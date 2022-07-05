@@ -1,49 +1,48 @@
 // Modulos
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
 //Modulos personalizados
-import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
-import { SharedModule } from './shared/shared.module';
+import { AppRoutingModule } from "./app-routing.module";
+import { AuthModule } from "./auth/auth.module";
+import { SharedModule } from "./shared/shared.module";
 
 //Firebase
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
 
 //NGRX
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { appReducers } from './app.reducer';
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 
 //Shared
-import { environment } from 'src/environments/environment';
+import { environment } from "src/environments/environment";
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { ChartsModule } from 'ng2-charts';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { ChartsModule } from "ng2-charts";
+import { AuthenticatedModule } from "./authenticated/authenticated.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,    
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AuthModule,
+    AuthenticatedModule,
     SharedModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    StoreModule.forRoot(appReducers),
+    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
+      maxAge: 25,
+      logOnly: environment.production,
     }),
     NgbModule,
-    ChartsModule
+    ChartsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

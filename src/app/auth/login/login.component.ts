@@ -1,38 +1,40 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../core/services/auth/auth.service';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
-import { Subscription } from 'rxjs';
-
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Subscription } from "rxjs";
+import { NgForm } from "@angular/forms";
+import { LoginModel } from "@models/auth/login.model";
+import { AuthFacadeService } from "@facades/auth-facade.service";
+import { SharedFacadeService } from "@facades/shared-facade.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styles: []
+  selector: "app-login",
+  templateUrl: "./login.component.html",
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
+  @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
+  public dataForm: LoginModel;
   public isLoading: boolean;
-  
-  private _subcriptionLogin: Subscription = new Subscription();
 
   constructor(
-    private _authService: AuthService,
-    private _store: Store<AppState>
-  ) { }
+    private _authFacadeService: AuthFacadeService,
+    private _sharedFacadeService: SharedFacadeService
+  ) {}
 
   ngOnInit() {
-    this._subcriptionLogin = this._store.select('ui').subscribe(ui => {
-      this.isLoading = ui.isLoading;
+    this._sharedFacadeService.getLoading$().subscribe((loading: boolean) => {
+      this.isLoading = loading;
     });
   }
 
   ngOnDestroy() {
-    this._subcriptionLogin.unsubscribe();
+    this._sharedFacadeService.reset();
+    this._authFacadeService.reset();
   }
 
-  onSubmit(data: any) {
-    this._authService.loginUser(data.email, data.password);
+  onSubmit() {
+    this.dataForm = { ...this.mainForm.form.getRawValue() };
+    console.log(this.dataForm);
+    if (this.mainForm.form.valid) {
+      this._authFacadeService.login(this.dataForm);
+    }
   }
-
 }

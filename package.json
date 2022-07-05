@@ -24,6 +24,8 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^8.6.0",
+    "@ngrx/effects": "^8.6.0",
+    "@ngrx/entity": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
