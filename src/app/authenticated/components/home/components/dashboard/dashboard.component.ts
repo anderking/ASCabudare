@@ -1,16 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
-import { Store } from "@ngrx/store";
-import { AppState } from "src/app/app.reducer";
-import { IngresoEgreso } from "../../../../../core/models/ingreso-egreso.model";
-import { IngresoEgresoService } from "../../../../../core/services/configuration/ingreso-egreso.service";
 import { Label } from "ng2-charts";
 import { ChartType } from "chart.js";
 import { filter, tap } from "rxjs/operators";
-import {
-  ActivateLoadingAction,
-  DeactivateLoadingAction,
-} from "src/app/core/store/actions/ui.actions";
+import { IngresoEgresoModel } from "@models/ingreso-egreso.model";
+import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
+import { SharedFacadeService } from "@facades/shared-facade.service";
+import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 
 @Component({
   selector: "app-dashboard",
@@ -18,7 +14,7 @@ import {
   styles: [],
 })
 export class DashboardComponent implements OnInit {
-  public items: IngresoEgreso[] = [];
+  public items: IngresoEgresoModel[] = [];
   public isLoading: boolean;
 
   public totalIngresos: any;
@@ -39,30 +35,30 @@ export class DashboardComponent implements OnInit {
   private _subscriptionLoading: Subscription = new Subscription();
 
   constructor(
-    private _ingresoEgresoService: IngresoEgresoService,
-    private _store: Store<AppState>
+    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
+    private _sharedFacadeService: SharedFacadeService
   ) {}
 
   ngOnInit() {
-    this._store.dispatch(new ActivateLoadingAction());
-
-    this._subscriptionLoading = this._store.select("ui").subscribe((ui) => {
-      this.isLoading = ui.isLoading;
+    this._sharedFacadeService.getLoading$().subscribe((loading: boolean) => {
+      this.isLoading = loading;
     });
 
-    this._subcriptionStadistic = this._store
-      .select("IE")
-      .pipe(filter((IE) => IE.items != null))
-      .subscribe((IE) => {
-        this.items = IE.items;
+    this._ingresoEgresoFacadeService
+      .getAll$()
+      .pipe(
+        filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
+        tap((items: IngresoEgresoModel[]) => console.log(items))
+      )
+      .subscribe((items: IngresoEgresoModel[]) => {
+        this.items = items;
         if (this.items) {
           this.calculate(this.items);
-          this._store.dispatch(new DeactivateLoadingAction());
         }
       });
   }
 
-  calculate(items: IngresoEgreso[]) {
+  calculate(items: IngresoEgresoModel[]) {
     this.totalIngresos = 0;
     this.totalEgresos = 0;
     this.cantIngresos = 0;

@@ -1,31 +1,44 @@
 import { DataActionModel } from "@models/common/data-action.model";
-import { LoginModel } from "@models/auth/login.model";
+import {
+  LoginFormModel,
+  LoginResponseModel,
+  RegisterFormModel,
+} from "@models/auth/login.model";
 import { createAction, props } from "@ngrx/store";
-import { UserModel } from "@models/auth/user.model";
 
 export const login = createAction(
   "[Login] Login",
-  props<{ action: DataActionModel<LoginModel> }>()
+  props<{ action: DataActionModel<LoginFormModel> }>()
 );
 
 export const loginSucess = createAction(
   "[Login] Login Success",
-  props<{ login: LoginModel }>()
+  props<{ login: LoginResponseModel }>()
 );
 
 export const register = createAction(
   "[Login] Register",
-  props<{ action: DataActionModel<LoginModel> }>()
+  props<{ action: DataActionModel<RegisterFormModel> }>()
 );
 
 export const registerSucess = createAction(
   "[Login] Register Success",
-  props<{ register: LoginModel }>()
+  props<{ register: LoginResponseModel }>()
 );
 
-export const setuser = createAction(
-  "[Login] Set User",
-  props<{ user: UserModel }>()
+export const setUserDoc = createAction(
+  "[Login] Set UserDoc",
+  props<{ action: DataActionModel<LoginResponseModel> }>()
+);
+
+export const setUserDocSuccess = createAction(
+  "[Login] Set UserDocSuccess",
+  props<{ userDoc: string }>()
+);
+
+export const setCurrentUser = createAction(
+  "[Login] Set CurrentUser",
+  props<{ currentUser: LoginResponseModel }>()
 );
 
 export const clear = createAction("[Login] Clear Login");

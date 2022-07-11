@@ -1,8 +1,9 @@
+import { ErrorModel } from "@models/shared/error.model";
 import { Observable } from "rxjs";
 
 export interface SharedInterface<> {
-  getMessages$(): Observable<string>;
-  getError$(): Observable<string>;
+  getMessage$(): Observable<string>;
+  getError$(): Observable<ErrorModel>;
   getLoading$(): Observable<boolean>;
   reset(): void;
 }

@@ -76,4 +76,8 @@ export class ApiService<T> implements ApiServiceInterface<T> {
     const endPoint = `${this.url}${action.url}`;
     return this._http.delete<T>(endPoint);
   }
+
+  getToken$(isExpired: boolean): Observable<string> {
+    return of('token')
+  }
 }

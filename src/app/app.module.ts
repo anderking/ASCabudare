@@ -23,6 +23,8 @@ import { environment } from "src/environments/environment";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ChartsModule } from "ng2-charts";
 import { AuthenticatedModule } from "./authenticated/authenticated.module";
+import { CoreModule } from "./core/core.module";
+import { EffectsModule } from "@ngrx/effects";
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,14 +33,15 @@ import { AuthenticatedModule } from "./authenticated/authenticated.module";
     AuthModule,
     AuthenticatedModule,
     SharedModule,
-    AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
+    CoreModule,
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     NgbModule,
     ChartsModule,
   ],

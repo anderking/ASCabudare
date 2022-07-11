@@ -1,9 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { Subscription } from "rxjs";
 import { NgForm } from "@angular/forms";
-import { LoginModel } from "@models/auth/login.model";
+import {
+  LoginResponseModel,
+  RegisterFormModel,
+} from "@models/auth/login.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
+import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
+import { filter, first } from "rxjs/operators";
 
 @Component({
   selector: "app-register",
@@ -12,7 +16,7 @@ import { SharedFacadeService } from "@facades/shared-facade.service";
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
-  public dataForm: LoginModel;
+  public dataForm: RegisterFormModel;
   public isLoading: boolean;
 
   constructor(
@@ -24,6 +28,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.getLoading$().subscribe((loading: boolean) => {
       this.isLoading = loading;
     });
+
+    this._authFacadeService
+      .getRegister$()
+      .pipe(first((login) => !isNullOrUndefined(login)))
+      .subscribe((login: LoginResponseModel) => {
+        console.log("REGISTER RESPONSE", login);
+        this._authFacadeService.setUserDoc(login);
+      });
   }
 
   ngOnDestroy() {

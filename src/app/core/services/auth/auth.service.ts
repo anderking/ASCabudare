@@ -7,6 +7,7 @@ import { map, tap, first, filter, last, take } from "rxjs/operators";
 import { Subscription, Observable } from "rxjs";
 import { authActions } from "@store/auth/actions";
 import { UserModel } from "@models/auth/user.model";
+import { LoginResponseModel } from "@models/auth/login.model";
 
 @Injectable({
   providedIn: "root",
@@ -43,13 +44,17 @@ export class AuthService {
           .subscribe((userFB: any) => {
             console.log(userFB);
             if (userFB) {
-              const user: UserModel = {
-                uid: userFB.uid,
+              let currentUser: LoginResponseModel = {
+                displayName: userFB.displayName,
                 email: userFB.email,
-                firstName: userFB.firstName,
-                lastName: userFB.lastName,
+                emailVerified: userFB.emailVerified,
+                phoneNumber: userFB.phoneNumber,
+                photoURL: userFB.photoURL,
+                ma: userFB.ma,
+                uid: userFB.uid,
+                refreshToken: userFB.refreshToken,
               };
-              authActions.setuser({ user });
+              authActions.setCurrentUser({ currentUser });
             } else {
               this.logut();
             }
@@ -86,4 +91,6 @@ export class AuthService {
       })
     );
   }
+
+  getToken() {}
 }

@@ -1,14 +1,14 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { LoginModel } from "@models/auth/login.model";
-import { authActions } from "@store/auth/actions";
+import { LoginResponseModel } from "@models/auth/login.model";
+import * as actions from "../actions/auth.actions";
 import { UserModel } from "@models/auth/user.model";
-
 
 /** Se declara la interface del reducer */
 export interface State {
-  login: LoginModel;
-  register: LoginModel;
-  user: UserModel;
+  login: LoginResponseModel;
+  register: LoginResponseModel;
+  userDoc: string;
+  currentUser: LoginResponseModel;
   loading: boolean;
 }
 
@@ -16,43 +16,55 @@ export interface State {
 export const initialState: State = {
   login: null,
   register: null,
-  user: null,
+  userDoc: null,
+  currentUser: null,
   loading: false,
 };
 
 /** Definimos todos los escucha por cada accion para efectuar un reducer conectado al store a traves del adapter */
-const authReducer = createReducer(
+const entityReducer = createReducer(
   initialState,
 
-  on(authActions.login, (state) => ({
+  on(actions.login, (state) => ({
     ...state,
     loading: true,
   })),
 
-  on(authActions.loginSucess, (state, { login }) => ({
+  on(actions.loginSucess, (state, { login }) => ({
     ...state,
     login,
     loading: false,
   })),
 
-  on(authActions.register, (state) => ({
+  on(actions.register, (state) => ({
     ...state,
     loading: true,
   })),
 
-  on(authActions.registerSucess, (state, { register }) => ({
+  on(actions.registerSucess, (state, { register }) => ({
     ...state,
     register,
     loading: false,
   })),
 
-  on(authActions.setuser, (state, { user }) => ({
+  on(actions.setUserDoc, (state) => ({
     ...state,
-    user,
+    loading: true,
+  })),
+
+  on(actions.setUserDocSuccess, (state, { userDoc }) => ({
+    ...state,
+    userDoc,
     loading: false,
   })),
 
-  on(authActions.clear, (state) => {
+  on(actions.setCurrentUser, (state, { currentUser }) => ({
+    ...state,
+    currentUser,
+    loading: false,
+  })),
+
+  on(actions.clear, (state) => {
     return {
       ...state,
       login: null,
@@ -60,7 +72,7 @@ const authReducer = createReducer(
     };
   }),
 
-  on(authActions.resetLoading, (state) => {
+  on(actions.resetLoading, (state) => {
     return {
       ...state,
       loading: false,
@@ -70,5 +82,5 @@ const authReducer = createReducer(
 
 /** Se exporta la funcion reducer que contiene todo el store */
 export function reducer(state: State | undefined, action: Action) {
-  return authReducer(state, action);
+  return entityReducer(state, action);
 }

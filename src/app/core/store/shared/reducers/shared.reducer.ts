@@ -1,10 +1,11 @@
+import { ErrorModel } from "@models/shared/error.model";
 import { Action, createReducer, on } from "@ngrx/store";
 import { sharedActions } from "@store/shared/actions";
 
 /** Se declara la interface del reducer */
 export interface State {
   message: string;
-  error: string;
+  error: ErrorModel;
   loading: boolean;
 }
 
@@ -16,8 +17,22 @@ export const initialState: State = {
 };
 
 /** Definimos todos los escucha por cada accion para efectuar un reducer conectado al store a traves del adapter */
-const sharedReducer = createReducer(
+const entityReducer = createReducer(
   initialState,
+
+  on(sharedActions.setMessage, (state, { message }) => {
+    return {
+      ...state,
+      message,
+    };
+  }),
+
+  on(sharedActions.setError, (state, { error }) => {
+    return {
+      ...state,
+      error,
+    };
+  }),
 
   on(sharedActions.clear, (state) => {
     return {
@@ -37,5 +52,5 @@ const sharedReducer = createReducer(
 
 /** Se exporta la funcion reducer que contiene todo el store */
 export function reducer(state: State | undefined, action: Action) {
-  return sharedReducer(state, action);
+  return entityReducer(state, action);
 }

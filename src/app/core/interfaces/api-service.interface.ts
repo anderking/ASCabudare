@@ -9,4 +9,5 @@ export interface ApiServiceInterface<T> {
     create$(action: DataActionModel<T>): Observable<T>;
     update$(action: DataActionModel<T>): Observable<T>;
     delete$(action: DataActionModel<T>): Observable<T>;
+    getToken$(expired: boolean): Observable<string>;
 }
