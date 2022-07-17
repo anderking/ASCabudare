@@ -11,31 +11,6 @@
               <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
             </div>
             <form class="user" #mainForm="ngForm" (ngSubmit)="onSubmit()">
-              <div class="form-group row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-
-                  <input type="text"
-                    [ngClass]="{'is-invalid': validationFirstName.touched && !validationFirstName.valid, 'is-valid': validationFirstName.touched && validationFirstName.valid}"
-                    class="form-control form-control-user" name="firstName" #validationFirstName="ngModel"
-                    placeholder="First Name" [(ngModel)]="firstName" required>
-
-
-                  <div class="invalid-feedback" *ngIf="validationFirstName.touched && !validationFirstName.valid">
-                    <div *ngIf="validationFirstName.errors.required">First Name required</div>
-                  </div>
-                </div>
-
-                <div class="col-sm-6">
-                  <input type="text"
-                    [ngClass]="{'is-invalid': validationLastName.touched && !validationLastName.valid, 'is-valid': validationLastName.touched && validationLastName.valid}"
-                    class="form-control form-control-user" name="lastName" #validationLastName="ngModel"
-                    placeholder="Last Name" [(ngModel)]="lastName" required>
-                  <div class="invalid-feedback" *ngIf="validationLastName.touched && !validationLastName.valid">
-                    <div *ngIf="validationLastName.errors.required">Last Name required</div>
-                  </div>
-                </div>
-
-              </div>
 
               <div class="form-group">
                 <input type="email"

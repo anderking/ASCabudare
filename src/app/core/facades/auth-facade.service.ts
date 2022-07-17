@@ -37,7 +37,7 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  getLogin$(): Observable<LoginResponseModel> {
+  public getLogin$(): Observable<LoginResponseModel> {
     return this._store.select(selectors.selectLogin);
   }
 
@@ -53,7 +53,7 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  getRegister$(): Observable<LoginResponseModel> {
+  public getRegister$(): Observable<LoginResponseModel> {
     return this._store.select(selectors.selectRegister);
   }
 
@@ -69,15 +69,24 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  getUser$(): Observable<LoginResponseModel> {
-    return this._store.select(selectors.selectUser);
+  public getUserDoc$(): Observable<string> {
+    return this._store.select(selectors.selectUserDoc);
   }
 
-  getLoading$(): Observable<boolean> {
+  public setCurrentUser(currentUser: LoginResponseModel): void {
+    const props = actions.setCurrentUser({ currentUser });
+    this._store.dispatch(props);
+  }
+
+  public getCurrentUser$(): Observable<LoginResponseModel> {
+    return this._store.select(selectors.selectCurrentUser);
+  }
+
+  public getLoading$(): Observable<boolean> {
     return this._store.select(selectors.selectLoading);
   }
 
-  reset(): void {
+  public reset(): void {
     const action = actions.clear();
     this._store.dispatch(action);
   }

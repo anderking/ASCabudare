@@ -29,7 +29,6 @@ export class AuthEffects {
       ofType(actions.login),
       switchMap(({ action }) =>
         this._firebaseService.signInWithEmailAndPassword$(action).pipe(
-          tap((x) => console.log("login", x)),
           map((login: any) => {
             let user: LoginResponseModel = {
               displayName: login.displayName,
@@ -57,17 +56,16 @@ export class AuthEffects {
       ofType(actions.register),
       switchMap(({ action }) =>
         this._firebaseService.createUserWithEmailAndPassword$(action).pipe(
-          tap((x) => console.log("register", x)),
-          map((login: any) => {
+          map((register: any) => {
             let user: LoginResponseModel = {
-              displayName: login.displayName,
-              email: login.email,
-              emailVerified: login.emailVerified,
-              phoneNumber: login.phoneNumber,
-              photoURL: login.photoURL,
-              ma: login.ma,
-              uid: login.uid,
-              refreshToken: login.refreshToken,
+              displayName: register.displayName,
+              email: register.email,
+              emailVerified: register.emailVerified,
+              phoneNumber: register.phoneNumber,
+              photoURL: register.photoURL,
+              ma: register.ma,
+              uid: register.uid,
+              refreshToken: register.refreshToken,
             };
             return user;
           }),
@@ -87,7 +85,6 @@ export class AuthEffects {
       ofType(actions.setUserDoc),
       switchMap(({ action }) =>
         this._firebaseService.setUserDoc$(action).pipe(
-          tap((x) => console.log("userDoc", x)),
           map((userDoc: string) => actions.setUserDocSuccess({ userDoc })),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())

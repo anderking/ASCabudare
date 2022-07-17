@@ -8,6 +8,8 @@ export const selectRegister = createSelector(
   (state) => state.register
 );
 
-export const selectUser = createSelector(getLogin, (state) => state.currentUser);
+export const selectCurrentUser = createSelector(getLogin, (state) => state.currentUser);
+
+export const selectUserDoc = createSelector(getLogin, (state) => state.userDoc);
 
 export const selectLoading = createSelector(getLogin, (state) => state.loading);

@@ -17,8 +17,6 @@ export interface LoginResponseModel {
 
 export interface RegisterFormModel {
   email: string;
-  firstName: string;
-  lastName: string;
   password: string;
 }
 

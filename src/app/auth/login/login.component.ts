@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { Subject, Subscription } from "rxjs";
+import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { LoginFormModel, LoginResponseModel } from "@models/auth/login.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
 import { filter, first, takeUntil } from "rxjs/operators";
-import Swal from "sweetalert2";
+import { AuthService } from "@services/auth/auth.service";
 
 @Component({
   selector: "app-login",
@@ -19,27 +19,35 @@ export class LoginComponent implements OnInit, OnDestroy {
   private _finisher = new Subject<void>();
 
   constructor(
+    private _authService: AuthService,
     private _authFacadeService: AuthFacadeService,
     private _sharedFacadeService: SharedFacadeService
   ) {}
 
   ngOnInit() {
-    this._sharedFacadeService.getLoading$().subscribe((loading: boolean) => {
-      this.isLoading = loading;
-    });
+    this._sharedFacadeService
+      .getLoading$()
+      .pipe(takeUntil(this._finisher))
+      .subscribe((loading: boolean) => {
+        this.isLoading = loading;
+      });
 
     this._authFacadeService
       .getLogin$()
-      .pipe(first((login) => !isNullOrUndefined(login)))
+      .pipe(
+        first((login) => !isNullOrUndefined(login)),
+        takeUntil(this._finisher)
+      )
       .subscribe((login: LoginResponseModel) => {
         console.log("LOGIN RESPONSE", login);
-        this._authFacadeService.setUserDoc(login);
+        this._authService.setCurrentUserEncrypt(login);
       });
   }
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
     this._authFacadeService.reset();
+    this._finisher.next();
   }
 
   onSubmit() {

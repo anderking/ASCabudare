@@ -1,31 +1,32 @@
-import { Injectable, OnInit } from '@angular/core';
-import { CanLoad, Router, CanActivate } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
-import { take } from 'rxjs/operators';
+import { Injectable, OnInit } from "@angular/core";
+import { CanLoad, Router, CanActivate } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
+import { take } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthRedirectGuard implements OnInit, CanLoad, CanActivate {
+  private IsAuth: boolean;
 
-  private IsAuth:boolean;
+  constructor(private _authService: AuthService, private _router: Router) {}
 
-  constructor
-    (
-      private authService: AuthService,
-      private router: Router,
-  ){ 
+  ngOnInit(): void {}
+
+  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this._authService.isAuthRedirect()) {
+      return true;
+    } else {
+      this._router.navigateByUrl("/authenticated");
+    }
   }
 
-  ngOnInit():void{
+  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this._authService.isAuthRedirect()) {
+      return true;
+    } else {
+      this._router.navigateByUrl("/authenticated");
+    }
   }
-
-  canLoad(){
-    return this.authService.isAuthRedirect().pipe(take(1))
-  }
-
-  canActivate(){
-    return this.authService.isAuthRedirect().pipe(take(1))
-  }
-
 }

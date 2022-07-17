@@ -20,7 +20,7 @@ export class FirebaseService<T> {
    * @param action
    */
   signInWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
-    console.log("signInWithEmailAndPassword", action);
+    //console.log("signInWithEmailAndPassword", action);
     let data: any = action.payload;
 
     const subscription = from(
@@ -38,7 +38,7 @@ export class FirebaseService<T> {
    * @param action
    */
   createUserWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
-    console.log("createUserWithEmailAndPassword", action);
+    //console.log("createUserWithEmailAndPassword", action);
     let data: any = action.payload;
     const subscription = from(
       this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
@@ -52,7 +52,7 @@ export class FirebaseService<T> {
    * @param action
    */
   setUserDoc$(action: DataActionModel<T>): Observable<any> {
-    console.log("setUserDoc", action);
+    //console.log("setUserDoc", action);
     let data: any = action.payload;
     const subscription = from(this.afDB.doc(action.url).set(data));
     return subscription.pipe(map(() => "OK"));

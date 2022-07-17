@@ -1,25 +1,29 @@
-import { Injectable, OnInit } from '@angular/core';
-import { CanLoad, Router  } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
-import { tap, take } from 'rxjs/operators';
+import { Injectable, OnInit } from "@angular/core";
+import { CanLoad, Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthGuard implements CanLoad, OnInit {
+  constructor(private _authService: AuthService, private _router: Router) {}
 
-  constructor
-  (
-    private authService: AuthService,
-    private router: Router,
-  ){
+  ngOnInit(): void {}
+
+  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this._authService.isAuthenticate()) {
+      return true;
+    } else {
+      this._router.navigateByUrl("/auth");
+    }
   }
 
-  ngOnInit(): void {
+  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this._authService.isAuthenticate()) {
+      return true;
+    } else {
+      this._router.navigateByUrl("/auth");
+    }
   }
-
-  canLoad(){
-    return this.authService.isAuth().pipe(take(1))
-  }
-  
 }

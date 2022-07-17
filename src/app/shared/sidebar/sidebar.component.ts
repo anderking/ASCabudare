@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authFacadeService.getUser$().subscribe((user: LoginResponseModel) => {
+    this.authFacadeService.getCurrentUser$().subscribe((user: LoginResponseModel) => {
       this.user = user;
     });
   }

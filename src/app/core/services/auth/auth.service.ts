@@ -1,48 +1,50 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { Router } from "@angular/router";
 import * as fireBase from "firebase";
-import { map, tap, first, filter, last, take } from "rxjs/operators";
-import { Subscription, Observable } from "rxjs";
-import { authActions } from "@store/auth/actions";
-import { UserModel } from "@models/auth/user.model";
+import { Subscription } from "rxjs";
+import * as authActions from "@store/auth/actions/auth.actions";
 import { LoginResponseModel } from "@models/auth/login.model";
+import { AuthFacadeService } from "@facades/auth-facade.service";
+import * as CryptoJS from "crypto-js";
+import { environment } from "@environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  public user: UserModel;
   public userSubcription: Subscription = new Subscription();
-  public isUserAuth: boolean;
-  public userListener: UserModel;
 
   constructor(
     public afAuth: AngularFireAuth,
-    private router: Router,
-    private afDB: AngularFirestore
+    private afDB: AngularFirestore,
+    private _authFacadeService: AuthFacadeService
   ) {}
 
-  //Cierra la sesion de un usuario
-  logut() {
+  /**
+   * Cierra la sesion, borra el localStorage y borra el store
+   */
+  public logut(): void {
     this.afAuth.auth.signOut();
-    this.userListener = null;
     this.userSubcription.unsubscribe();
+    localStorage.clear();
     authActions.clear();
-    this.router.navigate(["/login"]);
+    let actualRoute = window.location.origin;
+    window.location.replace(actualRoute);
   }
 
-  //Se encarga de escuchar si el usuario autentificado ha cambiado su estado
-  initAuthListener() {
+  /**
+   * Escucha los cambios del currentUser desde FireBase
+   */
+  public initAuthListener(): void {
     this.afAuth.authState.subscribe((fbUser: fireBase.User) => {
-      console.log(fbUser);
+      console.log("fbUser", fbUser);
       if (fbUser) {
         this.userSubcription = this.afDB
           .doc(`${fbUser.uid}/user`)
           .valueChanges()
           .subscribe((userFB: any) => {
-            console.log(userFB);
+            console.log("userFB", userFB);
             if (userFB) {
               let currentUser: LoginResponseModel = {
                 displayName: userFB.displayName,
@@ -54,43 +56,81 @@ export class AuthService {
                 uid: userFB.uid,
                 refreshToken: userFB.refreshToken,
               };
-              authActions.setCurrentUser({ currentUser });
-            } else {
-              this.logut();
+              console.log("setCurrentUser", currentUser);
+              this._authFacadeService.setCurrentUser(currentUser);
             }
           });
-      } else {
-        this.logut();
       }
     });
   }
 
-  //Verifica si hay un usuario autenticado para retornar el Guard
-  isAuth() {
-    return this.afAuth.authState.pipe(
-      map((fbUser) => {
-        //console.log("Auth: ", fbUser)
-        if (fbUser === null) {
-          this.router.navigate(["/auth/login"]);
-        } else {
-          return true;
-        }
-      })
-    );
-  }
-  //Verifica si hay un un usuario autenticado que intente accedeer al login o register para retornar el Guard
-  isAuthRedirect() {
-    return this.afAuth.authState.pipe(
-      map((fbUser) => {
-        //console.log("Autenticated: ", fbUser)
-        if (fbUser != null) {
-          this.router.navigate(["/authenticated"]);
-        } else {
-          return true;
-        }
-      })
-    );
+  /**
+   *Setea el currentUser en el localStorage de forma encriptada
+   * @param currentUser
+   */
+  public setCurrentUserEncrypt(currentUser: LoginResponseModel): void {
+    let textToEncrypt = JSON.stringify(currentUser).trim();
+    var cookieEncrypt = CryptoJS.AES.encrypt(textToEncrypt, environment.key);
+    localStorage.setItem("currentUser", cookieEncrypt);
+    let actualRoute = window.location.origin;
+    window.location.replace(actualRoute + "/authenticated/home");
   }
 
-  getToken() {}
+  /**
+   * Retorna el currentUser del localStorage y lo desencripta
+   * @returns {LoginResponseModel}
+   */
+  private getCurrentUserDecrypt(): LoginResponseModel {
+    try {
+      let getCookieEncrypt = localStorage.getItem("currentUser");
+      let textDecrypt = CryptoJS.AES.decrypt(getCookieEncrypt, environment.key);
+      let currentUserDecript = textDecrypt.toString(CryptoJS.enc.Utf8);
+      if (currentUserDecript) {
+        let decryptedData = JSON.parse(currentUserDecript);
+        return decryptedData;
+      } else {
+        return null;
+      }
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Retorna un boolean si el usuario esta autenticado y si no lo está cierra la sesion automaticamente
+   * @returns {boolean}
+   */
+  public isAuthenticate(): boolean {
+    let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
+    console.log(currentUser);
+    if (currentUser != null) {
+      return true;
+    } else {
+      this.logut();
+      return false;
+    }
+  }
+  /**
+   * Verifica si hay un un usuario autenticado que intente accedeer al login o register para retornar el Guard
+   * @returns {boolean}
+   */
+  public isAuthRedirect(): boolean {
+    let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
+    console.log(currentUser);
+    if (currentUser == null) {
+      localStorage.clear();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Retorna el token de sesion
+   * @returns {string}
+   */
+  public getToken(): string {
+    let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
+    return currentUser ? currentUser.ma : null;
+  }
 }

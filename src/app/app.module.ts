@@ -24,7 +24,9 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ChartsModule } from "ng2-charts";
 import { AuthenticatedModule } from "./authenticated/authenticated.module";
 import { CoreModule } from "./core/core.module";
-import { EffectsModule } from "@ngrx/effects";
+
+//Cookies
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,7 +47,7 @@ import { EffectsModule } from "@ngrx/effects";
     NgbModule,
     ChartsModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

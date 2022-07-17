@@ -1,31 +1,23 @@
 import { Component, OnInit } from "@angular/core";
 import { SharedFacadeService } from "@facades/shared-facade.service";
-import { AuthService } from "./core/services/auth/auth.service";
 import { filter, takeUntil } from "rxjs/operators";
 import { isNullOrUndefined } from "util";
 import Swal from "sweetalert2";
-import { AuthFacadeService } from "@facades/auth-facade.service";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { AuthService } from "@services/auth/auth.service";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
-    private authService: AuthService,
-    private _authFacadeService: AuthFacadeService,
-    private _sharedFacadeService: SharedFacadeService
+    private _sharedFacadeService: SharedFacadeService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    //this.authService.initAuthListener();
-    this._authFacadeService
-      .getLogin$()
-      .subscribe((login: LoginResponseModel) => {
-        console.log("LOGIN RESPONSE", login);
-      });
+    this.authService.initAuthListener();
     this.messageSubscriptions();
   }
 
