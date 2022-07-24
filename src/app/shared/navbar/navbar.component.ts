@@ -18,12 +18,16 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authFacadeService.getCurrentUser$().subscribe((user: LoginResponseModel) => {
-      this.user = user;
-    });
+    this.authFacadeService
+      .getCurrentUser$()
+      .subscribe((user: LoginResponseModel) => {
+        this.user = user;
+      });
   }
 
   logout() {
     this._auth.logut();
+    let actualRoute = window.location.origin;
+    window.location.replace(actualRoute);
   }
 }

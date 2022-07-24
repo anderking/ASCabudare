@@ -25,12 +25,10 @@ export class AuthService {
    * Cierra la sesion, borra el localStorage y borra el store
    */
   public logut(): void {
-    this.afAuth.auth.signOut();
     this.userSubcription.unsubscribe();
+    this._authFacadeService.reset();
     localStorage.clear();
-    authActions.clear();
-    let actualRoute = window.location.origin;
-    window.location.replace(actualRoute);
+    this.afAuth.auth.signOut();
   }
 
   /**
@@ -38,13 +36,13 @@ export class AuthService {
    */
   public initAuthListener(): void {
     this.afAuth.authState.subscribe((fbUser: fireBase.User) => {
-      console.log("fbUser", fbUser);
+      //console.log("fbUser", fbUser);
       if (fbUser) {
         this.userSubcription = this.afDB
           .doc(`${fbUser.uid}/user`)
           .valueChanges()
           .subscribe((userFB: any) => {
-            console.log("userFB", userFB);
+            //console.log("userFB", userFB);
             if (userFB) {
               let currentUser: LoginResponseModel = {
                 displayName: userFB.displayName,

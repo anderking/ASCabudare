@@ -17,7 +17,7 @@ export const environment = {
   failed: 'Hay problemas para cargar los datos, revise su conexion a internet o recargue la página',
   conexionFailed: 'Ha ocurrido un error al enviar sus datos!!! posiblemente esto se deba a problemas con su conexión a internet, para asegurarnos de esto, recargaremos la página y por favor intente de nuevo. Si el problema persiste intente mas tarde.',
   apiUrl: '',
-  key : "aW5nYW5kZXJzb25kaWF6",
+  key : "EAWAutUZ^MPV4vLRJ9IY91^t$*RIhErm",
 };
 
 /*

@@ -3,7 +3,6 @@ import { SharedFacadeService } from "@facades/shared-facade.service";
 import { filter, takeUntil } from "rxjs/operators";
 import { isNullOrUndefined } from "util";
 import Swal from "sweetalert2";
-import { AuthService } from "@services/auth/auth.service";
 
 @Component({
   selector: "app-root",
@@ -12,12 +11,10 @@ import { AuthService } from "@services/auth/auth.service";
 })
 export class AppComponent implements OnInit {
   constructor(
-    private _sharedFacadeService: SharedFacadeService,
-    private authService: AuthService
+    private _sharedFacadeService: SharedFacadeService
   ) {}
 
   ngOnInit() {
-    this.authService.initAuthListener();
     this.messageSubscriptions();
   }
 

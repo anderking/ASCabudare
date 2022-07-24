@@ -69,6 +69,7 @@ const entityReducer = createReducer(
       ...state,
       login: null,
       register: null,
+      userDoc: null,
       currentUser: null,
     };
   }),
