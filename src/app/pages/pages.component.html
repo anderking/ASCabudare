@@ -1,0 +1,7 @@
+<app-container
+    [menuItems]="menuItems"
+    [navBarOptions]="navBarOptions"
+    [user]="currentUser"
+    (optionClick)="menuAction($event)">
+    <router-outlet></router-outlet>
+</app-container>

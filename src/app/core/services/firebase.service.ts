@@ -63,13 +63,14 @@ export class FirebaseService<T> {
    * @param action
    */
   search$(action: DataActionModel<T>): Observable<T[]> {
-    console.log("search$", action);
+    //console.log("search$", action);
     const subscription = from(
       this.afDB
         .collection(`${action.url}`)
         .snapshotChanges()
         .pipe(
           map((docData) => {
+            //console.log(docData)
             return docData.map((data: any) => {
               return {
                 ...data.payload.doc.data(),
@@ -88,7 +89,7 @@ export class FirebaseService<T> {
   create$(action: DataActionModel<T>): Observable<T> {
     console.log("create$", action);
     const payload: any = action.payload;
-    const id: string = payload.id || this.afDB.createId();
+    const id: string = payload?.id || this.afDB.createId();
     const data: any = { id, ...payload };
     const subscription = from(
       this.afDB.collection(`${action.url}`).doc(`${id}`).set({ data })

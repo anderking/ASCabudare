@@ -1,6 +1,6 @@
 export interface IngresoEgresoModel{
     id?:string;
     description:string;
-    amount:string;
-    type:string;
+    amount:number;
+    idTypeActive:string;
 }

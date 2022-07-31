@@ -1,47 +1,83 @@
-<div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Agregar Ingreso / Egreso</h4>
-          <p class="card-description">
-            Especifique el monto y el tipo
-          </p>
-  
-          <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-  
-            <div class="form-group">
-              <label>Descripción</label>
-              <input type="text" class="form-control" placeholder="Descripción" formControlName="description"
-                name="description">
-            </div>
-  
-            <div class="form-group">
-              <label>Monto</label>
-              <input type="number" class="form-control" placeholder="Monto" formControlName="amount" name="amount">
-              <p>
-                Debe de ser un monto positivo
-              </p>
-            </div>
-  
-            <div class="form-group">
-              <label>Tipo</label>
-              <br>
-              <button (click)="type='egreso'" *ngIf="type=='ingreso'" type="button"
-                class="btn btn-primary btn-block">Ingreso</button>
-              <button (click)="type='ingreso'" *ngIf="type=='egreso'" type="button"
-                class="btn btn-warning btn-block">Egreso</button>
-            </div>
-  
-            <hr>
-            <button *ngIf="!isLoading" type="submit" class="btn btn-success mr-2"
-              [disabled]="formGroup.invalid">Registrar</button>
-            <button *ngIf="isLoading" type="submit" class="btn btn-success mr-2" [disabled]="true"><i
-                class="fa fa-spin fa-sync"></i> Espere...</button>
-  
-            <button type="reset" class="btn btn-light">Cancelar</button>
-  
-          </form>
+<div class="container-fluid">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-12">
+
+      <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Form Ingreso-Egreso</h1>
+      </div>
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+
+          <div class="p-5">
+
+            <form #mainForm="ngForm" (ngSubmit)="onSubmit()">
+              <div class="form-row">
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label>Type:</label>
+                  <select class="form-control"
+                    [ngClass]="{'is-invalid': validationIdTypeActive.touched && !validationIdTypeActive.valid, 'is-valid':  validationIdTypeActive.touched && validationIdTypeActive.valid}"
+                    name="idTypeActive" #validationIdTypeActive="ngModel" [(ngModel)]="dataForm.idTypeActive" required>
+                    <option value="" selected>Seleccione un tipo</option>
+                    <option *ngFor="let item of typeActiveCombo$ | async" [ngValue]="item.code">
+                      {{item?.name}}</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="validationIdTypeActive.touched && !validationIdTypeActive.valid">
+                    <div *ngIf="validationIdTypeActive.errors.required">Field required</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label>Amount:</label>
+                  <input type="number" class="form-control"
+                    [ngClass]="{'is-invalid': validationAmounth.touched && !validationAmounth.valid, 'is-valid': validationAmounth.touched && validationAmounth.valid}"
+                    name="amounth" #validationAmounth="ngModel" placeholder="Amounth" [(ngModel)]="dataForm.amounth" required
+                    pattern="^([0-9]{1,10}(\.[0-9]{1,2})?)$">
+                  <div class="invalid-feedback" *ngIf="validationAmounth.touched && !validationAmounth.valid">
+                    <div *ngIf="validationAmounth.errors.required">Field required</div>
+                    <div *ngIf="validationAmounth.errors.pattern">Amounth incorrect, example: 12005.56
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <label>Description:</label>
+                  <textarea class="form-control"
+                    [ngClass]="{'is-invalid': validationDescription.touched && !validationDescription.valid, 'is-valid': validationDescription.touched && validationDescription.valid}"
+                    name="description" #validationDescription="ngModel" placeholder="Description"
+                    [(ngModel)]="dataForm.description" required></textarea>
+                  <div class="invalid-feedback" *ngIf="validationDescription.touched && !validationDescription.valid">
+                    <div *ngIf="validationDescription.errors.required">Field required</div>
+                  </div>
+                </div>
+
+
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
+                    [disabled]="mainForm.invalid" (click)="onSubmit()">
+                    Save
+                  </button>
+                  <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
+                    <div class="spinner-border spinner-border-sm" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </button>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <button type="button" class="btn btn-secondary btn-user btn-block" (click)="clean()">
+                    Clean
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>

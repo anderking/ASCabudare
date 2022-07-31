@@ -64,12 +64,12 @@ export class DashboardComponent implements OnInit {
     this.cantIngresos = 0;
     this.cantEgresos = 0;
     items.forEach((item) => {
-      if (item.type == "ingreso") {
+      if (item.idTypeActive == "ingreso") {
         this.totalIngresos += item.amount;
         this.cantIngresos++;
       }
 
-      if (item.type == "egreso") {
+      if (item.idTypeActive == "egreso") {
         this.totalEgresos += item.amount;
         this.cantEgresos++;
       }

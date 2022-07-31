@@ -31,7 +31,13 @@ const routes: Routes = [
     ],
   },
 
-  { path: "**", redirectTo: "auth" },
+  {
+    path: "pages",
+    loadChildren: () =>
+      import("@root/pages/pages.module").then((m) => m.PagesModule),
+  },
+
+  { path: "**", redirectTo: "/pages/404" },
 ];
 
 @NgModule({
