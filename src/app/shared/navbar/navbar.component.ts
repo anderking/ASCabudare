@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/core/services/auth/auth.service";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { UserModel } from "@models/auth/user.model";
 import { LoginResponseModel } from "@models/auth/login.model";
 
 @Component({

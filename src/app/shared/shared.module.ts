@@ -6,7 +6,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { ContainerComponent } from './container/container.component';
 import { ModalsComponent } from './modals/modals.component';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,8 @@ import { ModalsComponent } from './modals/modals.component';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     FooterComponent,

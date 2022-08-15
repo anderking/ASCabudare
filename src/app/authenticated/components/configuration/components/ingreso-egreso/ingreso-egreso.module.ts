@@ -6,7 +6,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IngresoEgresoComponent } from './ingreso-egreso.component';
 import { IngresosEgresosComponent } from './ingresos-egresos/ingresos-egresos.component';
 import { IngresoEgresoCreateComponent } from './ingreso-egreso-form/ingreso-egreso-form.component';
-import { IngresoEgresoShowComponent } from './ingreso-egreso-show/ingreso-egreso-show.component';
 import { TokenInterceptorService } from 'src/app/core/services/token-interceptor.service';
 import { NgBoostrapModule } from 'src/app/core/ui/ng-bootstrap.module';
 
@@ -16,7 +15,6 @@ import { NgBoostrapModule } from 'src/app/core/ui/ng-bootstrap.module';
   	IngresoEgresoComponent,
   	IngresosEgresosComponent,
   	IngresoEgresoCreateComponent,
-  	IngresoEgresoShowComponent,
   ],
   imports: [
     CommonModule,

@@ -41,8 +41,33 @@ export class IngresoEgresoEffects {
           switchMap((item: IngresoEgresoModel) => {
             const message = "Agregado exitosamente";
             return [
-              sharedActions.setMessage({ message }),
               actions.addIngresoEgreso({ item }),
+              sharedActions.setMessage({ message }),
+            ];
+          }),
+          catchError((error) =>
+            of(sharedActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Efecto que escucha la acción de crear nuevos registros de la entidad
+   */
+  createSecond$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(actions.createApiIngresoEgresoSecond),
+      switchMap((params) =>
+        this.firebaseService.createSecond$(params.props).pipe(
+          switchMap((response: any) => {
+            const message = "Agregado exitosamente";
+            let item: any = params.props.payload;
+            console.log(item);
+            return [
+              actions.addIngresoEgreso({ item }),
+              sharedActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>
@@ -66,8 +91,8 @@ export class IngresoEgresoEffects {
             item = params.props.payload;
             const id = item.id;
             return [
-              sharedActions.setMessage({ message }),
               actions.deleteIngresoEgreso({ id }),
+              sharedActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>

@@ -63,14 +63,14 @@ export class FirebaseService<T> {
    * @param action
    */
   search$(action: DataActionModel<T>): Observable<T[]> {
-    //console.log("search$", action);
+    console.log("search$", action);
     const subscription = from(
       this.afDB
         .collection(`${action.url}`)
         .snapshotChanges()
         .pipe(
           map((docData) => {
-            //console.log(docData)
+            console.log(docData)
             return docData.map((data: any) => {
               return {
                 ...data.payload.doc.data(),
@@ -95,6 +95,17 @@ export class FirebaseService<T> {
       this.afDB.collection(`${action.url}`).doc(`${id}`).set({ data })
     );
     return subscription.pipe(map((response: any) => response));
+  }
+
+  /**
+   * Servicio que se usa para comunicar la api back por get
+   * @param action
+   */
+   createSecond$(action: DataActionModel<T>): Observable<any> {
+    console.log("createSecond", action);
+    let data: any = action.payload;
+    const subscription = from(this.afDB.doc(action.url).collection(action.collection).add(data));
+    return subscription.pipe(map(() => "OK"));
   }
 
   /**

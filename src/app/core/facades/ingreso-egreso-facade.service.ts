@@ -6,7 +6,13 @@ import { DataActionModel } from "@models/common/data-action.model";
 import { IngresoEgresoModel } from "@models/ingreso-egreso.model";
 import * as selectors from "@store/ingreso-egreso/selectors/ingreso-egreso.selectors";
 import * as actions from "@store/ingreso-egreso/actions/ingreso-egreso.actions";
-import { collectionFB } from "../constants/ingreso-egreso/ingreso-egreso.constants";
+import {
+  collectionFB,
+  collectionFBSecond,
+} from "../constants/ingreso-egreso/ingreso-egreso.constants";
+import { AuthFacadeService } from "./auth-facade.service";
+import { LoginResponseModel } from "@models/auth/login.model";
+import { getCurrentUserDecrypt } from "../utilities/core.utilities";
 /**
  * Definición de la clase principal y sus implementaciones
  * @class IngresoEgresoFacadeService
@@ -17,6 +23,7 @@ import { collectionFB } from "../constants/ingreso-egreso/ingreso-egreso.constan
 export class IngresoEgresoFacadeService
   implements FacadeInterface<IngresoEgresoModel>
 {
+  private currentUser: LoginResponseModel = getCurrentUserDecrypt();
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
    * @param _store
@@ -28,7 +35,7 @@ export class IngresoEgresoFacadeService
    */
   public search(): void {
     const props: DataActionModel<IngresoEgresoModel> = {
-      url: collectionFB,
+      url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
     };
     const action = actions.searchApiIngresoEgresos({ props });
     this._store.dispatch(action);
@@ -85,11 +92,28 @@ export class IngresoEgresoFacadeService
    */
   public create(payload: IngresoEgresoModel): void {
     const props: DataActionModel<IngresoEgresoModel> = {
-      url: collectionFB,
+      url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
       payload: payload,
     };
 
     const action = actions.createApiIngresoEgreso({
+      props,
+    });
+    this._store.dispatch(action);
+  }
+
+  /**
+   * Dispara la acción para crear un registro
+   * @param payload
+   */
+  public createSecond(payload: IngresoEgresoModel): void {
+    const props: DataActionModel<IngresoEgresoModel> = {
+      url: this.currentUser.uid + "/" + collectionFB,
+      collection: "Items",
+      payload: payload,
+    };
+
+    const action = actions.createApiIngresoEgresoSecond({
       props,
     });
     this._store.dispatch(action);

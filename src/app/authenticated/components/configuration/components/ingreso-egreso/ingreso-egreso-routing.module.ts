@@ -3,7 +3,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { IngresoEgresoComponent } from "./ingreso-egreso.component";
 import { IngresosEgresosComponent } from "./ingresos-egresos/ingresos-egresos.component";
 import { IngresoEgresoCreateComponent } from "./ingreso-egreso-form/ingreso-egreso-form.component";
-import { IngresoEgresoShowComponent } from "./ingreso-egreso-show/ingreso-egreso-show.component";
 
 const routes: Routes = [
   {

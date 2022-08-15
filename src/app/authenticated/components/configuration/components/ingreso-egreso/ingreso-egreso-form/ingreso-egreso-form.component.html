@@ -14,51 +14,43 @@
 
           <div class="p-5">
 
-            <form #mainForm="ngForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="mainForm">
               <div class="form-row">
                 <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label>Type:</label>
-                  <select class="form-control"
-                    [ngClass]="{'is-invalid': validationIdTypeActive.touched && !validationIdTypeActive.valid, 'is-valid':  validationIdTypeActive.touched && validationIdTypeActive.valid}"
-                    name="idTypeActive" #validationIdTypeActive="ngModel" [(ngModel)]="dataForm.idTypeActive" required>
+                  <select class="form-control" formControlName="idTypeActive"
+                    [ngClass]="{'is-invalid': mainForm.get('idTypeActive')?.touched && !mainForm.get('idTypeActive')?.valid, 'is-valid':  mainForm.get('idTypeActive')?.touched && mainForm.get('idTypeActive')?.valid}">
                     <option value="" selected>Seleccione un tipo</option>
                     <option *ngFor="let item of typeActiveCombo$ | async" [ngValue]="item.code">
                       {{item?.name}}</option>
                   </select>
-                  <div class="invalid-feedback" *ngIf="validationIdTypeActive.touched && !validationIdTypeActive.valid">
-                    <div *ngIf="validationIdTypeActive.errors.required">Field required</div>
+                  <div class="invalid-feedback" *ngIf="isValidField('idTypeActive')">
+                    {{ getErrorMessageField('idTypeActive') }}
                   </div>
                 </div>
 
+
+
                 <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label>Amount:</label>
-                  <input type="number" class="form-control"
-                    [ngClass]="{'is-invalid': validationAmounth.touched && !validationAmounth.valid, 'is-valid': validationAmounth.touched && validationAmounth.valid}"
-                    name="amounth" #validationAmounth="ngModel" placeholder="Amounth" [(ngModel)]="dataForm.amounth" required
-                    pattern="^([0-9]{1,10}(\.[0-9]{1,2})?)$">
-                  <div class="invalid-feedback" *ngIf="validationAmounth.touched && !validationAmounth.valid">
-                    <div *ngIf="validationAmounth.errors.required">Field required</div>
-                    <div *ngIf="validationAmounth.errors.pattern">Amounth incorrect, example: 12005.56
-                    </div>
+                  <input type="number" class="form-control" formControlName="amount"
+                    [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('amount')">
+                    {{ getErrorMessageField('amount') }}
                   </div>
                 </div>
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <label>Description:</label>
-                  <textarea class="form-control"
-                    [ngClass]="{'is-invalid': validationDescription.touched && !validationDescription.valid, 'is-valid': validationDescription.touched && validationDescription.valid}"
-                    name="description" #validationDescription="ngModel" placeholder="Description"
-                    [(ngModel)]="dataForm.description" required></textarea>
-                  <div class="invalid-feedback" *ngIf="validationDescription.touched && !validationDescription.valid">
-                    <div *ngIf="validationDescription.errors.required">Field required</div>
+                  <textarea class="form-control" formControlName="description"
+                    [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
+                  <div class="invalid-feedback" *ngIf="isValidField('description')">
+                    {{ getErrorMessageField('description') }}
                   </div>
                 </div>
 
-
-
                 <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                  <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
-                    [disabled]="mainForm.invalid" (click)="onSubmit()">
+                  <button *ngIf="!isLoading" class="btn btn-primary btn-user btn-block" (click)="onSubmit()" [disabled]="mainForm.invalid">
                     Save
                   </button>
                   <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
@@ -71,6 +63,12 @@
                 <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <button type="button" class="btn btn-secondary btn-user btn-block" (click)="clean()">
                     Clean
+                  </button>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <button type="button" class="btn btn-info btn-user btn-block" (click)="back()">
+                    Back
                   </button>
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import { LoginResponseModel } from "@models/auth/login.model";
 import * as actions from "../actions/auth.actions";
-import { UserModel } from "@models/auth/user.model";
 
 /** Se declara la interface del reducer */
 export interface State {

@@ -4,13 +4,12 @@ import {
   LoginFormModel,
   LoginResponseModel,
   RegisterFormModel,
-  RegisterResponseModel,
 } from "@models/auth/login.model";
 import { DataActionModel } from "@models/common/data-action.model";
 import { Store } from "@ngrx/store";
 import * as selectors from "@store/auth/selectors/auth.selectors";
 import * as actions from "@store/auth/actions/auth.actions";
-import { UserModel } from "@models/auth/user.model";
+import { collectionFBUser } from "../constants/auth/auth.constants";
 /**
  * Definición de la clase principal y sus implementaciones
  * @class SustainingSupportParametrizationFacadeService
@@ -27,7 +26,7 @@ export class AuthFacadeService {
 
   public login(payload: LoginFormModel): void {
     const action: DataActionModel<LoginFormModel> = {
-      url: "user",
+      url: collectionFBUser,
       payload: payload,
     };
 
@@ -43,7 +42,7 @@ export class AuthFacadeService {
 
   public register(payload: RegisterFormModel): void {
     const action: DataActionModel<RegisterFormModel> = {
-      url: "user",
+      url: collectionFBUser,
       payload: payload,
     };
 
@@ -59,7 +58,7 @@ export class AuthFacadeService {
 
   public setUserDoc(payload: LoginResponseModel): void {
     const action: DataActionModel<LoginResponseModel> = {
-      url: `${payload.uid}/user`,
+      url: `${payload.uid}/${collectionFBUser}`,
       payload: payload,
     };
 

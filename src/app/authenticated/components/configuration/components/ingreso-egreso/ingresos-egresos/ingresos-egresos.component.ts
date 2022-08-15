@@ -23,9 +23,12 @@ export class IngresosEgresosComponent implements OnInit {
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
     private _sharedFacadeService: SharedFacadeService
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit() {
+    this._ingresoEgresoFacadeService.search()
     this._sharedFacadeService.getLoading$().subscribe((loading: boolean) => {
       this.isLoading = loading;
     });

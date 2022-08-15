@@ -8,6 +8,7 @@ import { LoginResponseModel } from "@models/auth/login.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
+import { getCurrentUserDecrypt } from "@root/core/utilities/core.utilities";
 
 @Injectable({
   providedIn: "root",
@@ -39,7 +40,7 @@ export class AuthService {
       //console.log("fbUser", fbUser);
       if (fbUser) {
         this.userSubcription = this.afDB
-          .doc(`${fbUser.uid}/user`)
+          .doc(`${fbUser.uid}/User`)
           .valueChanges()
           .subscribe((userFB: any) => {
             //console.log("userFB", userFB);
@@ -54,7 +55,7 @@ export class AuthService {
                 uid: userFB.uid,
                 refreshToken: userFB.refreshToken,
               };
-              console.log("setCurrentUser", currentUser);
+              //console.log("setCurrentUser", currentUser);
               this._authFacadeService.setCurrentUser(currentUser);
             }
           });
@@ -79,19 +80,7 @@ export class AuthService {
    * @returns {LoginResponseModel}
    */
   private getCurrentUserDecrypt(): LoginResponseModel {
-    try {
-      let getCookieEncrypt = localStorage.getItem("currentUser");
-      let textDecrypt = CryptoJS.AES.decrypt(getCookieEncrypt, environment.key);
-      let currentUserDecript = textDecrypt.toString(CryptoJS.enc.Utf8);
-      if (currentUserDecript) {
-        let decryptedData = JSON.parse(currentUserDecript);
-        return decryptedData;
-      } else {
-        return null;
-      }
-    } catch {
-      return null;
-    }
+    return getCurrentUserDecrypt();
   }
 
   /**
@@ -100,7 +89,7 @@ export class AuthService {
    */
   public isAuthenticate(): boolean {
     let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    console.log(currentUser);
+    //console.log(currentUser);
     if (currentUser != null) {
       return true;
     } else {
@@ -114,7 +103,7 @@ export class AuthService {
    */
   public isAuthRedirect(): boolean {
     let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    console.log(currentUser);
+    //console.log(currentUser);
     if (currentUser == null) {
       localStorage.clear();
       return true;
