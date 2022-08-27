@@ -34,7 +34,6 @@ const entityReducer = createReducer(
   }),
 
   on(actions.createApiIngresoEgreso, (state) => ({ ...state, loading: true })),
-  on(actions.createApiIngresoEgresoSecond, (state) => ({ ...state, loading: true })),
   on(actions.addIngresoEgreso, (state, { item }) => {
     return adapter.addOne(item, { ...state, loading: false });
   }),

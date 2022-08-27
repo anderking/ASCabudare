@@ -9,6 +9,8 @@ import {
   isNullOrUndefinedEmpty,
 } from "@root/core/utilities/is-null-or-undefined.util";
 import { Subject } from "rxjs";
+import { Location } from "@angular/common";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-ingresos-egresos",
@@ -22,22 +24,26 @@ export class IngresosEgresosComponent implements OnInit {
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
-    private _sharedFacadeService: SharedFacadeService
-  ) {
-    
-  }
+    private _sharedFacadeService: SharedFacadeService,
+    private _location: Location,
+    private _router: Router
+  ) {}
 
   ngOnInit() {
-    this._ingresoEgresoFacadeService.search()
-    this._sharedFacadeService.getLoading$().subscribe((loading: boolean) => {
-      this.isLoading = loading;
-    });
+    this._ingresoEgresoFacadeService.search();
+    this._ingresoEgresoFacadeService
+      .getLoading$()
+      .pipe(takeUntil(this._finisher))
+      .subscribe((loading: boolean) => {
+        this.isLoading = loading;
+      });
 
     this._ingresoEgresoFacadeService
       .getAll$()
       .pipe(
         filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
-        tap((items: IngresoEgresoModel[]) => console.log(items))
+        tap((items: IngresoEgresoModel[]) => console.log(items)),
+        takeUntil(this._finisher)
       )
       .subscribe((items: IngresoEgresoModel[]) => {
         this.items = items;
@@ -46,11 +52,24 @@ export class IngresosEgresosComponent implements OnInit {
 
   ngOnDestroy(): void {
     this._finisher.next();
-    this._ingresoEgresoFacadeService.reset();
+    this._ingresoEgresoFacadeService.reset()
     this._sharedFacadeService.reset();
   }
 
-  delete(item: IngresoEgresoModel) {
+  goDelete(item: IngresoEgresoModel): void {
     this._ingresoEgresoFacadeService.delete(item);
+  }
+
+  goNew(): void {
+    this._router.navigate(["/authenticated/configuration/ingreso-egreso/form"]);
+  }
+  goEdit(item: IngresoEgresoModel): void {
+    this._router.navigate([
+      "/authenticated/configuration/ingreso-egreso/form",
+      { id: item?.id },
+    ]);
+  }
+  goBack(): void {
+    this._location.back();
   }
 }

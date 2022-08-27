@@ -51,9 +51,10 @@ export class IngresoEgresoFacadeService
   /**
    * Dispara la acción para buscar un solo registro en la api
    */
-  public searchOne(id: string): void {
+  public searchOne(item: any): void {
     const props: DataActionModel<IngresoEgresoModel> = {
-      url: collectionFB + "/" + id,
+      url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
+      payload: item
     };
     const action = actions.searchOneApiIngresoEgreso({ props });
     this._store.dispatch(action);
@@ -97,23 +98,6 @@ export class IngresoEgresoFacadeService
     };
 
     const action = actions.createApiIngresoEgreso({
-      props,
-    });
-    this._store.dispatch(action);
-  }
-
-  /**
-   * Dispara la acción para crear un registro
-   * @param payload
-   */
-  public createSecond(payload: IngresoEgresoModel): void {
-    const props: DataActionModel<IngresoEgresoModel> = {
-      url: this.currentUser.uid + "/" + collectionFB,
-      collection: "Items",
-      payload: payload,
-    };
-
-    const action = actions.createApiIngresoEgresoSecond({
       props,
     });
     this._store.dispatch(action);

@@ -18,7 +18,7 @@ export class ComboEffects {
     this._actions$.pipe(
       ofType(actions.searchCategory),
       switchMap((params) =>
-        this.firebaseService.search$(params.props).pipe(
+        this.firebaseService.searchCombo$(params.props).pipe(
           switchMap((items: ComboModel[]) => {
             return [actions.loadCategory({ items })];
           }),
@@ -37,7 +37,7 @@ export class ComboEffects {
    this._actions$.pipe(
      ofType(actions.searchTypeActive),
      switchMap((params) =>
-       this.firebaseService.search$(params.props).pipe(
+       this.firebaseService.searchCombo$(params.props).pipe(
          switchMap((items: ComboModel[]) => {
            return [actions.loadTypeActive({ items })];
          }),

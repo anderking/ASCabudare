@@ -20,7 +20,28 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.search$(params.props).pipe(
           switchMap((items: IngresoEgresoModel[]) => {
+            console.log(items);
             return [actions.loadIngresoEgresos({ items })];
+          }),
+          catchError((error) =>
+            of(sharedActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Efecto que escucha la acción de buscar todos los registros de la entidad
+   */
+  searchOne$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(actions.searchOneApiIngresoEgreso),
+      switchMap((params) =>
+        this.firebaseService.searchOne$(params.props).pipe(
+          switchMap((item: IngresoEgresoModel) => {
+            console.log(item);
+            return [actions.setIngresoEgreso({ item })];
           }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
@@ -39,32 +60,8 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
           switchMap((item: IngresoEgresoModel) => {
-            const message = "Agregado exitosamente";
-            return [
-              actions.addIngresoEgreso({ item }),
-              sharedActions.setMessage({ message }),
-            ];
-          }),
-          catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
-          )
-        )
-      )
-    )
-  );
-
-  /**
-   * Efecto que escucha la acción de crear nuevos registros de la entidad
-   */
-  createSecond$ = createEffect(() =>
-    this._actions$.pipe(
-      ofType(actions.createApiIngresoEgresoSecond),
-      switchMap((params) =>
-        this.firebaseService.createSecond$(params.props).pipe(
-          switchMap((response: any) => {
-            const message = "Agregado exitosamente";
-            let item: any = params.props.payload;
             console.log(item);
+            const message = "Agregado exitosamente";
             return [
               actions.addIngresoEgreso({ item }),
               sharedActions.setMessage({ message }),

@@ -3,4 +3,5 @@ export interface IngresoEgresoModel{
     description:string;
     amount:number;
     idTypeActive:string;
+    typeActive:string;
 }

@@ -6,11 +6,12 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map, mergeMap, switchMap, tap } from "rxjs/operators";
 import * as fireBase from "firebase";
+import { ApiFirebaseServiceInterface } from "@interfaces/api-firebase-service.interface";
 
 @Injectable({
   providedIn: "root",
 })
-export class FirebaseService<T> {
+export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   private url = environment.apiUrl;
 
   constructor(public afAuth: AngularFireAuth, private afDB: AngularFirestore) {}
@@ -70,7 +71,6 @@ export class FirebaseService<T> {
         .snapshotChanges()
         .pipe(
           map((docData) => {
-            console.log(docData)
             return docData.map((data: any) => {
               return {
                 ...data.payload.doc.data(),
@@ -83,6 +83,62 @@ export class FirebaseService<T> {
   }
 
   /**
+   * Servicio que se usa para comunicar la api back por get
+   * @param action
+   */
+  searchCombo$(action: DataActionModel<T>): Observable<T[]> {
+    console.log("searchCombo$", action);
+    const subscription = from(
+      this.afDB
+        .collection(`${action.url}`)
+        .snapshotChanges()
+        .pipe(
+          map((docData) => {
+            return docData.map((data: any) => {
+              return {
+                ...data.payload.doc.data(),
+              };
+            });
+          })
+        )
+    );
+    return subscription.pipe(
+      map((items: T[]) => {
+        return items.map((item: any) => {
+          let newItem = {
+            ...item,
+            id: item.code,
+          };
+          return newItem;
+        });
+      })
+    );
+  }
+
+  /**
+   * Servicio que se usa para comunicar la api back por get
+   * @param action
+   */
+  searchOne$(action: DataActionModel<T>): Observable<T> {
+    console.log("searchOne$", action);
+    const payload: any = action.payload;
+    console.log(payload);
+    const subscription: any = from(
+      this.afDB
+        .collection(`${action.url}`)
+        .doc(`${payload.id}`)
+        .snapshotChanges()
+        .pipe(
+          map((docData) => {
+            console.log(docData.payload.data());
+            return docData.payload.data();
+          })
+        )
+    );
+    return subscription.pipe(map((response: T) => response));
+  }
+
+  /**
    * Servicio que se usa para comunicar la api back para save
    * @param action
    */
@@ -92,20 +148,19 @@ export class FirebaseService<T> {
     const id: string = payload?.id || this.afDB.createId();
     const data: any = { id, ...payload };
     const subscription = from(
-      this.afDB.collection(`${action.url}`).doc(`${id}`).set({ data })
+      new Promise(async (resolve, reject) => {
+        try {
+          const result = await this.afDB
+            .collection(`${action.url}`)
+            .doc(`${id}`)
+            .set(data);
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      })
     );
-    return subscription.pipe(map((response: any) => response));
-  }
-
-  /**
-   * Servicio que se usa para comunicar la api back por get
-   * @param action
-   */
-   createSecond$(action: DataActionModel<T>): Observable<any> {
-    console.log("createSecond", action);
-    let data: any = action.payload;
-    const subscription = from(this.afDB.doc(action.url).collection(action.collection).add(data));
-    return subscription.pipe(map(() => "OK"));
+    return subscription.pipe(map((response: any) => data));
   }
 
   /**

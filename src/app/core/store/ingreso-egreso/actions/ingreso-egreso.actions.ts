@@ -20,11 +20,6 @@ export const createApiIngresoEgreso = createAction(
   "[IngresoEgreso/API] CreateApi IngresoEgreso",
   props<{ props: DataActionModel<IngresoEgresoModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para crear un nuevo registro de la entidad*/
-export const createApiIngresoEgresoSecond = createAction(
-  "[IngresoEgreso/API] CreateApi IngresoEgresoSecond",
-  props<{ props: DataActionModel<IngresoEgresoModel> }>()
-);
 /** Dispara la acción que hace el llamado a la api a traves del efecto para actualizar un registro de la entidad*/
 export const updateApiIngresoEgreso = createAction(
   "[IngresoEgreso/API] UpdateApi IngresoEgreso",
