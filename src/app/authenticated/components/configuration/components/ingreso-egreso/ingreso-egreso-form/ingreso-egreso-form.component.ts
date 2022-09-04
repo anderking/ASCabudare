@@ -8,6 +8,7 @@ import {
 import {
   BehaviorSubject,
   combineLatest,
+  Observable,
   of,
   Subject,
   Subscription,
@@ -34,9 +35,10 @@ import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefine
   styles: [],
 })
 export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
-  private _finisher$ = new Subject<void>();
+  public finisher$ = new Subject<void>();
   public mainForm: FormGroup;
   public dataForm: IngresoEgresoModel;
+  public currentItem: IngresoEgresoModel;
   public isLoading: boolean;
   public typeActivesArray: ComboModel[];
   public typeActiveCurrent: ComboModel;
@@ -55,37 +57,26 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.callsCombos();
+    this.chargeIndicatorManager();
     this.controlSubscriptions();
 
-    this._ingresoEgresoFacadeService
-      .getLoading$()
-      .pipe(
-        filter((loading: boolean) => !isNullOrUndefined(loading)),
-        takeUntil(this._finisher$)
-      )
-      .subscribe((loading: boolean) => {
-        console.log("loading", loading);
-        this.isLoading = loading;
-      });
-
     const params$ = this._activatedRoute.paramMap.pipe(
-      filter((params) => !isNullOrUndefined(params)),
+      filter((params) => !isNullOrUndefinedEmpty(params)),
       map((params: ParamMap) => {
         const id = params.get("id");
         return { id };
       }),
       tap((item: any) => {
-        console.log(item);
         if (item.id) {
           this._ingresoEgresoFacadeService.searchOne(item);
         }
       }),
-      takeUntil(this._finisher$)
+      takeUntil(this.finisher$)
     );
 
     const items$ = this._ingresoEgresoFacadeService.getAll$().pipe(
       filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
-      takeUntil(this._finisher$)
+      takeUntil(this.finisher$)
     );
 
     const mainForm$ = of(this.mainForm);
@@ -94,7 +85,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
     results$
       .pipe(
-        tap((x) => console.log("COMBINELATEST", x)),
+        filter((x) => !isNullOrUndefinedEmpty(x)),
         map(([items, params, mainForm]) => {
           return {
             item: items.find(
@@ -104,7 +95,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
             mainForm,
           };
         }),
-        takeUntil(this._finisher$)
+        takeUntil(this.finisher$)
       )
       .subscribe((data) => {
         console.log("DATA", data);
@@ -117,23 +108,36 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   ngAfterViewInit(): void {
     this._sharedFacadeService
       .getMessage$()
-      .pipe(filter((message) => message !== null))
+      .pipe(
+        filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
+        takeUntil(this.finisher$)
+      )
       .subscribe((message) => {
-        console.log("message", message);
-        this.clean();
-        this._sharedFacadeService.reset();
+        if (!this.currentItem) {
+          this.clean();
+        }
+      });
+
+    this._ingresoEgresoFacadeService
+      .getCurrentItem$()
+      .pipe(
+        filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
+        takeUntil(this.finisher$)
+      )
+      .subscribe((currentItem) => {
+        console.log("currentItem", currentItem);
+        this.currentItem = currentItem;
       });
   }
 
   ngOnDestroy() {
-    this._sharedFacadeService.reset();
-    this._combosFacadeService.reset();
     this._ingresoEgresoFacadeService.reset();
-    this._finisher$.next();
+    this._combosFacadeService.reset();
+    this._sharedFacadeService.reset();
+    this.finisher$.next();
   }
 
   selectCurrentItem(item: IngresoEgresoModel): void {
-    console.log("CURRENT ITEM", item);
     this.mainForm.reset(item, { emitEvent: false });
     this._ingresoEgresoFacadeService.select(item);
   }
@@ -154,10 +158,9 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      takeUntil(this._finisher$)
+      takeUntil(this.finisher$)
     );
     typeActive$.subscribe((i: ComboModel[]) => {
-      //console.log(i);
       this.typeActiveCombo$.next(i);
       this.typeActivesArray = i;
     });
@@ -198,6 +201,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
   clean() {
     this.mainForm.reset();
+    this.mainForm.get("idTypeActive").setValue("");
   }
 
   goBack() {
@@ -209,11 +213,9 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
       .get("idTypeActive")
       .valueChanges.pipe(
         filter((value) => !isNullOrUndefined(value)),
-        takeUntil(this._finisher$)
+        takeUntil(this.finisher$)
       )
       .subscribe((value: string) => {
-        console.log(value);
-        console.log(this.typeActivesArray);
         if (this.typeActivesArray && this.typeActivesArray.length > 0) {
           try {
             this.typeActiveCurrent = this.typeActivesArray.find(
@@ -230,5 +232,26 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
           }
         }
       });
+  }
+
+  private chargeIndicatorManager(): void {
+    const isLoadingIngresoEgreso$ =
+      this._ingresoEgresoFacadeService.getLoading$();
+    const isLoadingCombos$ = this._combosFacadeService.getLoading$();
+
+    const result$ = combineLatest([
+      isLoadingIngresoEgreso$,
+      isLoadingCombos$,
+    ]).pipe(
+      map(
+        ([isLoadingIngresoEgreso, isLoadingCombos]) =>
+          isLoadingIngresoEgreso || isLoadingCombos
+      ),
+      takeUntil(this.finisher$)
+    );
+
+    result$.pipe(takeUntil(this.finisher$)).subscribe((i) => {
+      this.isLoading = i;
+    });
   }
 }

@@ -21,7 +21,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action
    */
   signInWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
-    //console.log("signInWithEmailAndPassword", action);
     let data: any = action.payload;
 
     const subscription = from(
@@ -39,7 +38,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action
    */
   createUserWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
-    //console.log("createUserWithEmailAndPassword", action);
     let data: any = action.payload;
     const subscription = from(
       this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
@@ -53,7 +51,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action
    */
   setUserDoc$(action: DataActionModel<T>): Observable<any> {
-    //console.log("setUserDoc", action);
     let data: any = action.payload;
     const subscription = from(this.afDB.doc(action.url).set(data));
     return subscription.pipe(map(() => "OK"));
@@ -64,7 +61,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action
    */
   search$(action: DataActionModel<T>): Observable<T[]> {
-    console.log("search$", action);
     const subscription = from(
       this.afDB
         .collection(`${action.url}`)
@@ -87,7 +83,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action
    */
   searchCombo$(action: DataActionModel<T>): Observable<T[]> {
-    console.log("searchCombo$", action);
     const subscription = from(
       this.afDB
         .collection(`${action.url}`)
@@ -120,9 +115,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action
    */
   searchOne$(action: DataActionModel<T>): Observable<T> {
-    console.log("searchOne$", action);
     const payload: any = action.payload;
-    console.log(payload);
     const subscription: any = from(
       this.afDB
         .collection(`${action.url}`)
@@ -130,7 +123,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
         .snapshotChanges()
         .pipe(
           map((docData) => {
-            console.log(docData.payload.data());
             return docData.payload.data();
           })
         )
@@ -146,7 +138,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     console.log("create$", action);
     const payload: any = action.payload;
     const id: string = payload?.id || this.afDB.createId();
-    const data: any = { id, ...payload };
+    const data: any = { ...payload, id };
     const subscription = from(
       new Promise(async (resolve, reject) => {
         try {
@@ -168,7 +160,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action
    */
   delete$(action: DataActionModel<T>): Observable<T> {
-    console.log("delete$", action);
     const payload: any = action.payload;
     const subscription = from(
       this.afDB.collection(`${action.url}`).doc(`${payload.id}`).delete()

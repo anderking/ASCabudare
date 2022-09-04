@@ -10,7 +10,6 @@ import {
   collectionFB,
   collectionFBSecond,
 } from "../constants/ingreso-egreso/ingreso-egreso.constants";
-import { AuthFacadeService } from "./auth-facade.service";
 import { LoginResponseModel } from "@models/auth/login.model";
 import { getCurrentUserDecrypt } from "../utilities/core.utilities";
 /**
@@ -54,7 +53,7 @@ export class IngresoEgresoFacadeService
   public searchOne(item: any): void {
     const props: DataActionModel<IngresoEgresoModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: item
+      payload: item,
     };
     const action = actions.searchOneApiIngresoEgreso({ props });
     this._store.dispatch(action);
@@ -109,7 +108,7 @@ export class IngresoEgresoFacadeService
    */
   public update(payload: IngresoEgresoModel): void {
     const props: DataActionModel<IngresoEgresoModel> = {
-      url: collectionFB,
+      url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
       payload: payload,
     };
 
@@ -125,7 +124,7 @@ export class IngresoEgresoFacadeService
    */
   public delete(payload: IngresoEgresoModel): void {
     const props: DataActionModel<IngresoEgresoModel> = {
-      url: collectionFB,
+      url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
       payload: payload,
     };
 

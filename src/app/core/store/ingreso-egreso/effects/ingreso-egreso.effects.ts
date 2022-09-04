@@ -20,7 +20,6 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.search$(params.props).pipe(
           switchMap((items: IngresoEgresoModel[]) => {
-            console.log(items);
             return [actions.loadIngresoEgresos({ items })];
           }),
           catchError((error) =>
@@ -40,7 +39,6 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.searchOne$(params.props).pipe(
           switchMap((item: IngresoEgresoModel) => {
-            console.log(item);
             return [actions.setIngresoEgreso({ item })];
           }),
           catchError((error) =>
@@ -60,7 +58,6 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
           switchMap((item: IngresoEgresoModel) => {
-            console.log(item);
             const message = "Agregado exitosamente";
             return [
               actions.addIngresoEgreso({ item }),

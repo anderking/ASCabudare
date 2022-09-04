@@ -8,6 +8,7 @@ import { IngresosEgresosComponent } from './ingresos-egresos/ingresos-egresos.co
 import { IngresoEgresoCreateComponent } from './ingreso-egreso-form/ingreso-egreso-form.component';
 import { TokenInterceptorService } from 'src/app/core/services/token-interceptor.service';
 import { NgBoostrapModule } from 'src/app/core/ui/ng-bootstrap.module';
+import { SharedModule } from '@root/shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NgBoostrapModule } from 'src/app/core/ui/ng-bootstrap.module';
     FormsModule,
     ReactiveFormsModule,
     IngresoEgresoRoutingModule,
-    NgBoostrapModule
+    NgBoostrapModule,
+    SharedModule
   ],
   providers:
   [

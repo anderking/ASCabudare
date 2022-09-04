@@ -20,6 +20,7 @@ import { Router } from "@angular/router";
 export class IngresosEgresosComponent implements OnInit {
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
+  public wordFilter: string = "";
   private _finisher = new Subject<void>();
 
   constructor(

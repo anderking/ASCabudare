@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ContainerComponent } from './container/container.component';
 import { ModalsComponent } from './modals/modals.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PipesModule } from '@root/core/pipes/pipes-module.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule,
   ],
   exports: [
     FooterComponent,
@@ -28,6 +30,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     SidebarComponent,
     ModalsComponent,
     ContainerComponent,
+    PipesModule,
   ]
 })
 export class SharedModule { }

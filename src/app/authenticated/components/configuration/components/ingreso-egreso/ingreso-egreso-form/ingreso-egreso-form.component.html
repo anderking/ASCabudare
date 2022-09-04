@@ -21,7 +21,7 @@
                     <label>Type:</label>
                     <select class="form-control" formControlName="idTypeActive"
                       [ngClass]="{'is-invalid': mainForm.get('idTypeActive')?.touched && !mainForm.get('idTypeActive')?.valid, 'is-valid':  mainForm.get('idTypeActive')?.touched && mainForm.get('idTypeActive')?.valid}">
-                      <option value="" selected>Seleccione un tipo</option>
+                      <option value="" selected>Select an option</option>
                       <option *ngFor="let item of typeActiveCombo$ | async" [ngValue]="item.code">
                         {{item?.name}}</option>
                     </select>
@@ -79,9 +79,10 @@
           </div>
         </div>
       </div>
-      <div *ngIf="isLoading" class="spinner">
+      <div *ngIf="isLoading">
         <div class="d-flex justify-content-center">
           <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
           </div>
         </div>
       </div>

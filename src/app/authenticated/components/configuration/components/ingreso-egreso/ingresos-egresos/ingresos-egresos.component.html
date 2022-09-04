@@ -17,8 +17,8 @@
       <div class="row justify-content-center">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
           <div class="form-group">
-            <input type="text" class="form-control" id="filterCategorias" name="filterCategorias"
-              [(ngModel)]="filterCategorias" placeholder="Buscar...">
+            <input type="text" class="form-control" id="wordFilter" name="wordFilter"
+              [(ngModel)]="wordFilter" placeholder="Buscar...">
           </div>
           <div class="table-responsive">
             <table class="table table-hover">
@@ -32,17 +32,37 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of items">
+                <tr *ngFor="let item of items | filterTableSearch:wordFilter:'description'">
                   <td>{{item.typeActive}}</td>
                   <td>{{item.description}}</td>
                   <td>{{item.amount}}</td>
                   <td><button (click)="goEdit(item)" class="btn btn-info">Editar</button></td>
-                  <td><button (click)="goDelete(item)" class="btn btn-danger">Eliminar</button></td>
+                  <td><a href="#delete-item-{{item.id}}" class="btn btn-danger" data-toggle="modal">Eliminar</a></td>
+                  <div class="modal fade" id="delete-item-{{item.id}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          ¿Estas seguro de eliminar este registro?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            (click)="goDelete(item)">Si</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </tr>
               </tbody>
             </table>
           </div>
-          <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
         </div>
       </div>
     </div>
