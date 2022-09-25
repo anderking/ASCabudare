@@ -53,6 +53,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute
   ) {
     this.mainForm = this.initForm();
+    this._ingresoEgresoFacadeService.search();
   }
 
   ngOnInit() {
@@ -65,11 +66,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
       map((params: ParamMap) => {
         const id = params.get("id");
         return { id };
-      }),
-      tap((item: any) => {
-        if (item.id) {
-          this._ingresoEgresoFacadeService.searchOne(item);
-        }
       }),
       takeUntil(this.finisher$)
     );

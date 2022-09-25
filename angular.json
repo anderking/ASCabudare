@@ -36,8 +36,6 @@
               "node_modules/jquery.easing/jquery.easing.min.js",
               "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
               "src/assets/js/sb-admin-2.min.js",
-              
-              "src/assets/js/datatables/dataTables.bootstrap4.min.js",
               "src/assets/js/datatables/jquery.dataTables.min.js",
               "src/assets/js/demo/datatables-demo.js",
               "src/assets/js/main.js"
