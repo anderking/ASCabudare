@@ -15,7 +15,7 @@ import {
 } from "rxjs";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
-import { IngresoEgresoModel } from "@models/ingreso-egreso.model";
+import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { isNullOrUndefined } from "util";
 import { CombosFacadeService } from "@facades/combos-facade.service";
@@ -25,9 +25,10 @@ import {
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
-import { UUID } from "angular2-uuid";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
+import { CategoryFacadeService } from "@facades/category-facade.service";
+import { CategoryModel } from "@models/configurations/category.model";
 
 @Component({
   selector: "app-ingreso-egreso-form",
@@ -43,9 +44,13 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   public typeActivesArray: ComboModel[];
   public typeActiveCurrent: ComboModel;
   public typeActiveCombo$ = new BehaviorSubject<ComboModel[]>([]);
+  public categorysArray: CategoryModel[];
+  public categoryCurrent: CategoryModel;
+  public categoryCombo$ = new BehaviorSubject<CategoryModel[]>([]);
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
+    private _categoryFacadeService: CategoryFacadeService,
     private _combosFacadeService: CombosFacadeService,
     private _sharedFacadeService: SharedFacadeService,
     private _location: Location,
@@ -128,6 +133,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._ingresoEgresoFacadeService.reset();
+    this._categoryFacadeService.reset();
     this._combosFacadeService.reset();
     this._sharedFacadeService.reset();
     this.finisher$.next();
@@ -143,6 +149,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
    * @returns {void}
    */
   callsCombos(): void {
+    this._categoryFacadeService.search();
     this._combosFacadeService.searchTypeActive();
 
     const typeActive$ = this._combosFacadeService.getTypeActive$().pipe(
@@ -160,13 +167,35 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
       this.typeActiveCombo$.next(i);
       this.typeActivesArray = i;
     });
+
+    const category$ = this._categoryFacadeService.getAll$().pipe(
+      filter((items: CategoryModel[]) => !isNullOrUndefined(items)),
+      map((items: CategoryModel[]) => {
+        try {
+          return items.filter((item: CategoryModel) => item.state);
+        } catch (error) {
+          return items;
+        }
+      }),
+      takeUntil(this.finisher$)
+    );
+    category$.subscribe((i: CategoryModel[]) => {
+      this.categoryCombo$.next(i);
+      this.categorysArray = i;
+    });
   }
 
   initForm(): FormGroup {
     return this._fb.group({
       id: null,
+      idCategory: ["", [Validators.required]],
+      category: ["", [Validators.required]],
       idTypeActive: ["", [Validators.required]],
       typeActive: ["", [Validators.required]],
+      createDate: [
+        new Date().toLocaleDateString("en-CA"),
+        [Validators.required],
+      ],
       amount: [
         "",
         [
@@ -179,8 +208,14 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.dataForm = { ...this.mainForm.getRawValue() };
-    console.log(this.mainForm.controls);
+    const createDate: string = this.mainForm.getRawValue().createDate;
+    var hours = new Date().toISOString().split("T")[1];
+    var newDate = createDate + "T" + hours;
+    const date = new Date(newDate);
+    this.dataForm = {
+      ...this.mainForm.getRawValue(),
+      createDateFB: date
+    };
     if (this.mainForm.valid) {
       console.log(this.dataForm);
       this._ingresoEgresoFacadeService.create(this.dataForm);
@@ -197,7 +232,9 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
   clean() {
     this.mainForm.reset();
+    this.mainForm.get("idCategory").setValue("");
     this.mainForm.get("idTypeActive").setValue("");
+    this.mainForm.get("createDate").setValue(new Date().toLocaleDateString("en-CA"));
   }
 
   goBack() {
@@ -228,20 +265,46 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
           }
         }
       });
+
+    this.mainForm
+      .get("idCategory")
+      .valueChanges.pipe(
+        filter((value) => !isNullOrUndefined(value)),
+        takeUntil(this.finisher$)
+      )
+      .subscribe((value: string) => {
+        if (this.categorysArray && this.categorysArray.length > 0) {
+          try {
+            this.categoryCurrent = this.categorysArray.find(
+              (i: CategoryModel) => i.id === value
+            );
+            this.mainForm.patchValue({
+              category:
+                this.categoryCurrent && this.categoryCurrent.name
+                  ? this.categoryCurrent.name
+                  : null,
+            });
+          } catch (error) {
+            return;
+          }
+        }
+      });
   }
 
   private chargeIndicatorManager(): void {
     const isLoadingIngresoEgreso$ =
       this._ingresoEgresoFacadeService.getLoading$();
+    const isLoadingCategory$ = this._categoryFacadeService.getLoading$();
     const isLoadingCombos$ = this._combosFacadeService.getLoading$();
 
     const result$ = combineLatest([
       isLoadingIngresoEgreso$,
+      isLoadingCategory$,
       isLoadingCombos$,
     ]).pipe(
       map(
-        ([isLoadingIngresoEgreso, isLoadingCombos]) =>
-          isLoadingIngresoEgreso || isLoadingCombos
+        ([isLoadingIngresoEgreso, isLoadingCategory, isLoadingCombos]) =>
+          isLoadingIngresoEgreso || isLoadingCategory || isLoadingCombos
       ),
       takeUntil(this.finisher$)
     );

@@ -17,20 +17,36 @@
 
               <form [formGroup]="mainForm">
                 <div class="form-row">
+
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                    <label>Type:</label>
-                    <select class="form-control" formControlName="idTypeActive"
-                      [ngClass]="{'is-invalid': mainForm.get('idTypeActive')?.touched && !mainForm.get('idTypeActive')?.valid, 'is-valid':  mainForm.get('idTypeActive')?.touched && mainForm.get('idTypeActive')?.valid}">
-                      <option value="" selected>Select an option</option>
-                      <option *ngFor="let item of typeActiveCombo$ | async" [ngValue]="item.code">
-                        {{item?.name}}</option>
-                    </select>
-                    <div class="invalid-feedback" *ngIf="isValidField('idTypeActive')">
-                      {{ getErrorMessageField('idTypeActive') }}
+                    <label>Select an option:</label>
+                    <div class="form-check" *ngFor="let item of typeActiveCombo$ | async">
+                      <input type="radio" class="form-check-input" formControlName="idTypeActive" value="{{item.code}}">
+                      <label class="form-check-label">{{item?.name}}</label>
                     </div>
                   </div>
 
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label>Category:</label>
+                    <select class="form-control" formControlName="idCategory"
+                      [ngClass]="{'is-invalid': mainForm.get('idCategory')?.touched && !mainForm.get('idCategory')?.valid, 'is-valid':  mainForm.get('idCategory')?.touched && mainForm.get('idCategory')?.valid}">
+                      <option value="" selected>Select an option</option>
+                      <option *ngFor="let item of categoryCombo$ | async" [ngValue]="item.id">
+                        {{item?.name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="isValidField('idCategory')">
+                      {{ getErrorMessageField('idCategory') }}
+                    </div>
+                  </div>
 
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label>Date:</label>
+                    <input type="date" class="form-control" formControlName="createDate"
+                      [ngClass]="{'is-invalid': mainForm.get('createDate')?.touched && !mainForm.get('createDate')?.valid, 'is-valid': mainForm.get('createDate')?.touched && mainForm.get('createDate')?.valid}">
+                    <div class="invalid-feedback" *ngIf="isValidField('createDate')">
+                      {{ getErrorMessageField('createDate') }}
+                    </div>
+                  </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
                     <label>Amount:</label>

@@ -3,7 +3,7 @@ import { Subscription } from "rxjs";
 import { Label } from "ng2-charts";
 import { ChartType } from "chart.js";
 import { filter, tap } from "rxjs/operators";
-import { IngresoEgresoModel } from "@models/ingreso-egreso.model";
+import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";

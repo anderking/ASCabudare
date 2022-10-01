@@ -4,8 +4,6 @@ import * as ComboActions from "../actions/combo.actions";
 
 /** Se declara la interface del reducer */
 export interface State {
-  category: ComboModel[];
-  categoryLoading: boolean;
   typeActive: ComboModel[];
   typeActiveLoading: boolean;
   loading: boolean;
@@ -13,8 +11,6 @@ export interface State {
 
 /** Inicializamos el state */
 export const initialState: State = {
-  category: [],
-  categoryLoading: false,
   typeActive: [],
   typeActiveLoading: false,
   loading: false,
@@ -23,25 +19,13 @@ export const initialState: State = {
 /** Definimos todos los escucha por cada accion para efectuar un reducer conectado al store a traves del adapter */
 const comboReducer = createReducer(
   initialState,
-  on(ComboActions.searchCategory, (state) => ({
-    ...state,
-    categoryLoading: true,
-    loading: true,
-  })),
+  
   on(ComboActions.searchTypeActive, (state) => ({
     ...state,
     typeActiveLoading: true,
     loading: true,
   })),
 
-  on(ComboActions.loadCategory, (state, { items }) => {
-    return {
-      ...state,
-      category: items,
-      categoryLoading: false,
-      loading: false,
-    };
-  }),
   on(ComboActions.loadTypeActive, (state, { items }) => {
     return {
       ...state,
@@ -58,7 +42,6 @@ const comboReducer = createReducer(
   on(ComboActions.resetLoading, (state) => {
     return {
       ...state,
-      categoryLoading: false,
       typeActiveLoading: false,
       loading: false,
     };

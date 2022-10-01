@@ -3,24 +3,24 @@ import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { FacadeInterface } from "@interfaces/facade-interface";
 import { DataActionModel } from "@models/common/data-action.model";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
-import * as selectors from "@store/ingreso-egreso/selectors/ingreso-egreso.selectors";
-import * as actions from "@store/ingreso-egreso/actions/ingreso-egreso.actions";
+import { CategoryModel } from "@models/configurations/category.model";
+import * as selectors from "@store/configuration/selectors/category.selectors";
+import * as actions from "@store/configuration/actions/category.actions";
 import {
   collectionFB,
   collectionFBSecond,
-} from "../constants/ingreso-egreso/ingreso-egreso.constants";
+} from "../constants/configurations/category.constants";
 import { LoginResponseModel } from "@models/auth/login.model";
 import { getCurrentUserDecrypt } from "../utilities/core.utilities";
 /**
  * Definición de la clase principal y sus implementaciones
- * @class IngresoEgresoFacadeService
+ * @class CategoryFacadeService
  */
 @Injectable({
   providedIn: "root",
 })
-export class IngresoEgresoFacadeService
-  implements FacadeInterface<IngresoEgresoModel>
+export class CategoryFacadeService
+  implements FacadeInterface<CategoryModel>
 {
   private currentUser: LoginResponseModel = getCurrentUserDecrypt();
   /**
@@ -33,17 +33,17 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para buscar todos los registros sin filtro en la api
    */
   public search(): void {
-    const props: DataActionModel<IngresoEgresoModel> = {
+    const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
     };
-    const action = actions.searchApiIngresoEgresos({ props });
+    const action = actions.searchApiCategorys({ props });
     this._store.dispatch(action);
   }
 
   /**
    * Obtiene todos los registros del store disparados por los diferentes search
    */
-  public getAll$(): Observable<IngresoEgresoModel[]> {
+  public getAll$(): Observable<CategoryModel[]> {
     return this._store.select(selectors.selectAll);
   }
 
@@ -51,18 +51,18 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para buscar un solo registro en la api
    */
   public searchOne(item: any): void {
-    const props: DataActionModel<IngresoEgresoModel> = {
+    const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
       payload: item,
     };
-    const action = actions.searchOneApiIngresoEgreso({ props });
+    const action = actions.searchOneApiCategory({ props });
     this._store.dispatch(action);
   }
 
   /**
    * Obtiene del store el registro disparado por el searchOne
    */
-  public getOne$(): Observable<IngresoEgresoModel> {
+  public getOne$(): Observable<CategoryModel> {
     return this._store.select(selectors.selectCurrent);
   }
 
@@ -70,9 +70,9 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para seleccionar un registro de la tabla
    * @param payload
    */
-  public select(payload: IngresoEgresoModel): void {
+  public select(payload: CategoryModel): void {
     if (payload) {
-      const action = actions.setCurrentIngresoEgresoId({
+      const action = actions.setCurrentCategoryId({
         id: payload.id,
       });
       this._store.dispatch(action);
@@ -82,7 +82,7 @@ export class IngresoEgresoFacadeService
   /**
    * Obtiene del store el item actual tras disparar el select
    */
-  public getCurrentItem$(): Observable<IngresoEgresoModel> {
+  public getCurrentItem$(): Observable<CategoryModel> {
     return this._store.select(selectors.selectCurrent);
   }
 
@@ -90,13 +90,13 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para crear un registro
    * @param payload
    */
-  public create(payload: IngresoEgresoModel): void {
-    const props: DataActionModel<IngresoEgresoModel> = {
+  public create(payload: CategoryModel): void {
+    const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
       payload: payload,
     };
 
-    const action = actions.createApiIngresoEgreso({
+    const action = actions.createApiCategory({
       props,
     });
     this._store.dispatch(action);
@@ -106,13 +106,13 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para actualizar un registro
    * @param payload
    */
-  public update(payload: IngresoEgresoModel): void {
-    const props: DataActionModel<IngresoEgresoModel> = {
+  public update(payload: CategoryModel): void {
+    const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
       payload: payload,
     };
 
-    const action = actions.updateApiIngresoEgreso({
+    const action = actions.updateApiCategory({
       props,
     });
     this._store.dispatch(action);
@@ -122,13 +122,13 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para borrar un registro
    * @param payload
    */
-  public delete(payload: IngresoEgresoModel): void {
-    const props: DataActionModel<IngresoEgresoModel> = {
+  public delete(payload: CategoryModel): void {
+    const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
       payload: payload,
     };
 
-    const action = actions.deleteApiIngresoEgreso({
+    const action = actions.deleteApiCategory({
       props,
     });
     this._store.dispatch(action);
@@ -138,7 +138,7 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para resetear el currentItem
    */
   public resetSelected(): void {
-    const action = actions.clearCurrentIngresoEgreso();
+    const action = actions.clearCurrentCategory();
     this._store.dispatch(action);
   }
 
@@ -147,7 +147,7 @@ export class IngresoEgresoFacadeService
    * @param items
    */
   public reset(): void {
-    const action = actions.clearIngresoEgresos();
+    const action = actions.clearCategorys();
     this._store.dispatch(action);
   }
 

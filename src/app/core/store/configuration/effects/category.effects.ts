@@ -1,26 +1,27 @@
 import { Injectable } from "@angular/core";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
+
 import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
-import * as actions from "../actions/ingreso-egreso.actions";
+import * as actions from "../actions/category.actions";
 import { sharedActions } from "@store/shared/actions";
+import { CategoryModel } from "@models/configurations/category.model";
 /**
  * Efecto para escuchar acciones de la entidad
  */
 @Injectable()
-export class IngresoEgresoEffects {
+export class CategoryEffects {
   /**
    * Efecto que escucha la acción de buscar todos los registros de la entidad
    */
   search$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.searchApiIngresoEgresos),
+      ofType(actions.searchApiCategorys),
       switchMap((params) =>
         this.firebaseService.search$(params.props).pipe(
-          switchMap((items: IngresoEgresoModel[]) => {
-            return [actions.loadIngresoEgresos({ items })];
+          switchMap((items: CategoryModel[]) => {
+            return [actions.loadCategorys({ items })];
           }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
@@ -35,11 +36,11 @@ export class IngresoEgresoEffects {
    */
   searchOne$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.searchOneApiIngresoEgreso),
+      ofType(actions.searchOneApiCategory),
       switchMap((params) =>
         this.firebaseService.searchOne$(params.props).pipe(
-          switchMap((item: IngresoEgresoModel) => {
-            return [actions.setIngresoEgreso({ item })];
+          switchMap((item: CategoryModel) => {
+            return [actions.setCategory({ item })];
           }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
@@ -54,13 +55,13 @@ export class IngresoEgresoEffects {
    */
   create$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.createApiIngresoEgreso),
+      ofType(actions.createApiCategory),
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
-          switchMap((item: IngresoEgresoModel) => {
+          switchMap((item: CategoryModel) => {
             const message = "Agregado exitosamente";
             return [
-              actions.addIngresoEgreso({ item }),
+              actions.addCategory({ item }),
               sharedActions.setMessage({ message }),
             ];
           }),
@@ -77,7 +78,7 @@ export class IngresoEgresoEffects {
    */
   delete$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.deleteApiIngresoEgreso),
+      ofType(actions.deleteApiCategory),
       switchMap((params) =>
         this.firebaseService.delete$(params.props).pipe(
           switchMap((item: any) => {
@@ -85,7 +86,7 @@ export class IngresoEgresoEffects {
             item = params.props.payload;
             const id = item.id;
             return [
-              actions.deleteIngresoEgreso({ id }),
+              actions.deleteCategory({ id }),
               sharedActions.setMessage({ message }),
             ];
           }),
@@ -105,7 +106,7 @@ export class IngresoEgresoEffects {
   constructor(
     private _actions$: Actions,
     private firebaseService: FirebaseService<
-      IngresoEgresoModel | IngresoEgresoModel[]
+      CategoryModel | CategoryModel[]
     >
   ) {}
 }

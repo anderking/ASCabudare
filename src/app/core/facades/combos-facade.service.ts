@@ -6,7 +6,7 @@ import * as selectors from "@store/masters/selectors/combo.selectors";
 import * as actions from "@store/masters/actions/combo.actions";
 
 import { ComboModel } from "@models/masters/combo.model";
-import { collectionFBCategory, collectionFBTypeActive } from "../constants/masters/masters.constants";
+import { collectionFBTypeActive } from "../constants/masters/masters.constants";
 /**
  * Definición de la clase principal y sus implementaciones
  * @class CombosFacadeService
@@ -20,24 +20,6 @@ export class CombosFacadeService {
    * @param _store
    */
   constructor(private _store: Store) {}
-
-  /**
-   * Dispara la acción para buscar todos los registros sin filtro en la api
-   */
-  public searchCategory(): void {
-    const props: DataActionModel<ComboModel> = {
-      url: collectionFBCategory,
-    };
-    const action = actions.searchCategory({ props });
-    this._store.dispatch(action);
-  }
-
-  /**
-   * Obtiene todos los registros del store disparados por los diferentes search
-   */
-  public getCategory$(): Observable<ComboModel[]> {
-    return this._store.select(selectors.selectCategory);
-  }
 
   /**
    * Dispara la acción para buscar todos los registros sin filtro en la api

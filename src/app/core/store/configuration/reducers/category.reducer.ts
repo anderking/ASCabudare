@@ -1,16 +1,16 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
-import * as actions from "../actions/ingreso-egreso.actions";
+import { CategoryModel } from "@models/configurations/category.model";
+import * as actions from "../actions/category.actions";
 
 /** Se declara la interface del reducer */
-export interface State extends EntityState<IngresoEgresoModel> {
+export interface State extends EntityState<CategoryModel> {
   selectCurrentId: string | number | null;
   loading: boolean;
 }
 /** El adapter es como el puente entre el estore y el reducer */
-export const adapter: EntityAdapter<IngresoEgresoModel> =
-  createEntityAdapter<IngresoEgresoModel>();
+export const adapter: EntityAdapter<CategoryModel> =
+  createEntityAdapter<CategoryModel>();
 
 /** Inicializamos el state */
 export const initialState: State = adapter.getInitialState({
@@ -21,57 +21,57 @@ export const initialState: State = adapter.getInitialState({
 /** Definimos todos los escucha por cada accion para efectuar un reducer conectado al store a traves del adapter */
 const entityReducer = createReducer(
   initialState,
-  on(actions.searchApiIngresoEgresos, (state) => ({ ...state, loading: true })),
-  on(actions.loadIngresoEgresos, (state, { items }) => {
+  on(actions.searchApiCategorys, (state) => ({ ...state, loading: true })),
+  on(actions.loadCategorys, (state, { items }) => {
     return adapter.setAll(items, { ...state, loading: false });
   }),
-  on(actions.searchOneApiIngresoEgreso, (state) => ({
+  on(actions.searchOneApiCategory, (state) => ({
     ...state,
     loading: true,
   })),
-  on(actions.setIngresoEgreso, (state, { item }) => {
+  on(actions.setCategory, (state, { item }) => {
     return adapter.setOne(item, { ...state, loading: false });
   }),
 
-  on(actions.createApiIngresoEgreso, (state) => ({ ...state, loading: true })),
-  on(actions.addIngresoEgreso, (state, { item }) => {
+  on(actions.createApiCategory, (state) => ({ ...state, loading: true })),
+  on(actions.addCategory, (state, { item }) => {
     return adapter.addOne(item, { ...state, loading: false });
   }),
-  on(actions.addIngresoEgresos, (state, { items }) => {
+  on(actions.addCategorys, (state, { items }) => {
     return adapter.addMany(items, { ...state, loading: false });
   }),
 
-  on(actions.updateApiIngresoEgreso, (state) => ({ ...state, loading: true })),
-  on(actions.updateIngresoEgreso, (state, { item }) => {
+  on(actions.updateApiCategory, (state) => ({ ...state, loading: true })),
+  on(actions.updateCategory, (state, { item }) => {
     return adapter.updateOne(item, { ...state, loading: false });
   }),
-  on(actions.updateIngresoEgresos, (state, { items }) => {
+  on(actions.updateCategorys, (state, { items }) => {
     return adapter.updateMany(items, { ...state, loading: false });
   }),
-  on(actions.upsertIngresoEgreso, (state, { item }) => {
+  on(actions.upsertCategory, (state, { item }) => {
     return adapter.upsertOne(item, { ...state, loading: false });
   }),
-  on(actions.upsertIngresoEgresos, (state, { items }) => {
+  on(actions.upsertCategorys, (state, { items }) => {
     return adapter.upsertMany(items, { ...state, loading: false });
   }),
 
-  on(actions.deleteApiIngresoEgreso, (state) => ({ ...state, loading: true })),
-  on(actions.deleteIngresoEgreso, (state, { id }) => {
+  on(actions.deleteApiCategory, (state) => ({ ...state, loading: true })),
+  on(actions.deleteCategory, (state, { id }) => {
     return adapter.removeOne(id, { ...state, loading: false });
   }),
-  on(actions.deleteIngresoEgresos, (state, { ids }) => {
+  on(actions.deleteCategorys, (state, { ids }) => {
     return adapter.removeMany(ids, { ...state, loading: false });
   }),
-  on(actions.clearIngresoEgresos, (state) => {
+  on(actions.clearCategorys, (state) => {
     return adapter.removeAll({
       ...state,
       selectCurrentId: null,
     });
   }),
-  on(actions.setCurrentIngresoEgresoId, (state, { id }) => {
+  on(actions.setCurrentCategoryId, (state, { id }) => {
     return { ...state, selectCurrentId: id };
   }),
-  on(actions.clearCurrentIngresoEgreso, (state) => {
+  on(actions.clearCurrentCategory, (state) => {
     return { ...state, selectCurrentId: null };
   }),
   on(actions.resetLoading, (state) => {

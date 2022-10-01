@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import Swal from "sweetalert2";
 import { filter, takeUntil, tap } from "rxjs/operators";
-import { IngresoEgresoModel } from "@models/ingreso-egreso.model";
+import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {

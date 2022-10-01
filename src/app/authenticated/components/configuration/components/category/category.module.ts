@@ -1,31 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { CategoryRoutingModule } from './category-routing.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CategoryComponent } from './category.component';
-import { CategoriesComponent } from './categories/categories.component';
+import { CategorysComponent } from './categorys/categorys.component';
 import { CategoryCreateComponent } from './category-form/category-form.component';
-import { CategoryShowComponent } from './category-show/category-show.component';
 import { TokenInterceptorService } from 'src/app/core/services/token-interceptor.service';
+import { NgBoostrapModule } from 'src/app/core/ui/ng-bootstrap.module';
+import { SharedModule } from '@root/shared/shared.module';
+
 
 @NgModule({
   declarations: [
   	CategoryComponent,
-  	CategoriesComponent,
+  	CategorysComponent,
   	CategoryCreateComponent,
-  	CategoryShowComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
-    CategoryRoutingModule
+    ReactiveFormsModule,
+    CategoryRoutingModule,
+    NgBoostrapModule,
+    SharedModule
   ],
   providers:
   [
-    //CategoryService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass : TokenInterceptorService,

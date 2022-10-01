@@ -11,24 +11,6 @@ import { ComboModel } from "@models/masters/combo.model";
  */
 @Injectable()
 export class ComboEffects {
-  /**
-   * Efecto que escucha la acción de buscar todos los registros de la entidad
-   */
-  searchCategory$ = createEffect(() =>
-    this._actions$.pipe(
-      ofType(actions.searchCategory),
-      switchMap((params) =>
-        this.firebaseService.searchCombo$(params.props).pipe(
-          switchMap((items: ComboModel[]) => {
-            return [actions.loadCategory({ items })];
-          }),
-          catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
-          )
-        )
-      )
-    )
-  );
 
   /**
    * Efecto que escucha la acción de buscar todos los registros de la entidad
