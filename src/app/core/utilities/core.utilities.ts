@@ -17,3 +17,17 @@ export function getCurrentUserDecrypt(): LoginResponseModel {
     return null;
   }
 }
+
+export function oderBy(items: any[], field: string): any[] {
+  function compare(attr: string, obj1: any, obj2: any) {
+    return obj1[attr].localeCompare(obj2[attr]);
+  }
+
+  function generaComparador(attr: string) {
+    return function (a: any, b: any) {
+      return compare(attr, a, b);
+    };
+  }
+
+  return items.sort(generaComparador(field));
+}

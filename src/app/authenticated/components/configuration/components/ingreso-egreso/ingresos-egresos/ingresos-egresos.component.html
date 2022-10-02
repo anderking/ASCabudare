@@ -17,29 +17,34 @@
       <div class="row justify-content-center">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
           <div class="form-group">
-            <input type="text" class="form-control" id="wordFilter" name="wordFilter"
-              [(ngModel)]="wordFilter" placeholder="Search...">
+            <input type="text" class="form-control" id="wordFilter" name="wordFilter" [(ngModel)]="wordFilter"
+              placeholder="Search...">
           </div>
           <div class="table-responsive">
             <table class="table table-hover">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col">Category</th>
                   <th scope="col">Type</th>
+                  <th scope="col">Category</th>
                   <th scope="col">Description</th>
                   <th scope="col">Date</th>
                   <th scope="col">Amount</th>
+                  <th scope="col">State</th>
                   <th scope="col">Edit</th>
                   <th scope="col">Delete</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of items | filterTableSearch:wordFilter:'description'">
-                  <td>{{item.category}}</td>
+                <tr
+                  *ngFor="let item of items | orderBy : ['-typeActive','category','description'] | filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } : false">
                   <td>{{item.typeActive}}</td>
+                  <td>{{item.category}}</td>
                   <td>{{item.description}}</td>
                   <td>{{item.createDate}}</td>
-                  <td>{{item.amount}}</td>
+                  <td>{{item.amount | million:'1.2-2'}} {{currentUser?.currency}}</td>
+                  <td><span class="badge"
+                      [ngClass]="{'badge-success': item.state, 'badge-danger': !item.state}">{{item.stateText}}</span>
+                  </td>
                   <td><button (click)="goEdit(item)" class="btn btn-info">Edit</button></td>
                   <td><a href="#delete-item-{{item.id}}" class="btn btn-danger" data-toggle="modal">Delete</a></td>
                   <div class="modal fade" id="delete-item-{{item.id}}" tabindex="-1" role="dialog"

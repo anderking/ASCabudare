@@ -20,12 +20,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private _authService: AuthService,
-    private _authFacadeService: AuthFacadeService,
-    private _sharedFacadeService: SharedFacadeService
+    private _authFacadeService: AuthFacadeService
   ) {}
 
   ngOnInit() {
-    this._sharedFacadeService
+    this._authFacadeService
       .getLoading$()
       .pipe(takeUntil(this._finisher))
       .subscribe((loading: boolean) => {
@@ -39,17 +38,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         takeUntil(this._finisher)
       )
       .subscribe((login: LoginResponseModel) => {
-        console.log("LOGIN RESPONSE", login);
+        //console.log("LOGIN RESPONSE", login);
         this._authService.setCurrentUserEncrypt(login);
       });
   }
 
   ngAfterViewInit(): void {
-    this._authService.logut()
+    this._authService.logut();
   }
 
   ngOnDestroy() {
-    this._sharedFacadeService.reset();
     this._authFacadeService.reset();
     this._finisher.next();
   }

@@ -1,10 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import {
-  LoginFormModel,
-  LoginResponseModel,
-  RegisterFormModel,
-} from "@models/auth/login.model";
+import { LoginFormModel, LoginResponseModel } from "@models/auth/login.model";
 import { DataActionModel } from "@models/common/data-action.model";
 import { Store } from "@ngrx/store";
 import * as selectors from "@store/auth/selectors/auth.selectors";
@@ -40,8 +36,8 @@ export class AuthFacadeService {
     return this._store.select(selectors.selectLogin);
   }
 
-  public register(payload: RegisterFormModel): void {
-    const action: DataActionModel<RegisterFormModel> = {
+  public register(payload: LoginFormModel): void {
+    const action: DataActionModel<LoginFormModel> = {
       url: collectionFBUser,
       payload: payload,
     };
@@ -68,8 +64,20 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  public getUserDoc$(): Observable<string> {
+  public getUserDoc$(): Observable<LoginResponseModel> {
     return this._store.select(selectors.selectUserDoc);
+  }
+
+  public updateProfile(payload: LoginResponseModel): void {
+    const action: DataActionModel<LoginResponseModel> = {
+      url: `${payload.uid}/${collectionFBUser}`,
+      payload: payload,
+    };
+
+    const props = actions.updateProfile({
+      action,
+    });
+    this._store.dispatch(props);
   }
 
   public setCurrentUser(currentUser: LoginResponseModel): void {

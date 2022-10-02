@@ -37,6 +37,15 @@
                   </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label>Local Currency:</label>
+                    <input type="text" class="form-control" formControlName="currency"
+                      [ngClass]="{'is-invalid': mainForm.get('currency')?.touched && !mainForm.get('currency')?.valid, 'is-valid': mainForm.get('currency')?.touched && mainForm.get('currency')?.valid}">
+                    <div class="invalid-feedback" *ngIf="isValidField('currency')">
+                      {{ getErrorMessageField('currency') }}
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <label>PhotoURL:</label>
                     <input type="text" class="form-control" formControlName="photoURL"
                       [ngClass]="{'is-invalid': mainForm.get('photoURL')?.touched && !mainForm.get('photoURL')?.valid, 'is-valid': mainForm.get('photoURL')?.touched && mainForm.get('photoURL')?.valid}">
@@ -61,6 +70,12 @@
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
                     <button type="button" class="btn btn-secondary btn-user btn-block" (click)="clean()">
                       Clean
+                    </button>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <button type="button" class="btn btn-info btn-user btn-block" (click)="goBack()">
+                      Back
                     </button>
                   </div>
 

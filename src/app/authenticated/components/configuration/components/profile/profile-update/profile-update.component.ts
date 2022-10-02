@@ -85,6 +85,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     return this._fb.group({
       displayName: [""],
       phoneNumber: [""],
+      currency: [""],
       photoURL: [""],
     });
   }
@@ -94,7 +95,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     console.log(this.mainForm.controls);
     if (this.mainForm.valid) {
       console.log(this.dataForm);
-      this._authFacadeService.setUserDoc(this.dataForm);
+      this._authFacadeService.updateProfile(this.dataForm);
     }
   }
 

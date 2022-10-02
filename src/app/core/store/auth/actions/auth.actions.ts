@@ -1,8 +1,7 @@
 import { DataActionModel } from "@models/common/data-action.model";
 import {
   LoginFormModel,
-  LoginResponseModel,
-  RegisterFormModel,
+  LoginResponseModel
 } from "@models/auth/login.model";
 import { createAction, props } from "@ngrx/store";
 
@@ -18,7 +17,7 @@ export const loginSucess = createAction(
 
 export const register = createAction(
   "[Login] Register",
-  props<{ action: DataActionModel<RegisterFormModel> }>()
+  props<{ action: DataActionModel<LoginFormModel> }>()
 );
 
 export const registerSucess = createAction(
@@ -33,7 +32,17 @@ export const setUserDoc = createAction(
 
 export const setUserDocSuccess = createAction(
   "[Login] Set UserDocSuccess",
-  props<{ userDoc: string }>()
+  props<{ userDoc: LoginResponseModel }>()
+);
+
+export const updateProfile = createAction(
+  "[Login] Update Profile",
+  props<{ action: DataActionModel<LoginResponseModel> }>()
+);
+
+export const updateProfileSuccess = createAction(
+  "[Login] Update ProfileSuccess",
+  props<{ currentUser: LoginResponseModel }>()
 );
 
 export const setCurrentUser = createAction(

@@ -1,9 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import {
-  LoginResponseModel,
-  RegisterFormModel,
-} from "@models/auth/login.model";
+import { LoginResponseModel, LoginFormModel } from "@models/auth/login.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
@@ -18,19 +15,17 @@ import { Subject } from "rxjs";
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
-  public dataForm: RegisterFormModel;
+  public dataForm: LoginFormModel;
   public isLoading: boolean;
   private _finisher = new Subject<void>();
-  private _currentUser: LoginResponseModel
 
   constructor(
     private _authService: AuthService,
-    private _authFacadeService: AuthFacadeService,
-    private _sharedFacadeService: SharedFacadeService
+    private _authFacadeService: AuthFacadeService
   ) {}
 
   ngOnInit() {
-    this._sharedFacadeService
+    this._authFacadeService
       .getLoading$()
       .pipe(takeUntil(this._finisher))
       .subscribe((loading: boolean) => {
@@ -44,8 +39,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         takeUntil(this._finisher)
       )
       .subscribe((register: LoginResponseModel) => {
-        console.log("REGISTER RESPONSE", register);
-        this._currentUser = register;
+        //console.log("REGISTER RESPONSE", register);
         this._authFacadeService.setUserDoc(register);
       });
 
@@ -55,18 +49,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
         first((userDoc) => !isNullOrUndefined(userDoc)),
         takeUntil(this._finisher)
       )
-      .subscribe((userDoc: string) => {
-        console.log("USERDOC RESPONSE", userDoc);
-        this._authService.setCurrentUserEncrypt(this._currentUser);
+      .subscribe((userDoc: LoginResponseModel) => {
+        //console.log("USERDOC RESPONSE", userDoc);
+        this._authService.setCurrentUserEncrypt(userDoc);
       });
   }
 
   ngAfterViewInit(): void {
-    this._authService.logut()
+    this._authService.logut();
   }
 
   ngOnDestroy() {
-    this._sharedFacadeService.reset();
     this._authFacadeService.reset();
     this._finisher.next();
   }

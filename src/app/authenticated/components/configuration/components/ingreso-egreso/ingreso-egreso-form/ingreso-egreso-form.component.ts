@@ -1,18 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from "@angular/forms";
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  of,
-  Subject,
-  Subscription,
-} from "rxjs";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
@@ -29,6 +17,9 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
+import { LoginResponseModel } from "@models/auth/login.model";
+import { AuthFacadeService } from "@facades/auth-facade.service";
+import { oderBy } from "@root/core/utilities/core.utilities";
 
 @Component({
   selector: "app-ingreso-egreso-form",
@@ -47,12 +38,14 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   public categorysArray: CategoryModel[];
   public categoryCurrent: CategoryModel;
   public categoryCombo$ = new BehaviorSubject<CategoryModel[]>([]);
+  public currentUser: LoginResponseModel;
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
     private _categoryFacadeService: CategoryFacadeService,
     private _combosFacadeService: CombosFacadeService,
     private _sharedFacadeService: SharedFacadeService,
+    private _authFacadeService: AuthFacadeService,
     private _location: Location,
     private _fb: FormBuilder,
     private _activatedRoute: ActivatedRoute
@@ -129,6 +122,12 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
         console.log("currentItem", currentItem);
         this.currentItem = currentItem;
       });
+
+    this._authFacadeService
+      .getCurrentUser$()
+      .subscribe((user: LoginResponseModel) => {
+        this.currentUser = user;
+      });
   }
 
   ngOnDestroy() {
@@ -177,6 +176,13 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
+      map((items: CategoryModel[]) => {
+        try {
+          return oderBy(items, "name");
+        } catch (error) {
+          return items;
+        }
+      }),
       takeUntil(this.finisher$)
     );
     category$.subscribe((i: CategoryModel[]) => {
@@ -204,6 +210,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
         ],
       ],
       description: ["", [Validators.required, Validators.maxLength(700)]],
+      state: [true],
     });
   }
 
@@ -214,7 +221,8 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
     const date = new Date(newDate);
     this.dataForm = {
       ...this.mainForm.getRawValue(),
-      createDateFB: date
+      createDateFB: date,
+      stateText: this.mainForm.getRawValue().state ? "Activa" : "Inactiva",
     };
     if (this.mainForm.valid) {
       console.log(this.dataForm);
@@ -231,10 +239,12 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   clean() {
-    this.mainForm.reset();
+    this.mainForm.reset({ state: true });
     this.mainForm.get("idCategory").setValue("");
     this.mainForm.get("idTypeActive").setValue("");
-    this.mainForm.get("createDate").setValue(new Date().toLocaleDateString("en-CA"));
+    this.mainForm
+      .get("createDate")
+      .setValue(new Date().toLocaleDateString("en-CA"));
   }
 
   goBack() {

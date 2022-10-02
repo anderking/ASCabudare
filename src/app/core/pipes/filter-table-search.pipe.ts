@@ -4,13 +4,30 @@ import { Pipe, PipeTransform } from "@angular/core";
   name: "filterTableSearch",
 })
 export class FilterTableSearchPipe implements PipeTransform {
-  transform(value: any[], arg: string, field: string): any {
-    const itemsFilter = [];
-    for (const item of value) {
-      if (item[field].toLowerCase()?.indexOf(arg?.toLowerCase()) > -1) {
-        itemsFilter.push(item);
+  transform(items: any, filter: any, isAnd: boolean): any {
+    if (filter && Array.isArray(items)) {
+      let filterKeys = Object.keys(filter);
+      if (isAnd) {
+        return items.filter((item) =>
+          filterKeys.reduce(
+            (memo, keyName) =>
+              (memo && new RegExp(filter[keyName], "gi").test(item[keyName])) ||
+              filter[keyName] === "",
+            true
+          )
+        );
+      } else {
+        return items.filter((item) => {
+          return filterKeys.some((keyName) => {
+            return (
+              new RegExp(filter[keyName], "gi").test(item[keyName]) ||
+              filter[keyName] === ""
+            );
+          });
+        });
       }
+    } else {
+      return items;
     }
-    return itemsFilter;
   }
 }

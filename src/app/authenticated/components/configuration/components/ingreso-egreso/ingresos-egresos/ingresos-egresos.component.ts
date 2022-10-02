@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import Swal from "sweetalert2";
-import { filter, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -11,6 +11,8 @@ import {
 import { Subject } from "rxjs";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
+import { AuthFacadeService } from "@facades/auth-facade.service";
+import { LoginResponseModel } from "@models/auth/login.model";
 
 @Component({
   selector: "app-ingresos-egresos",
@@ -21,11 +23,13 @@ export class IngresosEgresosComponent implements OnInit {
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
   public wordFilter: string = "";
+  public currentUser: LoginResponseModel;
   private _finisher = new Subject<void>();
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
     private _sharedFacadeService: SharedFacadeService,
+    private _authFacadeService: AuthFacadeService,
     private _location: Location,
     private _router: Router
   ) {}
@@ -49,11 +53,17 @@ export class IngresosEgresosComponent implements OnInit {
       .subscribe((items: IngresoEgresoModel[]) => {
         this.items = items;
       });
+
+    this._authFacadeService
+      .getCurrentUser$()
+      .subscribe((user: LoginResponseModel) => {
+        this.currentUser = user;
+      });
   }
 
   ngOnDestroy(): void {
     this._finisher.next();
-    this._ingresoEgresoFacadeService.reset()
+    this._ingresoEgresoFacadeService.reset();
     this._sharedFacadeService.reset();
   }
 

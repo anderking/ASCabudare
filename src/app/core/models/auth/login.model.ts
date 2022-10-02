@@ -8,21 +8,9 @@ export interface LoginResponseModel {
   email: string;
   emailVerified: boolean;
   phoneNumber: string;
+  currency: string;
   photoURL: string;
   ma: string;
   uid: string;
   refreshToken: string;
-}
-
-
-export interface RegisterFormModel {
-  email: string;
-  password: string;
-}
-
-export interface RegisterResponseModel {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
 }

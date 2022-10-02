@@ -6,7 +6,7 @@ import * as actions from "../actions/auth.actions";
 export interface State {
   login: LoginResponseModel;
   register: LoginResponseModel;
-  userDoc: string;
+  userDoc: LoginResponseModel;
   currentUser: LoginResponseModel;
   loading: boolean;
 }
@@ -54,6 +54,17 @@ const entityReducer = createReducer(
   on(actions.setUserDocSuccess, (state, { userDoc }) => ({
     ...state,
     userDoc,
+    loading: false,
+  })),
+
+  on(actions.updateProfile, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(actions.updateProfileSuccess, (state, { currentUser }) => ({
+    ...state,
+    currentUser,
     loading: false,
   })),
 

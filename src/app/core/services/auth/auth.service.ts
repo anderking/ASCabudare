@@ -50,12 +50,12 @@ export class AuthService {
                 email: userFB.email,
                 emailVerified: userFB.emailVerified,
                 phoneNumber: userFB.phoneNumber,
+                currency: userFB.currency,
                 photoURL: userFB.photoURL,
                 ma: userFB.ma,
                 uid: userFB.uid,
                 refreshToken: userFB.refreshToken,
               };
-              //console.log("setCurrentUser", currentUser);
               this._authFacadeService.setCurrentUser(currentUser);
             }
           });

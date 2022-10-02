@@ -2,12 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
 import { catchError, map, switchMap, tap } from "rxjs/operators";
-import {
-  LoginFormModel,
-  LoginResponseModel,
-  RegisterFormModel,
-  RegisterResponseModel,
-} from "@models/auth/login.model";
+import { LoginFormModel, LoginResponseModel } from "@models/auth/login.model";
 import * as actions from "../actions/auth.actions";
 import { sharedActions } from "@store/shared/actions";
 import { FirebaseService } from "@services/firebase.service";
@@ -17,10 +12,7 @@ export class AuthEffects {
   constructor(
     private _actions$: Actions,
     private _firebaseService: FirebaseService<
-      | LoginFormModel
-      | LoginResponseModel
-      | RegisterFormModel
-      | RegisterResponseModel
+      LoginFormModel | LoginResponseModel
     >
   ) {}
 
@@ -35,6 +27,7 @@ export class AuthEffects {
               email: login.email,
               emailVerified: login.emailVerified,
               phoneNumber: login.phoneNumber,
+              currency: "",
               photoURL: login.photoURL,
               ma: login.ma,
               uid: login.uid,
@@ -62,6 +55,7 @@ export class AuthEffects {
               email: register.email,
               emailVerified: register.emailVerified,
               phoneNumber: register.phoneNumber,
+              currency: "",
               photoURL: register.photoURL,
               ma: register.ma,
               uid: register.uid,
@@ -80,12 +74,34 @@ export class AuthEffects {
     );
   });
 
-  setUser$ = createEffect(() => {
+  setUserDoc$ = createEffect(() => {
     return this._actions$.pipe(
       ofType(actions.setUserDoc),
       switchMap(({ action }) =>
         this._firebaseService.setUserDoc$(action).pipe(
-          map((userDoc: string) => actions.setUserDocSuccess({ userDoc })),
+          map((userDoc: LoginResponseModel) =>
+            actions.setUserDocSuccess({ userDoc })
+          ),
+          catchError((error) =>
+            of(sharedActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    );
+  });
+
+  updateProfile$ = createEffect(() => {
+    return this._actions$.pipe(
+      ofType(actions.updateProfile),
+      switchMap(({ action }) =>
+        this._firebaseService.setUserDoc$(action).pipe(
+          switchMap((currentUser: LoginResponseModel) => {
+            const message = "Usuario actualizado exitosamente";
+            return [
+              actions.updateProfileSuccess({ currentUser }),
+              sharedActions.setMessage({ message }),
+            ];
+          }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
           )

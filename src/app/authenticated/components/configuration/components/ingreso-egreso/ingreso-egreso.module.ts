@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IngresoEgresoRoutingModule } from './ingreso-egreso-routing.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -32,6 +32,7 @@ import { SharedModule } from '@root/shared/shared.module';
       useClass : TokenInterceptorService,
       multi: true
     },
+    DecimalPipe
   ],
 })
 export class IngresoEgresoModule { }

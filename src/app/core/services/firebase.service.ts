@@ -53,7 +53,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   setUserDoc$(action: DataActionModel<T>): Observable<any> {
     let data: any = action.payload;
     const subscription = from(this.afDB.doc(action.url).set(data));
-    return subscription.pipe(map(() => "OK"));
+    return subscription.pipe(map(() => data));
   }
 
   /**

@@ -32,7 +32,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of items | filterTableSearch:wordFilter:'description'">
+                <tr
+                  *ngFor="let item of items | orderBy : ['name'] | filterTableSearch: { name: wordFilter, description: wordFilter, stateText: wordFilter } : false">
                   <td>{{item.name}}</td>
                   <td>{{item.description}}</td>
                   <td><span class="badge"
