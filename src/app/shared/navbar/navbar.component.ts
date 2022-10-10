@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   public user: LoginResponseModel;
 
   constructor(
-    private _auth: AuthService,
+    private auth: AuthService,
     private authFacadeService: AuthFacadeService
   ) {}
 
@@ -25,8 +25,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this._auth.logut();
-    let actualRoute = window.location.origin;
+    this.auth.logut();
+    const actualRoute = window.location.origin;
     window.location.replace(actualRoute);
   }
 }

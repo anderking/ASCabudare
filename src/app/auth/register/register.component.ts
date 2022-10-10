@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  AfterViewInit,
+} from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { LoginResponseModel, LoginFormModel } from "@models/auth/login.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
@@ -13,10 +19,12 @@ import { Subject } from "rxjs";
   templateUrl: "./register.component.html",
   styles: [],
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
   public dataForm: LoginFormModel;
   public isLoading: boolean;
+  public email: string;
+  public password: string;
   private _finisher = new Subject<void>();
 
   constructor(
@@ -39,7 +47,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         takeUntil(this._finisher)
       )
       .subscribe((register: LoginResponseModel) => {
-        //console.log("REGISTER RESPONSE", register);
+        // console.log("REGISTER RESPONSE", register);
         this._authFacadeService.setUserDoc(register);
       });
 
@@ -50,7 +58,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         takeUntil(this._finisher)
       )
       .subscribe((userDoc: LoginResponseModel) => {
-        //console.log("USERDOC RESPONSE", userDoc);
+        // console.log("USERDOC RESPONSE", userDoc);
         this._authService.setCurrentUserEncrypt(userDoc);
       });
   }

@@ -48,7 +48,7 @@ export class ConfiUriInterceptor<T> implements HttpInterceptor {
     token: string,
     request: HttpRequest<any>
   ): HttpRequest<any> {
-    let headers: { [name: string]: string | string[] } = {
+    const headers: { [name: string]: string | string[] } = {
       ["Content-Type"]: "application/json;odata=nometadata",
       ["Accept"]: "application/json;odata=nometadata",
     };

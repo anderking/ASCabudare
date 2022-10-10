@@ -16,7 +16,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back por get
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   searchGetAll$(action: DataActionModel<T>): Observable<T[]> {
     const endPoint = this.url + action.url;
@@ -25,7 +25,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back y obtener un solo registro
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   searchGetOne$(action: DataActionModel<T>): Observable<T> {
     const endPoint = this.url + action.url;
@@ -34,7 +34,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back y obtener resultados que necesitan un body
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   searchPostAll$(action: DataActionModel<T>): Observable<T[]> {
     const endPoint = this.url + action.url;
@@ -43,7 +43,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back y obtener resultados que necesitan un body
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   searchPostOne$(action: DataActionModel<T>): Observable<T> {
     const endPoint = this.url + action.url;
@@ -52,7 +52,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back para save
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   create$(action: DataActionModel<T>): Observable<T> {
     const endPoint = this.url + action.url;
@@ -61,7 +61,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
 
   /**
    * * Servicio que se usa para comunicar la api back para update
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   update$(action: DataActionModel<T>): Observable<T> {
     const endPoint = this.url + action.url;
@@ -70,7 +70,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back para delete
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   delete$(action: DataActionModel<T>): Observable<T> {
     const endPoint = `${this.url}${action.url}`;
@@ -78,6 +78,6 @@ export class ApiService<T> implements ApiServiceInterface<T> {
   }
 
   getToken$(isExpired: boolean): Observable<string> {
-    return of('token')
+    return of("token");
   }
 }

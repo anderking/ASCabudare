@@ -1,11 +1,13 @@
 import { ErrorModel } from "@models/shared/error.model";
 import { Action, createReducer, on } from "@ngrx/store";
 import { sharedActions } from "@store/shared/actions";
+import { attachmentActions } from "@store/shared/actions";
 
 /** Se declara la interface del reducer */
 export interface State {
   message: string;
   error: ErrorModel;
+  urlAttachment: string;
   loading: boolean;
 }
 
@@ -13,6 +15,7 @@ export interface State {
 export const initialState: State = {
   message: null,
   error: null,
+  urlAttachment: null,
   loading: false,
 };
 
@@ -43,6 +46,33 @@ const entityReducer = createReducer(
   }),
 
   on(sharedActions.resetLoading, (state) => {
+    return {
+      ...state,
+      loading: false,
+    };
+  }),
+
+  on(attachmentActions.createAttachment, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(attachmentActions.createAttachmentSuccess, (state, { urlAttachment }) => {
+    return {
+      ...state,
+      urlAttachment,
+      loading: false,
+    };
+  }),
+
+  on(attachmentActions.clear, (state) => {
+    return {
+      ...state,
+      urlAttachment: null,
+    };
+  }),
+
+  on(attachmentActions.resetLoading, (state) => {
     return {
       ...state,
       loading: false,

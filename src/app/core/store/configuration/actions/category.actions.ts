@@ -3,30 +3,29 @@ import { Update } from "@ngrx/entity";
 import { DataActionModel } from "@models/common/data-action.model";
 import { CategoryModel } from "@models/configurations/category.model";
 
-
 /** Acciones para gestionar el backend */
 
-/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener todos los registros de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener todos los registros de la entidad */
 export const searchApiCategorys = createAction(
   "[Category/API] Search Categorys",
   props<{ props: DataActionModel<CategoryModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener un registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener un registro de la entidad */
 export const searchOneApiCategory = createAction(
   "[Category/API] SearchOne Category",
   props<{ props: DataActionModel<CategoryModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para crear un nuevo registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para crear un nuevo registro de la entidad */
 export const createApiCategory = createAction(
   "[Category/API] CreateApi Category",
   props<{ props: DataActionModel<CategoryModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para actualizar un registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para actualizar un registro de la entidad */
 export const updateApiCategory = createAction(
   "[Category/API] UpdateApi Category",
   props<{ props: DataActionModel<CategoryModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para borrar un registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para borrar un registro de la entidad */
 export const deleteApiCategory = createAction(
   "[Category/API] DeleteApi Category",
   props<{ props: DataActionModel<CategoryModel> }>()
@@ -82,10 +81,8 @@ export const deleteCategorys = createAction(
   props<{ ids: string[] }>()
 );
 /** removeAll: elimina todas las entidades del objeto de estado de entidad. */
-export const clearCategorys = createAction(
-  "[Category/API] Clear Categorys"
-);
-/** Esta acción permite setear el registro actual a traves del identificador*/
+export const clearCategorys = createAction("[Category/API] Clear Categorys");
+/** Esta acción permite setear el registro actual a traves del identificador */
 export const setCurrentCategoryId = createAction(
   "[Category/API] Set CurrentCategoryId",
   props<{ id: string | number }>()
@@ -94,5 +91,5 @@ export const setCurrentCategoryId = createAction(
 export const clearCurrentCategory = createAction(
   "[Category/API] Clear CurrentCategory"
 );
-/** Esta acción permite limpiar el store*/
+/** Esta acción permite limpiar el store */
 export const resetLoading = createAction("[Category/API] Set Loading");

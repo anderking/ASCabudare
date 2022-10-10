@@ -7,17 +7,14 @@ import * as actions from "@store/masters/actions/combo.actions";
 
 import { ComboModel } from "@models/masters/combo.model";
 import { collectionFBTypeActive } from "../constants/masters/masters.constants";
-/**
- * Definición de la clase principal y sus implementaciones
- * @class CombosFacadeService
- */
+
 @Injectable({
   providedIn: "root",
 })
 export class CombosFacadeService {
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
-   * @param _store
+   * @param _store Contiene sl Store global
    */
   constructor(private _store: Store) {}
 
@@ -41,7 +38,6 @@ export class CombosFacadeService {
 
   /**
    * Dispara la acción para vaciar el store
-   * @param items
    */
   public reset(): void {
     const action = actions.clearCombos();

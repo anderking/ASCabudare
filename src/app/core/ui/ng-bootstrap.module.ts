@@ -1,21 +1,12 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 import {
-    NgbPaginationModule,
-    NgbAlertModule
-} from '@ng-bootstrap/ng-bootstrap';
-
+  NgbPaginationModule,
+  NgbAlertModule,
+} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
-    imports: [
-        NgbPaginationModule,
-        NgbAlertModule
-    ],
-    exports: [
-        NgbPaginationModule,
-        NgbAlertModule
-    ],
-    providers: [  
-    ],
-
+  imports: [NgbPaginationModule, NgbAlertModule],
+  exports: [NgbPaginationModule, NgbAlertModule],
+  providers: [],
 })
-export class NgBoostrapModule { }
+export class NgBoostrapModule {}

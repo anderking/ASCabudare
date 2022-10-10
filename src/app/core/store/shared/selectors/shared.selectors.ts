@@ -12,3 +12,8 @@ export const selectLoading = createSelector(
   getShared,
   (state) => state.loading
 );
+
+export const selectUrlAttachment = createSelector(
+  getShared,
+  (state) => state.urlAttachment
+);

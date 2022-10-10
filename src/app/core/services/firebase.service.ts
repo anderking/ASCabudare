@@ -4,24 +4,27 @@ import { DataActionModel } from "@models/common/data-action.model";
 import { environment } from "@environments/environment";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { map, mergeMap, switchMap, tap } from "rxjs/operators";
-import * as fireBase from "firebase";
+import { finalize, map, mergeMap, switchMap, tap } from "rxjs/operators";
 import { ApiFirebaseServiceInterface } from "@interfaces/api-firebase-service.interface";
-
+import { AngularFireStorage } from "@angular/fire/storage";
 @Injectable({
   providedIn: "root",
 })
 export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   private url = environment.apiUrl;
 
-  constructor(public afAuth: AngularFireAuth, private afDB: AngularFirestore) {}
+  constructor(
+    public afAuth: AngularFireAuth,
+    private afDB: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {}
 
   /**
    * Servicio que se usa para comunicar la api back por get
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   signInWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
-    let data: any = action.payload;
+    const data: any = action.payload;
 
     const subscription = from(
       this.afAuth.auth.signInWithEmailAndPassword(data.email, data.password)
@@ -35,10 +38,10 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back por get
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   createUserWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
-    let data: any = action.payload;
+    const data: any = action.payload;
     const subscription = from(
       this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
     );
@@ -48,17 +51,39 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back por get
-   * @param action
+   * @param action Contiene el body DataActionModel
+   */
+  uploadAttachment$(action: DataActionModel<T>): Observable<any> {
+    const data: any = action.payload;
+
+    const filePath = Date.now() + "-" + data.name;
+    const storageRef = this.storage.ref(filePath);
+    const task$ = storageRef.put(data);
+
+    const subscription = from(task$).pipe(
+      switchMap(() => storageRef.getDownloadURL()),
+      finalize(() => {})
+    );
+
+    return subscription.pipe(
+      tap((x) => console.log("uploadAttachment", x)),
+      map((response: any) => response)
+    );
+  }
+
+  /**
+   * Servicio que se usa para comunicar la api back por get
+   * @param action Contiene el body DataActionModel
    */
   setUserDoc$(action: DataActionModel<T>): Observable<any> {
-    let data: any = action.payload;
+    const data: any = action.payload;
     const subscription = from(this.afDB.doc(action.url).set(data));
     return subscription.pipe(map(() => data));
   }
 
   /**
    * Servicio que se usa para comunicar la api back por get
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   search$(action: DataActionModel<T>): Observable<T[]> {
     const subscription = from(
@@ -80,7 +105,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back por get
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   searchCombo$(action: DataActionModel<T>): Observable<T[]> {
     const subscription = from(
@@ -100,7 +125,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     return subscription.pipe(
       map((items: T[]) => {
         return items.map((item: any) => {
-          let newItem = {
+          const newItem = {
             ...item,
             id: item.code,
           };
@@ -112,7 +137,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back por get
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   searchOne$(action: DataActionModel<T>): Observable<T> {
     const payload: any = action.payload;
@@ -132,7 +157,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back para save
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   create$(action: DataActionModel<T>): Observable<T> {
     console.log("create$", action);
@@ -157,7 +182,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
 
   /**
    * Servicio que se usa para comunicar la api back para delete
-   * @param action
+   * @param action Contiene el body DataActionModel
    */
   delete$(action: DataActionModel<T>): Observable<T> {
     const payload: any = action.payload;

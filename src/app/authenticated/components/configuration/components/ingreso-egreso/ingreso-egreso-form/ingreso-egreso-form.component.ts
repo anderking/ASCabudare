@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
@@ -26,7 +26,9 @@ import { oderBy } from "@root/core/utilities/core.utilities";
   templateUrl: "./ingreso-egreso-form.component.html",
   styles: [],
 })
-export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
+export class IngresoEgresoCreateComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public finisher$ = new Subject<void>();
   public mainForm: FormGroup;
   public dataForm: IngresoEgresoModel;
@@ -83,7 +85,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
         map(([items, params, mainForm]) => {
           return {
             item: items.find(
-              (item: IngresoEgresoModel) => item.id == params.id
+              (item: IngresoEgresoModel) => item.id === params.id
             ),
             params,
             mainForm,
@@ -145,7 +147,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
   /**
    * Se llaman a todas los subjects que se deseen manipular en el componente
-   * @returns {void}
    */
   callsCombos(): void {
     this._categoryFacadeService.search();
@@ -216,8 +217,8 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const createDate: string = this.mainForm.getRawValue().createDate;
-    var hours = new Date().toISOString().split("T")[1];
-    var newDate = createDate + "T" + hours;
+    const hours = new Date().toISOString().split("T")[1];
+    const newDate = createDate + "T" + hours;
     const date = new Date(newDate);
     this.dataForm = {
       ...this.mainForm.getRawValue(),

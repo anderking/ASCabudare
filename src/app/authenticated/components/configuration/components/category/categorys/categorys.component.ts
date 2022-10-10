@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { filter, takeUntil, tap } from "rxjs/operators";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
@@ -13,10 +13,10 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
   templateUrl: "./categorys.component.html",
   styleUrls: ["./categorys.component.scss"],
 })
-export class CategorysComponent implements OnInit {
+export class CategorysComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public items: CategoryModel[] = [];
-  public wordFilter: string = "";
+  public wordFilter = "";
   private _finisher = new Subject<void>();
 
   constructor(

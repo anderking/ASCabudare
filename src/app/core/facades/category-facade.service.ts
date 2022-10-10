@@ -12,20 +12,15 @@ import {
 } from "../constants/configurations/category.constants";
 import { LoginResponseModel } from "@models/auth/login.model";
 import { getCurrentUserDecrypt } from "../utilities/core.utilities";
-/**
- * Definición de la clase principal y sus implementaciones
- * @class CategoryFacadeService
- */
+
 @Injectable({
   providedIn: "root",
 })
-export class CategoryFacadeService
-  implements FacadeInterface<CategoryModel>
-{
+export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
   private currentUser: LoginResponseModel = getCurrentUserDecrypt();
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
-   * @param _store
+   * @param _store Contiene sl Store global
    */
   constructor(private _store: Store) {}
 
@@ -68,7 +63,7 @@ export class CategoryFacadeService
 
   /**
    * Dispara la acción para seleccionar un registro de la tabla
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public select(payload: CategoryModel): void {
     if (payload) {
@@ -88,12 +83,12 @@ export class CategoryFacadeService
 
   /**
    * Dispara la acción para crear un registro
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public create(payload: CategoryModel): void {
     const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: payload,
+      payload,
     };
 
     const action = actions.createApiCategory({
@@ -104,12 +99,12 @@ export class CategoryFacadeService
 
   /**
    * Dispara la acción para actualizar un registro
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public update(payload: CategoryModel): void {
     const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: payload,
+      payload,
     };
 
     const action = actions.updateApiCategory({
@@ -120,12 +115,12 @@ export class CategoryFacadeService
 
   /**
    * Dispara la acción para borrar un registro
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public delete(payload: CategoryModel): void {
     const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: payload,
+      payload,
     };
 
     const action = actions.deleteApiCategory({
@@ -144,7 +139,6 @@ export class CategoryFacadeService
 
   /**
    * Dispara la acción para vaciar el store
-   * @param items
    */
   public reset(): void {
     const action = actions.clearCategorys();

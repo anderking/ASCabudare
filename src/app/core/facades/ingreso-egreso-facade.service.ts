@@ -12,10 +12,7 @@ import {
 } from "../constants/ingreso-egreso/ingreso-egreso.constants";
 import { LoginResponseModel } from "@models/auth/login.model";
 import { getCurrentUserDecrypt } from "../utilities/core.utilities";
-/**
- * Definición de la clase principal y sus implementaciones
- * @class IngresoEgresoFacadeService
- */
+
 @Injectable({
   providedIn: "root",
 })
@@ -25,7 +22,7 @@ export class IngresoEgresoFacadeService
   private currentUser: LoginResponseModel = getCurrentUserDecrypt();
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
-   * @param _store
+   * @param _store Contiene sl Store global
    */
   constructor(private _store: Store) {}
 
@@ -68,7 +65,7 @@ export class IngresoEgresoFacadeService
 
   /**
    * Dispara la acción para seleccionar un registro de la tabla
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public select(payload: IngresoEgresoModel): void {
     if (payload) {
@@ -88,12 +85,12 @@ export class IngresoEgresoFacadeService
 
   /**
    * Dispara la acción para crear un registro
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public create(payload: IngresoEgresoModel): void {
     const props: DataActionModel<IngresoEgresoModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: payload,
+      payload,
     };
 
     const action = actions.createApiIngresoEgreso({
@@ -104,12 +101,12 @@ export class IngresoEgresoFacadeService
 
   /**
    * Dispara la acción para actualizar un registro
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public update(payload: IngresoEgresoModel): void {
     const props: DataActionModel<IngresoEgresoModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: payload,
+      payload,
     };
 
     const action = actions.updateApiIngresoEgreso({
@@ -120,12 +117,12 @@ export class IngresoEgresoFacadeService
 
   /**
    * Dispara la acción para borrar un registro
-   * @param payload
+   * @param payload Contiene el body de la petición
    */
   public delete(payload: IngresoEgresoModel): void {
     const props: DataActionModel<IngresoEgresoModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: payload,
+      payload,
     };
 
     const action = actions.deleteApiIngresoEgreso({
@@ -144,7 +141,6 @@ export class IngresoEgresoFacadeService
 
   /**
    * Dispara la acción para vaciar el store
-   * @param items
    */
   public reset(): void {
     const action = actions.clearIngresoEgresos();

@@ -6,17 +6,13 @@ import * as selectors from "@store/shared/selectors/shared.selectors";
 import * as actions from "@store/shared/actions/shared.actions";
 import { ErrorModel } from "@models/shared/error.model";
 
-/**
- * Definición de la clase principal y sus implementaciones
- * @class SustainingSupportParametrizationFacadeService
- */
 @Injectable({
   providedIn: "root",
 })
 export class SharedFacadeService implements SharedInterface {
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
-   * @param _store
+   * @param _store Contiene sl Store global
    */
   constructor(private _store: Store) {}
 

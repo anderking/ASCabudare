@@ -3,7 +3,6 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
 import * as fireBase from "firebase";
 import { Subscription } from "rxjs";
-import * as authActions from "@store/auth/actions/auth.actions";
 import { LoginResponseModel } from "@models/auth/login.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import * as CryptoJS from "crypto-js";
@@ -37,15 +36,15 @@ export class AuthService {
    */
   public initAuthListener(): void {
     this.afAuth.authState.subscribe((fbUser: fireBase.User) => {
-      //console.log("fbUser", fbUser);
+      // console.log("fbUser", fbUser);
       if (fbUser) {
         this.userSubcription = this.afDB
           .doc(`${fbUser.uid}/User`)
           .valueChanges()
           .subscribe((userFB: any) => {
-            //console.log("userFB", userFB);
+            // console.log("userFB", userFB);
             if (userFB) {
-              let currentUser: LoginResponseModel = {
+              const currentUser: LoginResponseModel = {
                 displayName: userFB.displayName,
                 email: userFB.email,
                 emailVerified: userFB.emailVerified,
@@ -64,20 +63,19 @@ export class AuthService {
   }
 
   /**
-   *Setea el currentUser en el localStorage de forma encriptada
-   * @param currentUser
+   * Setea el currentUser en el localStorage de forma encriptada
+   * @param currentUser Contiene el usuario actual en sesión
    */
   public setCurrentUserEncrypt(currentUser: LoginResponseModel): void {
-    let textToEncrypt = JSON.stringify(currentUser).trim();
-    var cookieEncrypt = CryptoJS.AES.encrypt(textToEncrypt, environment.key);
+    const textToEncrypt = JSON.stringify(currentUser).trim();
+    const cookieEncrypt = CryptoJS.AES.encrypt(textToEncrypt, environment.key);
     localStorage.setItem("currentUser", cookieEncrypt);
-    let actualRoute = window.location.origin;
+    const actualRoute = window.location.origin;
     window.location.replace(actualRoute + "/authenticated/home");
   }
 
   /**
    * Retorna el currentUser del localStorage y lo desencripta
-   * @returns {LoginResponseModel}
    */
   private getCurrentUserDecrypt(): LoginResponseModel {
     return getCurrentUserDecrypt();
@@ -85,11 +83,10 @@ export class AuthService {
 
   /**
    * Retorna un boolean si el usuario esta autenticado y si no lo está cierra la sesion automaticamente
-   * @returns {boolean}
    */
   public isAuthenticate(): boolean {
-    let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    //console.log(currentUser);
+    const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
+    // console.log(currentUser);
     if (currentUser != null) {
       return true;
     } else {
@@ -99,11 +96,10 @@ export class AuthService {
   }
   /**
    * Verifica si hay un un usuario autenticado que intente accedeer al login o register para retornar el Guard
-   * @returns {boolean}
    */
   public isAuthRedirect(): boolean {
-    let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    //console.log(currentUser);
+    const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
+    // console.log(currentUser);
     if (currentUser == null) {
       localStorage.clear();
       return true;
@@ -114,10 +110,9 @@ export class AuthService {
 
   /**
    * Retorna el token de sesion
-   * @returns {string}
    */
   public getToken(): string {
-    let currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
+    const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
     return currentUser ? currentUser.ma : null;
   }
 }

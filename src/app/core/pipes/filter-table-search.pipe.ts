@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 export class FilterTableSearchPipe implements PipeTransform {
   transform(items: any, filter: any, isAnd: boolean): any {
     if (filter && Array.isArray(items)) {
-      let filterKeys = Object.keys(filter);
+      const filterKeys = Object.keys(filter);
       if (isAnd) {
         return items.filter((item) =>
           filterKeys.reduce(

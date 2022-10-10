@@ -1,5 +1,3 @@
-import { ManagementComponent } from '../management.component';
+import { ManagementComponent } from "../management.component";
 
-export {
-    ManagementComponent,
-};
+export { ManagementComponent };

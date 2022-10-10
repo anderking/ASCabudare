@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  AfterViewInit,
+} from "@angular/core";
 import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { LoginFormModel, LoginResponseModel } from "@models/auth/login.model";
@@ -12,10 +18,12 @@ import { AuthService } from "@services/auth/auth.service";
   selector: "app-login",
   templateUrl: "./login.component.html",
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
   public dataForm: LoginFormModel;
   public isLoading: boolean;
+  public email: string;
+  public password: string;
   private _finisher = new Subject<void>();
 
   constructor(
@@ -38,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         takeUntil(this._finisher)
       )
       .subscribe((login: LoginResponseModel) => {
-        //console.log("LOGIN RESPONSE", login);
+        // console.log("LOGIN RESPONSE", login);
         this._authService.setCurrentUserEncrypt(login);
       });
   }

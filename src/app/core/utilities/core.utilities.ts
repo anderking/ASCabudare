@@ -4,12 +4,11 @@ import { environment } from "@environments/environment";
 
 export function getCurrentUserDecrypt(): LoginResponseModel {
   try {
-    let getCookieEncrypt = localStorage.getItem("currentUser");
-    let textDecrypt = CryptoJS.AES.decrypt(getCookieEncrypt, environment.key);
-    let currentUserDecript = textDecrypt.toString(CryptoJS.enc.Utf8);
+    const getCookieEncrypt = localStorage.getItem("currentUser");
+    const textDecrypt = CryptoJS.AES.decrypt(getCookieEncrypt, environment.key);
+    const currentUserDecript = textDecrypt.toString(CryptoJS.enc.Utf8);
     if (currentUserDecript) {
-      let decryptedData = JSON.parse(currentUserDecript);
-      return decryptedData;
+      return JSON.parse(currentUserDecript);
     } else {
       return null;
     }
@@ -24,9 +23,7 @@ export function oderBy(items: any[], field: string): any[] {
   }
 
   function generaComparador(attr: string) {
-    return function (a: any, b: any) {
-      return compare(attr, a, b);
-    };
+    return (a: any, b: any) => compare(attr, a, b);
   }
 
   return items.sort(generaComparador(field));

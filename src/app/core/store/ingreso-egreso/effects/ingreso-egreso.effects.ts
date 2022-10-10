@@ -99,8 +99,8 @@ export class IngresoEgresoEffects {
 
   /**
    * Se manejan los inyecciones de acciones y modelos que se necesitan en el efecto.
-   * @param _actions$
-   * @param firebaseService
+   * @param _actions$ Contiene la librería de acciones
+   * @param firebaseService Contiene los servicios para conectar con Firebase
    */
   constructor(
     private _actions$: Actions,

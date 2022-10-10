@@ -1,9 +1,3 @@
-/**
- * Función para obtener el mensaje de error en función del código de estado de una petición
- * @param {number} statusCode
- * @returns {string}
- */
-
 export const statusMessages = (statusCode: number, text?: string): string => {
   switch (statusCode) {
     case 200:

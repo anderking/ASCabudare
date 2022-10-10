@@ -13,7 +13,7 @@ import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefine
   templateUrl: "./dashboard.component.html",
   styles: [],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   public items: IngresoEgresoModel[] = [];
   public isLoading: boolean;
 
@@ -64,12 +64,12 @@ export class DashboardComponent implements OnInit {
     this.cantIngresos = 0;
     this.cantEgresos = 0;
     items.forEach((item) => {
-      if (item.idTypeActive == "ingreso") {
+      if (item.idTypeActive === "ingreso") {
         this.totalIngresos += item.amount;
         this.cantIngresos++;
       }
 
-      if (item.idTypeActive == "egreso") {
+      if (item.idTypeActive === "egreso") {
         this.totalEgresos += item.amount;
         this.cantEgresos++;
       }

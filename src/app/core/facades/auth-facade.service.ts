@@ -6,24 +6,21 @@ import { Store } from "@ngrx/store";
 import * as selectors from "@store/auth/selectors/auth.selectors";
 import * as actions from "@store/auth/actions/auth.actions";
 import { collectionFBUser } from "../constants/auth/auth.constants";
-/**
- * Definición de la clase principal y sus implementaciones
- * @class SustainingSupportParametrizationFacadeService
- */
+
 @Injectable({
   providedIn: "root",
 })
 export class AuthFacadeService {
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
-   * @param _store
+   * @param _store Contiene sl Store global
    */
   constructor(private _store: Store) {}
 
   public login(payload: LoginFormModel): void {
     const action: DataActionModel<LoginFormModel> = {
       url: collectionFBUser,
-      payload: payload,
+      payload,
     };
 
     const props = actions.login({
@@ -39,7 +36,7 @@ export class AuthFacadeService {
   public register(payload: LoginFormModel): void {
     const action: DataActionModel<LoginFormModel> = {
       url: collectionFBUser,
-      payload: payload,
+      payload,
     };
 
     const props = actions.register({
@@ -55,7 +52,7 @@ export class AuthFacadeService {
   public setUserDoc(payload: LoginResponseModel): void {
     const action: DataActionModel<LoginResponseModel> = {
       url: `${payload.uid}/${collectionFBUser}`,
-      payload: payload,
+      payload,
     };
 
     const props = actions.setUserDoc({
@@ -71,7 +68,7 @@ export class AuthFacadeService {
   public updateProfile(payload: LoginResponseModel): void {
     const action: DataActionModel<LoginResponseModel> = {
       url: `${payload.uid}/${collectionFBUser}`,
-      payload: payload,
+      payload,
     };
 
     const props = actions.updateProfile({

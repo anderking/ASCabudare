@@ -1,21 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, DecimalPipe } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IngresoEgresoRoutingModule } from './ingreso-egreso-routing.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { IngresoEgresoComponent } from './ingreso-egreso.component';
-import { IngresosEgresosComponent } from './ingresos-egresos/ingresos-egresos.component';
-import { IngresoEgresoCreateComponent } from './ingreso-egreso-form/ingreso-egreso-form.component';
-import { TokenInterceptorService } from 'src/app/core/services/token-interceptor.service';
-import { NgBoostrapModule } from 'src/app/core/ui/ng-bootstrap.module';
-import { SharedModule } from '@root/shared/shared.module';
-
+import { NgModule } from "@angular/core";
+import { CommonModule, DecimalPipe } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { IngresoEgresoRoutingModule } from "./ingreso-egreso-routing.module";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { IngresoEgresoComponent } from "./ingreso-egreso.component";
+import { IngresosEgresosComponent } from "./ingresos-egresos/ingresos-egresos.component";
+import { IngresoEgresoCreateComponent } from "./ingreso-egreso-form/ingreso-egreso-form.component";
+import { TokenInterceptorService } from "src/app/core/services/token-interceptor.service";
+import { NgBoostrapModule } from "src/app/core/ui/ng-bootstrap.module";
+import { SharedModule } from "@root/shared/shared.module";
 
 @NgModule({
   declarations: [
-  	IngresoEgresoComponent,
-  	IngresosEgresosComponent,
-  	IngresoEgresoCreateComponent,
+    IngresoEgresoComponent,
+    IngresosEgresosComponent,
+    IngresoEgresoCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -23,16 +22,15 @@ import { SharedModule } from '@root/shared/shared.module';
     ReactiveFormsModule,
     IngresoEgresoRoutingModule,
     NgBoostrapModule,
-    SharedModule
+    SharedModule,
   ],
-  providers:
-  [
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass : TokenInterceptorService,
-      multi: true
+      useClass: TokenInterceptorService,
+      multi: true,
     },
-    DecimalPipe
+    DecimalPipe,
   ],
 })
-export class IngresoEgresoModule { }
+export class IngresoEgresoModule {}

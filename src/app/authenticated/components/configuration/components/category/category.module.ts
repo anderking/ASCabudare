@@ -1,21 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CategoryRoutingModule } from './category-routing.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CategoryComponent } from './category.component';
-import { CategorysComponent } from './categorys/categorys.component';
-import { CategoryCreateComponent } from './category-form/category-form.component';
-import { TokenInterceptorService } from 'src/app/core/services/token-interceptor.service';
-import { NgBoostrapModule } from 'src/app/core/ui/ng-bootstrap.module';
-import { SharedModule } from '@root/shared/shared.module';
-
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CategoryRoutingModule } from "./category-routing.module";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { CategoryComponent } from "./category.component";
+import { CategorysComponent } from "./categorys/categorys.component";
+import { CategoryCreateComponent } from "./category-form/category-form.component";
+import { TokenInterceptorService } from "src/app/core/services/token-interceptor.service";
+import { NgBoostrapModule } from "src/app/core/ui/ng-bootstrap.module";
+import { SharedModule } from "@root/shared/shared.module";
 
 @NgModule({
   declarations: [
-  	CategoryComponent,
-  	CategorysComponent,
-  	CategoryCreateComponent,
+    CategoryComponent,
+    CategorysComponent,
+    CategoryCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -23,15 +22,14 @@ import { SharedModule } from '@root/shared/shared.module';
     ReactiveFormsModule,
     CategoryRoutingModule,
     NgBoostrapModule,
-    SharedModule
+    SharedModule,
   ],
-  providers:
-  [
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass : TokenInterceptorService,
-      multi: true
+      useClass: TokenInterceptorService,
+      multi: true,
     },
   ],
 })
-export class CategoryModule { }
+export class CategoryModule {}

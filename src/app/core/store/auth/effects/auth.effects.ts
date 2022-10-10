@@ -22,7 +22,7 @@ export class AuthEffects {
       switchMap(({ action }) =>
         this._firebaseService.signInWithEmailAndPassword$(action).pipe(
           map((login: any) => {
-            let user: LoginResponseModel = {
+            const user: LoginResponseModel = {
               displayName: login.displayName,
               email: login.email,
               emailVerified: login.emailVerified,
@@ -50,7 +50,7 @@ export class AuthEffects {
       switchMap(({ action }) =>
         this._firebaseService.createUserWithEmailAndPassword$(action).pipe(
           map((register: any) => {
-            let user: LoginResponseModel = {
+            const user: LoginResponseModel = {
               displayName: register.displayName,
               email: register.email,
               emailVerified: register.emailVerified,

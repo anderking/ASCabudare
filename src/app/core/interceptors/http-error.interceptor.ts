@@ -21,7 +21,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (error instanceof ErrorEvent) {
           errorMessage = `Error del navegador: ${error.error.message}`;
         } else {
-          if (error.status == 200) {
+          if (error.status === 200) {
             errorMessage = `${statusMessages(error.status, error.error.text)}`;
           } else {
             errorMessage = `Error del servidor: ${statusMessages(

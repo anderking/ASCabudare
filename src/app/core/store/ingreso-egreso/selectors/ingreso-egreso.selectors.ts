@@ -7,22 +7,22 @@ export const selectIds = createSelector(
   getIngresoEgreso,
   fromIngresoEgreso.selectIds // shorthand for clasificationsState => fromIngresoEgreso.selectIngresoEgresoIds(clasificationsState)
 );
-/** Exporta el diccionario de todos los items de la entidad para el facade*/
+/** Exporta el diccionario de todos los items de la entidad para el facade */
 export const selectEntities = createSelector(
   getIngresoEgreso,
   fromIngresoEgreso.selectEntities
 );
-/** Exporta un array de todos los items de la entidad para el facade*/
+/** Exporta un array de todos los items de la entidad para el facade */
 export const selectAll = createSelector(
   getIngresoEgreso,
   fromIngresoEgreso.selectAll
 );
-/** Exporta el total de items en la entidad para el facade*/
+/** Exporta el total de items en la entidad para el facade */
 export const selectTotal = createSelector(
   getIngresoEgreso,
   fromIngresoEgreso.selectTotal
 );
-/** Exporta el identificador de un item actual para el facade*/
+/** Exporta el identificador de un item actual para el facade */
 export const selectCurrentId = createSelector(
   getIngresoEgreso,
   fromIngresoEgreso.selectCurrentId

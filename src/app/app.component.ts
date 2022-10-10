@@ -10,9 +10,7 @@ import Swal from "sweetalert2";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private _sharedFacadeService: SharedFacadeService
-  ) {}
+  constructor(private _sharedFacadeService: SharedFacadeService) {}
 
   ngOnInit() {
     this.messageSubscriptions();
@@ -20,7 +18,6 @@ export class AppComponent implements OnInit {
 
   /**
    * Se manejan las sucripciones de mensajes que se requieren mantener abiertas durante la gestion del componente
-   * @returns {void}
    */
   private messageSubscriptions(): void {
     this._sharedFacadeService

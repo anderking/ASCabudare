@@ -5,27 +5,27 @@ import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model"
 
 /** Acciones para gestionar el backend */
 
-/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener todos los registros de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener todos los registros de la entidad */
 export const searchApiIngresoEgresos = createAction(
   "[IngresoEgreso/API] Search IngresoEgresos",
   props<{ props: DataActionModel<IngresoEgresoModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener un registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener un registro de la entidad */
 export const searchOneApiIngresoEgreso = createAction(
   "[IngresoEgreso/API] SearchOne IngresoEgreso",
   props<{ props: DataActionModel<IngresoEgresoModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para crear un nuevo registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para crear un nuevo registro de la entidad */
 export const createApiIngresoEgreso = createAction(
   "[IngresoEgreso/API] CreateApi IngresoEgreso",
   props<{ props: DataActionModel<IngresoEgresoModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para actualizar un registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para actualizar un registro de la entidad */
 export const updateApiIngresoEgreso = createAction(
   "[IngresoEgreso/API] UpdateApi IngresoEgreso",
   props<{ props: DataActionModel<IngresoEgresoModel> }>()
 );
-/** Dispara la acción que hace el llamado a la api a traves del efecto para borrar un registro de la entidad*/
+/** Dispara la acción que hace el llamado a la api a traves del efecto para borrar un registro de la entidad */
 export const deleteApiIngresoEgreso = createAction(
   "[IngresoEgreso/API] DeleteApi IngresoEgreso",
   props<{ props: DataActionModel<IngresoEgresoModel> }>()
@@ -84,7 +84,7 @@ export const deleteIngresoEgresos = createAction(
 export const clearIngresoEgresos = createAction(
   "[IngresoEgreso/API] Clear IngresoEgresos"
 );
-/** Esta acción permite setear el registro actual a traves del identificador*/
+/** Esta acción permite setear el registro actual a traves del identificador */
 export const setCurrentIngresoEgresoId = createAction(
   "[IngresoEgreso/API] Set CurrentIngresoEgresoId",
   props<{ id: string | number }>()
@@ -93,5 +93,5 @@ export const setCurrentIngresoEgresoId = createAction(
 export const clearCurrentIngresoEgreso = createAction(
   "[IngresoEgreso/API] Clear CurrentIngresoEgreso"
 );
-/** Esta acción permite limpiar el store*/
+/** Esta acción permite limpiar el store */
 export const resetLoading = createAction("[IngresoEgreso/API] Set Loading");

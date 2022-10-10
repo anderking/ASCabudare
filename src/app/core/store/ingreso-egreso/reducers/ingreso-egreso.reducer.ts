@@ -81,7 +81,7 @@ const entityReducer = createReducer(
 
 /** Se exporta la funcion reducer que contiene todo el store */
 export function reducer(state: State | undefined, action: Action) {
-  //console.log("STATE==>>",state)
+  // console.log("STATE==>>",state)
   return entityReducer(state, action);
 }
 

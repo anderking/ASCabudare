@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { combineLatest, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -18,7 +18,9 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
   templateUrl: "./category-form.component.html",
   styles: [],
 })
-export class CategoryCreateComponent implements OnInit, OnDestroy {
+export class CategoryCreateComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public finisher$ = new Subject<void>();
   public mainForm: FormGroup;
   public dataForm: CategoryModel;
@@ -62,7 +64,7 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
         filter((x) => !isNullOrUndefinedEmpty(x)),
         map(([items, params, mainForm]) => {
           return {
-            item: items.find((item: CategoryModel) => item.id == params.id),
+            item: items.find((item: CategoryModel) => item.id === params.id),
             params,
             mainForm,
           };
@@ -143,7 +145,7 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   }
 
   clean() {
-    this.mainForm.reset({state:true});
+    this.mainForm.reset({ state: true });
   }
 
   goBack() {

@@ -8,16 +8,16 @@ export function isValidField(field: string, mainForm: FormGroup): boolean {
 }
 
 export function getErrorMessageField(field: string, mainForm: FormGroup): string {
-  let message: string = "";
+  let message = "";
   if (mainForm.get(field).errors.required) {
     message = "Field required";
   } else if (mainForm.get(field).hasError("pattern")) {
     message = "Field invalid";
   } else if (mainForm.get(field).hasError("maxlength")) {
-    let maxLength = mainForm.get(field)?.errors?.maxlength?.requiredLength;
+    const maxLength = mainForm.get(field)?.errors?.maxlength?.requiredLength;
     message = "Field invalid, must be " + maxLength + " or less characters";
   } else if (mainForm.get(field).hasError("minlength")) {
-    let minLength = mainForm.get(field)?.errors?.minlength?.requiredLength;
+    const minLength = mainForm.get(field)?.errors?.minlength?.requiredLength;
     message = "Field invalid, must be " + minLength + " or less characters";
   }
   return message;

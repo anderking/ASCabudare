@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import Swal from "sweetalert2";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
@@ -19,10 +19,10 @@ import { LoginResponseModel } from "@models/auth/login.model";
   templateUrl: "./ingresos-egresos.component.html",
   styleUrls: ["./ingresos-egresos.component.scss"],
 })
-export class IngresosEgresosComponent implements OnInit {
+export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
-  public wordFilter: string = "";
+  public wordFilter = "";
   public currentUser: LoginResponseModel;
   private _finisher = new Subject<void>();
 

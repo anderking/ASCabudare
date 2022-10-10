@@ -1,5 +1,3 @@
-import { AuthorizationComponent } from '../authorization.component';
+import { AuthorizationComponent } from "../authorization.component";
 
-export {
-    AuthorizationComponent,
-};
+export { AuthorizationComponent };

@@ -19,7 +19,7 @@ export const initialState: State = {
 /** Definimos todos los escucha por cada accion para efectuar un reducer conectado al store a traves del adapter */
 const comboReducer = createReducer(
   initialState,
-  
+
   on(ComboActions.searchTypeActive, (state) => ({
     ...state,
     typeActiveLoading: true,
@@ -50,6 +50,5 @@ const comboReducer = createReducer(
 
 /** Se exporta la funcion reducer que contiene todo el store */
 export function reducer(state: State | undefined, action: Action) {
-  //console.log("STATE==>>",state)
   return comboReducer(state, action);
 }

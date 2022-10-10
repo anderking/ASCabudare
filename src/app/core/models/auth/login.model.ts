@@ -10,6 +10,7 @@ export interface LoginResponseModel {
   phoneNumber: string;
   currency: string;
   photoURL: string;
+  uploadPhoto?: any | any[];
   ma: string;
   uid: string;
   refreshToken: string;

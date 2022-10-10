@@ -1,6 +1,6 @@
-export interface ComboModel{
-    id:string;
-    code:string;
-    name:string;
-    state:boolean;
+export interface ComboModel {
+  id: string;
+  code: string;
+  name: string;
+  state: boolean;
 }
