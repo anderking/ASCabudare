@@ -1,45 +1,47 @@
 // Modulos
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+// Modulos personalizados
+import { AppRoutingModule } from "./app-routing.module";
+import { AuthModule } from "./auth/auth.module";
+import { SharedModule } from "./shared/shared.module";
+// Firebase
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+// NGRX
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { AppComponent } from "./app.component";
+// Shared
+import { environment } from "src/environments/environment";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
-//Modulos personalizados
-import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
-
-//Firebase
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-
-//NGRX
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { appReducers } from './app.reducer';
-
-import { AppComponent } from './app.component';
-
-//Shared
-import { environment } from 'src/environments/environment';
-
-
+import { AuthenticatedModule } from "./authenticated/authenticated.module";
+import { CoreModule } from "./core/core.module";
+// Cookies
+import { CookieService } from "ngx-cookie-service";
+import { AngularFireStorageModule } from "@angular/fire/storage";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AuthModule,
+    AuthenticatedModule,
+    SharedModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    CoreModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    StoreModule.forRoot(appReducers),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-    }),
+    AngularFireStorageModule,
+    NgbModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CookieService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

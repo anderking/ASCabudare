@@ -1,51 +1,46 @@
-<nav class="sidebar sidebar-offcanvas">
-  <ul class="nav">
-    <li class="nav-item nav-profile">
-      <div class="nav-link">
-        
-        <div class="user-wrapper">
-          <div class="profile-image">
-            <img src="assets/images/faces/face1.jpg" alt="profile image">
-          </div>
-          
-          <div class="text-wrapper">
-            <p *ngIf="user" class="profile-name">{{ user.firstName }}</p>
-            <div>
-              <small class="designation text-muted">Gerente</small>
-            </div>
-          </div>
-        </div>
-        
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]="[ '/authenticated/home' ]">
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fas fa-laugh-wink"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">IngresoEgreso</div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
+
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item active">
+    <a class="nav-link" [routerLink]="[ '/authenticated/home' ]">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Addons
+  </div>
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+      aria-controls="collapsePages">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>Configuraciones</span>
+    </a>
+    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" [routerLink]="[ '/authenticated/configuration/category' ]">Categorías</a>
+        <a class="collapse-item" [routerLink]="[ '/authenticated/configuration/ingreso-egreso' ]">Ingreso-Egreso</a>
       </div>
-    </li>
+    </div>
+  </li>
 
-    <li class="nav-item">
-      <a routerLink="/" class="nav-link">
-        <i class="menu-icon fa fa-tachometer-alt"></i>
-        <span class="menu-title">Dashboard</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a routerLink="/ingreso-egreso" class="nav-link">
-        <i class="menu-icon fa fa-clipboard-list"></i>
-        <span class="menu-title">Ingresos y Egresos</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a routerLink="/detalle" class="nav-link">
-        <i class="menu-icon fa fa-table"></i>
-        <span class="menu-title">Detalle</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a (click)="logout()" class="nav-link cursor">
-        <i class="menu-icon fa fa-sign-out-alt"></i>
-        <span class="menu-title">Cerrar sesión</span>
-      </a>
-    </li>
-    
-  </ul>
-</nav>
+</ul>
+<!-- End of Sidebar -->

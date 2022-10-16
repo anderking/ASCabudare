@@ -5,10 +5,13 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { RouterModule } from '@angular/router';
+import { AuthRoutingModule } from './auth-routing.module';
+import { AuthComponent } from './auth.component';
 
 
 @NgModule({
   declarations: [
+    AuthComponent,
     LoginComponent,
     RegisterComponent,
   ],
@@ -17,6 +20,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     AngularFireAuthModule,
     RouterModule,
+    AuthRoutingModule
   ]
 })
 export class AuthModule { }

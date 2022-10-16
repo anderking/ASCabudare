@@ -2,3 +2,10 @@
 .cursor{
     cursor: pointer;
 }
+.sidebar{
+    height: 100% !important;
+}
+
+.btn-primary {
+    color: #fff !important;
+}

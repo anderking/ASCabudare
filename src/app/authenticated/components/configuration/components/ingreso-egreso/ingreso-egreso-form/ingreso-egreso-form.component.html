@@ -1,0 +1,125 @@
+<div class="container-fluid">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-12">
+
+      <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">Form Ingreso-Egreso</h1>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+
+            <div class="p-5">
+
+              <form [formGroup]="mainForm">
+                <div class="form-row">
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label>Select an option:</label>
+                    <div class="form-check" *ngFor="let item of typeActiveCombo$ | async">
+                      <input type="radio" class="form-check-input" formControlName="idTypeActive" value="{{item.code}}">
+                      <label class="form-check-label">{{item?.name}}</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label>Category:</label>
+                    <select class="form-control" formControlName="idCategory"
+                      [ngClass]="{'is-invalid': mainForm.get('idCategory')?.touched && !mainForm.get('idCategory')?.valid, 'is-valid':  mainForm.get('idCategory')?.touched && mainForm.get('idCategory')?.valid}">
+                      <option value="" selected>Select an option</option>
+                      <option *ngFor="let item of categoryCombo$ | async" [ngValue]="item.id">
+                        {{item?.name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="isValidField('idCategory')">
+                      {{ getErrorMessageField('idCategory') }}
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label>Date:</label>
+                    <input type="date" class="form-control" formControlName="createDate"
+                      [ngClass]="{'is-invalid': mainForm.get('createDate')?.touched && !mainForm.get('createDate')?.valid, 'is-valid': mainForm.get('createDate')?.touched && mainForm.get('createDate')?.valid}">
+                    <div class="invalid-feedback" *ngIf="isValidField('createDate')">
+                      {{ getErrorMessageField('createDate') }}
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label>Amount:</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">{{currentUser?.currency}}</span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="amount"
+                        [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
+                      <div class="invalid-feedback" *ngIf="isValidField('amount')">
+                        {{ getErrorMessageField('amount') }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <label>Description:</label>
+                    <textarea class="form-control" formControlName="description"
+                      [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
+                    <div class="invalid-feedback" *ngIf="isValidField('description')">
+                      {{ getErrorMessageField('description') }}
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="state"
+                        [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
+                      <label class="form-check-label">
+                        State
+                      </label>
+                      <div class="invalid-feedback" *ngIf="isValidField('state')">
+                        {{ getErrorMessageField('state') }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <button *ngIf="!isLoading" class="btn btn-primary btn-user btn-block" (click)="onSubmit()"
+                      [disabled]="mainForm.invalid">
+                      Save
+                    </button>
+                    <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
+                      <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </button>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <button type="button" class="btn btn-secondary btn-user btn-block" (click)="clean()">
+                      Clean
+                    </button>
+                  </div>
+
+                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                    <button type="button" class="btn btn-info btn-user btn-block" (click)="goBack()">
+                      Back
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isLoading">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

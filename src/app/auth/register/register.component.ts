@@ -1,37 +1,82 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
-import { Subscription } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  AfterViewInit,
+} from "@angular/core";
+import { NgForm } from "@angular/forms";
+import { LoginResponseModel, LoginFormModel } from "@models/auth/login.model";
+import { AuthFacadeService } from "@facades/auth-facade.service";
+import { SharedFacadeService } from "@facades/shared-facade.service";
+import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
+import { filter, first, takeUntil } from "rxjs/operators";
+import { AuthService } from "@services/auth/auth.service";
+import { Subject } from "rxjs";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styles: []
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styles: [],
 })
-export class RegisterComponent implements OnInit, OnDestroy {
-
+export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
+  public dataForm: LoginFormModel;
   public isLoading: boolean;
-
-  public _subcriptionRegister: Subscription = new Subscription();
+  public email: string;
+  public password: string;
+  private _finisher = new Subject<void>();
 
   constructor(
     private _authService: AuthService,
-    private _store: Store<AppState>
-  ) { }
+    private _authFacadeService: AuthFacadeService
+  ) {}
 
   ngOnInit() {
-    this._subcriptionRegister = this._store.select('ui').subscribe(ui => {
-      this.isLoading = ui.isLoading;
-    });
+    this._authFacadeService
+      .getLoading$()
+      .pipe(takeUntil(this._finisher))
+      .subscribe((loading: boolean) => {
+        this.isLoading = loading;
+      });
+
+    this._authFacadeService
+      .getRegister$()
+      .pipe(
+        first((register) => !isNullOrUndefined(register)),
+        takeUntil(this._finisher)
+      )
+      .subscribe((register: LoginResponseModel) => {
+        // console.log("REGISTER RESPONSE", register);
+        this._authFacadeService.setUserDoc(register);
+      });
+
+    this._authFacadeService
+      .getUserDoc$()
+      .pipe(
+        first((userDoc) => !isNullOrUndefined(userDoc)),
+        takeUntil(this._finisher)
+      )
+      .subscribe((userDoc: LoginResponseModel) => {
+        // console.log("USERDOC RESPONSE", userDoc);
+        this._authService.setCurrentUserEncrypt(userDoc);
+      });
+  }
+
+  ngAfterViewInit(): void {
+    this._authService.logut();
   }
 
   ngOnDestroy() {
-    this._subcriptionRegister.unsubscribe();
+    this._authFacadeService.reset();
+    this._finisher.next();
   }
 
-  onSubmit(data: any) {
-    this._authService.createUser(data.email, data.password, data.firstName);
+  onSubmit() {
+    this.dataForm = { ...this.mainForm.form.getRawValue() };
+    console.log(this.dataForm);
+    if (this.mainForm.form.valid) {
+      this._authFacadeService.register(this.dataForm);
+    }
   }
-
 }
