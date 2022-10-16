@@ -15,7 +15,7 @@ import { AppComponent } from "./app.component";
 // Shared
 import { environment } from "src/environments/environment";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { ChartsModule } from "ng2-charts";
+
 import { AuthenticatedModule } from "./authenticated/authenticated.module";
 import { CoreModule } from "./core/core.module";
 // Cookies
@@ -40,7 +40,6 @@ import { AngularFireStorageModule } from "@angular/fire/storage";
     AngularFirestoreModule,
     AngularFireStorageModule,
     NgbModule,
-    ChartsModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

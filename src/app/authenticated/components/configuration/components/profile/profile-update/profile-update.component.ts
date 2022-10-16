@@ -24,7 +24,7 @@ import Swal from "sweetalert2";
 @Component({
   selector: "app-profile-update",
   templateUrl: "./profile-update.component.html",
-  styles: [],
+  styleUrls: ["./profile-update.component.scss"],
 })
 export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
@@ -34,12 +34,9 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
-  public fileName: string = "Subir archivo";
-  public isFileValid: boolean = true; //Indica si el proceso de cargar files es valido
-  public fileArrayName: object[]; //Arreglo para almacenar los nombres de los files cargados en el html
-  public fileArrayDelete: object[]; //Arreglo para almacenar los files restantes luego de borrar alguno
-  public currentFile: any = null; //Arreglo para almacenar los files restantes luego de borrar alguno
-  public isFileArrayDelete: boolean = false; //Indica si se borro algun file por el usuario
+  public fileName = "Subir archivo";
+  public errorFiles = "";
+  public currentFile: any = null;
 
   constructor(
     private _sharedFacadeService: SharedFacadeService,
@@ -86,15 +83,20 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getUrlAttachment$()
       .pipe(filter((x) => !isNullOrUndefinedEmpty(x)))
       .subscribe((url) => {
+        Swal.fire({
+          icon: "success",
+          title: "Upload",
+          text: "Successfully uploaded",
+        });
         this.currentFile = null;
         this.fileName = "Subir archivo";
-        this.mainForm.get("uploadPhoto").reset();
         this.mainForm.get("photoURL").setValue(url);
       });
   }
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
+    this._attachmentFacadeService.reset();
     this.finisher$.next();
   }
 
@@ -109,7 +111,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       phoneNumber: [""],
       currency: [""],
       photoURL: [""],
-      uploadPhoto: [[]],
     });
   }
 
@@ -117,7 +118,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     this.dataForm = {
       ...this.currentItem,
       ...this.mainForm.getRawValue(),
-      uploadPhoto: this.currentFile,
     };
     console.log(this.mainForm.controls);
     if (this.mainForm.valid) {
@@ -136,6 +136,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
 
   clean() {
     this.mainForm.reset();
+    this.errorFiles = "";
   }
 
   goBack() {
@@ -143,53 +144,36 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   }
 
   changeFile(event: any): void {
-    //Inicializa las variables que ayudaran a las validaciones de la carga de files
-    let jpg = "image/jpg";
-    let jpeg = "image/jpeg";
-    let png = "image/png";
-    let allowed_types = [];
-    allowed_types = [jpg, jpeg, png];
-    const max_size = 1000000; // 5 Mb
+    const jpg = "image/jpg";
+    const jpeg = "image/jpeg";
+    const png = "image/png";
+    const max_size = 1000000;
+    const allowed_types = [jpg, jpeg, png];
 
-    let filesInput = event.target.files; //Almacena el array de files detectado en el evento
+    const filesInput = event.target.files;
 
     if (filesInput.length > 0) {
-      let arrayFile = []; //Inicializamos un array para almacenar de forma temporal los files cargados
-
-      this.fileArrayName = [];
-
-      /*Leemos los files guardados hasta el momento y los agregamos a los array de
-			Archivos cargados temporalmente y el de los nombres que se muestran en el html */
-      this.dataForm.uploadPhoto.forEach((element: any) => {
-        arrayFile.push(element);
-        this.fileArrayName.push(element);
-      });
-
-      //Ciclo para realizar el procedimiento de carga y almacenado de files
-      for (var i = 0; i < filesInput.length; i++) {
-        this.isFileValid = true;
-        let currentFile: any = filesInput[i];
-        let extension = allowed_types.includes(currentFile.type);
+      for (let i = 0; i < filesInput.length; i++) {
+        const currentFile: any = filesInput[i];
+        const extension = allowed_types.includes(currentFile.type);
         let isValid = true;
 
-        //Validamos si la extension actual se encuentra en la indicada por el array de extensiones validas
         if (!extension) {
-          this.fileName = "Solo se permiten archivos de tipo IMG o PNG";
+          this.errorFiles = "Solo se permiten archivos de tipo IMG o PNG";
           isValid = false;
         }
 
-        //Validamos si el tamaño del file actual excede el tamaño del file predefinido
         if (currentFile.size > max_size) {
-          this.fileName =
+          this.errorFiles =
             "Tamaño maximo permitido " + max_size / 1000000 + "Mb";
           isValid = false;
         }
         if (isValid) {
+          this.errorFiles = "";
           this.fileName = currentFile.name;
           this.currentFile = currentFile;
         } else {
           this.currentFile = null;
-          this.mainForm.get("uploadPhoto").setValue(null);
         }
       }
     }

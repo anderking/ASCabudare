@@ -52,7 +52,7 @@
                     <label>Amount:</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">{{currentUser.currency}}</span>
+                        <span class="input-group-text">{{currentUser?.currency}}</span>
                       </div>
                       <input type="number" class="form-control" formControlName="amount"
                         [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">

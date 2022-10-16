@@ -16,7 +16,7 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
 @Component({
   selector: "app-category-form",
   templateUrl: "./category-form.component.html",
-  styles: [],
+  styleUrls: ["./category-form.component.scss"],
 })
 export class CategoryCreateComponent
   implements OnInit, AfterViewInit, OnDestroy

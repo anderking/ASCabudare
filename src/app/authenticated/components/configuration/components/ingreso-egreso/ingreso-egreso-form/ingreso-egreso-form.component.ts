@@ -24,7 +24,7 @@ import { oderBy } from "@root/core/utilities/core.utilities";
 @Component({
   selector: "app-ingreso-egreso-form",
   templateUrl: "./ingreso-egreso-form.component.html",
-  styles: [],
+  styleUrls: ["./ingreso-egreso-form.component.scss"],
 })
 export class IngresoEgresoCreateComponent
   implements OnInit, AfterViewInit, OnDestroy
@@ -53,10 +53,11 @@ export class IngresoEgresoCreateComponent
     private _activatedRoute: ActivatedRoute
   ) {
     this.mainForm = this.initForm();
-    this._ingresoEgresoFacadeService.search();
   }
 
   ngOnInit() {
+    this._ingresoEgresoFacadeService.search();
+
     this.callsCombos();
     this.chargeIndicatorManager();
     this.controlSubscriptions();

@@ -47,7 +47,7 @@ export class OrderByPipe implements PipeTransform {
     return 0; // equal each other
   }
 
-  public transform(input: any, config = "+"): any {
+  public transform(input: any, config: any = "+"): any {
     if (!input) {
       return input;
     }
