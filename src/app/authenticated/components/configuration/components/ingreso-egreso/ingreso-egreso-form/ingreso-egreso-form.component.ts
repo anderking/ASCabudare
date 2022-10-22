@@ -5,7 +5,6 @@ import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.servi
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
-import { isNullOrUndefined } from "util";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { ComboModel } from "@models/masters/combo.model";
 import { Location } from "@angular/common";
@@ -14,7 +13,7 @@ import {
   isValidField,
 } from "@root/core/utilities/form-validations";
 import { ActivatedRoute, ParamMap } from "@angular/router";
-import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
+import { isNullOrUndefined, isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
 import { LoginResponseModel } from "@models/auth/login.model";
