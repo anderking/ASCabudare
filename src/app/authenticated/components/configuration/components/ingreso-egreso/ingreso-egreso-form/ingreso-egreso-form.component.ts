@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from "@angular/forms";
 import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -29,7 +29,7 @@ export class IngresoEgresoCreateComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   public finisher$ = new Subject<void>();
-  public mainForm: FormGroup;
+  public mainForm: UntypedFormGroup;
   public dataForm: IngresoEgresoModel;
   public currentItem: IngresoEgresoModel;
   public isLoading: boolean;
@@ -48,7 +48,7 @@ export class IngresoEgresoCreateComponent
     private _sharedFacadeService: SharedFacadeService,
     private _authFacadeService: AuthFacadeService,
     private _location: Location,
-    private _fb: FormBuilder,
+    private _fb: UntypedFormBuilder,
     private _activatedRoute: ActivatedRoute
   ) {
     this.mainForm = this.initForm();
@@ -192,7 +192,7 @@ export class IngresoEgresoCreateComponent
     });
   }
 
-  initForm(): FormGroup {
+  initForm(): UntypedFormGroup {
     return this._fb.group({
       id: null,
       idCategory: ["", [Validators.required]],

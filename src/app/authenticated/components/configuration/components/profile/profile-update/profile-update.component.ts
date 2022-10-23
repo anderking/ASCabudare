@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder } from "@angular/forms";
 import { combineLatest, from, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
@@ -28,7 +28,7 @@ import Swal from "sweetalert2";
 })
 export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
-  public mainForm: FormGroup;
+  public mainForm: UntypedFormGroup;
   public dataForm: LoginResponseModel;
   public currentItem: LoginResponseModel;
   public isLoading: boolean;
@@ -41,7 +41,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   constructor(
     private _sharedFacadeService: SharedFacadeService,
     private _location: Location,
-    private _fb: FormBuilder,
+    private _fb: UntypedFormBuilder,
     private _authFacadeService: AuthFacadeService,
     private _attachmentFacadeService: AttachmentFacadeService
   ) {
@@ -105,7 +105,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     this.mainForm.reset(item, { emitEvent: false });
   }
 
-  initForm(): FormGroup {
+  initForm(): UntypedFormGroup {
     return this._fb.group({
       displayName: [""],
       phoneNumber: [""],
