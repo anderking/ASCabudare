@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from "@angular/forms";
 import { combineLatest, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
@@ -22,7 +22,7 @@ export class CategoryCreateComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   public finisher$ = new Subject<void>();
-  public mainForm: FormGroup;
+  public mainForm: UntypedFormGroup;
   public dataForm: CategoryModel;
   public currentItem: CategoryModel;
   public isLoading: boolean;
@@ -31,7 +31,7 @@ export class CategoryCreateComponent
     private _categoryFacadeService: CategoryFacadeService,
     private _sharedFacadeService: SharedFacadeService,
     private _location: Location,
-    private _fb: FormBuilder,
+    private _fb: UntypedFormBuilder,
     private _activatedRoute: ActivatedRoute
   ) {
     this.mainForm = this.initForm();
@@ -115,7 +115,7 @@ export class CategoryCreateComponent
     this._categoryFacadeService.select(item);
   }
 
-  initForm(): FormGroup {
+  initForm(): UntypedFormGroup {
     return this._fb.group({
       id: null,
       name: ["", [Validators.required]],

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from "@angular/forms";
 import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
-import { isNullOrUndefined } from "util";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { ComboModel } from "@models/masters/combo.model";
 import { Location } from "@angular/common";
@@ -14,7 +13,7 @@ import {
   isValidField,
 } from "@root/core/utilities/form-validations";
 import { ActivatedRoute, ParamMap } from "@angular/router";
-import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
+import { isNullOrUndefined, isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
 import { LoginResponseModel } from "@models/auth/login.model";
@@ -30,7 +29,7 @@ export class IngresoEgresoCreateComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   public finisher$ = new Subject<void>();
-  public mainForm: FormGroup;
+  public mainForm: UntypedFormGroup;
   public dataForm: IngresoEgresoModel;
   public currentItem: IngresoEgresoModel;
   public isLoading: boolean;
@@ -49,7 +48,7 @@ export class IngresoEgresoCreateComponent
     private _sharedFacadeService: SharedFacadeService,
     private _authFacadeService: AuthFacadeService,
     private _location: Location,
-    private _fb: FormBuilder,
+    private _fb: UntypedFormBuilder,
     private _activatedRoute: ActivatedRoute
   ) {
     this.mainForm = this.initForm();
@@ -193,7 +192,7 @@ export class IngresoEgresoCreateComponent
     });
   }
 
-  initForm(): FormGroup {
+  initForm(): UntypedFormGroup {
     return this._fb.group({
       id: null,
       idCategory: ["", [Validators.required]],
