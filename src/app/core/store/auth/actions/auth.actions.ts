@@ -42,7 +42,17 @@ export const updateProfile = createAction(
 
 export const updateProfileSuccess = createAction(
   "[Login] Update ProfileSuccess",
-  props<{ currentUser: LoginResponseModel }>()
+  props<{ updateProfileFB: LoginResponseModel }>()
+);
+
+export const updateProfileFB = createAction(
+  "[Login] Update ProfileFB",
+  props<{ action: DataActionModel<LoginResponseModel> }>()
+);
+
+export const updateProfileFBSuccess = createAction(
+  "[Login] Update ProfileFBSuccess",
+  props<{ updateProfileFB: LoginResponseModel }>()
 );
 
 export const setCurrentUser = createAction(

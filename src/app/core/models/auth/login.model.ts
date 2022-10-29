@@ -11,7 +11,7 @@ export interface LoginResponseModel {
   currency: string;
   photoURL: string;
   uploadPhoto?: any | any[];
-  ma: string;
+  accessToken?: string;
   uid: string;
-  refreshToken: string;
+  refreshToken?: string;
 }

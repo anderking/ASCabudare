@@ -77,6 +77,26 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
+  public getUpdateProfileLoading$(): Observable<boolean> {
+    return this._store.select(selectors.selectUpdateProfile);
+  }
+
+  public updateProfileFB(payload: LoginResponseModel): void {
+    const action: DataActionModel<LoginResponseModel> = {
+      url: `${payload.uid}/${collectionFBUser}`,
+      payload,
+    };
+
+    const props = actions.updateProfileFB({
+      action,
+    });
+    this._store.dispatch(props);
+  }
+
+  public getUpdateProfileFBLoading$(): Observable<boolean> {
+    return this._store.select(selectors.selectUpdateProfileFB);
+  }
+
   public setCurrentUser(currentUser: LoginResponseModel): void {
     const props = actions.setCurrentUser({ currentUser });
     this._store.dispatch(props);

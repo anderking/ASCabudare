@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore } from "@angular/fire/firestore";
-import * as fireBase from "firebase";
-import { Subscription } from "rxjs";
+import { Auth } from "@angular/fire/auth";
+import { doc, Firestore, onSnapshot } from "@angular/fire/firestore";
+import { Observable, Subscription } from "rxjs";
 import { LoginResponseModel } from "@models/auth/login.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import * as CryptoJS from "crypto-js";
@@ -16,8 +15,8 @@ export class AuthService {
   public userSubcription: Subscription = new Subscription();
 
   constructor(
-    public afAuth: AngularFireAuth,
-    private afDB: AngularFirestore,
+    public afAuth: Auth,
+    private afDB: Firestore,
     private _authFacadeService: AuthFacadeService
   ) {}
 
@@ -28,38 +27,30 @@ export class AuthService {
     this.userSubcription.unsubscribe();
     this._authFacadeService.reset();
     localStorage.clear();
-    this.afAuth.auth.signOut();
+    this.afAuth.signOut();
   }
 
   /**
    * Escucha los cambios del currentUser desde FireBase
    */
   public initAuthListener(): void {
-    this.afAuth.authState.subscribe((fbUser: fireBase.User) => {
-      // console.log("fbUser", fbUser);
-      if (fbUser) {
-        this.userSubcription = this.afDB
-          .doc(`${fbUser.uid}/User`)
-          .valueChanges()
-          .subscribe((userFB: any) => {
-            // console.log("userFB", userFB);
-            if (userFB) {
-              const currentUser: LoginResponseModel = {
-                displayName: userFB.displayName,
-                email: userFB.email,
-                emailVerified: userFB.emailVerified,
-                phoneNumber: userFB.phoneNumber,
-                currency: userFB.currency,
-                photoURL: userFB.photoURL,
-                ma: userFB.ma,
-                uid: userFB.uid,
-                refreshToken: userFB.refreshToken,
-              };
-              this._authFacadeService.setCurrentUser(currentUser);
-            }
-          });
-      }
-    });
+    const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
+    if (currentUser) {
+      const subscription = new Observable((observer) => {
+        const docRef = doc(this.afDB, `${currentUser.uid}/User`);
+        return onSnapshot(
+          docRef,
+          (snapshot) => {
+            observer.next(snapshot.data());
+          },
+          (error) => observer.error(error.message)
+        );
+      });
+      subscription.subscribe((user: LoginResponseModel) => {
+        this._authFacadeService.updateProfileFB(user);
+        this._authFacadeService.setCurrentUser(user);
+      });
+    }
   }
 
   /**
@@ -86,7 +77,6 @@ export class AuthService {
    */
   public isAuthenticate(): boolean {
     const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    // console.log(currentUser);
     if (currentUser != null) {
       return true;
     } else {
@@ -99,7 +89,6 @@ export class AuthService {
    */
   public isAuthRedirect(): boolean {
     const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    // console.log(currentUser);
     if (currentUser == null) {
       localStorage.clear();
       return true;
@@ -113,6 +102,6 @@ export class AuthService {
    */
   public getToken(): string {
     const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    return currentUser ? currentUser.ma : null;
+    return currentUser ? currentUser.accessToken : null;
   }
 }

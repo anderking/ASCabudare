@@ -29,7 +29,7 @@ export class AuthEffects {
               phoneNumber: login.phoneNumber,
               currency: "",
               photoURL: login.photoURL,
-              ma: login.ma,
+              accessToken: login.accessToken,
               uid: login.uid,
               refreshToken: login.refreshToken,
             };
@@ -57,7 +57,7 @@ export class AuthEffects {
               phoneNumber: register.phoneNumber,
               currency: "",
               photoURL: register.photoURL,
-              ma: register.ma,
+              accessToken: register.accessToken,
               uid: register.uid,
               refreshToken: register.refreshToken,
             };
@@ -94,12 +94,30 @@ export class AuthEffects {
     return this._actions$.pipe(
       ofType(actions.updateProfile),
       switchMap(({ action }) =>
-        this._firebaseService.setUserDoc$(action).pipe(
-          switchMap((currentUser: LoginResponseModel) => {
+        this._firebaseService.updateProfile$(action).pipe(
+          switchMap((updateProfileFB: LoginResponseModel) => {
             const message = "Usuario actualizado exitosamente";
             return [
-              actions.updateProfileSuccess({ currentUser }),
+              actions.updateProfileSuccess({ updateProfileFB }),
               sharedActions.setMessage({ message }),
+            ];
+          }),
+          catchError((error) =>
+            of(sharedActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    );
+  });
+
+  updateProfileFB$ = createEffect(() => {
+    return this._actions$.pipe(
+      ofType(actions.updateProfileFB),
+      switchMap(({ action }) =>
+        this._firebaseService.updateProfileFB$(action).pipe(
+          switchMap((updateProfileFB: LoginResponseModel) => {
+            return [
+              actions.updateProfileFBSuccess({ updateProfileFB }),
             ];
           }),
           catchError((error) =>

@@ -196,9 +196,20 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getLoading$()
       .subscribe((loading) => (this.isLoadingAttachment = loading));
     const isLoading$ = this._authFacadeService.getLoading$();
+    const isLoadingUpdateProfile$ =
+      this._authFacadeService.getUpdateProfileLoading$();
+    const isLoadingUpdateProfileFB$ =
+      this._authFacadeService.getUpdateProfileFBLoading$();
 
-    const result$ = combineLatest([isLoading$]).pipe(
-      map(([isLoading]) => isLoading),
+    const result$ = combineLatest([
+      isLoading$,
+      isLoadingUpdateProfile$,
+      isLoadingUpdateProfileFB$,
+    ]).pipe(
+      map(
+        ([isLoading, isLoadingUpdateProfile, isLoadingUpdateProfileFB]) =>
+          isLoading || isLoadingUpdateProfile
+      ),
       takeUntil(this.finisher$)
     );
 
