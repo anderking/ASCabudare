@@ -4,7 +4,7 @@ import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import * as actions from "../actions/attachment.actions";
-import { sharedActions } from "@store/shared/actions";
+import * as sharedActions from "@store/shared/actions/shared.actions";
 
 @Injectable()
 export class SharedEffects {

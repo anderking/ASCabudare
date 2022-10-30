@@ -3,7 +3,7 @@ export interface LoginFormModel {
   password: string;
 }
 
-export interface LoginResponseModel {
+export interface CurrentUserModel {
   displayName: string;
   email: string;
   emailVerified: boolean;

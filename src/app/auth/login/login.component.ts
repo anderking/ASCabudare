@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
-import { LoginFormModel, LoginResponseModel } from "@models/auth/login.model";
+import { LoginFormModel, CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         first((login) => !isNullOrUndefined(login)),
         takeUntil(this._finisher)
       )
-      .subscribe((login: LoginResponseModel) => {
+      .subscribe((login: CurrentUserModel) => {
         // console.log("LOGIN RESPONSE", login);
         this._authService.setCurrentUserEncrypt(login);
       });

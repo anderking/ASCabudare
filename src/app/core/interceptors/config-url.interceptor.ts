@@ -9,16 +9,17 @@ import {
 import { Observable, throwError } from "rxjs";
 import { environment } from "@environments/environment";
 import { catchError, mergeMap, tap } from "rxjs/operators";
+import { FirebaseService } from "@services/firebase.service";
 
 @Injectable()
 export class ConfiUriInterceptor<T> implements HttpInterceptor {
-  constructor(@Inject("FirebaseService") private _firebaseService) {}
+  constructor(private _firebaseService: FirebaseService<T>) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log(request)
+    console.log(request);
     if (request.url.indexOf(environment.apiUrl) > -1) {
       return this.getTokenConfig(false, next, request).pipe(
         catchError((error: HttpErrorResponse) => {

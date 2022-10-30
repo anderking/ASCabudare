@@ -5,7 +5,7 @@ import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import * as actions from "../actions/ingreso-egreso.actions";
-import { sharedActions } from "@store/shared/actions";
+import * as sharedActions from "@store/shared/actions/shared.actions";
 /**
  * Efecto para escuchar acciones de la entidad
  */
@@ -58,7 +58,12 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
           switchMap((item: IngresoEgresoModel) => {
-            const message = "Agregado exitosamente";
+            let message = "Registro agregado exitosamente";
+            const payload: any = params.props.payload;
+            console.log(payload);
+            if (payload.id) {
+              message = "Registro actualizado exitosamente";
+            }
             return [
               actions.addIngresoEgreso({ item }),
               sharedActions.setMessage({ message }),
@@ -81,7 +86,7 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.delete$(params.props).pipe(
           switchMap((item: any) => {
-            const message = "Registro eliminado";
+            const message = "Registro eliminado exitosamente";
             item = params.props.payload;
             const id = item.id;
             return [

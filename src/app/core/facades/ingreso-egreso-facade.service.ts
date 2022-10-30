@@ -10,7 +10,7 @@ import {
   collectionFB,
   collectionFBSecond,
 } from "../constants/ingreso-egreso/ingreso-egreso.constants";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import { getCurrentUserDecrypt } from "../utilities/core.utilities";
 
 @Injectable({
@@ -19,7 +19,7 @@ import { getCurrentUserDecrypt } from "../utilities/core.utilities";
 export class IngresoEgresoFacadeService
   implements FacadeInterface<IngresoEgresoModel>
 {
-  private currentUser: LoginResponseModel = getCurrentUserDecrypt();
+  private currentUser: CurrentUserModel = getCurrentUserDecrypt();
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
    * @param _store Contiene sl Store global

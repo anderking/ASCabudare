@@ -1,7 +1,7 @@
 import { ErrorModel } from "@models/shared/error.model";
 import { Action, createReducer, on } from "@ngrx/store";
-import { sharedActions } from "@store/shared/actions";
-import { attachmentActions } from "@store/shared/actions";
+import * as sharedActions from "@store/shared/actions/shared.actions";
+import * as attachmentActions from "@store/shared/actions/attachment.actions";
 
 /** Se declara la interface del reducer */
 export interface State {

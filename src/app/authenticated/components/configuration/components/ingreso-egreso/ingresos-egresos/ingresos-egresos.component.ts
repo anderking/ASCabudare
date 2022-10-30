@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import Swal from "sweetalert2";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
@@ -12,7 +11,7 @@ import { Subject } from "rxjs";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 
 @Component({
   selector: "app-ingresos-egresos",
@@ -23,7 +22,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
   public wordFilter = "";
-  public currentUser: LoginResponseModel;
+  public currentUser: CurrentUserModel;
   private _finisher = new Subject<void>();
 
   constructor(
@@ -56,7 +55,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
 
     this._authFacadeService
       .getCurrentUser$()
-      .subscribe((user: LoginResponseModel) => {
+      .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
       });
   }

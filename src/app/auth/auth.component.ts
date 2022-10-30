@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { SharedFacadeService } from "@facades/shared-facade.service";
 
 @Component({
   selector: "app-auth",
@@ -6,7 +7,9 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./auth.component.scss"],
 })
 export class AuthComponent implements OnInit {
-  constructor() {}
+  constructor(private _sharedFacadeService: SharedFacadeService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._sharedFacadeService.messageSubscriptions();
+  }
 }

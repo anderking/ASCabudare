@@ -16,7 +16,7 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { isNullOrUndefined, isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { oderBy } from "@root/core/utilities/core.utilities";
 
@@ -39,7 +39,7 @@ export class IngresoEgresoCreateComponent
   public categorysArray: CategoryModel[];
   public categoryCurrent: CategoryModel;
   public categoryCombo$ = new BehaviorSubject<CategoryModel[]>([]);
-  public currentUser: LoginResponseModel;
+  public currentUser: CurrentUserModel;
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
@@ -127,7 +127,7 @@ export class IngresoEgresoCreateComponent
 
     this._authFacadeService
       .getCurrentUser$()
-      .subscribe((user: LoginResponseModel) => {
+      .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
       });
   }

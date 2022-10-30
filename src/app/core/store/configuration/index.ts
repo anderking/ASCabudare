@@ -3,7 +3,7 @@ import {
   ActionReducerMap,
   createSelector,
 } from "@ngrx/store";
-import { categoryReducer } from "./reducers";
+import { categoryReducer } from "@store/configuration/reducers";
 
 export const configurationFeatureKey = "configuration";
 

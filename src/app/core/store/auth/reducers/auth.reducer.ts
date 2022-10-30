@@ -1,13 +1,13 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import * as actions from "../actions/auth.actions";
 
 /** Se declara la interface del reducer */
 export interface State {
-  login: LoginResponseModel;
-  register: LoginResponseModel;
-  userDoc: LoginResponseModel;
-  currentUser: LoginResponseModel;
+  login: CurrentUserModel;
+  register: CurrentUserModel;
+  userDoc: CurrentUserModel;
+  currentUser: CurrentUserModel;
   updateProfile: boolean;
   updateProfileFB: boolean;
   loading: boolean;

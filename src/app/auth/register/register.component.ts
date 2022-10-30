@@ -6,7 +6,7 @@ import {
   AfterViewInit,
 } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { LoginResponseModel, LoginFormModel } from "@models/auth/login.model";
+import { CurrentUserModel, LoginFormModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
   public isLoading: boolean;
   public email: string;
   public password: string;
-  public registerFB: LoginResponseModel;
+  public registerFB: CurrentUserModel;
   private _finisher = new Subject<void>();
 
   constructor(
@@ -47,10 +47,10 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         first((register) => !isNullOrUndefined(register)),
         takeUntil(this._finisher)
       )
-      .subscribe((register: LoginResponseModel) => {
+      .subscribe((register: CurrentUserModel) => {
         console.log("REGISTER RESPONSE", register);
         this.registerFB = register;
-        const userDoc: LoginResponseModel = {
+        const userDoc: CurrentUserModel = {
           displayName: register.displayName,
           email: register.email,
           emailVerified: register.emailVerified,
@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         first((userDoc) => !isNullOrUndefined(userDoc)),
         takeUntil(this._finisher)
       )
-      .subscribe((userDoc: LoginResponseModel) => {
+      .subscribe((userDoc: CurrentUserModel) => {
         this._authService.setCurrentUserEncrypt(this.registerFB);
       });
   }

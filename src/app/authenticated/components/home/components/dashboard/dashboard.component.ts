@@ -9,7 +9,7 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
 import { groupByMult } from "@root/core/utilities/core.utilities";
 import { GroupModel } from "@models/shared/group.model";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 
 @Component({
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public cantIngresos: any;
   public cantEgresos: any;
 
-  public currentUser: LoginResponseModel;
+  public currentUser: CurrentUserModel;
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this._authFacadeService
       .getCurrentUser$()
-      .subscribe((user: LoginResponseModel) => {
+      .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
       });
   }

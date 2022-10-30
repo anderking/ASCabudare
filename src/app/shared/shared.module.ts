@@ -5,17 +5,18 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { ContainerComponent } from './container/container.component';
-import { ModalsComponent } from './modals/modals.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PipesModule } from '@root/core/pipes/pipes-module.module';
+import { NgBoostrapModule } from '@root/core/ui/ng-bootstrap.module';
+import { ToastContainerComponent } from './toast-container/toast-container.component';
 
 @NgModule({
   declarations: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    ModalsComponent,
-    ContainerComponent
+    ContainerComponent,
+    ToastContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -23,14 +24,16 @@ import { PipesModule } from '@root/core/pipes/pipes-module.module';
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
+    NgBoostrapModule,
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    ModalsComponent,
     ContainerComponent,
+    ToastContainerComponent,
     PipesModule,
+    NgBoostrapModule,
   ]
 })
 export class SharedModule { }
