@@ -36,8 +36,14 @@ export class SharedFacadeService implements SharedInterface {
     this.getError$()
       .pipe(filter((error) => !isNullOrUndefinedEmpty(error)))
       .subscribe((error) => {
-        console.log(error.message);
-        this._toastService.show(error.message, {
+        console.error(error);
+        let message:any;
+        if (error.code){
+          message = error.message;
+        }else{
+          message = error;
+        }
+        this._toastService.show(message, {
           classname: "bg-danger text-light",
           delay: 5000,
         });
