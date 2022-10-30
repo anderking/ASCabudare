@@ -17,9 +17,9 @@ import {
 } from "@root/core/utilities/form-validations";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
-import Swal from "sweetalert2";
+import { ToastService } from "@services/ui/toast.service";
 
 @Component({
   selector: "app-profile-update",
@@ -29,8 +29,8 @@ import Swal from "sweetalert2";
 export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
   public mainForm: UntypedFormGroup;
-  public dataForm: LoginResponseModel;
-  public currentItem: LoginResponseModel;
+  public dataForm: CurrentUserModel;
+  public currentItem: CurrentUserModel;
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
@@ -43,7 +43,8 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     private _location: Location,
     private _fb: UntypedFormBuilder,
     private _authFacadeService: AuthFacadeService,
-    private _attachmentFacadeService: AttachmentFacadeService
+    private _attachmentFacadeService: AttachmentFacadeService,
+    private _toastService: ToastService
   ) {
     this.mainForm = this.initForm();
   }
@@ -53,7 +54,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     this.chargeIndicatorManager();
 
     const item$ = this._authFacadeService.getCurrentUser$().pipe(
-      filter((item: LoginResponseModel) => !isNullOrUndefinedEmpty(item)),
+      filter((item: CurrentUserModel) => !isNullOrUndefinedEmpty(item)),
       takeUntil(this.finisher$)
     );
 
@@ -83,10 +84,9 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getUrlAttachment$()
       .pipe(filter((x) => !isNullOrUndefinedEmpty(x)))
       .subscribe((url) => {
-        Swal.fire({
-          icon: "success",
-          title: "Upload",
-          text: "Successfully uploaded",
+        this._toastService.show("Successfully uploaded", {
+          classname: "bg-success text-light",
+          delay: 5000,
         });
         this.currentFile = null;
         this.fileName = "Subir archivo";
@@ -100,7 +100,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     this.finisher$.next();
   }
 
-  selectCurrentItem(item: LoginResponseModel): void {
+  selectCurrentItem(item: CurrentUserModel): void {
     this.currentItem = item;
     this.mainForm.reset(item, { emitEvent: false });
   }
@@ -183,10 +183,9 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     if (this.currentFile) {
       this._attachmentFacadeService.create(this.currentFile);
     } else {
-      Swal.fire({
-        icon: "error",
-        title: "Upload",
-        text: "Upload file pleases",
+      this._toastService.show("Upload file pleases", {
+        classname: "bg-danger text-light",
+        delay: 5000,
       });
     }
   }
@@ -196,9 +195,20 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getLoading$()
       .subscribe((loading) => (this.isLoadingAttachment = loading));
     const isLoading$ = this._authFacadeService.getLoading$();
+    const isLoadingUpdateProfile$ =
+      this._authFacadeService.getUpdateProfileLoading$();
+    const isLoadingUpdateProfileFB$ =
+      this._authFacadeService.getUpdateProfileFBLoading$();
 
-    const result$ = combineLatest([isLoading$]).pipe(
-      map(([isLoading]) => isLoading),
+    const result$ = combineLatest([
+      isLoading$,
+      isLoadingUpdateProfile$,
+      isLoadingUpdateProfileFB$,
+    ]).pipe(
+      map(
+        ([isLoading, isLoadingUpdateProfile, isLoadingUpdateProfileFB]) =>
+          isLoading || isLoadingUpdateProfile
+      ),
       takeUntil(this.finisher$)
     );
 

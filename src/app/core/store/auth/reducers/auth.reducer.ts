@@ -1,13 +1,15 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import * as actions from "../actions/auth.actions";
 
 /** Se declara la interface del reducer */
 export interface State {
-  login: LoginResponseModel;
-  register: LoginResponseModel;
-  userDoc: LoginResponseModel;
-  currentUser: LoginResponseModel;
+  login: CurrentUserModel;
+  register: CurrentUserModel;
+  userDoc: CurrentUserModel;
+  currentUser: CurrentUserModel;
+  updateProfile: boolean;
+  updateProfileFB: boolean;
   loading: boolean;
 }
 
@@ -17,6 +19,8 @@ export const initialState: State = {
   register: null,
   userDoc: null,
   currentUser: null,
+  updateProfile: false,
+  updateProfileFB: false,
   loading: false,
 };
 
@@ -59,13 +63,23 @@ const entityReducer = createReducer(
 
   on(actions.updateProfile, (state) => ({
     ...state,
-    loading: true,
+    updateProfile: true,
   })),
 
-  on(actions.updateProfileSuccess, (state, { currentUser }) => ({
+  on(actions.updateProfileSuccess, (state, { updateProfileFB }) => ({
     ...state,
-    currentUser,
-    loading: false,
+    currentUser: updateProfileFB,
+    updateProfile: false,
+  })),
+
+  on(actions.updateProfileFB, (state) => ({
+    ...state,
+    updateProfileFB: true,
+  })),
+
+  on(actions.updateProfileFBSuccess, (state, { updateProfileFB }) => ({
+    ...state,
+    updateProfileFB: false,
   })),
 
   on(actions.setCurrentUser, (state, { currentUser }) => ({

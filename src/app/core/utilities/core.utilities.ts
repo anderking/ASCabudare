@@ -1,8 +1,8 @@
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
 
-export function getCurrentUserDecrypt(): LoginResponseModel {
+export function getCurrentUserDecrypt(): CurrentUserModel {
   try {
     const getCookieEncrypt = localStorage.getItem("currentUser");
     const textDecrypt = CryptoJS.AES.decrypt(getCookieEncrypt, environment.key);

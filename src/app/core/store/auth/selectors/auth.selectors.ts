@@ -12,4 +12,8 @@ export const selectCurrentUser = createSelector(getLogin, (state) => state.curre
 
 export const selectUserDoc = createSelector(getLogin, (state) => state.userDoc);
 
+export const selectUpdateProfile = createSelector(getLogin, (state) => state.updateProfile);
+
+export const selectUpdateProfileFB = createSelector(getLogin, (state) => state.updateProfileFB);
+
 export const selectLoading = createSelector(getLogin, (state) => state.loading);

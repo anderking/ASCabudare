@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { UntypedFormGroup, Validators, UntypedFormBuilder } from "@angular/forms";
+import {
+  UntypedFormGroup,
+  Validators,
+  UntypedFormBuilder,
+} from "@angular/forms";
 import { combineLatest, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
@@ -82,10 +86,7 @@ export class CategoryCreateComponent
   ngAfterViewInit(): void {
     this._sharedFacadeService
       .getMessage$()
-      .pipe(
-        filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
-        takeUntil(this.finisher$)
-      )
+      .pipe(filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)))
       .subscribe((message) => {
         if (!this.currentItem) {
           this.clean();

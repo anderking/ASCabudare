@@ -39,12 +39,12 @@
       <div class="row">
         <div *ngFor="let category of item.values" class="col-xl-3 col-md-6 mb-4">
           <div class="card shadow h-100 py-2"
-            [ngClass]="{'border-left-success': item.name == 'Ingreso', 'border-left-danger': item.name == 'Egreso' }">
+            [ngClass]="{'border-left-success': item.name === 'Ingreso', 'border-left-danger': item.name === 'Egreso' }">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-uppercase mb-1"
-                    [ngClass]="{'text-success': item.name == 'Ingreso', 'text-danger': item.name == 'Egreso' }">
+                    [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
                     {{category.name}}
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">{{category.values | amount:'amount' |

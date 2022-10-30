@@ -3,7 +3,7 @@ import {
   ActionReducerMap,
   createSelector,
 } from "@ngrx/store";
-import { ingresoEgresoReducer } from "./reducers";
+import { ingresoEgresoReducer } from "@store/ingreso-egreso/reducers";
 
 export const ingresoEgresoFeatureKey = "ingresoEgreso";
 

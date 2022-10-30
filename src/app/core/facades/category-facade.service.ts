@@ -10,14 +10,14 @@ import {
   collectionFB,
   collectionFBSecond,
 } from "../constants/configurations/category.constants";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import { getCurrentUserDecrypt } from "../utilities/core.utilities";
 
 @Injectable({
   providedIn: "root",
 })
 export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
-  private currentUser: LoginResponseModel = getCurrentUserDecrypt();
+  private currentUser: CurrentUserModel = getCurrentUserDecrypt();
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
    * @param _store Contiene sl Store global

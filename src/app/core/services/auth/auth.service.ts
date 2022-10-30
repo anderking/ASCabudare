@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore } from "@angular/fire/firestore";
-import * as fireBase from "firebase";
-import { Subscription } from "rxjs";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { Auth } from "@angular/fire/auth";
+import { doc, Firestore, onSnapshot } from "@angular/fire/firestore";
+import { Observable, Subscription } from "rxjs";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
@@ -16,8 +15,8 @@ export class AuthService {
   public userSubcription: Subscription = new Subscription();
 
   constructor(
-    public afAuth: AngularFireAuth,
-    private afDB: AngularFirestore,
+    public afAuth: Auth,
+    private afDB: Firestore,
     private _authFacadeService: AuthFacadeService
   ) {}
 
@@ -28,45 +27,37 @@ export class AuthService {
     this.userSubcription.unsubscribe();
     this._authFacadeService.reset();
     localStorage.clear();
-    this.afAuth.auth.signOut();
+    this.afAuth.signOut();
   }
 
   /**
    * Escucha los cambios del currentUser desde FireBase
    */
   public initAuthListener(): void {
-    this.afAuth.authState.subscribe((fbUser: fireBase.User) => {
-      // console.log("fbUser", fbUser);
-      if (fbUser) {
-        this.userSubcription = this.afDB
-          .doc(`${fbUser.uid}/User`)
-          .valueChanges()
-          .subscribe((userFB: any) => {
-            // console.log("userFB", userFB);
-            if (userFB) {
-              const currentUser: LoginResponseModel = {
-                displayName: userFB.displayName,
-                email: userFB.email,
-                emailVerified: userFB.emailVerified,
-                phoneNumber: userFB.phoneNumber,
-                currency: userFB.currency,
-                photoURL: userFB.photoURL,
-                ma: userFB.ma,
-                uid: userFB.uid,
-                refreshToken: userFB.refreshToken,
-              };
-              this._authFacadeService.setCurrentUser(currentUser);
-            }
-          });
-      }
-    });
+    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
+    if (currentUser) {
+      const subscription = new Observable((observer) => {
+        const docRef = doc(this.afDB, `${currentUser.uid}/User`);
+        return onSnapshot(
+          docRef,
+          (snapshot) => {
+            observer.next(snapshot.data());
+          },
+          (error) => observer.error(error.message)
+        );
+      });
+      subscription.subscribe((user: CurrentUserModel) => {
+        this._authFacadeService.updateProfileFB(user);
+        this._authFacadeService.setCurrentUser(user);
+      });
+    }
   }
 
   /**
    * Setea el currentUser en el localStorage de forma encriptada
    * @param currentUser Contiene el usuario actual en sesión
    */
-  public setCurrentUserEncrypt(currentUser: LoginResponseModel): void {
+  public setCurrentUserEncrypt(currentUser: CurrentUserModel): void {
     const textToEncrypt = JSON.stringify(currentUser).trim();
     const cookieEncrypt = CryptoJS.AES.encrypt(textToEncrypt, environment.key);
     localStorage.setItem("currentUser", cookieEncrypt);
@@ -77,7 +68,7 @@ export class AuthService {
   /**
    * Retorna el currentUser del localStorage y lo desencripta
    */
-  private getCurrentUserDecrypt(): LoginResponseModel {
+  private getCurrentUserDecrypt(): CurrentUserModel {
     return getCurrentUserDecrypt();
   }
 
@@ -85,8 +76,7 @@ export class AuthService {
    * Retorna un boolean si el usuario esta autenticado y si no lo está cierra la sesion automaticamente
    */
   public isAuthenticate(): boolean {
-    const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    // console.log(currentUser);
+    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
     if (currentUser != null) {
       return true;
     } else {
@@ -98,8 +88,7 @@ export class AuthService {
    * Verifica si hay un un usuario autenticado que intente accedeer al login o register para retornar el Guard
    */
   public isAuthRedirect(): boolean {
-    const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    // console.log(currentUser);
+    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
     if (currentUser == null) {
       localStorage.clear();
       return true;
@@ -112,7 +101,7 @@ export class AuthService {
    * Retorna el token de sesion
    */
   public getToken(): string {
-    const currentUser: LoginResponseModel = this.getCurrentUserDecrypt();
-    return currentUser ? currentUser.ma : null;
+    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
+    return currentUser ? currentUser.accessToken : null;
   }
 }

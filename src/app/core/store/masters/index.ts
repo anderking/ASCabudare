@@ -3,7 +3,7 @@ import {
   ActionReducerMap,
   createSelector,
 } from "@ngrx/store";
-import { comboReducer } from "./reducers";
+import { comboReducer } from "@store/masters/reducers";
 
 export const mastersFeatureKey = "masters";
 

@@ -3,7 +3,7 @@ import {
   ActionReducerMap,
   createSelector,
 } from "@ngrx/store";
-import { authReducer } from "./reducers";
+import { authReducer } from "@store/auth/reducers";
 
 export const authFeatureKey = "auth";
 

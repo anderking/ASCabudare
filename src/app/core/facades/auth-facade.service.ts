@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { LoginFormModel, LoginResponseModel } from "@models/auth/login.model";
+import { LoginFormModel, CurrentUserModel } from "@models/auth/current-user.model";
 import { DataActionModel } from "@models/common/data-action.model";
 import { Store } from "@ngrx/store";
 import * as selectors from "@store/auth/selectors/auth.selectors";
@@ -29,7 +29,7 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  public getLogin$(): Observable<LoginResponseModel> {
+  public getLogin$(): Observable<CurrentUserModel> {
     return this._store.select(selectors.selectLogin);
   }
 
@@ -45,12 +45,12 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  public getRegister$(): Observable<LoginResponseModel> {
+  public getRegister$(): Observable<CurrentUserModel> {
     return this._store.select(selectors.selectRegister);
   }
 
-  public setUserDoc(payload: LoginResponseModel): void {
-    const action: DataActionModel<LoginResponseModel> = {
+  public setUserDoc(payload: CurrentUserModel): void {
+    const action: DataActionModel<CurrentUserModel> = {
       url: `${payload.uid}/${collectionFBUser}`,
       payload,
     };
@@ -61,12 +61,12 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  public getUserDoc$(): Observable<LoginResponseModel> {
+  public getUserDoc$(): Observable<CurrentUserModel> {
     return this._store.select(selectors.selectUserDoc);
   }
 
-  public updateProfile(payload: LoginResponseModel): void {
-    const action: DataActionModel<LoginResponseModel> = {
+  public updateProfile(payload: CurrentUserModel): void {
+    const action: DataActionModel<CurrentUserModel> = {
       url: `${payload.uid}/${collectionFBUser}`,
       payload,
     };
@@ -77,12 +77,32 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  public setCurrentUser(currentUser: LoginResponseModel): void {
+  public getUpdateProfileLoading$(): Observable<boolean> {
+    return this._store.select(selectors.selectUpdateProfile);
+  }
+
+  public updateProfileFB(payload: CurrentUserModel): void {
+    const action: DataActionModel<CurrentUserModel> = {
+      url: `${payload.uid}/${collectionFBUser}`,
+      payload,
+    };
+
+    const props = actions.updateProfileFB({
+      action,
+    });
+    this._store.dispatch(props);
+  }
+
+  public getUpdateProfileFBLoading$(): Observable<boolean> {
+    return this._store.select(selectors.selectUpdateProfileFB);
+  }
+
+  public setCurrentUser(currentUser: CurrentUserModel): void {
     const props = actions.setCurrentUser({ currentUser });
     this._store.dispatch(props);
   }
 
-  public getCurrentUser$(): Observable<LoginResponseModel> {
+  public getCurrentUser$(): Observable<CurrentUserModel> {
     return this._store.select(selectors.selectCurrentUser);
   }
 

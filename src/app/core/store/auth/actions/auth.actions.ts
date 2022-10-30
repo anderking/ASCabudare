@@ -1,8 +1,8 @@
 import { DataActionModel } from "@models/common/data-action.model";
 import {
   LoginFormModel,
-  LoginResponseModel
-} from "@models/auth/login.model";
+  CurrentUserModel
+} from "@models/auth/current-user.model";
 import { createAction, props } from "@ngrx/store";
 
 export const login = createAction(
@@ -12,7 +12,7 @@ export const login = createAction(
 
 export const loginSucess = createAction(
   "[Login] Login Success",
-  props<{ login: LoginResponseModel }>()
+  props<{ login: CurrentUserModel }>()
 );
 
 export const register = createAction(
@@ -22,32 +22,42 @@ export const register = createAction(
 
 export const registerSucess = createAction(
   "[Login] Register Success",
-  props<{ register: LoginResponseModel }>()
+  props<{ register: CurrentUserModel }>()
 );
 
 export const setUserDoc = createAction(
   "[Login] Set UserDoc",
-  props<{ action: DataActionModel<LoginResponseModel> }>()
+  props<{ action: DataActionModel<CurrentUserModel> }>()
 );
 
 export const setUserDocSuccess = createAction(
   "[Login] Set UserDocSuccess",
-  props<{ userDoc: LoginResponseModel }>()
+  props<{ userDoc: CurrentUserModel }>()
 );
 
 export const updateProfile = createAction(
   "[Login] Update Profile",
-  props<{ action: DataActionModel<LoginResponseModel> }>()
+  props<{ action: DataActionModel<CurrentUserModel> }>()
 );
 
 export const updateProfileSuccess = createAction(
   "[Login] Update ProfileSuccess",
-  props<{ currentUser: LoginResponseModel }>()
+  props<{ updateProfileFB: CurrentUserModel }>()
+);
+
+export const updateProfileFB = createAction(
+  "[Login] Update ProfileFB",
+  props<{ action: DataActionModel<CurrentUserModel> }>()
+);
+
+export const updateProfileFBSuccess = createAction(
+  "[Login] Update ProfileFBSuccess",
+  props<{ updateProfileFB: CurrentUserModel }>()
 );
 
 export const setCurrentUser = createAction(
   "[Login] Set CurrentUser",
-  props<{ currentUser: LoginResponseModel }>()
+  props<{ currentUser: CurrentUserModel }>()
 );
 
 export const clear = createAction("[Login] Clear Login");

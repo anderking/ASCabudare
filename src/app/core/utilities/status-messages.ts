@@ -4,7 +4,7 @@ export const statusMessages = (statusCode: number, text?: string): string => {
       return text;
 
     case 201:
-      return statusCode + " " + "Agregado exitosamente.";
+      return statusCode + " " + "Registro agregado exitosamente.";
 
     case 202:
       return (

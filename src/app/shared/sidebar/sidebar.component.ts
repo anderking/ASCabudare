@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/core/services/auth/auth.service";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { LoginResponseModel } from "@models/auth/login.model";
+import { CurrentUserModel } from "@models/auth/current-user.model";
 
 @Component({
   selector: "app-sidebar",
@@ -9,7 +9,7 @@ import { LoginResponseModel } from "@models/auth/login.model";
   styles: [],
 })
 export class SidebarComponent implements OnInit {
-  public user: LoginResponseModel;
+  public user: CurrentUserModel;
 
   constructor(
     private auth: AuthService,
@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authFacadeService.getCurrentUser$().subscribe((user: LoginResponseModel) => {
+    this.authFacadeService.getCurrentUser$().subscribe((user: CurrentUserModel) => {
       this.user = user;
     });
   }
