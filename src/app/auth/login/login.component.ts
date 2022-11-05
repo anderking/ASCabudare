@@ -7,9 +7,11 @@ import {
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
-import { LoginFormModel, CurrentUserModel } from "@models/auth/current-user.model";
+import {
+  LoginFormModel,
+  CurrentUserModel,
+} from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
 import { filter, first, takeUntil } from "rxjs/operators";
 import { AuthService } from "@services/auth/auth.service";

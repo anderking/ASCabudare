@@ -1,0 +1,23 @@
+{
+  "LOGIN": {
+    "TITLE": "Welcome",
+    "TEXT_BUTTON_PRIMARY": "Login",
+    "TEXT_FORGOT_PASSWORD": "Forgot Password?",
+    "TEXT_REGISTER": "Create an Account"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Forgot Password",
+    "TEXT_BUTTON_PRIMARY": "Send email",
+    "TEXT_LOGIN": "Already have an account? Login"
+  },
+  "REGISTER": {
+    "TITLE": "Create an Account",
+    "TEXT_BUTTON_PRIMARY": "Create account",
+    "TEXT_LOGIN": "Already have an account? Login"
+  },
+  "VALIDATIONS": {
+    "REQUIRED": "Field required",
+    "EMAIL": "Email incorrect, example: name@company.com",
+    "PASSWORD": "The password must have a minimum of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+  }
+}

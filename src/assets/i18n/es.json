@@ -1,0 +1,23 @@
+{
+  "LOGIN": {
+    "TITLE": "Bienvenido",
+    "TEXT_BUTTON_PRIMARY": "Iniciar sesión",
+    "TEXT_FORGOT_PASSWORD": "¿Recuperar contraseña?",
+    "TEXT_REGISTER": "Crear una cuenta"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Recuperar contraseña",
+    "TEXT_BUTTON_PRIMARY": "Enviar email",
+    "TEXT_LOGIN": "¿Ya tienes una cuenta? Accede"
+  },
+  "REGISTER": {
+    "TITLE": "Crear una cuenta",
+    "TEXT_BUTTON_PRIMARY": "Crear cuenta",
+    "TEXT_LOGIN": "¿Ya tienes una cuenta? Accede"
+  },
+  "VALIDATIONS": {
+    "REQUIRED": "Campo requerido",
+    "EMAIL": "Email incorrecto, ejemplo: name@company.com",
+    "PASSWORD": "La contraseña debe tener un mínimo de ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial"
+  }
+}
