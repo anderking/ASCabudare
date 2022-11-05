@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-not-allowed",
@@ -6,5 +7,8 @@ import { Component } from "@angular/core";
   styleUrls: ["./not-allowed.component.scss"],
 })
 export class NotAllowedComponent {
-  constructor() {}
+  constructor(private router: Router) {}
+  goBack() {
+    this.router.navigate(["authenticated"]);
+  }
 }

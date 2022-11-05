@@ -1,6 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { LoginFormModel, CurrentUserModel } from "@models/auth/current-user.model";
+import {
+  LoginFormModel,
+  CurrentUserModel,
+} from "@models/auth/current-user.model";
 import { DataActionModel } from "@models/common/data-action.model";
 import { Store } from "@ngrx/store";
 import * as selectors from "@store/auth/selectors/auth.selectors";
@@ -95,6 +98,23 @@ export class AuthFacadeService {
 
   public getUpdateProfileFBLoading$(): Observable<boolean> {
     return this._store.select(selectors.selectUpdateProfileFB);
+  }
+
+  public verifyEmail(): void {
+    const props = actions.verifyEmail();
+    this._store.dispatch(props);
+  }
+
+  public forgotPassword(payload: LoginFormModel): void {
+    const action: DataActionModel<LoginFormModel> = {
+      url: collectionFBUser,
+      payload,
+    };
+
+    const props = actions.forgotPassword({
+      action,
+    });
+    this._store.dispatch(props);
   }
 
   public setCurrentUser(currentUser: CurrentUserModel): void {

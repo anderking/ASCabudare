@@ -35,6 +35,7 @@ export class AuthService {
    */
   public initAuthListener(): void {
     const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
+    console.log(currentUser)
     if (currentUser) {
       const subscription = new Observable((observer) => {
         const docRef = doc(this.afDB, `${currentUser.uid}/User`);
@@ -47,8 +48,17 @@ export class AuthService {
         );
       });
       subscription.subscribe((user: CurrentUserModel) => {
-        this._authFacadeService.updateProfileFB(user);
-        this._authFacadeService.setCurrentUser(user);
+        console.log(user)
+        if(user){
+          user = {
+            ...user,
+            emailVerified: currentUser.emailVerified
+          }
+          this._authFacadeService.updateProfileFB(user);
+          this._authFacadeService.setCurrentUser(user);
+        }else{
+
+        }
       });
     }
   }
@@ -91,6 +101,18 @@ export class AuthService {
     const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
     if (currentUser == null) {
       localStorage.clear();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Verifica si hay un un usuario autenticado que intente accedeer al login o register para retornar el Guard
+   */
+  public isVerifyEmail(): boolean {
+    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
+    if (currentUser && currentUser.emailVerified) {
       return true;
     } else {
       return false;

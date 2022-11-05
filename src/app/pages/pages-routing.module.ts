@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { PagesComponent } from "./pages.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { NotAllowedComponent } from "./not-allowed/not-allowed.component";
+import { NotVerifyComponent } from "./not-verify/not-verify.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
       { path: "", redirectTo: "404", pathMatch: "full" },
       { path: "404", component: NotFoundComponent },
       { path: "accessdenied", component: NotAllowedComponent },
+      { path: "verify-email", component: NotVerifyComponent },
       { path: "**", redirectTo: "", pathMatch: "full" },
     ],
   },

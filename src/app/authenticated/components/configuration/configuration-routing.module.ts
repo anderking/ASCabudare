@@ -1,14 +1,11 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ConfigurationComponent } from "./configuration.component";
-import { AuthGuard } from "../../../core/services/guard/auth.guard";
 
 const routes: Routes = [
   {
     path: "",
-    component: ConfigurationComponent,
     children: [
-      { path: "", component: ConfigurationComponent },
+      { path: "", redirectTo: "profile", pathMatch: "full" },
       {
         path: "ingreso-egreso",
         loadChildren: () =>
@@ -16,7 +13,6 @@ const routes: Routes = [
             (m) => m.IngresoEgresoModule
           ),
       },
-
       {
         path: "category",
         loadChildren: () =>
@@ -24,7 +20,6 @@ const routes: Routes = [
             (m) => m.CategoryModule
           ),
       },
-
       {
         path: "profile",
         loadChildren: () =>
@@ -34,8 +29,6 @@ const routes: Routes = [
       },
     ],
   },
-
-  { path: "", component: ConfigurationComponent },
 ];
 
 @NgModule({
