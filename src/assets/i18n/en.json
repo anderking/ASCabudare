@@ -1,0 +1,78 @@
+{
+  "BUTTONS": {
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "UPDATE": "Update",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "CLEAN": "Clean",
+    "CANCEL": "Cancel",
+    "BACK": "Back",
+    "UPLOAD": "Upload",
+    "LOGIN": "Login",
+    "SEND_EMAIL": "Send Email",
+    "REGISTER": "Register",
+    "YES": "Yes",
+    "NO": "No"
+  },
+  "TEXTS": {
+    "FORGOT_PASSWORD": "Forgot Password?",
+    "CREATE_ACCOUNT": "Create an Account",
+    "BACK_LOGIN": "Already have an account? Login",
+    "CONFIRMATION": "Are you sure you want to delete this record?",
+    "SEARCH": "Search",
+    "REGISTERS": "Registers",
+    "SELECT_AN_OPTION": "Select an option",
+    "EARNINGS": "Earnings",
+    "EARNINGS_ANNUAL": "Earnings (Annual)"
+  },
+  "VALIDATIONS": {
+    "REQUIRED": "Field required",
+    "EMAIL": "Email incorrect, example: name@company.com",
+    "PASSWORD": "The password must have a minimum of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+  },
+  "TITLES": {
+    "INGRESS_EGRESS": "Ingress Egress",
+    "CATEGORY": "Category",
+    "PROFILE": "Profile",
+    "REGISTER": "Create an Account",
+    "LOGIN": "Welcome",
+    "FORGOT_PASSWORD": "Forgot Password",
+    "CONFIRMATION": "Confirmation"
+  },
+  "PROPERTIES": {
+    "NAME": "Name",
+    "DISPLAY_NAME": "DisplayName",
+    "DESCRIPTION": "Description",
+    "PHONE_NUMBER": "PhoneNumber",
+    "LOCAL_CURRENCY": "Local Currency",
+    "PHOTO_URL": "PhotoURL",
+    "UPLOAD_FILE": "Upload File",
+    "SELECT_AN_OPTION": "Select an option",
+    "TYPE": "Type",
+    "CATEGORY": "Category",
+    "DATE": "Date",
+    "AMOUNT": "Amount",
+    "STATE": "State",
+    "EDIT": "Edit",
+    "DELETE": "Delete"
+  },
+  "ROUTERS": {
+    "PROFILE": "Profile",
+    "LOGOUT": "Logout",
+    "DASHBOARD": "Dashboard",
+    "CONFIGURATION": "Configurations",
+    "CATEGORY": "Category",
+    "INGRESS_EGRESS": "Ingress Egress"
+  },
+  "MESSAGES": {
+    "CREATE_SUCCESS": "Registry added successfully",
+    "UPDATE_SUCCESS": "Registry updated successfully",
+    "DELETE_SUCCESS": "Registry deleted successfully",
+    "USER_UPDATE_SUCCESS": "User updated successfully",
+    "UPLOAD_FILE_SUCCESS": "File uploaded successfully",
+    "UPLOAD_FILE_REQUERID": "File required",
+    "VALID_FILE_EXTENSION": "Only IMG or PNG files are allowed",
+    "VALID_FILE_SIZE": "Maximum size allowed"
+  }
+}

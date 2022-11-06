@@ -7,20 +7,16 @@ import {
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
-import {
-  LoginFormModel,
-  CurrentUserModel,
-} from "@models/auth/current-user.model";
+import { LoginFormModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
-import { filter, first, takeUntil } from "rxjs/operators";
+import { takeUntil } from "rxjs/operators";
 import { AuthService } from "@services/auth/auth.service";
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
+  selector: "app-forgot-password",
+  templateUrl: "./forgot-password.component.html",
 })
-export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ForgotPasswordComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
   public dataForm: LoginFormModel;
   public isLoading: boolean;
@@ -40,17 +36,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((loading: boolean) => {
         this.isLoading = loading;
       });
-
-    this._authFacadeService
-      .getLogin$()
-      .pipe(
-        first((login) => !isNullOrUndefined(login)),
-        takeUntil(this._finisher)
-      )
-      .subscribe((login: CurrentUserModel) => {
-        // console.log("LOGIN RESPONSE", login);
-        this._authService.setCurrentUserEncrypt(login);
-      });
   }
 
   ngAfterViewInit(): void {
@@ -66,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataForm = { ...this.mainForm.form.getRawValue() };
     if (this.mainForm.form.valid) {
       console.log("LOGIN", this.dataForm);
-      this._authFacadeService.login(this.dataForm);
+      this._authFacadeService.forgotPassword(this.dataForm);
     }
   }
 }

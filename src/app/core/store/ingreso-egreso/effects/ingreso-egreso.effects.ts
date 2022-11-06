@@ -6,6 +6,7 @@ import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import * as actions from "../actions/ingreso-egreso.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
+import { TranslateService } from "@ngx-translate/core";
 /**
  * Efecto para escuchar acciones de la entidad
  */
@@ -58,11 +59,15 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
           switchMap((item: IngresoEgresoModel) => {
-            let message = "Registro agregado exitosamente";
+            let message = this.translateService.instant(
+              "MESSAGES.CREATE_SUCCESS"
+            );
             const payload: any = params.props.payload;
             console.log(payload);
             if (payload.id) {
-              message = "Registro actualizado exitosamente";
+              message = this.translateService.instant(
+                "MESSAGES.UPDATE_SUCCESS"
+              );
             }
             return [
               actions.addIngresoEgreso({ item }),
@@ -86,7 +91,9 @@ export class IngresoEgresoEffects {
       switchMap((params) =>
         this.firebaseService.delete$(params.props).pipe(
           switchMap((item: any) => {
-            const message = "Registro eliminado exitosamente";
+            const message = this.translateService.instant(
+              "MESSAGES.DELETE_SUCCESS"
+            );
             item = params.props.payload;
             const id = item.id;
             return [
@@ -111,6 +118,7 @@ export class IngresoEgresoEffects {
     private _actions$: Actions,
     private firebaseService: FirebaseService<
       IngresoEgresoModel | IngresoEgresoModel[]
-    >
+    >,
+    private translateService: TranslateService
   ) {}
 }

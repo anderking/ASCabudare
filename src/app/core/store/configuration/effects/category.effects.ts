@@ -7,6 +7,7 @@ import { catchError, switchMap } from "rxjs/operators";
 import * as actions from "../actions/category.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
 import { CategoryModel } from "@models/configurations/category.model";
+import { TranslateService } from "@ngx-translate/core";
 /**
  * Efecto para escuchar acciones de la entidad
  */
@@ -59,11 +60,15 @@ export class CategoryEffects {
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
           switchMap((item: CategoryModel) => {
-            let message = "Registro agregado exitosamente";
+            let message = this.translateService.instant(
+              "MESSAGES.CREATE_SUCCESS"
+            );
             const payload: any = params.props.payload;
             console.log(payload);
             if (payload.id) {
-              message = "Registro actualizado exitosamente";
+              message = this.translateService.instant(
+                "MESSAGES.UPDATE_SUCCESS"
+              );
             }
             return [
               actions.addCategory({ item }),
@@ -87,7 +92,9 @@ export class CategoryEffects {
       switchMap((params) =>
         this.firebaseService.delete$(params.props).pipe(
           switchMap((item: any) => {
-            const message = "Registro eliminado exitosamente";
+            const message = this.translateService.instant(
+              "MESSAGES.DELETE_SUCCESS"
+            );
             item = params.props.payload;
             const id = item.id;
             return [
@@ -110,6 +117,7 @@ export class CategoryEffects {
    */
   constructor(
     private _actions$: Actions,
-    private firebaseService: FirebaseService<CategoryModel | CategoryModel[]>
+    private firebaseService: FirebaseService<CategoryModel | CategoryModel[]>,
+    private translateService: TranslateService
   ) {}
 }

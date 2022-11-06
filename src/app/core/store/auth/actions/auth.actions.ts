@@ -1,7 +1,7 @@
 import { DataActionModel } from "@models/common/data-action.model";
 import {
   LoginFormModel,
-  CurrentUserModel
+  CurrentUserModel,
 } from "@models/auth/current-user.model";
 import { createAction, props } from "@ngrx/store";
 
@@ -53,6 +53,23 @@ export const updateProfileFB = createAction(
 export const updateProfileFBSuccess = createAction(
   "[Login] Update ProfileFBSuccess",
   props<{ updateProfileFB: CurrentUserModel }>()
+);
+
+export const verifyEmail = createAction("[Login] Verify Email");
+
+export const verifyEmailSuccess = createAction(
+  "[Login] Verify EmailSuccess",
+  props<{ message: string }>()
+);
+
+export const forgotPassword = createAction(
+  "[Login] ForgotPassword",
+  props<{ action: DataActionModel<LoginFormModel> }>()
+);
+
+export const forgotPasswordSuccess = createAction(
+  "[Login] ForgotPassword Success",
+  props<{ message: string }>()
 );
 
 export const setCurrentUser = createAction(

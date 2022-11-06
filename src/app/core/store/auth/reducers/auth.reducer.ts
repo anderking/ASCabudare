@@ -88,6 +88,26 @@ const entityReducer = createReducer(
     loading: false,
   })),
 
+  on(actions.verifyEmail, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(actions.verifyEmailSuccess, (state, { message }) => ({
+    ...state,
+    loading: false,
+  })),
+
+  on(actions.forgotPassword, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(actions.forgotPasswordSuccess, (state, { message }) => ({
+    ...state,
+    loading: false,
+  })),
+
   on(actions.clear, (state) => {
     return {
       ...state,
@@ -95,6 +115,9 @@ const entityReducer = createReducer(
       register: null,
       userDoc: null,
       currentUser: null,
+      loading: false,
+      updateProfile: false,
+      updateProfileFB: false,
     };
   }),
 
@@ -102,6 +125,8 @@ const entityReducer = createReducer(
     return {
       ...state,
       loading: false,
+      updateProfile: false,
+      updateProfileFB: false,
     };
   })
 );

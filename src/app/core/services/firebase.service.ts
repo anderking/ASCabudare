@@ -6,6 +6,8 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   getAuth,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updateProfile,
 } from "@angular/fire/auth";
@@ -31,8 +33,6 @@ import { AuthService } from "@services/auth/auth.service";
   providedIn: "root",
 })
 export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
-  private url = environment.apiUrl;
-
   constructor(
     public afAuth: Auth,
     private afDB: Firestore,
@@ -41,7 +41,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   ) {}
 
   /**
-   * Servicio que se usa para comunicar la api back por get
+   * Servicio para autenticar un usuario por email y password
    * @param action Contiene el body DataActionModel
    */
   signInWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
@@ -58,7 +58,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio que se usa para comunicar la api back por get
+   * Servicio para crear un usuario con email y password
    * @param action Contiene el body DataActionModel
    */
   createUserWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
@@ -74,7 +74,101 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio que se usa para comunicar la api back por get
+   * Servicio para enviar correo de verificación
+   */
+  sendEmailVerification$(): Observable<any> {
+    const auth = getAuth();
+    const subscription = from(sendEmailVerification(auth.currentUser));
+    return subscription.pipe(
+      map(
+        () =>
+          "Email enviado, recuerde revisar su bandeja de entrada, correos no deseado o spam."
+      )
+    );
+  }
+
+  /**
+   * Servicio para recuperar el password de un usuario
+   * @param action Contiene el body DataActionModel
+   */
+  sendPasswordResetEmail$(action: DataActionModel<T>): Observable<any> {
+    const data: any = action.payload;
+    const auth = getAuth();
+    const subscription = from(sendPasswordResetEmail(auth, data.email));
+    return subscription.pipe(
+      map(
+        () =>
+          "Email enviado, recuerde revisar su bandeja de entrada, correos no deseado o spam."
+      )
+    );
+  }
+
+  /**
+   * Servicio para setear los datos del usuario
+   * @param action Contiene el body DataActionModel
+   */
+  setUserDoc$(action: DataActionModel<T>): Observable<any> {
+    //console.log("setUserDoc$", action);
+    const data: any = action.payload;
+    const subscription = from(
+      new Promise(async (resolve, reject) => {
+        try {
+          const docRef = doc(this.afDB, `${action.url}`);
+          resolve(setDoc(docRef, data));
+        } catch (error) {
+          reject(error);
+        }
+      })
+    );
+    return subscription.pipe(map(() => data));
+  }
+
+  /**
+   * Servicio para actualizar el perfil del usuario
+   * @param action Contiene el body DataActionModel
+   */
+  updateProfile$(action: DataActionModel<T>): Observable<any> {
+    console.log("updateProfile$", action);
+    const data: any = action.payload;
+    const subscription = from(
+      new Promise(async (resolve, reject) => {
+        try {
+          const docRef = doc(this.afDB, `${action.url}`);
+          resolve(setDoc(docRef, data));
+        } catch (error) {
+          reject(error);
+        }
+      })
+    );
+    return subscription.pipe(map(() => data));
+  }
+
+  /**
+   * Servicio para actualizar el perfil del usuario en autenticación
+   * @param action Contiene el body DataActionModel
+   */
+  updateProfileFB$(action: DataActionModel<T>): Observable<any> {
+    console.log("updateProfileFB$", action);
+    const data: any = action.payload;
+    const auth = getAuth();
+    const subscription = from(
+      new Promise(async (resolve, reject) => {
+        try {
+          const update = updateProfile(auth.currentUser, {
+            displayName: data.displayName,
+            photoURL: data.photoURL,
+          });
+          resolve(update);
+        } catch (error) {
+          reject(error);
+        }
+      })
+    );
+    return subscription.pipe(map(() => data));
+  }
+
+  /**
+   * Servicio para subir archivos
    * @param action Contiene el body DataActionModel
    */
   uploadAttachment$(action: DataActionModel<T>): Observable<any> {
@@ -95,71 +189,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio que se usa para comunicar la api back por get
-   * @param action Contiene el body DataActionModel
-   */
-  setUserDoc$(action: DataActionModel<T>): Observable<any> {
-    //console.log("setUserDoc$", action);
-    const data: any = action.payload;
-    const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          const docRef = doc(this.afDB, `${action.url}`);
-          resolve(setDoc(docRef, data));
-        } catch (error) {
-          reject(error);
-        }
-      })
-    );
-    return subscription.pipe(map(() => data));
-  }
-
-  /**
-   * Servicio que se usa para comunicar la api back por get
-   * @param action Contiene el body DataActionModel
-   */
-  updateProfile$(action: DataActionModel<T>): Observable<any> {
-    //console.log("updateProfile$", action);
-    const data: any = action.payload;
-    const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          const docRef = doc(this.afDB, `${action.url}`);
-          resolve(setDoc(docRef, data));
-        } catch (error) {
-          reject(error);
-        }
-      })
-    );
-    return subscription.pipe(map(() => data));
-  }
-
-  /**
-   * Servicio que se usa para comunicar la api back por get
-   * @param action Contiene el body DataActionModel
-   */
-  updateProfileFB$(action: DataActionModel<T>): Observable<any> {
-    //console.log("updateProfileFB$", action);
-    const data: any = action.payload;
-    const auth = getAuth();
-    const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          const update = updateProfile(auth.currentUser, {
-            displayName: data.displayName,
-            photoURL: data.photoURL,
-          });
-          resolve(update);
-        } catch (error) {
-          reject(error);
-        }
-      })
-    );
-    return subscription.pipe(map(() => data));
-  }
-
-  /**
-   * Servicio que se usa para comunicar la api back por get
+   * Servicio para consultar registros
    * @param action Contiene el body DataActionModel
    */
   search$(action: DataActionModel<T>): Observable<T[]> {
@@ -182,7 +212,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio que se usa para comunicar la api back por get
+   * Servicio para consultar registros y mapear los datos
    * @param action Contiene el body DataActionModel
    */
   searchCombo$(action: DataActionModel<T>): Observable<T[]> {
@@ -214,7 +244,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio que se usa para comunicar la api back por get
+   * Servicio para obtener un registro
    * @param action Contiene el body DataActionModel
    */
   searchOne$(action: DataActionModel<T>): Observable<T> {
@@ -236,7 +266,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio que se usa para comunicar la api back para save
+   * Servicio para crear o actualizar registros
    * @param action Contiene el body DataActionModel
    */
   create$(action: DataActionModel<T>): Observable<T> {
@@ -273,7 +303,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio que se usa para comunicar la api back para delete
+   * Servicio para eliminar registros
    * @param action Contiene el body DataActionModel
    */
   delete$(action: DataActionModel<T>): Observable<T> {

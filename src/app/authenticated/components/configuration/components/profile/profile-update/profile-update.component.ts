@@ -20,6 +20,7 @@ import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { ToastService } from "@services/ui/toast.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-profile-update",
@@ -34,7 +35,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
-  public fileName = "Subir archivo";
+  public fileName = "";
   public errorFiles = "";
   public currentFile: any = null;
 
@@ -44,7 +45,8 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     private _fb: UntypedFormBuilder,
     private _authFacadeService: AuthFacadeService,
     private _attachmentFacadeService: AttachmentFacadeService,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private translateService: TranslateService
   ) {
     this.mainForm = this.initForm();
   }
@@ -84,12 +86,15 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getUrlAttachment$()
       .pipe(filter((x) => !isNullOrUndefinedEmpty(x)))
       .subscribe((url) => {
-        this._toastService.show("Successfully uploaded", {
-          classname: "bg-success text-light",
-          delay: 5000,
-        });
+        this._toastService.show(
+          this.translateService.instant("MESSAGES.UPLOAD_FILE_SUCCESS"),
+          {
+            classname: "bg-success text-light",
+            delay: 5000,
+          }
+        );
         this.currentFile = null;
-        this.fileName = "Subir archivo";
+        this.fileName = "";
         this.mainForm.get("photoURL").setValue(url);
       });
   }
@@ -137,6 +142,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   clean() {
     this.mainForm.reset();
     this.errorFiles = "";
+    this.fileName = "";
   }
 
   goBack() {
@@ -159,13 +165,18 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
         let isValid = true;
 
         if (!extension) {
-          this.errorFiles = "Solo se permiten archivos de tipo IMG o PNG";
+          this.errorFiles = this.translateService.instant(
+            "MESSAGES.VALID_FILE_EXTENSION"
+          );
           isValid = false;
         }
 
         if (currentFile.size > max_size) {
           this.errorFiles =
-            "Tamaño maximo permitido " + max_size / 1000000 + "Mb";
+            this.translateService.instant("MESSAGES.VALID_FILE_SIZE") +
+            " " +
+            max_size / 1000000 +
+            "Mb";
           isValid = false;
         }
         if (isValid) {
@@ -183,10 +194,13 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     if (this.currentFile) {
       this._attachmentFacadeService.create(this.currentFile);
     } else {
-      this._toastService.show("Upload file pleases", {
-        classname: "bg-danger text-light",
-        delay: 5000,
-      });
+      this._toastService.show(
+        this.translateService.instant("MESSAGES.UPLOAD_FILE_REQUERID"),
+        {
+          classname: "bg-danger text-light",
+          delay: 5000,
+        }
+      );
     }
   }
 
