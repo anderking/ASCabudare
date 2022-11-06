@@ -1,23 +1,60 @@
 {
-  "LOGIN": {
-    "TITLE": "Bienvenido",
-    "TEXT_BUTTON_PRIMARY": "Iniciar sesión",
-    "TEXT_FORGOT_PASSWORD": "¿Recuperar contraseña?",
-    "TEXT_REGISTER": "Crear una cuenta"
+  "BUTTONS": {
+    "SAVE": "Guardar",
+    "CREATE": "Crear",
+    "UPDATE": "Actualizar",
+    "EDIT": "Editar",
+    "DELETE": "Eliminar",
+    "CLEAN": "Limpiar",
+    "CANCEL": "Cancelar",
+    "BACK": "Regresar",
+    "UPLOAD": "Subir",
+    "LOGIN": "Acceder",
+    "SEND_EMAIL": "Enviar Email",
+    "REGISTER": "Registrar",
+    "YES": "Si",
+    "NO": "No"
   },
-  "FORGOT_PASSWORD": {
-    "TITLE": "Recuperar contraseña",
-    "TEXT_BUTTON_PRIMARY": "Enviar email",
-    "TEXT_LOGIN": "¿Ya tienes una cuenta? Accede"
-  },
-  "REGISTER": {
-    "TITLE": "Crear una cuenta",
-    "TEXT_BUTTON_PRIMARY": "Crear cuenta",
-    "TEXT_LOGIN": "¿Ya tienes una cuenta? Accede"
+  "TEXTS": {
+    "FORGOT_PASSWORD": "¿Recuperar contraseña?",
+    "CREATE_ACCOUNT": "Crear una cuenta",
+    "BACK_LOGIN": "¿Ya tienes una cuenta? Accede",
+    "CONFIRMATION": "¿Está seguro de que desea eliminar este registro?",
+    "SEARCH": "Buscar",
+    "REGISTERS": "Registros",
+    "SELECT_AN_OPTION": "Seleccione una opción",
+    "EARNINGS": "Ganancias",
+    "EARNINGS_ANNUAL": "Ganancias (Anuales)"
   },
   "VALIDATIONS": {
     "REQUIRED": "Campo requerido",
     "EMAIL": "Email incorrecto, ejemplo: name@company.com",
     "PASSWORD": "La contraseña debe tener un mínimo de ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial"
+  },
+  "TITLES": {
+    "INGRESS_EGRESS": "Ingreso Egreso",
+    "CATEGORY": "Categoría",
+    "PROFILE": "Perfil",
+    "REGISTER": "Crear una cuenta",
+    "LOGIN": "Bienvenido",
+    "FORGOT_PASSWORD": "Recuperar contraseña",
+    "CONFIRMATION": "Confirmación"
+  },
+  "PROPERTIES": {
+    "NAME": "Nombre",
+    "DISPLAY_NAME": "Nombre completo",
+    "DESCRIPTION": "Descripción",
+    "PHONE_NUMBER": "Número de teléfono",
+    "LOCAL_CURRENCY": "Moneda local",
+    "PHOTO_URL": "Url foto",
+    "UPLOAD_FILE": "Subir archivo",
+    "SELECT_AN_OPTION": "Seleccione una opción",
+    "TYPE": "Tipo",
+    "CATEGORY": "Categoría",
+    "DATE": "Fecha",
+    "AMOUNT": "Monto",
+    "STATE": "Estado",
+    "EDIT": "Editar",
+    "DELETE": "Eliminar"
   }
 }

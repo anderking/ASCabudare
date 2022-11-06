@@ -6,7 +6,7 @@
     <div class="col-xl-12">
 
       <div class="text-center">
-        <h1 class="h4 text-gray-900 mb-4">Profile</h1>
+        <h1 class="h4 text-gray-900 mb-4">{{ 'TITLES.PROFILE' | translate }}</h1>
       </div>
 
       <div *ngIf="!isLoading">
@@ -19,7 +19,7 @@
                 <div class="form-row">
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <label>DisplayName:</label>
+                    <label>{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
                     <input type="text" class="form-control" formControlName="displayName"
                       [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
                     <div class="invalid-feedback" *ngIf="isValidField('displayName')">
@@ -28,7 +28,7 @@
                   </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                    <label>PhoneNumber:</label>
+                    <label>{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
                     <input type="text" class="form-control" formControlName="phoneNumber"
                       [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
                     <div class="invalid-feedback" *ngIf="isValidField('phoneNumber')">
@@ -37,7 +37,7 @@
                   </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                    <label>Local Currency:</label>
+                    <label>{{ 'PROPERTIES.LOCAL_CURRENCY' | translate }}:</label>
                     <input type="text" class="form-control" formControlName="currency"
                       [ngClass]="{'is-invalid': mainForm.get('currency')?.touched && !mainForm.get('currency')?.valid, 'is-valid': mainForm.get('currency')?.touched && mainForm.get('currency')?.valid}">
                     <div class="invalid-feedback" *ngIf="isValidField('currency')">
@@ -46,7 +46,7 @@
                   </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <label>PhotoURL:</label>
+                    <label>{{ 'PROPERTIES.PHOTO_URL' | translate }}:</label>
                     <input type="text" class="form-control" formControlName="photoURL"
                       [ngClass]="{'is-invalid': mainForm.get('photoURL')?.touched && !mainForm.get('photoURL')?.valid, 'is-valid': mainForm.get('photoURL')?.touched && mainForm.get('photoURL')?.valid}">
                     <div class="invalid-feedback" *ngIf="isValidField('photoURL')">
@@ -55,8 +55,8 @@
                   </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <label>{{ 'PROPERTIES.UPLOAD_FILE' | translate }}:</label>
                     <div class="input-group mb-3">
-
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" (change)="changeFile($event)">
                         <label class="custom-file-label" for="inputGroupFile01">{{fileName}}</label>
@@ -64,12 +64,10 @@
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" (click)="uploadFile()"
                           [disabled]="currentFile === null">
-                          <div *ngIf="!isLoadingAttachment">Upload</div>
+                          <div *ngIf="!isLoadingAttachment">{{ 'BUTTONS.UPLOAD' | translate }}</div>
                           <div *ngIf="isLoadingAttachment">
                             <div class="d-flex justify-content-center">
-                              <div class="spinner-border spinner-border-sm" role="status">
-                                <span class="sr-only">Loading...</span>
-                              </div>
+                              <div class="spinner-border spinner-border-sm" role="status"></div>
                             </div>
                           </div>
                         </button>
@@ -84,24 +82,22 @@
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
                     <button *ngIf="!isLoading" class="btn btn-primary btn-user btn-block" (click)="onSubmit()"
                       [disabled]="mainForm.invalid">
-                      Save
+                      {{ 'BUTTONS.SAVE' | translate }}
                     </button>
                     <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
-                      <div class="spinner-border spinner-border-sm" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
+                      <div class="spinner-border spinner-border-sm" role="status"></div>
                     </button>
                   </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
                     <button type="button" class="btn btn-secondary btn-user btn-block" (click)="clean()">
-                      Clean
+                      {{ 'BUTTONS.CLEAN' | translate }}
                     </button>
                   </div>
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
                     <button type="button" class="btn btn-info btn-user btn-block" (click)="goBack()">
-                      Back
+                      {{ 'BUTTONS.BACK' | translate }}
                     </button>
                   </div>
 
@@ -113,9 +109,7 @@
       </div>
       <div *ngIf="isLoading">
         <div class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+          <div class="spinner-border" role="status"></div>
         </div>
       </div>
     </div>

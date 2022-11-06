@@ -1,7 +1,7 @@
 <div *ngIf="!isLoading">
 
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Earnings</h1>
+    <h1 class="h3 mb-0 text-gray-800">{{ 'TEXTS.EARNINGS' | translate }}</h1>
   </div>
 
   <div class="row">
@@ -12,7 +12,8 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-uppercase mb-1"
-                [ngClass]="{'text-success': earnings >= 0, 'text-danger': earnings < 0 }">Earnings (Annual)</div>
+                [ngClass]="{'text-success': earnings >= 0, 'text-danger': earnings < 0 }">{{ 'TEXTS.EARNINGS_ANNUAL' |
+                translate }}</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">{{earnings | million:'1.2-2'}}
                 {{currentUser?.currency}}</div>
             </div>
@@ -65,8 +66,6 @@
 
 <div *ngIf="isLoading" class="spinner">
   <div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
+    <div class="spinner-border" role="status"></div>
   </div>
 </div>

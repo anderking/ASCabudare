@@ -34,7 +34,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
-  public fileName = "Subir archivo";
+  public fileName = "";
   public errorFiles = "";
   public currentFile: any = null;
 
@@ -89,7 +89,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
           delay: 5000,
         });
         this.currentFile = null;
-        this.fileName = "Subir archivo";
+        this.fileName = "";
         this.mainForm.get("photoURL").setValue(url);
       });
   }
@@ -137,6 +137,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   clean() {
     this.mainForm.reset();
     this.errorFiles = "";
+    this.fileName = "";
   }
 
   goBack() {

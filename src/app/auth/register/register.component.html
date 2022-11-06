@@ -8,7 +8,7 @@
         <div class="col-lg-7">
           <div class="p-5">
             <div class="text-center">
-              <h1 class="h4 text-gray-900 mb-4">{{ 'REGISTER.TITLE' | translate }}</h1>
+              <h1 class="h4 text-gray-900 mb-4">{{ 'TITLES.REGISTER' | translate }}</h1>
             </div>
             <form class="user" #mainForm="ngForm">
 
@@ -43,7 +43,7 @@
               <div class="form-group">
                 <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
                   [disabled]="mainForm.invalid" (click)="onSubmit()">
-                  {{ 'REGISTER.TITLE' | translate }}
+                  {{ 'BUTTONS.REGISTER' | translate }}
                 </button>
                 <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
                   <div class="spinner-border spinner-border-sm" role="status"></div>
@@ -51,7 +51,7 @@
               </div>
               <div class="form-group">
                 <div class="text-center">
-                  <a class="small" [routerLink]="[ '/login' ]">{{ 'REGISTER.TEXT_LOGIN' | translate }}</a>
+                  <a class="small" [routerLink]="[ '/login' ]">{{ 'TEXTS.BACK_LOGIN' | translate }}</a>
                 </div>
               </div>
             </form>
