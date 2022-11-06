@@ -43,7 +43,7 @@ export function createTranslateLoader(http: HttpClient) {
       multi: true,
     },
     AuthGuard,
-    AuthRedirectGuard,
+    AuthRedirectGuard
   ],
 })
 export class CoreModule {}

@@ -56,5 +56,23 @@
     "STATE": "State",
     "EDIT": "Edit",
     "DELETE": "Delete"
+  },
+  "ROUTERS": {
+    "PROFILE": "Profile",
+    "LOGOUT": "Logout",
+    "DASHBOARD": "Dashboard",
+    "CONFIGURATION": "Configurations",
+    "CATEGORY": "Category",
+    "INGRESS_EGRESS": "Ingress Egress"
+  },
+  "MESSAGES": {
+    "CREATE_SUCCESS": "Registry added successfully",
+    "UPDATE_SUCCESS": "Registry updated successfully",
+    "DELETE_SUCCESS": "Registry deleted successfully",
+    "USER_UPDATE_SUCCESS": "User updated successfully",
+    "UPLOAD_FILE_SUCCESS": "File uploaded successfully",
+    "UPLOAD_FILE_REQUERID": "File required",
+    "VALID_FILE_EXTENSION": "Only IMG or PNG files are allowed",
+    "VALID_FILE_SIZE": "Maximum size allowed"
   }
 }

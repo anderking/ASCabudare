@@ -9,12 +9,16 @@ import {
 import * as actions from "../actions/auth.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
 import { FirebaseService } from "@services/firebase.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private _actions$: Actions,
-    private _firebaseService: FirebaseService<LoginFormModel | CurrentUserModel>
+    private _firebaseService: FirebaseService<
+      LoginFormModel | CurrentUserModel
+    >,
+    private translateService: TranslateService
   ) {}
 
   login$ = createEffect(() => {
@@ -97,7 +101,9 @@ export class AuthEffects {
       switchMap(({ action }) =>
         this._firebaseService.updateProfile$(action).pipe(
           switchMap((updateProfileFB: CurrentUserModel) => {
-            const message = "Usuario actualizado exitosamente";
+            const message = this.translateService.instant(
+              "MESSAGES.USER_UPDATE_SUCCESS"
+            );
             return [
               actions.updateProfileSuccess({ updateProfileFB }),
               sharedActions.setMessage({ message }),

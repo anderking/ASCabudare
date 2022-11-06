@@ -56,5 +56,23 @@
     "STATE": "Estado",
     "EDIT": "Editar",
     "DELETE": "Eliminar"
+  },
+  "ROUTERS": {
+    "PROFILE": "Perfil",
+    "LOGOUT": "Cerrar sesión",
+    "DASHBOARD": "Dashboard",
+    "CONFIGURATION": "Configuraciones",
+    "CATEGORY": "Categoría",
+    "INGRESS_EGRESS": "Ingreso Egreso"
+  },
+  "MESSAGES": {
+    "CREATE_SUCCESS": "Registro agregado exitosamente",
+    "UPDATE_SUCCESS": "Registro actualizado exitosamente",
+    "DELETE_SUCCESS": "Registro eliminado exitosamente",
+    "USER_UPDATE_SUCCESS": "Usuario actualizado exitosamente",
+    "UPLOAD_FILE_SUCCESS": "Archivo subido exitosamente",
+    "UPLOAD_FILE_REQUERID": "Archivo requerido",
+    "VALID_FILE_EXTENSION": "Solo se permiten archivos de tipo IMG o PNG",
+    "VALID_FILE_SIZE": "Tamaño maximo permitido"
   }
 }
