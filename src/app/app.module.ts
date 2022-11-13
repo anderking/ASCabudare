@@ -1,4 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { AuthModule } from "./auth/auth.module";
@@ -10,8 +11,7 @@ import { environment } from "src/environments/environment";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AuthenticatedModule } from "./authenticated/authenticated.module";
 import { CoreModule } from "./core/core.module";
-import { CookieService } from "ngx-cookie-service";
-import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
+import { initializeApp, provideFirebaseApp} from "@angular/fire/app";
 import { provideFirestore, getFirestore } from "@angular/fire/firestore";
 import {
   getStorage,
@@ -19,10 +19,12 @@ import {
 } from "@angular/fire/storage";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AuthModule,
     AuthenticatedModule,
     SharedModule,
@@ -38,9 +40,6 @@ import { getAuth, provideAuth } from "@angular/fire/auth";
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
-  ],
-  providers: [
-    CookieService,
   ],
   bootstrap: [AppComponent],
 })

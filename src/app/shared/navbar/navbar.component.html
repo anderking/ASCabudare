@@ -4,6 +4,11 @@
     <i class="fa fa-bars"></i>
   </button>
 
+  <div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="lang" (ngModelChange)="changeLanguage($event)">
+    <label class="custom-control-label" for="customSwitch1">{{changeLang}}</label>
+  </div>
+
   <ul class="navbar-nav ml-auto">
 
     <li class="nav-item dropdown no-arrow">

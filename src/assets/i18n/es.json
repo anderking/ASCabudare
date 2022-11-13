@@ -24,7 +24,8 @@
     "REGISTERS": "Registros",
     "SELECT_AN_OPTION": "Seleccione una opción",
     "EARNINGS": "Ganancias",
-    "EARNINGS_ANNUAL": "Ganancias (Anuales)"
+    "EARNINGS_ANNUAL": "Ganancias (Anuales)",
+    "CHANGE_LANG": "Cambiar a"
   },
   "VALIDATIONS": {
     "REQUIRED": "Campo requerido",

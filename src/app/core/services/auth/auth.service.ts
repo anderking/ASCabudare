@@ -6,7 +6,7 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
-import { getCurrentUserDecrypt } from "@root/core/utilities/core.utilities";
+import { clearLocalStorage, getCurrentUserDecrypt } from "@root/core/utilities/core.utilities";
 
 @Injectable({
   providedIn: "root",
@@ -26,7 +26,7 @@ export class AuthService {
   public logut(): void {
     this.userSubcription.unsubscribe();
     this._authFacadeService.reset();
-    localStorage.clear();
+    clearLocalStorage()
     this.afAuth.signOut();
   }
 
@@ -35,7 +35,7 @@ export class AuthService {
    */
   public initAuthListener(): void {
     const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
-    console.log(currentUser)
+    //console.log(currentUser)
     if (currentUser) {
       const subscription = new Observable((observer) => {
         const docRef = doc(this.afDB, `${currentUser.uid}/User`);
@@ -48,16 +48,15 @@ export class AuthService {
         );
       });
       subscription.subscribe((user: CurrentUserModel) => {
-        console.log(user)
-        if(user){
+        //console.log(user)
+        if (user) {
           user = {
             ...user,
-            emailVerified: currentUser.emailVerified
-          }
+            emailVerified: currentUser.emailVerified,
+          };
           this._authFacadeService.updateProfileFB(user);
           this._authFacadeService.setCurrentUser(user);
-        }else{
-
+        } else {
         }
       });
     }
@@ -100,7 +99,7 @@ export class AuthService {
   public isAuthRedirect(): boolean {
     const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
     if (currentUser == null) {
-      localStorage.clear();
+      clearLocalStorage()
       return true;
     } else {
       return false;

@@ -38,9 +38,9 @@
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" formControlName="state"
+                      <input class="form-check-input" type="checkbox" id ="state" formControlName="state"
                         [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
-                      <label class="form-check-label">
+                      <label class="form-check-label" for="state">
                         {{ 'PROPERTIES.STATE' | translate }}
                       </label>
                       <div class="invalid-feedback" *ngIf="isValidField('state')">

@@ -1,6 +1,7 @@
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
+import { TranslateService } from "@ngx-translate/core";
 
 export function getCurrentUserDecrypt(): CurrentUserModel {
   try {
@@ -102,4 +103,10 @@ export function groupByMult(items: any[], groups: any[]): any[] {
   });
 
   return levelOne;
+}
+
+export function clearLocalStorage(): void {
+  let lang: string = localStorage.getItem("lang");
+  localStorage.clear();
+  localStorage.setItem("lang", lang != "null" && lang != null ? lang : "es");
 }
