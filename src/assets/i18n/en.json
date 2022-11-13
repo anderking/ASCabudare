@@ -24,7 +24,8 @@
     "REGISTERS": "Registers",
     "SELECT_AN_OPTION": "Select an option",
     "EARNINGS": "Earnings",
-    "EARNINGS_ANNUAL": "Earnings (Annual)"
+    "EARNINGS_ANNUAL": "Earnings (Annual)",
+    "CHANGE_LANG": "Change to"
   },
   "VALIDATIONS": {
     "REQUIRED": "Field required",

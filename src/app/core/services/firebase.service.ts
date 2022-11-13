@@ -128,7 +128,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action Contiene el body DataActionModel
    */
   updateProfile$(action: DataActionModel<T>): Observable<any> {
-    console.log("updateProfile$", action);
+    //console.log("updateProfile$", action);
     const data: any = action.payload;
     const subscription = from(
       new Promise(async (resolve, reject) => {
@@ -148,7 +148,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action Contiene el body DataActionModel
    */
   updateProfileFB$(action: DataActionModel<T>): Observable<any> {
-    console.log("updateProfileFB$", action);
+    //console.log("updateProfileFB$", action);
     const data: any = action.payload;
     const auth = getAuth();
     const subscription = from(

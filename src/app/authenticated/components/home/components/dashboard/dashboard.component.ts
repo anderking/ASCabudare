@@ -21,12 +21,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
   public ingresos_egresos: IngresoEgresoModel[] = [];
   public categories: CategoryModel[] = [];
-  public items: GroupModel<IngresoEgresoModel>[] = [];
+  public items: GroupModel<GroupModel<IngresoEgresoModel>>[] = [];
   public isLoading: boolean;
 
   public totalIngresos: number;
   public totalEgresos: number;
-  public earnings: number;
+  public totalEarnings: number;
   public cantIngresos: any;
   public cantEgresos: any;
 
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((data) => {
-        console.log("DATA", data);
+        //console.log("DATA", data);
         this.calculate(data.ingresos_egresos);
         this.ingresos_egresos = data.ingresos_egresos;
         this.categories = data.categories;
@@ -107,7 +107,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._categoryFacadeService.reset();
   }
 
-  calculate(items: IngresoEgresoModel[]) {
+  private calculate(items: IngresoEgresoModel[]): void {
     this.totalIngresos = 0;
     this.totalEgresos = 0;
     this.cantIngresos = 0;
@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.cantEgresos++;
       }
     });
-    this.earnings = this.totalIngresos - this.totalEgresos;
+    this.totalEarnings = this.totalIngresos - this.totalEgresos;
   }
 
   private chargeIndicatorManager(): void {

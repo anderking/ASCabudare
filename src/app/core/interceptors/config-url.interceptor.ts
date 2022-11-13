@@ -19,7 +19,6 @@ export class ConfiUriInterceptor<T> implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log(request);
     if (request.url.indexOf(environment.apiUrl) > -1) {
       return this.getTokenConfig(false, next, request).pipe(
         catchError((error: HttpErrorResponse) => {
