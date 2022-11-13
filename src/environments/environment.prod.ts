@@ -10,9 +10,6 @@ export const environment = {
     appId: "1:363021279013:web:58927a23e9b3a7381ec4cc",
     measurementId: "G-PC73KDJKRV",
   },
-  failed:
-    "Hay problemas para cargar los datos, revise su conexion a internet o recargue la página",
-    conexionFailed: "Ha ocurrido un error inesperado",
   apiUrl: "https://www.fake.com/api/",
   key: "EAWAutUZ^MPV4vLRJ9IY91^t$*RIhErm",
 };
