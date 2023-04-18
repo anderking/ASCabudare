@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logut();
+    this.auth.logout();
     const actualRoute = window.location.origin;
     window.location.replace(actualRoute);
   }

@@ -23,7 +23,7 @@ export class AuthService {
   /**
    * Cierra la sesion, borra el localStorage y borra el store
    */
-  public logut(): void {
+  public logout(): void {
     this.userSubcription.unsubscribe();
     this._authFacadeService.reset();
     clearLocalStorage()
@@ -89,7 +89,7 @@ export class AuthService {
     if (currentUser != null) {
       return true;
     } else {
-      this.logut();
+      this.logout();
       return false;
     }
   }

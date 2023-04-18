@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this._authService.logut();
+    this._authService.logout();
   }
 
   ngOnDestroy() {

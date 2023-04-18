@@ -25,7 +25,7 @@ export class NotVerifyComponent implements OnInit {
     this._authFacadeService.verifyEmail();
   }
   public logout(): void {
-    this.auth.logut();
+    this.auth.logout();
     const actualRoute = window.location.origin;
     window.location.replace(actualRoute);
   }
