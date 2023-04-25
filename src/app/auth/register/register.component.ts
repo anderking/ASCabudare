@@ -56,6 +56,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
           emailVerified: register.emailVerified,
           phoneNumber: register.phoneNumber,
           currency: "",
+          dayStartDashboard: "",
           photoURL: register.photoURL,
           uid: register.uid,
         };

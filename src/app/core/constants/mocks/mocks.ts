@@ -1,5 +1,5 @@
 import { from } from "rxjs";
-import {} from 'jasmine';
+import {} from "jasmine";
 
 export const storeMock = {
   dispatch: jasmine.createSpy("dispatch"),

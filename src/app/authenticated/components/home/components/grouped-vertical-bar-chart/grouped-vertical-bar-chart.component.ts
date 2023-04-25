@@ -12,7 +12,7 @@ export class GroupedVerticalBarChartComponent implements OnChanges {
   @Input() items: GroupModel<GroupModel<IngresoEgresoModel>>[] = [];
   single: SingleModel[];
   multi: MultiModel[];
-  view: any[] = [400, 400];
+  view: any[] = [500, 400];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -28,7 +28,6 @@ export class GroupedVerticalBarChartComponent implements OnChanges {
   constructor() {}
 
   ngOnChanges(): void {
-    console.log(this.items);
     if (this.items) {
       this.buildChartItems();
     }

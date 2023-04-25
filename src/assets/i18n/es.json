@@ -24,7 +24,7 @@
     "REGISTERS": "Registros",
     "SELECT_AN_OPTION": "Seleccione una opción",
     "EARNINGS": "Ganancias",
-    "EARNINGS_ANNUAL": "Ganancias (Anuales)",
+    "EARNINGS_ANNUAL": "Ganancias",
     "CHANGE_LANG": "Cambiar a"
   },
   "VALIDATIONS": {
@@ -53,10 +53,13 @@
     "TYPE": "Tipo",
     "CATEGORY": "Categoría",
     "DATE": "Fecha",
+    "STARTDATE": "Fecha inicio",
+    "ENDDATE": "Fecha fin",
     "AMOUNT": "Monto",
     "STATE": "Estado",
     "EDIT": "Editar",
-    "DELETE": "Eliminar"
+    "DELETE": "Eliminar",
+    "STARTDAY": "Día de inicio"
   },
   "ROUTERS": {
     "PROFILE": "Perfil",

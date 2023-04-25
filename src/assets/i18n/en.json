@@ -24,7 +24,7 @@
     "REGISTERS": "Registers",
     "SELECT_AN_OPTION": "Select an option",
     "EARNINGS": "Earnings",
-    "EARNINGS_ANNUAL": "Earnings (Annual)",
+    "EARNINGS_ANNUAL": "Earnings",
     "CHANGE_LANG": "Change to"
   },
   "VALIDATIONS": {
@@ -53,10 +53,13 @@
     "TYPE": "Type",
     "CATEGORY": "Category",
     "DATE": "Date",
+    "STARTDATE": "Start Date",
+    "ENDDATE": "End Date",
     "AMOUNT": "Amount",
     "STATE": "State",
     "EDIT": "Edit",
-    "DELETE": "Delete"
+    "DELETE": "Delete",
+    "STARTDAY": "Day start"
   },
   "ROUTERS": {
     "PROFILE": "Profile",

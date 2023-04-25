@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { UntypedFormGroup, UntypedFormBuilder } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { combineLatest, from, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
@@ -21,6 +21,8 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { ToastService } from "@services/ui/toast.service";
 import { TranslateService } from "@ngx-translate/core";
+import { startDaySelect } from "@root/core/constants/mocks/mocks-const";
+
 
 @Component({
   selector: "app-profile-update",
@@ -38,6 +40,8 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public fileName = "";
   public errorFiles = "";
   public currentFile: any = null;
+
+  public startDay$: any = of(startDaySelect);
 
   constructor(
     private _sharedFacadeService: SharedFacadeService,
@@ -116,6 +120,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       phoneNumber: [""],
       currency: [""],
       photoURL: [""],
+      dayStartDashboard: [null, [Validators.required]],
     });
   }
 

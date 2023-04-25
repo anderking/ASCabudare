@@ -9,6 +9,7 @@ export interface CurrentUserModel {
   emailVerified: boolean;
   phoneNumber: string;
   currency: string;
+  dayStartDashboard: string;
   photoURL: string;
   uploadPhoto?: any | any[];
   accessToken?: string;
