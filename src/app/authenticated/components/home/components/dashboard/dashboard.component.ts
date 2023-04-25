@@ -24,11 +24,8 @@ import {
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
+import { RangeDate } from "@models/shared/dashboard.model";
 
-interface RangeDate {
-  startDate: string;
-  endDate: string;
-}
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -228,7 +225,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     endDateControl.updateValueAndValidity();
 
     if (this.mainForm.valid) {
-      this._ingresoEgresoFacadeService.search();
+      this.loadItems();
     }
   }
 
