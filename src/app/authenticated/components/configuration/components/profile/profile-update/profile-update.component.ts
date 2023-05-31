@@ -1,14 +1,11 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
-import { combineLatest, from, of, Subject } from "rxjs";
+import { combineLatest, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
   filter,
-  finalize,
   map,
-  switchMap,
   takeUntil,
-  tap,
 } from "rxjs/operators";
 import { Location } from "@angular/common";
 import {
@@ -22,6 +19,7 @@ import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { ToastService } from "@services/ui/toast.service";
 import { TranslateService } from "@ngx-translate/core";
 import { startDaySelect } from "@root/core/constants/mocks/mocks-const";
+import { AttachmentModel } from "@models/shared/attachment.model";
 
 
 @Component({
@@ -39,7 +37,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
 
   public fileName = "";
   public errorFiles = "";
-  public currentFile: any = null;
+  public currentFile: AttachmentModel = null;
 
   public startDay$: any = of(startDaySelect);
 

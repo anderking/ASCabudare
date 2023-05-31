@@ -4,7 +4,6 @@ import { Store } from "@ngrx/store";
 import { DataActionModel } from "@models/common/data-action.model";
 import * as selectors from "@store/masters/selectors/combo.selectors";
 import * as actions from "@store/masters/actions/combo.actions";
-
 import { ComboModel } from "@models/masters/combo.model";
 import { collectionFBTypeActive } from "../constants/masters/masters.constants";
 
@@ -37,17 +36,17 @@ export class CombosFacadeService {
   }
 
   /**
+   * Obtiene el loading para manipular el spinner
+   */
+  public getLoading$(): Observable<boolean> {
+    return this._store.select(selectors.selectLoading);
+  }
+
+  /**
    * Dispara la acción para vaciar el store
    */
   public reset(): void {
     const action = actions.clearCombos();
     this._store.dispatch(action);
-  }
-
-  /**
-   * Obtiene el loading para manipular el spinner
-   */
-  public getLoading$(): Observable<boolean> {
-    return this._store.select(selectors.selectLoading);
   }
 }

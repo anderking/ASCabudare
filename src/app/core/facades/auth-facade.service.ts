@@ -8,7 +8,7 @@ import { DataActionModel } from "@models/common/data-action.model";
 import { Store } from "@ngrx/store";
 import * as selectors from "@store/auth/selectors/auth.selectors";
 import * as actions from "@store/auth/actions/auth.actions";
-import { collectionFBUser } from "../constants/auth/auth.constants";
+import { collectionFBUser } from "@constants/auth/auth.constants";
 
 @Injectable({
   providedIn: "root",

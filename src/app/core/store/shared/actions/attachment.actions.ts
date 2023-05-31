@@ -1,9 +1,10 @@
 import { DataActionModel } from "@models/common/data-action.model";
+import { AttachmentModel } from "@models/shared/attachment.model";
 import { createAction, props } from "@ngrx/store";
 
 export const createAttachment = createAction(
   "[Attachment/API] Create Attachment",
-  props<{ props: DataActionModel<any> }>()
+  props<{ props: DataActionModel<AttachmentModel> }>()
 );
 
 /** addOne: acepta una sola entidad y la agrega si aún no está presente. */

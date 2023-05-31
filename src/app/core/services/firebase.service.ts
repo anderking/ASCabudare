@@ -233,6 +233,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     return subscription.pipe(
       map((items: T[]) => {
         return items.map((item: any) => {
+          console.log(item)
           const newItem = {
             ...item,
             id: item.code,

@@ -1,4 +1,4 @@
-import { from } from "rxjs";
+import { from, of } from "rxjs";
 import {} from "jasmine";
 
 export const storeMock = {
@@ -10,4 +10,5 @@ export const storeMock = {
       },
     ])
   ),
+  select: jasmine.createSpy().and.returnValue(of({})),
 };

@@ -56,7 +56,6 @@ export class AuthService {
           };
           this._authFacadeService.updateProfileFB(user);
           this._authFacadeService.setCurrentUser(user);
-        } else {
         }
       });
     }

@@ -4,6 +4,7 @@ import { Store } from "@ngrx/store";
 import * as selectors from "@store/shared/selectors/shared.selectors";
 import * as actions from "@store/shared/actions/attachment.actions";
 import { DataActionModel } from "@models/common/data-action.model";
+import { AttachmentModel } from "@models/shared/attachment.model";
 
 @Injectable({
   providedIn: "root",
@@ -19,8 +20,8 @@ export class AttachmentFacadeService {
    * Dispara la acción para crear un registro
    * @param payload Contiene el body de la petición
    */
-  public create(payload: any): void {
-    const props: DataActionModel<any> = {
+  public create(payload: AttachmentModel): void {
+    const props: DataActionModel<AttachmentModel> = {
       url: "",
       payload,
     };

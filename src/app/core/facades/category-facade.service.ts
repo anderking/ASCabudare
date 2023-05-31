@@ -9,9 +9,9 @@ import * as actions from "@store/configuration/actions/category.actions";
 import {
   collectionFB,
   collectionFBSecond,
-} from "../constants/configurations/category.constants";
+} from "@constants/configurations/category.constants";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import { getCurrentUserDecrypt } from "../utilities/core.utilities";
+import { getCurrentUserDecrypt } from "@core/utilities/core.utilities";
 
 @Injectable({
   providedIn: "root",

@@ -5,7 +5,20 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "paths": {
+      "@facades/*": ["src/app/core/facades/*"],
+      "@models/*": ["src/app/core/models/*"],
+      "@services/*": ["src/app/core/services/*"],
+      "@store/*": ["src/app/core/store/*"],
+      "@interfaces/*": ["src/app/core/interfaces/*"],
+      "@root/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"],
+      "@core/*": ["src/app/core/*"],
+      "@constants/*": ["src/app/core/constants/*"],
+      "@utilities/*": ["src/app/core/utilities/*"],
+      "@shared/*": ["src/app/shared/*"],
+    }
   },
   "files": [
     "src/test.ts",

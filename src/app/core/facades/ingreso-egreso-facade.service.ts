@@ -9,9 +9,9 @@ import * as actions from "@store/ingreso-egreso/actions/ingreso-egreso.actions";
 import {
   collectionFB,
   collectionFBSecond,
-} from "../constants/ingreso-egreso/ingreso-egreso.constants";
+} from "@constants/ingreso-egreso/ingreso-egreso.constants";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import { getCurrentUserDecrypt } from "../utilities/core.utilities";
+import { getCurrentUserDecrypt } from "@core/utilities/core.utilities";
 
 @Injectable({
   providedIn: "root",
