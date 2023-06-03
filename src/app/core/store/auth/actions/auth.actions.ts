@@ -6,77 +6,77 @@ import {
 import { createAction, props } from "@ngrx/store";
 
 export const login = createAction(
-  "[Login] Login",
+  "[Auth] login Auth",
   props<{ action: DataActionModel<LoginFormModel> }>()
 );
 
 export const loginSucess = createAction(
-  "[Login] Login Success",
+  "[Auth] loginSucess Auth",
   props<{ login: CurrentUserModel }>()
 );
 
 export const register = createAction(
-  "[Login] Register",
+  "[Auth] register Auth",
   props<{ action: DataActionModel<LoginFormModel> }>()
 );
 
 export const registerSucess = createAction(
-  "[Login] Register Success",
+  "[Auth] registerSucess Auth",
   props<{ register: CurrentUserModel }>()
 );
 
 export const setUserDoc = createAction(
-  "[Login] Set UserDoc",
+  "[Auth] setUserDoc Auth",
   props<{ action: DataActionModel<CurrentUserModel> }>()
 );
 
 export const setUserDocSuccess = createAction(
-  "[Login] Set UserDocSuccess",
+  "[Auth] setUserDocSuccess Auth",
   props<{ userDoc: CurrentUserModel }>()
 );
 
 export const updateProfile = createAction(
-  "[Login] Update Profile",
+  "[Auth] updateProfile Auth",
   props<{ action: DataActionModel<CurrentUserModel> }>()
 );
 
 export const updateProfileSuccess = createAction(
-  "[Login] Update ProfileSuccess",
+  "[Auth] updateProfileSuccess Auth",
   props<{ updateProfileFB: CurrentUserModel }>()
 );
 
 export const updateProfileFB = createAction(
-  "[Login] Update ProfileFB",
+  "[Auth] updateProfileFB Auth",
   props<{ action: DataActionModel<CurrentUserModel> }>()
 );
 
 export const updateProfileFBSuccess = createAction(
-  "[Login] Update ProfileFBSuccess",
+  "[Auth] updateProfileFBSuccess Auth",
   props<{ updateProfileFB: CurrentUserModel }>()
 );
 
-export const verifyEmail = createAction("[Login] Verify Email");
+export const verifyEmail = createAction("[Auth] verifyEmail Auth");
 
 export const verifyEmailSuccess = createAction(
-  "[Login] Verify EmailSuccess",
+  "[Auth] verifyEmailSuccess Auth",
   props<{ message: string }>()
 );
 
 export const forgotPassword = createAction(
-  "[Login] ForgotPassword",
+  "[Auth] forgotPassword Auth",
   props<{ action: DataActionModel<LoginFormModel> }>()
 );
 
 export const forgotPasswordSuccess = createAction(
-  "[Login] ForgotPassword Success",
+  "[Auth] forgotPasswordSuccess Auth",
   props<{ message: string }>()
 );
 
 export const setCurrentUser = createAction(
-  "[Login] Set CurrentUser",
+  "[Auth] setCurrentUser Auth",
   props<{ currentUser: CurrentUserModel }>()
 );
 
-export const clear = createAction("[Login] Clear Login");
+export const reset = createAction("[Auth] reset Auth");
 
-export const resetLoading = createAction("[Login] Reset Loading Success");
+export const resetLoading = createAction("[Auth] resetLoading Auth");

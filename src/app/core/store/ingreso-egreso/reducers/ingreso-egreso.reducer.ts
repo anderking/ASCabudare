@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
-import * as actions from "../actions/ingreso-egreso.actions";
+import * as actions from "@store/ingreso-egreso/actions/ingreso-egreso.actions";
 
 /** Se declara la interface del reducer */
 export interface State extends EntityState<IngresoEgresoModel> {
@@ -21,58 +21,61 @@ export const initialState: State = adapter.getInitialState({
 /** Definimos todos los escucha por cada accion para efectuar un reducer conectado al store a traves del adapter */
 const entityReducer = createReducer(
   initialState,
-  on(actions.searchApiIngresoEgresos, (state) => ({ ...state, loading: true })),
-  on(actions.loadIngresoEgresos, (state, { items }) => {
+  on(actions.searchApi, (state) => ({ ...state, loading: true })),
+  on(actions.setAll, (state, { items }) => {
     return adapter.setAll(items, { ...state, loading: false });
   }),
-  on(actions.searchOneApiIngresoEgreso, (state) => ({
+
+  on(actions.searchOneApi, (state) => ({
     ...state,
     loading: true,
   })),
-  on(actions.setIngresoEgreso, (state, { item }) => {
+  on(actions.setOne, (state, { item }) => {
     return adapter.setOne(item, { ...state, loading: false });
   }),
 
-  on(actions.createApiIngresoEgreso, (state) => ({ ...state, loading: true })),
-  on(actions.addIngresoEgreso, (state, { item }) => {
+  on(actions.createApi, (state) => ({ ...state, loading: true })),
+  on(actions.addOne, (state, { item }) => {
     return adapter.addOne(item, { ...state, loading: false });
   }),
-  on(actions.addIngresoEgresos, (state, { items }) => {
+  on(actions.addMany, (state, { items }) => {
     return adapter.addMany(items, { ...state, loading: false });
   }),
 
-  on(actions.updateApiIngresoEgreso, (state) => ({ ...state, loading: true })),
-  on(actions.updateIngresoEgreso, (state, { item }) => {
+  on(actions.updateApi, (state) => ({ ...state, loading: true })),
+  on(actions.updateOne, (state, { item }) => {
     return adapter.updateOne(item, { ...state, loading: false });
   }),
-  on(actions.updateIngresoEgresos, (state, { items }) => {
+  on(actions.updateMany, (state, { items }) => {
     return adapter.updateMany(items, { ...state, loading: false });
   }),
-  on(actions.upsertIngresoEgreso, (state, { item }) => {
+
+  on(actions.upsertOne, (state, { item }) => {
     return adapter.upsertOne(item, { ...state, loading: false });
   }),
-  on(actions.upsertIngresoEgresos, (state, { items }) => {
+  on(actions.upsertMany, (state, { items }) => {
     return adapter.upsertMany(items, { ...state, loading: false });
   }),
 
-  on(actions.deleteApiIngresoEgreso, (state) => ({ ...state, loading: true })),
-  on(actions.deleteIngresoEgreso, (state, { id }) => {
+  on(actions.deleteApi, (state) => ({ ...state, loading: true })),
+  on(actions.removeOne, (state, { id }) => {
     return adapter.removeOne(id, { ...state, loading: false });
   }),
-  on(actions.deleteIngresoEgresos, (state, { ids }) => {
+  on(actions.removeMany, (state, { ids }) => {
     return adapter.removeMany(ids, { ...state, loading: false });
   }),
-  on(actions.clearIngresoEgresos, (state) => {
+
+  on(actions.setCurrentItemId, (state, { id }) => {
+    return { ...state, selectCurrentId: id };
+  }),
+  on(actions.resetSelected, (state) => {
+    return { ...state, selectCurrentId: null };
+  }),
+  on(actions.reset, (state) => {
     return adapter.removeAll({
       ...state,
       selectCurrentId: null,
     });
-  }),
-  on(actions.setCurrentIngresoEgresoId, (state, { id }) => {
-    return { ...state, selectCurrentId: id };
-  }),
-  on(actions.clearCurrentIngresoEgreso, (state) => {
-    return { ...state, selectCurrentId: null };
   }),
   on(actions.resetLoading, (state) => {
     return { ...state, loading: false };
@@ -81,7 +84,6 @@ const entityReducer = createReducer(
 
 /** Se exporta la funcion reducer que contiene todo el store */
 export function reducer(state: State | undefined, action: Action) {
-  // console.log("STATE==>>",state)
   return entityReducer(state, action);
 }
 

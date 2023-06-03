@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
-
 import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
-import * as actions from "../actions/category.actions";
+import * as actions from "@store/configuration/actions/category.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
 import { CategoryModel } from "@models/configurations/category.model";
 import { TranslateService } from "@ngx-translate/core";
@@ -18,11 +17,11 @@ export class CategoryEffects {
    */
   search$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.searchApiCategorys),
+      ofType(actions.searchApi),
       switchMap((params) =>
         this.firebaseService.search$(params.props).pipe(
           switchMap((items: CategoryModel[]) => {
-            return [actions.loadCategorys({ items })];
+            return [actions.setAll({ items })];
           }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
@@ -37,11 +36,11 @@ export class CategoryEffects {
    */
   searchOne$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.searchOneApiCategory),
+      ofType(actions.searchOneApi),
       switchMap((params) =>
         this.firebaseService.searchOne$(params.props).pipe(
           switchMap((item: CategoryModel) => {
-            return [actions.setCategory({ item })];
+            return [actions.setOne({ item })];
           }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
@@ -56,7 +55,7 @@ export class CategoryEffects {
    */
   create$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.createApiCategory),
+      ofType(actions.createApi),
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
           switchMap((item: CategoryModel) => {
@@ -71,7 +70,7 @@ export class CategoryEffects {
               );
             }
             return [
-              actions.addCategory({ item }),
+              actions.addOne({ item }),
               sharedActions.setMessage({ message }),
             ];
           }),
@@ -88,7 +87,7 @@ export class CategoryEffects {
    */
   delete$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.deleteApiCategory),
+      ofType(actions.deleteApi),
       switchMap((params) =>
         this.firebaseService.delete$(params.props).pipe(
           switchMap((item: any) => {
@@ -98,7 +97,7 @@ export class CategoryEffects {
             item = params.props.payload;
             const id = item.id;
             return [
-              actions.deleteCategory({ id }),
+              actions.removeOne({ id }),
               sharedActions.setMessage({ message }),
             ];
           }),

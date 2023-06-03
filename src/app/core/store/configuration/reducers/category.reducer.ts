@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { CategoryModel } from "@models/configurations/category.model";
-import * as actions from "../actions/category.actions";
+import * as actions from "@store/configuration/actions/category.actions";
 
 /** Se declara la interface del reducer */
 export interface State extends EntityState<CategoryModel> {
@@ -21,58 +21,63 @@ export const initialState: State = adapter.getInitialState({
 /** Definimos todos los escucha por cada accion para efectuar un reducer conectado al store a traves del adapter */
 const entityReducer = createReducer(
   initialState,
-  on(actions.searchApiCategorys, (state) => ({ ...state, loading: true })),
-  on(actions.loadCategorys, (state, { items }) => {
+  on(actions.searchApi, (state) => ({ ...state, loading: true })),
+  on(actions.setAll, (state, { items }) => {
     return adapter.setAll(items, { ...state, loading: false });
   }),
-  on(actions.searchOneApiCategory, (state) => ({
+
+  on(actions.searchOneApi, (state) => ({
     ...state,
     loading: true,
   })),
-  on(actions.setCategory, (state, { item }) => {
+  on(actions.setOne, (state, { item }) => {
     return adapter.setOne(item, { ...state, loading: false });
   }),
 
-  on(actions.createApiCategory, (state) => ({ ...state, loading: true })),
-  on(actions.addCategory, (state, { item }) => {
+  on(actions.createApi, (state) => ({ ...state, loading: true })),
+  on(actions.addOne, (state, { item }) => {
     return adapter.addOne(item, { ...state, loading: false });
   }),
-  on(actions.addCategorys, (state, { items }) => {
+
+  on(actions.addMany, (state, { items }) => {
     return adapter.addMany(items, { ...state, loading: false });
   }),
 
-  on(actions.updateApiCategory, (state) => ({ ...state, loading: true })),
-  on(actions.updateCategory, (state, { item }) => {
+  on(actions.updateApi, (state) => ({ ...state, loading: true })),
+  on(actions.updateOne, (state, { item }) => {
     return adapter.updateOne(item, { ...state, loading: false });
   }),
-  on(actions.updateCategorys, (state, { items }) => {
+  on(actions.updateMany, (state, { items }) => {
     return adapter.updateMany(items, { ...state, loading: false });
   }),
-  on(actions.upsertCategory, (state, { item }) => {
+
+  on(actions.upsertOne, (state, { item }) => {
     return adapter.upsertOne(item, { ...state, loading: false });
   }),
-  on(actions.upsertCategorys, (state, { items }) => {
+  on(actions.upsertMany, (state, { items }) => {
     return adapter.upsertMany(items, { ...state, loading: false });
   }),
 
-  on(actions.deleteApiCategory, (state) => ({ ...state, loading: true })),
-  on(actions.deleteCategory, (state, { id }) => {
+  on(actions.deleteApi, (state) => ({ ...state, loading: true })),
+  on(actions.removeOne, (state, { id }) => {
     return adapter.removeOne(id, { ...state, loading: false });
   }),
-  on(actions.deleteCategorys, (state, { ids }) => {
+  on(actions.removeMany, (state, { ids }) => {
     return adapter.removeMany(ids, { ...state, loading: false });
   }),
-  on(actions.clearCategorys, (state) => {
+
+  on(actions.setCurrentItemId, (state, { id }) => {
+    return { ...state, selectCurrentId: id };
+  }),
+
+  on(actions.resetSelected, (state) => {
+    return { ...state, selectCurrentId: null };
+  }),
+  on(actions.reset, (state) => {
     return adapter.removeAll({
       ...state,
       selectCurrentId: null,
     });
-  }),
-  on(actions.setCurrentCategoryId, (state, { id }) => {
-    return { ...state, selectCurrentId: id };
-  }),
-  on(actions.clearCurrentCategory, (state) => {
-    return { ...state, selectCurrentId: null };
   }),
   on(actions.resetLoading, (state) => {
     return { ...state, loading: false };
@@ -81,7 +86,6 @@ const entityReducer = createReducer(
 
 /** Se exporta la funcion reducer que contiene todo el store */
 export function reducer(state: State | undefined, action: Action) {
-  // console.log("STATE==>>",state)
   return entityReducer(state, action);
 }
 

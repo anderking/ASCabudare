@@ -4,7 +4,7 @@ import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
-import * as actions from "../actions/ingreso-egreso.actions";
+import * as actions from "@store/ingreso-egreso/actions/ingreso-egreso.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
 import { TranslateService } from "@ngx-translate/core";
 /**
@@ -17,11 +17,11 @@ export class IngresoEgresoEffects {
    */
   search$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.searchApiIngresoEgresos),
+      ofType(actions.searchApi),
       switchMap((params) =>
         this.firebaseService.search$(params.props).pipe(
           switchMap((items: IngresoEgresoModel[]) => {
-            return [actions.loadIngresoEgresos({ items })];
+            return [actions.setAll({ items })];
           }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
@@ -36,11 +36,11 @@ export class IngresoEgresoEffects {
    */
   searchOne$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.searchOneApiIngresoEgreso),
+      ofType(actions.searchOneApi),
       switchMap((params) =>
         this.firebaseService.searchOne$(params.props).pipe(
           switchMap((item: IngresoEgresoModel) => {
-            return [actions.setIngresoEgreso({ item })];
+            return [actions.setOne({ item })];
           }),
           catchError((error) =>
             of(sharedActions.setError({ error }), actions.resetLoading())
@@ -55,7 +55,7 @@ export class IngresoEgresoEffects {
    */
   create$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.createApiIngresoEgreso),
+      ofType(actions.createApi),
       switchMap((params) =>
         this.firebaseService.create$(params.props).pipe(
           switchMap((item: IngresoEgresoModel) => {
@@ -70,7 +70,7 @@ export class IngresoEgresoEffects {
               );
             }
             return [
-              actions.addIngresoEgreso({ item }),
+              actions.addOne({ item }),
               sharedActions.setMessage({ message }),
             ];
           }),
@@ -87,7 +87,7 @@ export class IngresoEgresoEffects {
    */
   delete$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.deleteApiIngresoEgreso),
+      ofType(actions.deleteApi),
       switchMap((params) =>
         this.firebaseService.delete$(params.props).pipe(
           switchMap((item: any) => {
@@ -97,7 +97,7 @@ export class IngresoEgresoEffects {
             item = params.props.payload;
             const id = item.id;
             return [
-              actions.deleteIngresoEgreso({ id }),
+              actions.removeOne({ id }),
               sharedActions.setMessage({ message }),
             ];
           }),

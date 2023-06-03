@@ -45,7 +45,7 @@ describe("AuthFacadeService", () => {
       expect(collectionFBUser).toEqual("User");
     });
 
-    it("should expect dispatch login action with the correct payload", () => {
+    it("should expect dispatch login action with the correct props", () => {
       const payload: LoginFormModel = mockTestLoginFormOne;
       facadeService.login(payload);
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -72,7 +72,7 @@ describe("AuthFacadeService", () => {
       expect(collectionFBUser).toEqual("User");
     });
 
-    it("should expect dispatch register action with the correct payload", () => {
+    it("should expect dispatch register action with the correct props", () => {
       const payload: LoginFormModel = mockTestLoginFormOne;
       facadeService.register(payload);
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -99,7 +99,7 @@ describe("AuthFacadeService", () => {
       expect(collectionFBUser).toEqual("User");
     });
 
-    it("should expect dispatch setUserDoc action with the correct payload", () => {
+    it("should expect dispatch setUserDoc action with the correct props", () => {
       const payload: CurrentUserModel = mockTestCurrentUserOne;
       facadeService.setUserDoc(payload);
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -128,7 +128,7 @@ describe("AuthFacadeService", () => {
       expect(collectionFBUser).toEqual("User");
     });
 
-    it("should expect dispatch updateProfile action with the correct payload", () => {
+    it("should expect dispatch updateProfile action with the correct props", () => {
       const payload: CurrentUserModel = mockTestCurrentUserOne;
       facadeService.updateProfile(payload);
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -159,7 +159,7 @@ describe("AuthFacadeService", () => {
       expect(collectionFBUser).toEqual("User");
     });
 
-    it("should expect dispatch updateProfileFB action with the correct payload", () => {
+    it("should expect dispatch updateProfileFB action with the correct props", () => {
       const payload: CurrentUserModel = mockTestCurrentUserOne;
       facadeService.updateProfileFB(payload);
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -182,7 +182,7 @@ describe("AuthFacadeService", () => {
     });
   });
 
-  it("should expect dispatch verifyEmail action with the correct payload", () => {
+  it("should expect dispatch verifyEmail action with the correct props", () => {
     facadeService.verifyEmail();
     expect(store.dispatch).toHaveBeenCalledWith(actions.verifyEmail());
   });
@@ -195,7 +195,7 @@ describe("AuthFacadeService", () => {
       expect(collectionFBUser).toEqual("User");
     });
 
-    it("should expect dispatch forgotPassword action with the correct payload", () => {
+    it("should expect dispatch forgotPassword action with the correct props", () => {
       const payload: LoginFormModel = mockTestLoginFormOne;
       facadeService.forgotPassword(payload);
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -213,7 +213,7 @@ describe("AuthFacadeService", () => {
       expect(spy).toBeDefined;
     });
 
-    it("should expect dispatch setCurrentUser action with the correct payload", () => {
+    it("should expect dispatch setCurrentUser action with the correct props", () => {
       const currentUser: CurrentUserModel = mockTestCurrentUserOne;
       facadeService.setCurrentUser(currentUser);
       expect(store.dispatch).toHaveBeenCalledWith(
@@ -242,8 +242,8 @@ describe("AuthFacadeService", () => {
     });
   });
 
-  it("should expect dispatch clear action with the correct payload", () => {
+  it("should expect dispatch reset action with the correct props", () => {
     facadeService.reset();
-    expect(store.dispatch).toHaveBeenCalledWith(actions.clear());
+    expect(store.dispatch).toHaveBeenCalledWith(actions.reset());
   });
 });

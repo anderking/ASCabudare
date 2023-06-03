@@ -39,7 +39,7 @@ describe("CombosFacadeService", () => {
       expect(collectionFBTypeActive).toEqual("Masters/Combos/TypeActive");
     });
 
-    it("should expect dispatch searchTypeActive action with the correct payload", () => {
+    it("should expect dispatch searchTypeActive action with the correct props", () => {
       facadeService.searchTypeActive();
       expect(store.dispatch).toHaveBeenCalledWith(
         actions.searchTypeActive({ props: { url: collectionFBTypeActive } })
@@ -67,8 +67,8 @@ describe("CombosFacadeService", () => {
     });
   });
 
-  it("should expect dispatch clear action with the correct payload", () => {
+  it("should expect dispatch reset action with the correct props", () => {
     facadeService.reset();
-    expect(store.dispatch).toHaveBeenCalledWith(actions.clearCombos());
+    expect(store.dispatch).toHaveBeenCalledWith(actions.resetCombos());
   });
 });

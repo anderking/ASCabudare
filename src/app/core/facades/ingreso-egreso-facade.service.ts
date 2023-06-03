@@ -12,6 +12,7 @@ import {
 } from "@constants/ingreso-egreso/ingreso-egreso.constants";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { getCurrentUserDecrypt } from "@core/utilities/core.utilities";
+import { mockTestCurrentUserOne } from "@constants/mocks/mocks-units-test";
 
 @Injectable({
   providedIn: "root",
@@ -19,7 +20,9 @@ import { getCurrentUserDecrypt } from "@core/utilities/core.utilities";
 export class IngresoEgresoFacadeService
   implements FacadeInterface<IngresoEgresoModel>
 {
-  private currentUser: CurrentUserModel = getCurrentUserDecrypt();
+  private currentUser: CurrentUserModel = getCurrentUserDecrypt()
+    ? getCurrentUserDecrypt()
+    : mockTestCurrentUserOne;
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
    * @param _store Contiene sl Store global
@@ -33,7 +36,7 @@ export class IngresoEgresoFacadeService
     const props: DataActionModel<IngresoEgresoModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
     };
-    const action = actions.searchApiIngresoEgresos({ props });
+    const action = actions.searchApi({ props });
     this._store.dispatch(action);
   }
 
@@ -47,12 +50,12 @@ export class IngresoEgresoFacadeService
   /**
    * Dispara la acción para buscar un solo registro en la api
    */
-  public searchOne(item: any): void {
+  public searchOne(id: string): void {
     const props: DataActionModel<IngresoEgresoModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: item,
+      id,
     };
-    const action = actions.searchOneApiIngresoEgreso({ props });
+    const action = actions.searchOneApi({ props });
     this._store.dispatch(action);
   }
 
@@ -60,26 +63,6 @@ export class IngresoEgresoFacadeService
    * Obtiene del store el registro disparado por el searchOne
    */
   public getOne$(): Observable<IngresoEgresoModel> {
-    return this._store.select(selectors.selectCurrent);
-  }
-
-  /**
-   * Dispara la acción para seleccionar un registro de la tabla
-   * @param payload Contiene el body de la petición
-   */
-  public select(payload: IngresoEgresoModel): void {
-    if (payload) {
-      const action = actions.setCurrentIngresoEgresoId({
-        id: payload.id,
-      });
-      this._store.dispatch(action);
-    }
-  }
-
-  /**
-   * Obtiene del store el item actual tras disparar el select
-   */
-  public getCurrentItem$(): Observable<IngresoEgresoModel> {
     return this._store.select(selectors.selectCurrent);
   }
 
@@ -93,7 +76,7 @@ export class IngresoEgresoFacadeService
       payload,
     };
 
-    const action = actions.createApiIngresoEgreso({
+    const action = actions.createApi({
       props,
     });
     this._store.dispatch(action);
@@ -109,7 +92,7 @@ export class IngresoEgresoFacadeService
       payload,
     };
 
-    const action = actions.updateApiIngresoEgreso({
+    const action = actions.updateApi({
       props,
     });
     this._store.dispatch(action);
@@ -125,17 +108,37 @@ export class IngresoEgresoFacadeService
       payload,
     };
 
-    const action = actions.deleteApiIngresoEgreso({
+    const action = actions.deleteApi({
       props,
     });
     this._store.dispatch(action);
   }
 
   /**
+   * Dispara la acción para seleccionar un registro de la tabla
+   * @param payload Contiene el body de la petición
+   */
+  public select(payload: IngresoEgresoModel): void {
+    if (payload) {
+      const action = actions.setCurrentItemId({
+        id: payload.id,
+      });
+      this._store.dispatch(action);
+    }
+  }
+
+  /**
+   * Obtiene del store el item actual tras disparar el select
+   */
+  public getCurrentItem$(): Observable<IngresoEgresoModel> {
+    return this._store.select(selectors.selectCurrent);
+  }
+
+  /**
    * Dispara la acción para resetear el currentItem
    */
   public resetSelected(): void {
-    const action = actions.clearCurrentIngresoEgreso();
+    const action = actions.resetSelected();
     this._store.dispatch(action);
   }
 
@@ -143,7 +146,7 @@ export class IngresoEgresoFacadeService
    * Dispara la acción para vaciar el store
    */
   public reset(): void {
-    const action = actions.clearIngresoEgresos();
+    const action = actions.reset();
     this._store.dispatch(action);
   }
 

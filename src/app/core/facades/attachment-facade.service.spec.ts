@@ -36,7 +36,7 @@ describe("AttachmentFacadeService", () => {
     expect(spy).toBeDefined;
   });
 
-  it("should expect dispatch create action with the correct payload", () => {
+  it("should expect dispatch create action with the correct props", () => {
     const payload: AttachmentModel = mockTestAttachmentOne;
     facadeService.create(payload);
     expect(store.dispatch).toHaveBeenCalledWith(
@@ -64,8 +64,8 @@ describe("AttachmentFacadeService", () => {
     });
   });
 
-  it("should expect dispatch clear action with the correct payload", () => {
+  it("should expect dispatch reset action with the correct payload", () => {
     facadeService.reset();
-    expect(store.dispatch).toHaveBeenCalledWith(actions.clear());
+    expect(store.dispatch).toHaveBeenCalledWith(actions.reset());
   });
 });

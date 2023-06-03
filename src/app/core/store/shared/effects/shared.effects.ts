@@ -3,7 +3,7 @@ import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
-import * as actions from "../actions/attachment.actions";
+import * as attachmentActions from "@store/shared/actions/attachment.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
 
 @Injectable()
@@ -13,14 +13,19 @@ export class SharedEffects {
    */
   create$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(actions.createAttachment),
+      ofType(attachmentActions.createAttachment),
       switchMap((params) =>
         this.firebaseService.uploadAttachment$(params.props).pipe(
           switchMap((urlAttachment: string) => {
-            return [actions.createAttachmentSuccess({ urlAttachment })];
+            return [
+              attachmentActions.createAttachmentSuccess({ urlAttachment }),
+            ];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(
+              sharedActions.setError({ error }),
+              attachmentActions.resetLoading()
+            )
           )
         )
       )

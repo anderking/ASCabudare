@@ -108,7 +108,7 @@ const entityReducer = createReducer(
     loading: false,
   })),
 
-  on(actions.clear, (state) => {
+  on(actions.reset, (state) => {
     return {
       ...state,
       login: null,

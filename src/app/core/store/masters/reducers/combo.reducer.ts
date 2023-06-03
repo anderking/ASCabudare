@@ -1,6 +1,6 @@
 import { ComboModel } from "@models/masters/combo.model";
 import { Action, createReducer, on } from "@ngrx/store";
-import * as ComboActions from "../actions/combo.actions";
+import * as actions from "@store/masters/actions/combo.actions";
 
 /** Se declara la interface del reducer */
 export interface State {
@@ -20,13 +20,13 @@ export const initialState: State = {
 const comboReducer = createReducer(
   initialState,
 
-  on(ComboActions.searchTypeActive, (state) => ({
+  on(actions.searchTypeActive, (state) => ({
     ...state,
     typeActiveLoading: true,
     loading: true,
   })),
 
-  on(ComboActions.loadTypeActive, (state, { items }) => {
+  on(actions.loadTypeActive, (state, { items }) => {
     return {
       ...state,
       typeActive: items,
@@ -35,11 +35,11 @@ const comboReducer = createReducer(
     };
   }),
 
-  on(ComboActions.clearCombos, (state) => {
+  on(actions.resetCombos, (state) => {
     return { ...initialState };
   }),
 
-  on(ComboActions.resetLoading, (state) => {
+  on(actions.resetLoading, (state) => {
     return {
       ...state,
       typeActiveLoading: false,

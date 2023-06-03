@@ -5,7 +5,7 @@ import { DataActionModel } from "@models/common/data-action.model";
 import * as selectors from "@store/masters/selectors/combo.selectors";
 import * as actions from "@store/masters/actions/combo.actions";
 import { ComboModel } from "@models/masters/combo.model";
-import { collectionFBTypeActive } from "../constants/masters/masters.constants";
+import { collectionFBTypeActive } from "@constants/masters/masters.constants";
 
 @Injectable({
   providedIn: "root",
@@ -46,7 +46,7 @@ export class CombosFacadeService {
    * Dispara la acción para vaciar el store
    */
   public reset(): void {
-    const action = actions.clearCombos();
+    const action = actions.resetCombos();
     this._store.dispatch(action);
   }
 }

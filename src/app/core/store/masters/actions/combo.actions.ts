@@ -6,16 +6,16 @@ import { ComboModel } from "@models/masters/combo.model";
 
 /** Dispara la acción que hace el llamado a la api a traves del efecto para obtener todos los registros del combo */
 export const searchTypeActive = createAction(
-  "[Combo/API] Search TypeActive",
+  "[Combo/API] searchTypeActive Combo",
   props<{ props: DataActionModel<ComboModel> }>()
 );
 /** Al disparar la acción del search, esta se dispara a traves del efecto para reemplazar la colección actual con la colección provista */
 export const loadTypeActive = createAction(
-  "[Combo/API] Load TypeActive",
+  "[Combo/API] loadTypeActive Combo",
   props<{ items: ComboModel[] }>()
 );
 
 /** Esta acción permite limpiar el store */
-export const clearCombos = createAction("[Combo/API] Clear Combos");
+export const resetCombos = createAction("[Combo/API] resetCombos Combo");
 /** Esta acción permite limpiar el store */
-export const resetLoading = createAction("[Combo/API] Set Loading");
+export const resetLoading = createAction("[Combo/API] resetLoading Combo");

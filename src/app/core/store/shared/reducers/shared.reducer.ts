@@ -37,7 +37,7 @@ const entityReducer = createReducer(
     };
   }),
 
-  on(sharedActions.clear, (state) => {
+  on(sharedActions.reset, (state) => {
     return {
       ...state,
       message: null,
@@ -65,7 +65,7 @@ const entityReducer = createReducer(
     };
   }),
 
-  on(attachmentActions.clear, (state) => {
+  on(attachmentActions.reset, (state) => {
     return {
       ...state,
       urlAttachment: null,

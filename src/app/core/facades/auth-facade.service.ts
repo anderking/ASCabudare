@@ -131,7 +131,7 @@ export class AuthFacadeService {
   }
 
   public reset(): void {
-    const action = actions.clear();
+    const action = actions.reset();
     this._store.dispatch(action);
   }
 }

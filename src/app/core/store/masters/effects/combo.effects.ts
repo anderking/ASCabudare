@@ -3,7 +3,7 @@ import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap, tap } from "rxjs/operators";
-import * as actions from "../actions/combo.actions";
+import * as actions from "@store/masters/actions/combo.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
 import { ComboModel } from "@models/masters/combo.model";
 /**

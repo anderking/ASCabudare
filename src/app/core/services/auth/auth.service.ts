@@ -35,7 +35,6 @@ export class AuthService {
    */
   public initAuthListener(): void {
     const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
-    //console.log(currentUser)
     if (currentUser) {
       const subscription = new Observable((observer) => {
         const docRef = doc(this.afDB, `${currentUser.uid}/User`);
@@ -48,7 +47,6 @@ export class AuthService {
         );
       });
       subscription.subscribe((user: CurrentUserModel) => {
-        //console.log(user)
         if (user) {
           user = {
             ...user,

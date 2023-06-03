@@ -6,7 +6,7 @@ import {
   LoginFormModel,
   CurrentUserModel,
 } from "@models/auth/current-user.model";
-import * as actions from "../actions/auth.actions";
+import * as actions from "@store/auth/actions/auth.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
 import { FirebaseService } from "@services/firebase.service";
 import { TranslateService } from "@ngx-translate/core";

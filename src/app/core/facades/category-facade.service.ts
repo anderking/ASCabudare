@@ -12,12 +12,13 @@ import {
 } from "@constants/configurations/category.constants";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { getCurrentUserDecrypt } from "@core/utilities/core.utilities";
+import { mockTestCurrentUserOne } from "@constants/mocks/mocks-units-test";
 
 @Injectable({
   providedIn: "root",
 })
 export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
-  private currentUser: CurrentUserModel = getCurrentUserDecrypt();
+  private currentUser: CurrentUserModel = getCurrentUserDecrypt() ? getCurrentUserDecrypt() : mockTestCurrentUserOne;
   /**
    * Se manejan los inyecciones de servicios que se necesitan en el facade.
    * @param _store Contiene sl Store global
@@ -31,7 +32,7 @@ export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
     const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
     };
-    const action = actions.searchApiCategorys({ props });
+    const action = actions.searchApi({ props });
     this._store.dispatch(action);
   }
 
@@ -45,12 +46,12 @@ export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
   /**
    * Dispara la acción para buscar un solo registro en la api
    */
-  public searchOne(item: any): void {
+  public searchOne(id: string): void {
     const props: DataActionModel<CategoryModel> = {
       url: this.currentUser.uid + "/" + collectionFB + "/" + collectionFBSecond,
-      payload: item,
+      id,
     };
-    const action = actions.searchOneApiCategory({ props });
+    const action = actions.searchOneApi({ props });
     this._store.dispatch(action);
   }
 
@@ -58,26 +59,6 @@ export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
    * Obtiene del store el registro disparado por el searchOne
    */
   public getOne$(): Observable<CategoryModel> {
-    return this._store.select(selectors.selectCurrent);
-  }
-
-  /**
-   * Dispara la acción para seleccionar un registro de la tabla
-   * @param payload Contiene el body de la petición
-   */
-  public select(payload: CategoryModel): void {
-    if (payload) {
-      const action = actions.setCurrentCategoryId({
-        id: payload.id,
-      });
-      this._store.dispatch(action);
-    }
-  }
-
-  /**
-   * Obtiene del store el item actual tras disparar el select
-   */
-  public getCurrentItem$(): Observable<CategoryModel> {
     return this._store.select(selectors.selectCurrent);
   }
 
@@ -91,7 +72,7 @@ export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
       payload,
     };
 
-    const action = actions.createApiCategory({
+    const action = actions.createApi({
       props,
     });
     this._store.dispatch(action);
@@ -107,7 +88,7 @@ export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
       payload,
     };
 
-    const action = actions.updateApiCategory({
+    const action = actions.updateApi({
       props,
     });
     this._store.dispatch(action);
@@ -123,17 +104,37 @@ export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
       payload,
     };
 
-    const action = actions.deleteApiCategory({
+    const action = actions.deleteApi({
       props,
     });
     this._store.dispatch(action);
   }
 
   /**
+   * Dispara la acción para seleccionar un registro de la tabla
+   * @param payload Contiene el body de la petición
+   */
+  public select(payload: CategoryModel): void {
+    if (payload) {
+      const action = actions.setCurrentItemId({
+        id: payload.id,
+      });
+      this._store.dispatch(action);
+    }
+  }
+
+  /**
+   * Obtiene del store el item actual tras disparar el select
+   */
+  public getCurrentItem$(): Observable<CategoryModel> {
+    return this._store.select(selectors.selectCurrent);
+  }
+
+  /**
    * Dispara la acción para resetear el currentItem
    */
   public resetSelected(): void {
-    const action = actions.clearCurrentCategory();
+    const action = actions.resetSelected();
     this._store.dispatch(action);
   }
 
@@ -141,7 +142,7 @@ export class CategoryFacadeService implements FacadeInterface<CategoryModel> {
    * Dispara la acción para vaciar el store
    */
   public reset(): void {
-    const action = actions.clearCategorys();
+    const action = actions.reset();
     this._store.dispatch(action);
   }
 

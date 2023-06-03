@@ -2,8 +2,16 @@ import {
   CurrentUserModel,
   LoginFormModel,
 } from "@models/auth/current-user.model";
+import { CategoryModel } from "@models/configurations/category.model";
+import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { ComboModel } from "@models/masters/combo.model";
 import { AttachmentModel } from "@models/shared/attachment.model";
+import { ErrorModel } from "@models/shared/error.model";
+
+export const mockTestLoginFormOne: LoginFormModel = {
+  email: "string",
+  password: "string",
+};
 
 export const mockTestCurrentUserOne: CurrentUserModel = {
   displayName: "string",
@@ -19,10 +27,20 @@ export const mockTestCurrentUserOne: CurrentUserModel = {
   refreshToken: "string",
 };
 
-export const mockTestLoginFormOne: LoginFormModel = {
-  email: "string",
-  password: "string",
+export const mockTestAttachmentOne: AttachmentModel = {
+  lastModified: 1,
+  lastModifiedDate: new Date(),
+  name: "string",
+  size: 1,
+  type: "string",
+  webkitRelativePath: "string",
 };
+
+export const mockTestErrorOne: ErrorModel = {
+  code: "string",
+  message: "string",
+};
+
 export const mockTestComboOne: ComboModel = {
   id: "string",
   code: "string",
@@ -39,11 +57,50 @@ export const mockTestComboAll: ComboModel[] = [
   },
 ];
 
-export const mockTestAttachmentOne: AttachmentModel = {
-  lastModified: 1,
-  lastModifiedDate: new Date(),
+export const mockTestCategoryOne: CategoryModel = {
+  id: "string",
   name: "string",
-  size: 1,
-  type: "string",
-  webkitRelativePath: "string",
+  description: "string",
+  state: true,
+  stateText: "string",
 };
+
+export const mockTestCategoryAll: CategoryModel[] = [
+  {
+    id: "string",
+    name: "string",
+    description: "string",
+    state: true,
+    stateText: "string",
+  },
+];
+
+export const mockTestIngresoEgresoOne: IngresoEgresoModel = {
+  id: "string",
+  description: "string",
+  amount: 100,
+  typeActive: "string",
+  idTypeActive: "string",
+  idCategory: "string",
+  category: "string",
+  state: true,
+  stateText: "string",
+  createDate: "string",
+  createDateFB: "string",
+};
+
+export const mockTestIngresoEgresoAll: IngresoEgresoModel[] = [
+  {
+    id: "string",
+    description: "string",
+    amount: 100,
+    typeActive: "string",
+    idTypeActive: "string",
+    idCategory: "string",
+    category: "string",
+    state: true,
+    stateText: "string",
+    createDate: "string",
+    createDateFB: "string",
+  },
+];

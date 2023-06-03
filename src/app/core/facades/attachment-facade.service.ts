@@ -47,7 +47,7 @@ export class AttachmentFacadeService {
    * Limpia el reducer
    */
   public reset(): void {
-    const action = actions.clear();
+    const action = actions.reset();
     this._store.dispatch(action);
   }
 }

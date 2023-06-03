@@ -29,7 +29,7 @@ export class SharedFacadeService implements SharedInterface {
     return this._store.select(selectors.selectLoading);
   }
   reset(): void {
-    const action = actions.clear();
+    const action = actions.reset();
     this._store.dispatch(action);
   }
   messageSubscriptions(): void {
@@ -37,10 +37,10 @@ export class SharedFacadeService implements SharedInterface {
       .pipe(filter((error) => !isNullOrUndefinedEmpty(error)))
       .subscribe((error) => {
         console.error(error);
-        let message:any;
-        if (error.code){
+        let message: any;
+        if (error.code) {
           message = error.message;
-        }else{
+        } else {
           message = error;
         }
         this._toastService.show(message, {

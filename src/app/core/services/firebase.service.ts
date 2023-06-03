@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { from, Observable, of } from "rxjs";
 import { DataActionModel } from "@models/common/data-action.model";
-import { environment } from "@environments/environment";
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -20,7 +19,7 @@ import {
   onSnapshot,
   setDoc,
 } from "@angular/fire/firestore";
-import { finalize, map, mergeMap, switchMap, tap } from "rxjs/operators";
+import { finalize, map, switchMap, tap } from "rxjs/operators";
 import { ApiFirebaseServiceInterface } from "@interfaces/api-firebase-service.interface";
 import {
   getDownloadURL,
@@ -249,8 +248,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    * @param action Contiene el body DataActionModel
    */
   searchOne$(action: DataActionModel<T>): Observable<T> {
-    const payload: any = action.payload;
-    const id: string = payload?.id;
+    const id: string = action?.id;
 
     const subscription = new Observable((observer) => {
       const docRef = doc(this.afDB, `${action.url}`, `${id}`);
