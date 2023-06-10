@@ -5,8 +5,9 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthRedirectGuard } from '../core/services/guard/auth-redirect.guard';
 import { AuthComponent } from './auth.component';
+import { LoginTimeComponent } from './login-time/login-time.component';
 
-const routes: Routes = [
+export const routes: Routes = [
 
   {
     path: '', component: AuthComponent, canActivate: [AuthRedirectGuard],
@@ -14,6 +15,7 @@ const routes: Routes = [
       [
         { path: '', redirectTo: 'login', pathMatch: 'full' },
         { path: 'login', component: LoginComponent},
+        { path: 'login-time', component: LoginTimeComponent},
         { path: 'register', component: RegisterComponent},
         { path: 'forgot-password', component: ForgotPasswordComponent},
       ]

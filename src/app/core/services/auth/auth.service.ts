@@ -1,18 +1,22 @@
 import { Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
 import { doc, Firestore, onSnapshot } from "@angular/fire/firestore";
-import { Observable, Subscription } from "rxjs";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
-import { clearLocalStorage, getCurrentUserDecrypt } from "@root/core/utilities/core.utilities";
+import {
+  clearLocalStorage,
+  getCurrentUserDecrypt,
+} from "@root/core/utilities/core.utilities";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   public userSubcription: Subscription = new Subscription();
+  public paramsToLoginTime = new BehaviorSubject<CurrentUserModel>(null);
 
   constructor(
     public afAuth: Auth,
@@ -21,12 +25,20 @@ export class AuthService {
   ) {}
 
   /**
+   * Setea el subject
+   * @param {CurrentUserModel} value es un boleano
+   */
+  set theParamsToLoginTime(value: CurrentUserModel) {
+    this.paramsToLoginTime.next(value);
+  }
+
+  /**
    * Cierra la sesion, borra el localStorage y borra el store
    */
   public logout(): void {
     this.userSubcription.unsubscribe();
     this._authFacadeService.reset();
-    clearLocalStorage()
+    clearLocalStorage();
     this.afAuth.signOut();
   }
 
@@ -96,7 +108,7 @@ export class AuthService {
   public isAuthRedirect(): boolean {
     const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
     if (currentUser == null) {
-      clearLocalStorage()
+      clearLocalStorage();
       return true;
     } else {
       return false;

@@ -38,3 +38,8 @@ export const selectLoading = createSelector(
   getIngresoEgreso,
   (state) => state.loading
 );
+
+export const selectCurrentFilter = createSelector(
+  getIngresoEgreso,
+  (state) => state.currentFilter
+);

@@ -3,10 +3,7 @@ import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
-import {
-  isNullOrUndefined,
-  isNullOrUndefinedEmpty,
-} from "@root/core/utilities/is-null-or-undefined.util";
+import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { Subject } from "rxjs";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
@@ -17,12 +14,12 @@ import {
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
-import { RangeDate } from "@models/shared/dashboard.model";
 import {
   ValidationsCustom,
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
+import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
 
 @Component({
   selector: "app-ingresos-egresos",
@@ -59,6 +56,25 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this._ingresoEgresoFacadeService
+      .getCurrentFilter$()
+      .pipe(
+        filter(
+          (currentFilter: CurrentFilterModel) =>
+            !isNullOrUndefinedEmpty(currentFilter)
+        ),
+        takeUntil(this._finisher)
+      )
+      .subscribe((currentFilter: CurrentFilterModel) => {
+        console.log(currentFilter);
+        this._rangeDate = currentFilter.rangeDate;
+        const startDateControl = this.mainForm.controls["startDate"];
+        const endDateControl = this.mainForm.controls["endDate"];
+        startDateControl.setValue(currentFilter.rangeDate.startDate);
+        endDateControl.setValue(currentFilter.rangeDate.endDate);
+        this.wordFilter = currentFilter.wordFilter;
+      });
+
     this._ingresoEgresoFacadeService.search();
     this._ingresoEgresoFacadeService
       .getLoading$()
@@ -73,6 +89,13 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     this._finisher.next();
     this._ingresoEgresoFacadeService.reset();
     this._sharedFacadeService.reset();
+    if (this._rangeDate) {
+      const payload: CurrentFilterModel = {
+        rangeDate: this._rangeDate,
+        wordFilter: this.wordFilter,
+      };
+      this._ingresoEgresoFacadeService.setCurrentFilter(payload);
+    }
   }
 
   private initForm(): UntypedFormGroup {
@@ -164,7 +187,6 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
 
     if (this.mainForm.valid) {
       this.loadItems();
-      //this._ingresoEgresoFacadeService.search();
     }
   }
 

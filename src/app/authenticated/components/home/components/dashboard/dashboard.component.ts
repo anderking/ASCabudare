@@ -24,7 +24,8 @@ import {
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
-import { RangeDate } from "@models/shared/dashboard.model";
+import { RangeDate } from "@models/shared/filter.model";
+
 
 @Component({
   selector: "app-dashboard",

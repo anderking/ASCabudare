@@ -13,8 +13,9 @@ import {
 } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
-import { filter, first, takeUntil } from "rxjs/operators";
+import { first, takeUntil } from "rxjs/operators";
 import { AuthService } from "@services/auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private _authService: AuthService,
-    private _authFacadeService: AuthFacadeService
+    private _authFacadeService: AuthFacadeService,
+    private _router: Router
   ) {}
 
   ngOnInit() {
@@ -48,8 +50,9 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this._finisher)
       )
       .subscribe((login: CurrentUserModel) => {
-        // console.log("LOGIN RESPONSE", login);
-        this._authService.setCurrentUserEncrypt(login);
+        console.log("LOGIN RESPONSE", login);
+        this._router.navigate(["/login-time"]);
+        this._authService.theParamsToLoginTime = login;
       });
   }
 
@@ -65,7 +68,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   onSubmit() {
     this.dataForm = { ...this.mainForm.form.getRawValue() };
     if (this.mainForm.form.valid) {
-      console.log("LOGIN", this.dataForm);
       this._authFacadeService.login(this.dataForm);
     }
   }

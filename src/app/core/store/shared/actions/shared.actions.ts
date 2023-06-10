@@ -2,11 +2,12 @@ import { ErrorModel } from "@models/shared/error.model";
 import { createAction, props } from "@ngrx/store";
 
 export const setMessage = createAction(
-  "[Notification/App] setMessage Shared",
+  "[Shared/App] setMessage Shared",
   props<{ message: string }>()
 );
+
 export const setError = createAction(
-  "[Notification/App] setError Shared",
+  "[Shared/App] setError Shared",
   props<{ error: ErrorModel }>()
 );
 

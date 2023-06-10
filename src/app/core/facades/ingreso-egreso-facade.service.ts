@@ -13,6 +13,7 @@ import {
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { getCurrentUserDecrypt } from "@core/utilities/core.utilities";
 import { mockTestCurrentUserOne } from "@constants/mocks/mocks-units-test";
+import { CurrentFilterModel } from "@models/shared/filter.model";
 
 @Injectable({
   providedIn: "root",
@@ -155,5 +156,13 @@ export class IngresoEgresoFacadeService
    */
   public getLoading$(): Observable<boolean> {
     return this._store.select(selectors.selectLoading);
+  }
+
+  getCurrentFilter$(): Observable<CurrentFilterModel> {
+    return this._store.select(selectors.selectCurrentFilter);
+  }
+  setCurrentFilter(currentFilter: CurrentFilterModel): void {
+    const action = actions.setCurrentFilter({ currentFilter });
+    this._store.dispatch(action);
   }
 }

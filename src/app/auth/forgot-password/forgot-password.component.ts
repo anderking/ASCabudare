@@ -50,7 +50,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy, AfterViewInit
   onSubmit() {
     this.dataForm = { ...this.mainForm.form.getRawValue() };
     if (this.mainForm.form.valid) {
-      console.log("LOGIN", this.dataForm);
       this._authFacadeService.forgotPassword(this.dataForm);
     }
   }

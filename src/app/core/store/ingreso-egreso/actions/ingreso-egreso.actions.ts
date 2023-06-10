@@ -2,6 +2,7 @@ import { createAction, props } from "@ngrx/store";
 import { Update } from "@ngrx/entity";
 import { DataActionModel } from "@models/common/data-action.model";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
+import { CurrentFilterModel } from "@models/shared/filter.model";
 
 /** Acciones para gestionar el backend */
 
@@ -86,8 +87,17 @@ export const setCurrentItemId = createAction(
   props<{ id: string | number }>()
 );
 /** Esta acción permite resetear el registro actual del store */
-export const resetSelected = createAction("[IngresoEgreso/API] resetSelected IngresoEgreso");
+export const resetSelected = createAction(
+  "[IngresoEgreso/API] resetSelected IngresoEgreso"
+);
 /** Esta acción permite resetear todo el sotre de la entidad */
 export const reset = createAction("[IngresoEgreso/API] reset IngresoEgresos");
 /** Esta acción permite limpiar el loading del store */
-export const resetLoading = createAction("[IngresoEgreso/API] resetLoading IngresoEgreso");
+export const resetLoading = createAction(
+  "[IngresoEgreso/API] resetLoading IngresoEgreso"
+);
+
+export const setCurrentFilter = createAction(
+  "[IngresoEgreso/App] setCurrentFilter IngresoEgreso",
+  props<{ currentFilter: CurrentFilterModel }>()
+);

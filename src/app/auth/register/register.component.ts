@@ -6,13 +6,16 @@ import {
   AfterViewInit,
 } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { CurrentUserModel, LoginFormModel } from "@models/auth/current-user.model";
+import {
+  CurrentUserModel,
+  LoginFormModel,
+} from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
-import { filter, first, takeUntil } from "rxjs/operators";
+import { first, takeUntil } from "rxjs/operators";
 import { AuthService } from "@services/auth/auth.service";
 import { Subject } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-register",
@@ -30,7 +33,8 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private _authService: AuthService,
-    private _authFacadeService: AuthFacadeService
+    private _authFacadeService: AuthFacadeService,
+    private _router: Router
   ) {}
 
   ngOnInit() {
@@ -69,8 +73,9 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         first((userDoc) => !isNullOrUndefined(userDoc)),
         takeUntil(this._finisher)
       )
-      .subscribe((userDoc: CurrentUserModel) => {
-        this._authService.setCurrentUserEncrypt(this.registerFB);
+      .subscribe(() => {
+        this._router.navigate(["/login-time"]);
+        this._authService.theParamsToLoginTime = this.registerFB;
       });
   }
 
@@ -85,7 +90,6 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit() {
     this.dataForm = { ...this.mainForm.form.getRawValue() };
-    console.log(this.dataForm);
     if (this.mainForm.form.valid) {
       this._authFacadeService.register(this.dataForm);
     }
