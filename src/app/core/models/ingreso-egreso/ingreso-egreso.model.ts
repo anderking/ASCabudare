@@ -7,9 +7,9 @@ export interface IngresoEgresoModel {
   idCategory: string;
   category: string;
   state: boolean;
-  stateText: string;
+  stateText?: string;
   createDate: string;
-  createDateFB: any;
+  createDateFB?: object;
 }
 
 export interface TimestampFirebase {

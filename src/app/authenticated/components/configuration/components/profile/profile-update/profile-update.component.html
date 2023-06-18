@@ -20,7 +20,7 @@
 
                   <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
                     <label>{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
-                    <input type="text" class="form-control" formControlName="displayName"
+                    <input id="dayStartDashboard" type="text" class="form-control" formControlName="displayName"
                       [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
                     <div class="invalid-feedback" *ngIf="isValidField('displayName')">
                       {{ getErrorMessageField('displayName') }}

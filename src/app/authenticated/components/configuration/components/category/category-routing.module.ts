@@ -4,7 +4,7 @@ import { CategoryComponent } from "./category.component";
 import { CategorysComponent } from "./categorys/categorys.component";
 import { CategoryCreateComponent } from "./category-form/category-form.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: "",
     component: CategoryComponent,

@@ -26,7 +26,7 @@ describe("AuthService", () => {
           useValue: storeMock,
         },
       ],
-    }).compileComponents();
+    });
     afAuth = TestBed.inject(Auth);
     authService = TestBed.inject(AuthService);
     authFacadeService = TestBed.inject(AuthFacadeService);

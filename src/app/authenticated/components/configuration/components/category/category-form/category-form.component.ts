@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -6,7 +6,7 @@ import {
 } from "@angular/forms";
 import { combineLatest, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { Location } from "@angular/common";
 import {
   getErrorMessageField,
@@ -22,9 +22,7 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
   templateUrl: "./category-form.component.html",
   styleUrls: ["./category-form.component.scss"],
 })
-export class CategoryCreateComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class CategoryCreateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
   public mainForm: UntypedFormGroup;
   public dataForm: CategoryModel;
@@ -39,11 +37,11 @@ export class CategoryCreateComponent
     private _activatedRoute: ActivatedRoute
   ) {
     this.mainForm = this.initForm();
-    this._categoryFacadeService.search();
   }
 
   ngOnInit() {
     this.chargeIndicatorManager();
+    this._categoryFacadeService.search();
 
     const params$ = this._activatedRoute.paramMap.pipe(
       filter((params) => !isNullOrUndefinedEmpty(params)),
@@ -67,11 +65,20 @@ export class CategoryCreateComponent
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
         map(([items, params, mainForm]) => {
-          return {
-            item: items.find((item: CategoryModel) => item.id === params.id),
-            params,
-            mainForm,
-          };
+          try {
+            return {
+              item: items.find((item: CategoryModel) => item.id === params.id),
+              params,
+              mainForm,
+            };
+          } catch (error) {
+            console.error(error);
+            return {
+              item: null,
+              params,
+              mainForm,
+            };
+          }
         }),
         takeUntil(this.finisher$)
       )
@@ -79,17 +86,6 @@ export class CategoryCreateComponent
         console.log("DATA", data);
         if (data.item) {
           this.selectCurrentItem(data.item);
-        }
-      });
-  }
-
-  ngAfterViewInit(): void {
-    this._sharedFacadeService
-      .getMessage$()
-      .pipe(filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)))
-      .subscribe((message) => {
-        if (!this.currentItem) {
-          this.clean();
         }
       });
 
@@ -102,6 +98,15 @@ export class CategoryCreateComponent
       .subscribe((currentItem) => {
         console.log("currentItem", currentItem);
         this.currentItem = currentItem;
+      });
+
+    this._sharedFacadeService
+      .getMessage$()
+      .pipe(filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)))
+      .subscribe(() => {
+        if (!this.currentItem) {
+          this.clean();
+        }
       });
   }
 
@@ -130,9 +135,7 @@ export class CategoryCreateComponent
       ...this.mainForm.getRawValue(),
       stateText: this.mainForm.getRawValue().state ? "Activa" : "Inactiva",
     };
-    console.log(this.mainForm.controls);
     if (this.mainForm.valid) {
-      console.log(this.dataForm);
       this._categoryFacadeService.create(this.dataForm);
     }
   }
@@ -153,7 +156,7 @@ export class CategoryCreateComponent
     this._location.back();
   }
 
-  private chargeIndicatorManager(): void {
+  chargeIndicatorManager(): void {
     const isLoadingCategory$ = this._categoryFacadeService.getLoading$();
 
     const result$ = combineLatest([isLoadingCategory$]).pipe(

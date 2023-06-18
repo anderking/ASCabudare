@@ -13,6 +13,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { routes } from "../auth-routing.module";
 import { SharedModule } from "@root/shared/shared.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
+import { of } from "rxjs";
 
 describe("ForgotPasswordComponent", () => {
   let component: ForgotPasswordComponent;
@@ -53,8 +54,10 @@ describe("ForgotPasswordComponent", () => {
   });
 
   it("should call getLoading$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getLoading$").and.callThrough();
+    const mySpy = spyOn(authFacadeService, "getLoading$").and.returnValue(of(true));
+
     component.ngOnInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -63,7 +66,9 @@ describe("ForgotPasswordComponent", () => {
 
   it("should call logout from authService", () => {
     const mySpy = spyOn(authService, "logout").and.callThrough();
+
     component.ngAfterViewInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -72,7 +77,9 @@ describe("ForgotPasswordComponent", () => {
 
   it("should call reset from authFacadeService", () => {
     const mySpy = spyOn(authFacadeService, "reset").and.callThrough();
+
     component.ngOnDestroy();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -82,7 +89,6 @@ describe("ForgotPasswordComponent", () => {
   it("should submit valid form", () => {
     const data = { email: "test@example.com", password: "password123" };
     const spy = spyOn(authFacadeService, "forgotPassword");
-
     component.mainForm = {
       form: {
         valid: true,
@@ -91,6 +97,7 @@ describe("ForgotPasswordComponent", () => {
     } as NgForm;
 
     component.onSubmit();
+
     expect(component.mainForm.form.valid).toBeTruthy();
     expect(spy).toHaveBeenCalledWith(data);
   });

@@ -13,6 +13,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { routes } from "../auth-routing.module";
 import { SharedModule } from "@root/shared/shared.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
+import { of } from "rxjs";
+import { mockTestCurrentUserOne } from "@root/core/constants/mocks/mocks-units-test";
 
 describe("LoginComponent", () => {
   let component: LoginComponent;
@@ -53,8 +55,10 @@ describe("LoginComponent", () => {
   });
 
   it("should call getLoading$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getLoading$").and.callThrough();
+    const mySpy = spyOn(authFacadeService, "getLoading$").and.returnValue(of(true));
+
     component.ngOnInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -62,8 +66,10 @@ describe("LoginComponent", () => {
   });
 
   it("should call getLogin$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getLogin$").and.callThrough();
+    const mySpy = spyOn(authFacadeService, "getLogin$").and.returnValue(of(mockTestCurrentUserOne));
+
     component.ngOnInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -72,7 +78,9 @@ describe("LoginComponent", () => {
 
   it("should call logout from authService", () => {
     const mySpy = spyOn(authService, "logout").and.callThrough();
+
     component.ngAfterViewInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -81,7 +89,9 @@ describe("LoginComponent", () => {
 
   it("should call reset from authFacadeService", () => {
     const mySpy = spyOn(authFacadeService, "reset").and.callThrough();
+
     component.ngOnDestroy();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -91,7 +101,6 @@ describe("LoginComponent", () => {
   it("should submit valid form", () => {
     const data = { email: "test@example.com", password: "password123" };
     const spy = spyOn(authFacadeService, "login");
-
     component.mainForm = {
       form: {
         valid: true,
@@ -100,6 +109,7 @@ describe("LoginComponent", () => {
     } as NgForm;
 
     component.onSubmit();
+
     expect(component.mainForm.form.valid).toBeTruthy();
     expect(spy).toHaveBeenCalledWith(data);
   });

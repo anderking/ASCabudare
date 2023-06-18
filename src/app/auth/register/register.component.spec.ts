@@ -15,6 +15,7 @@ import { SharedModule } from "@root/shared/shared.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { of } from "rxjs";
 import { CurrentUserModel } from "@models/auth/current-user.model";
+import { mockTestCurrentUserOne } from "@root/core/constants/mocks/mocks-units-test";
 
 describe("RegisterComponent", () => {
   let component: RegisterComponent;
@@ -55,8 +56,10 @@ describe("RegisterComponent", () => {
   });
 
   it("should call getLoading$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getLoading$").and.callThrough();
+    const mySpy = spyOn(authFacadeService, "getLoading$").and.returnValue(of(true));
+
     component.ngOnInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -64,8 +67,10 @@ describe("RegisterComponent", () => {
   });
 
   it("should call getRegister$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getRegister$").and.callThrough();
+    const mySpy = spyOn(authFacadeService, "getRegister$").and.returnValue(of(mockTestCurrentUserOne));
+
     component.ngOnInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -84,8 +89,10 @@ describe("RegisterComponent", () => {
       uid: "string",
     };
     const mySpy = spyOn(authFacadeService, "setUserDoc");
+
     spyOn(authFacadeService, "getRegister$").and.returnValue(of(payload));
     component.ngOnInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -93,8 +100,10 @@ describe("RegisterComponent", () => {
   });
 
   it("should call getUserDoc$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getUserDoc$").and.callThrough();
+    const mySpy = spyOn(authFacadeService, "getUserDoc$").and.returnValue(of(mockTestCurrentUserOne));
+
     component.ngOnInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -103,7 +112,9 @@ describe("RegisterComponent", () => {
 
   it("should call logout from authService", () => {
     const mySpy = spyOn(authService, "logout").and.callThrough();
+
     component.ngAfterViewInit();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -112,7 +123,9 @@ describe("RegisterComponent", () => {
 
   it("should call reset from authFacadeService", () => {
     const mySpy = spyOn(authFacadeService, "reset").and.callThrough();
+
     component.ngOnDestroy();
+
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
@@ -122,7 +135,6 @@ describe("RegisterComponent", () => {
   it("should submit valid form", () => {
     const data = { email: "test@example.com", password: "password123" };
     const spy = spyOn(authFacadeService, "register");
-
     component.mainForm = {
       form: {
         valid: true,
@@ -131,6 +143,7 @@ describe("RegisterComponent", () => {
     } as NgForm;
 
     component.onSubmit();
+
     expect(component.mainForm.form.valid).toBeTruthy();
     expect(spy).toHaveBeenCalledWith(data);
   });

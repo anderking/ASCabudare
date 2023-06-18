@@ -4,7 +4,7 @@ import { IngresoEgresoComponent } from "./ingreso-egreso.component";
 import { IngresosEgresosComponent } from "./ingresos-egresos/ingresos-egresos.component";
 import { IngresoEgresoCreateComponent } from "./ingreso-egreso-form/ingreso-egreso-form.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: "",
     component: IngresoEgresoComponent,

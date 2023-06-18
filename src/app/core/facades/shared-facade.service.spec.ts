@@ -20,7 +20,7 @@ describe("SharedFacadeService", () => {
           useValue: storeMock,
         },
       ],
-    }).compileComponents();
+    });
 
     facadeService = TestBed.inject(SharedFacadeService);
     store = TestBed.inject(Store);

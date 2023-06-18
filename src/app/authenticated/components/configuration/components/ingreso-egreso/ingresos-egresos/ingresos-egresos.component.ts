@@ -32,9 +32,9 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public items: IngresoEgresoModel[] = [];
   public wordFilter = "";
   public currentUser: CurrentUserModel;
+  public rangeDate: RangeDate;
   private _finisher = new Subject<void>();
   private _initDay: string = null;
-  private _rangeDate: RangeDate;
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
@@ -43,7 +43,9 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     private _location: Location,
     private _router: Router,
     private _fb: UntypedFormBuilder
-  ) {
+  ) {}
+
+  ngOnInit() {
     this._authFacadeService
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
@@ -53,9 +55,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
           this.mainForm = this.initForm();
         }
       });
-  }
 
-  ngOnInit() {
     this._ingresoEgresoFacadeService
       .getCurrentFilter$()
       .pipe(
@@ -67,11 +67,11 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       )
       .subscribe((currentFilter: CurrentFilterModel) => {
         console.log(currentFilter);
-        this._rangeDate = currentFilter.rangeDate;
+        this.rangeDate = currentFilter.rangeDate;
         const startDateControl = this.mainForm.controls["startDate"];
         const endDateControl = this.mainForm.controls["endDate"];
-        startDateControl.setValue(currentFilter.rangeDate.startDate);
-        endDateControl.setValue(currentFilter.rangeDate.endDate);
+        startDateControl.setValue(currentFilter?.rangeDate?.startDate);
+        endDateControl.setValue(currentFilter?.rangeDate?.endDate);
         this.wordFilter = currentFilter.wordFilter;
       });
 
@@ -89,16 +89,16 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     this._finisher.next();
     this._ingresoEgresoFacadeService.reset();
     this._sharedFacadeService.reset();
-    if (this._rangeDate) {
+    if (this.rangeDate) {
       const payload: CurrentFilterModel = {
-        rangeDate: this._rangeDate,
+        rangeDate: this.rangeDate,
         wordFilter: this.wordFilter,
       };
       this._ingresoEgresoFacadeService.setCurrentFilter(payload);
     }
   }
 
-  private initForm(): UntypedFormGroup {
+  initForm(): UntypedFormGroup {
     const day = this._initDay ? this._initDay : "01";
     const today = new Date().toLocaleDateString("en-CA");
     const todaySplit = today.split("-");
@@ -109,7 +109,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       new Date(initStartDate).getMonth() + 1
     );
 
-    this._rangeDate = {
+    this.rangeDate = {
       startDate: new Date(initStartDate).toLocaleDateString("en-CA"),
       endDate: new Date(initEndDate).toLocaleDateString("en-CA"),
     };
@@ -134,12 +134,12 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
         map((items: IngresoEgresoModel[]) => {
           try {
             return items.filter((item: IngresoEgresoModel) => {
-              if (this._rangeDate) {
+              if (this.rangeDate) {
                 const createDate = new Date(item.createDate).getTime();
                 const startDate = new Date(
-                  this._rangeDate?.startDate
+                  this.rangeDate?.startDate
                 ).getTime();
-                const endDate = new Date(this._rangeDate?.endDate).getTime();
+                const endDate = new Date(this.rangeDate?.endDate).getTime();
                 if (createDate >= startDate && createDate <= endDate) {
                   return true;
                 } else {
@@ -159,11 +159,11 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   }
 
   public changeFilter(value: string, field: string): void {
-    this._rangeDate = {
-      ...this._rangeDate,
+    this.rangeDate = {
+      ...this.rangeDate,
       [field]: value,
     };
-    console.log(this._rangeDate);
+    console.log(this.rangeDate);
 
     const startDateControl = this.mainForm.controls["startDate"];
     const endDateControl = this.mainForm.controls["endDate"];

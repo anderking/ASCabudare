@@ -7,6 +7,7 @@ import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model"
 import { ComboModel } from "@models/masters/combo.model";
 import { AttachmentModel } from "@models/shared/attachment.model";
 import { ErrorModel } from "@models/shared/error.model";
+import { CurrentFilterModel } from "@models/shared/filter.model";
 
 export const mockTestLoginFormOne: LoginFormModel = {
   email: "string",
@@ -15,7 +16,7 @@ export const mockTestLoginFormOne: LoginFormModel = {
 
 export const mockTestCurrentUserOne: CurrentUserModel = {
   displayName: "string",
-  email: "string",
+  email: "string@company.com",
   emailVerified: false,
   phoneNumber: "string",
   currency: "string",
@@ -62,7 +63,7 @@ export const mockTestCategoryOne: CategoryModel = {
   name: "string",
   description: "string",
   state: true,
-  stateText: "string",
+  stateText: "Activa",
 };
 
 export const mockTestCategoryAll: CategoryModel[] = [
@@ -77,30 +78,38 @@ export const mockTestCategoryAll: CategoryModel[] = [
 
 export const mockTestIngresoEgresoOne: IngresoEgresoModel = {
   id: "string",
-  description: "string",
-  amount: 100,
-  typeActive: "string",
-  idTypeActive: "string",
   idCategory: "string",
   category: "string",
+  idTypeActive: "string",
+  typeActive: "string",
+  createDate: 'string',
+  amount: 100,
+  description: "string",
   state: true,
-  stateText: "string",
-  createDate: "string",
-  createDateFB: "string",
+  stateText: "Activa",
 };
 
 export const mockTestIngresoEgresoAll: IngresoEgresoModel[] = [
   {
     id: "string",
-    description: "string",
-    amount: 100,
-    typeActive: "string",
-    idTypeActive: "string",
     idCategory: "string",
     category: "string",
+    idTypeActive: "string",
+    typeActive: "string",
+    createDate: new Date().toLocaleDateString("en-CA"),
+    amount: 100,
+    description: "string",
     state: true,
-    stateText: "string",
-    createDate: "string",
-    createDateFB: "string",
+    createDateFB: new Date(
+      new Date().toLocaleDateString("en-CA") +
+        "T" +
+        new Date().toISOString().split("T")[1]
+    ),
+    stateText: "Activa",
   },
 ];
+
+export const mockTestCurrentFilterOne: CurrentFilterModel = {
+  rangeDate: { startDate: "string", endDate: "string" },
+  wordFilter: "string",
+};

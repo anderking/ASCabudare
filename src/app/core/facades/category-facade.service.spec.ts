@@ -29,7 +29,7 @@ describe("CategoryFacadeService", () => {
           useValue: storeMock,
         },
       ],
-    }).compileComponents();
+    });
 
     facadeService = TestBed.inject(CategoryFacadeService);
     store = TestBed.inject(Store);

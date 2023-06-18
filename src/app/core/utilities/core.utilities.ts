@@ -1,7 +1,6 @@
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
-import { TranslateService } from "@ngx-translate/core";
 
 export function getCurrentUserDecrypt(): CurrentUserModel {
   try {
@@ -66,41 +65,43 @@ export function groupBy(inputArray: any, key: any, removeKey = false): any[] {
 
 export function groupByMult(items: any[], groups: any[]): any[] {
   const outputType = {};
-
-  items.forEach((a) => {
-    groups
-      .reduce((o, g, i) => {
-        o[a[g]] = o[a[g]] || (i + 1 === groups.length ? [] : {});
-        return o[a[g]];
-      }, outputType)
-      .push(a);
-  });
-
   const levelOne: any = [];
+  try {
+    items.forEach((a) => {
+      groups
+        .reduce((o, g, i) => {
+          o[a[g]] = o[a[g]] || (i + 1 === groups.length ? [] : {});
+          return o[a[g]];
+        }, outputType)
+        .push(a);
+    });
 
-  for (const key in outputType) {
-    if (outputType.hasOwnProperty(key)) {
-      const element = outputType[key];
-      levelOne.push({
-        name: key,
-        values: element,
-      });
-    }
-  }
-
-  levelOne.forEach((item) => {
-    const levelTwo: any = [];
-    for (const key in item.values) {
-      if (item.values.hasOwnProperty(key)) {
-        const element = item.values[key];
-        levelTwo.push({
+    for (const key in outputType) {
+      if (outputType.hasOwnProperty(key)) {
+        const element = outputType[key];
+        levelOne.push({
           name: key,
           values: element,
         });
       }
     }
-    item.values = levelTwo;
-  });
+
+    levelOne.forEach((item) => {
+      const levelTwo: any = [];
+      for (const key in item.values) {
+        if (item.values.hasOwnProperty(key)) {
+          const element = item.values[key];
+          levelTwo.push({
+            name: key,
+            values: element,
+          });
+        }
+      }
+      item.values = levelTwo;
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
   return levelOne;
 }

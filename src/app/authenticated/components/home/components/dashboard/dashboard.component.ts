@@ -4,10 +4,7 @@ import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
-import {
-  isNullOrUndefined,
-  isNullOrUndefinedEmpty,
-} from "@root/core/utilities/is-null-or-undefined.util";
+import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
 import { groupByMult } from "@root/core/utilities/core.utilities";
@@ -25,7 +22,6 @@ import {
   isValidField,
 } from "@root/core/utilities/form-validations";
 import { RangeDate } from "@models/shared/filter.model";
-
 
 @Component({
   selector: "app-dashboard",
@@ -57,7 +53,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _sharedFacadeService: SharedFacadeService,
     private _authFacadeService: AuthFacadeService,
     private _fb: UntypedFormBuilder
-  ) {
+  ) {}
+
+  ngOnInit() {
     this._authFacadeService
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
@@ -67,9 +65,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.mainForm = this.initForm();
         }
       });
-  }
-
-  ngOnInit() {
     this.chargeIndicatorManager();
     this._ingresoEgresoFacadeService.search();
     this._categoryFacadeService.search();
@@ -160,10 +155,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
         map(([ingresos_egresos, categories]) => {
-          return {
-            ingresos_egresos,
-            categories,
-          };
+          try {
+            return {
+              ingresos_egresos,
+              categories,
+            };
+          } catch (error) {
+            return {
+              ingresos_egresos: [],
+              categories: [],
+            };
+          }
         }),
         takeUntil(this.finisher$)
       )
@@ -184,17 +186,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.totalEgresos = 0;
     this.cantIngresos = 0;
     this.cantEgresos = 0;
-    items.forEach((item) => {
-      if (item.typeActive === "Ingreso") {
-        this.totalIngresos += item.amount;
-        this.cantIngresos++;
-      }
+    try {
+      items.forEach((item) => {
+        if (item.typeActive === "Ingreso") {
+          this.totalIngresos += item.amount;
+          this.cantIngresos++;
+        }
 
-      if (item.typeActive === "Egreso") {
-        this.totalEgresos += item.amount;
-        this.cantEgresos++;
-      }
-    });
+        if (item.typeActive === "Egreso") {
+          this.totalEgresos += item.amount;
+          this.cantEgresos++;
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
     this.totalEarnings = this.totalIngresos - this.totalEgresos;
   }
 
@@ -238,7 +244,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return getErrorMessageField(field, this.mainForm);
   }
 
-  private chargeIndicatorManager(): void {
+  public chargeIndicatorManager(): void {
     const isLoadingIngresoEgreso$ =
       this._ingresoEgresoFacadeService.getLoading$();
     const isLoadingCategory$ = this._categoryFacadeService.getLoading$();

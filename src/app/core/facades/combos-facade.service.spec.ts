@@ -21,7 +21,7 @@ describe("CombosFacadeService", () => {
           useValue: storeMock,
         },
       ],
-    }).compileComponents();
+    });
 
     facadeService = TestBed.inject(CombosFacadeService);
     store = TestBed.inject(Store);

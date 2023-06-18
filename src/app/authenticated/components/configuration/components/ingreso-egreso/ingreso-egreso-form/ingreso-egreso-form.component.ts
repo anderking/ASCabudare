@@ -1,5 +1,9 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { UntypedFormGroup, Validators, UntypedFormBuilder } from "@angular/forms";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  UntypedFormGroup,
+  Validators,
+  UntypedFormBuilder,
+} from "@angular/forms";
 import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -13,7 +17,10 @@ import {
   isValidField,
 } from "@root/core/utilities/form-validations";
 import { ActivatedRoute, ParamMap } from "@angular/router";
-import { isNullOrUndefined, isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
+import {
+  isNullOrUndefined,
+  isNullOrUndefinedEmpty,
+} from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
@@ -25,21 +32,20 @@ import { oderBy } from "@root/core/utilities/core.utilities";
   templateUrl: "./ingreso-egreso-form.component.html",
   styleUrls: ["./ingreso-egreso-form.component.scss"],
 })
-export class IngresoEgresoCreateComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
   public mainForm: UntypedFormGroup;
   public dataForm: IngresoEgresoModel;
   public currentItem: IngresoEgresoModel;
   public isLoading: boolean;
-  public typeActivesArray: ComboModel[];
+  public typeActivesArray: ComboModel[] = [];
   public typeActiveCurrent: ComboModel;
   public typeActiveCombo$ = new BehaviorSubject<ComboModel[]>([]);
-  public categorysArray: CategoryModel[];
+  public categorysArray: any[] = [];
   public categoryCurrent: CategoryModel;
   public categoryCombo$ = new BehaviorSubject<CategoryModel[]>([]);
   public currentUser: CurrentUserModel;
+  public createDateFB: object = null;
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
@@ -60,6 +66,12 @@ export class IngresoEgresoCreateComponent
     this.callsCombos();
     this.chargeIndicatorManager();
     this.controlSubscriptions();
+
+    this._authFacadeService
+      .getCurrentUser$()
+      .subscribe((user: CurrentUserModel) => {
+        this.currentUser = user;
+      });
 
     const params$ = this._activatedRoute.paramMap.pipe(
       filter((params) => !isNullOrUndefinedEmpty(params)),
@@ -83,13 +95,21 @@ export class IngresoEgresoCreateComponent
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
         map(([items, params, mainForm]) => {
-          return {
-            item: items.find(
-              (item: IngresoEgresoModel) => item.id === params.id
-            ),
-            params,
-            mainForm,
-          };
+          try {
+            return {
+              item: items.find(
+                (item: IngresoEgresoModel) => item.id === params.id
+              ),
+              params,
+              mainForm,
+            };
+          } catch (error) {
+            return {
+              item: null,
+              params,
+              mainForm,
+            };
+          }
         }),
         takeUntil(this.finisher$)
       )
@@ -97,20 +117,6 @@ export class IngresoEgresoCreateComponent
         console.log("DATA", data);
         if (data.item) {
           this.selectCurrentItem(data.item);
-        }
-      });
-  }
-
-  ngAfterViewInit(): void {
-    this._sharedFacadeService
-      .getMessage$()
-      .pipe(
-        filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
-        takeUntil(this.finisher$)
-      )
-      .subscribe((message) => {
-        if (!this.currentItem) {
-          this.clean();
         }
       });
 
@@ -125,10 +131,16 @@ export class IngresoEgresoCreateComponent
         this.currentItem = currentItem;
       });
 
-    this._authFacadeService
-      .getCurrentUser$()
-      .subscribe((user: CurrentUserModel) => {
-        this.currentUser = user;
+    this._sharedFacadeService
+      .getMessage$()
+      .pipe(
+        filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
+        takeUntil(this.finisher$)
+      )
+      .subscribe(() => {
+        if (!this.currentItem) {
+          this.clean();
+        }
       });
   }
 
@@ -193,6 +205,14 @@ export class IngresoEgresoCreateComponent
   }
 
   initForm(): UntypedFormGroup {
+    const createDateISO: string = new Date().toISOString();
+    const createDate = createDateISO.split("T")[0];
+    const hoursISO = createDateISO.split("T")[1];
+    const hours = hoursISO.split(".")[0];
+    const newDate = createDate + "T" + hours;
+    const date = new Date(newDate);
+    this.createDateFB = date;
+
     return this._fb.group({
       id: null,
       idCategory: ["", [Validators.required]],
@@ -215,14 +235,10 @@ export class IngresoEgresoCreateComponent
     });
   }
 
-  onSubmit() {
-    const createDate: string = this.mainForm.getRawValue().createDate;
-    const hours = new Date().toISOString().split("T")[1];
-    const newDate = createDate + "T" + hours;
-    const date = new Date(newDate);
+  onSubmit(createDateFB: object) {
     this.dataForm = {
       ...this.mainForm.getRawValue(),
-      createDateFB: date,
+      createDateFB,
       stateText: this.mainForm.getRawValue().state ? "Activa" : "Inactiva",
     };
     if (this.mainForm.valid) {
@@ -240,6 +256,7 @@ export class IngresoEgresoCreateComponent
   }
 
   clean() {
+    console.log("paso")
     this.mainForm.reset({ state: true });
     this.mainForm.get("idCategory").setValue("");
     this.mainForm.get("idTypeActive").setValue("");
@@ -249,6 +266,7 @@ export class IngresoEgresoCreateComponent
   }
 
   goBack() {
+    console.log("paso")
     this._location.back();
   }
 
@@ -302,7 +320,7 @@ export class IngresoEgresoCreateComponent
       });
   }
 
-  private chargeIndicatorManager(): void {
+  chargeIndicatorManager(): void {
     const isLoadingIngresoEgreso$ =
       this._ingresoEgresoFacadeService.getLoading$();
     const isLoadingCategory$ = this._categoryFacadeService.getLoading$();
