@@ -12,7 +12,7 @@ export class VerticalBarChartComponent implements OnChanges {
   @Input() items: GroupModel<GroupModel<IngresoEgresoModel>>[] = [];
   single: { name: string; value: number }[];
   multi: any[];
-  view: any[] = [500, 400];
+  view: any[] = [400, 400];
   showXAxis = true;
   showYAxis = true;
   gradient = false;

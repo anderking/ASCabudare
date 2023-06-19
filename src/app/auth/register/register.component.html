@@ -1,64 +1,66 @@
 <div class="container">
-
-  <div class="card o-hidden border-0 shadow-lg my-5">
-    <div class="card-body p-0">
-
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-3"></div>
+    <div class="col-sm-12 col-md-6">
       <div class="row">
-        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-        <div class="col-lg-7">
-          <div class="p-5">
-            <div class="text-center">
-              <h1 class="h4 text-gray-900 mb-4">{{ 'TITLES.REGISTER' | translate }}</h1>
-            </div>
-            <form class="user" #mainForm="ngForm">
-
-              <div class="form-group">
-                <input type="email"
-                  [ngClass]="{'is-invalid': validationEmail.touched && !validationEmail.valid, 'is-valid': validationEmail.touched && validationEmail.valid}"
-                  class="form-control form-control-user" name="email" #validationEmail="ngModel" placeholder="Email"
-                  [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
-
-
-                <div class="invalid-feedback" *ngIf="validationEmail.touched && !validationEmail.valid">
-                  <div *ngIf="validationEmail.errors.required">{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
-                  <div *ngIf="validationEmail.errors.pattern">{{ 'VALIDATIONS.EMAIL' | translate }}</div>
-                </div>
-              </div>
-
-              <div class="form-group">
-
-                <input type="password"
-                  [ngClass]="{'is-invalid': validationPassword.touched && !validationPassword.valid, 'is-valid': validationPassword.touched && validationPassword.valid}"
-                  class="form-control form-control-user" name="password" #validationPassword="ngModel"
-                  placeholder="Password" [(ngModel)]="password"
-                  pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
-
-                <div class="invalid-feedback" *ngIf="validationPassword.touched && !validationPassword.valid">
-                  <div *ngIf="validationPassword.errors.required">{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
-                  <div *ngIf="validationPassword.errors.pattern">{{ 'VALIDATIONS.PASSWORD' | translate }}</div>
-                </div>
-
-              </div>
-
-              <div class="form-group">
-                <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
-                  [disabled]="mainForm.invalid" (click)="onSubmit()">
-                  {{ 'BUTTONS.REGISTER' | translate }}
-                </button>
-                <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
-                  <div class="spinner-border spinner-border-sm" role="status"></div>
-                </button>
-              </div>
-              <div class="form-group">
+        <div class="col-lg-12">
+          <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+              <div class="p-5">
                 <div class="text-center">
-                  <a class="small" [routerLink]="[ '/login' ]">{{ 'TEXTS.BACK_LOGIN' | translate }}</a>
+                  <h1 class="h4 text-gray-900 mb-4">{{ 'TITLES.REGISTER' | translate }}</h1>
                 </div>
+                <form class="user" #mainForm="ngForm">
+
+                  <div class="form-group">
+                    <input type="email"
+                      [ngClass]="{'is-invalid': validationEmail.touched && !validationEmail.valid, 'is-valid': validationEmail.touched && validationEmail.valid}"
+                      class="form-control form-control-user" name="email" #validationEmail="ngModel" placeholder="Email"
+                      [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
+
+
+                    <div class="invalid-feedback" *ngIf="validationEmail.touched && !validationEmail.valid">
+                      <div *ngIf="validationEmail.errors.required">{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
+                      <div *ngIf="validationEmail.errors.pattern">{{ 'VALIDATIONS.EMAIL' | translate }}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <input type="password"
+                      [ngClass]="{'is-invalid': validationPassword.touched && !validationPassword.valid, 'is-valid': validationPassword.touched && validationPassword.valid}"
+                      class="form-control form-control-user" name="password" #validationPassword="ngModel"
+                      placeholder="Password" [(ngModel)]="password"
+                      pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
+
+                    <div class="invalid-feedback" *ngIf="validationPassword.touched && !validationPassword.valid">
+                      <div *ngIf="validationPassword.errors.required">{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
+                      <div *ngIf="validationPassword.errors.pattern">{{ 'VALIDATIONS.PASSWORD' | translate }}</div>
+                    </div>
+
+                  </div>
+
+                  <div class="form-group">
+                    <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
+                      [disabled]="mainForm.invalid" (click)="onSubmit()">
+                      {{ 'BUTTONS.REGISTER' | translate }}
+                    </button>
+                    <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
+                      <div class="spinner-border spinner-border-sm" role="status"></div>
+                    </button>
+                  </div>
+                  <div class="form-group">
+                    <div class="text-center">
+                      <a class="small" [routerLink]="[ '/login' ]">{{ 'TEXTS.BACK_LOGIN' | translate }}</a>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="col-sm-12 col-md-3"></div>
   </div>
-
 </div>

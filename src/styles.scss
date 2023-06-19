@@ -1,11 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
-.cursor{
-    cursor: pointer;
-}
-.sidebar{
-    height: 100% !important;
+.cursor {
+  cursor: pointer;
 }
 
 .btn-primary {
-    color: #fff !important;
+  color: #fff !important;
+}
+
+.img-profile {
+  height: 30px !important;
+  width: 30px !important;
+  border: 2px solid hsla(0, 0%, 100%, .8) !important;
+  border-radius: 50%;
+}
+
+#content {
+  margin-top: 2em;
 }
