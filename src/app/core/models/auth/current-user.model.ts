@@ -11,7 +11,7 @@ export interface CurrentUserModel {
   currency: string;
   dayStartDashboard: string;
   photoURL: string;
-  uploadPhoto?: any | any[];
+  uploadPhoto?: any;
   accessToken?: string;
   uid: string;
   refreshToken?: string;

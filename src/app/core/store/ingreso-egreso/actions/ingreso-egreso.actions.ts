@@ -90,7 +90,7 @@ export const setCurrentItemId = createAction(
 export const resetSelected = createAction(
   "[IngresoEgreso/API] resetSelected IngresoEgreso"
 );
-/** Esta acción permite resetear todo el sotre de la entidad */
+/** Esta acción permite resetear  el sotre de la entidad */
 export const reset = createAction("[IngresoEgreso/API] reset IngresoEgresos");
 /** Esta acción permite limpiar el loading del store */
 export const resetLoading = createAction(

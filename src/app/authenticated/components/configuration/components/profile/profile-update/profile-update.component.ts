@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from "@angular/forms";
 import { combineLatest, of, Subject } from "rxjs";
 import { SharedFacadeService } from "@facades/shared-facade.service";
-import {
-  filter,
-  map,
-  takeUntil,
-} from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { Location } from "@angular/common";
 import {
   getErrorMessageField,
@@ -21,11 +21,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { startDaySelect } from "@root/core/constants/mocks/mocks-const";
 import { AttachmentModel } from "@models/shared/attachment.model";
 
-
 @Component({
   selector: "app-profile-update",
   templateUrl: "./profile-update.component.html",
-  styleUrls: ["./profile-update.component.scss"],
 })
 export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
@@ -162,8 +160,9 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     const filesInput = event.target.files;
 
     if (filesInput.length > 0) {
-      for (let i = 0; i < filesInput.length; i++) {
-        const currentFile: any = filesInput[i];
+      for (let value of filesInput) {
+        console.log(value);
+        const currentFile: any = value;
         const extension = allowed_types.includes(currentFile.type);
         let isValid = true;
 

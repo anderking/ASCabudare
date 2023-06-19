@@ -120,7 +120,7 @@ export class AuthService {
    */
   public isVerifyEmail(): boolean {
     const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
-    if (currentUser && currentUser.emailVerified) {
+    if (currentUser?.emailVerified) {
       return true;
     } else {
       return false;

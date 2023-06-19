@@ -11,7 +11,6 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
 @Component({
   selector: "app-categorys",
   templateUrl: "./categorys.component.html",
-  styleUrls: ["./categorys.component.scss"],
 })
 export class CategorysComponent implements OnInit, OnDestroy {
   public isLoading: boolean;

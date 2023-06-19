@@ -1,12 +1,10 @@
 import { Component, Input, OnChanges } from "@angular/core";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { GroupModel } from "@models/shared/group.model";
-import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-vertical-bar-chart",
   templateUrl: "./vertical-bar-chart.component.html",
-  styleUrls: ["./vertical-bar-chart.component.scss"],
 })
 export class VerticalBarChartComponent implements OnChanges {
   @Input() items: GroupModel<GroupModel<IngresoEgresoModel>>[] = [];

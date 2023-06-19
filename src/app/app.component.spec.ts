@@ -7,9 +7,7 @@ import {
 } from "@ngx-translate/core";
 import { AppComponent } from "./app.component";
 describe("AppComponent", () => {
-  let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let translateService: TranslateService;
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -27,8 +25,6 @@ describe("AppComponent", () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
-    translateService = TestBed.inject(TranslateService);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 

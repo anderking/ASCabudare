@@ -1,10 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-ingreso-egreso',
-  templateUrl: './ingreso-egreso.component.html',
-  styleUrls: ['./ingreso-egreso.component.scss']
+  selector: "app-ingreso-egreso",
+  templateUrl: "./ingreso-egreso.component.html",
 })
-export class IngresoEgresoComponent{
-  constructor() { }
-}
+export class IngresoEgresoComponent {}

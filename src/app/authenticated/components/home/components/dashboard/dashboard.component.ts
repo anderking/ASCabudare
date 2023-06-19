@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { combineLatest, Subject } from "rxjs";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -26,7 +26,6 @@ import { RangeDate } from "@models/shared/filter.model";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   public mainForm: UntypedFormGroup;
@@ -170,7 +169,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((data) => {
-        //console.log("DATA", data);
+        console.log("DATA", data);
         this.calculate(data.ingresos_egresos);
         this.ingresos_egresos = data.ingresos_egresos;
         this.categories = data.categories;

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable, of } from "rxjs";
-import { retry, map, tap, mergeMap } from "rxjs/operators";
+import { retry } from "rxjs/operators";
 import { DataActionModel } from "@models/common/data-action.model";
 import { environment } from "@environments/environment";
 import { ApiServiceInterface } from "@interfaces/api-service.interface";

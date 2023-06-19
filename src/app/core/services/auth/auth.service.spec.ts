@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { AuthService } from "./auth.service";
 import { environment } from "src/environments/environment";

@@ -8,7 +8,7 @@ import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { ComboModel } from "@models/masters/combo.model";
 import { Location } from "@angular/common";
@@ -30,7 +30,6 @@ import { oderBy } from "@root/core/utilities/core.utilities";
 @Component({
   selector: "app-ingreso-egreso-form",
   templateUrl: "./ingreso-egreso-form.component.html",
-  styleUrls: ["./ingreso-egreso-form.component.scss"],
 })
 export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();

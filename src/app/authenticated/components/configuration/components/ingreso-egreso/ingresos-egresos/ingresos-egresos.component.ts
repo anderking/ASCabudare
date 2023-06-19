@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -24,7 +24,6 @@ import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
 @Component({
   selector: "app-ingresos-egresos",
   templateUrl: "./ingresos-egresos.component.html",
-  styleUrls: ["./ingresos-egresos.component.scss"],
 })
 export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public mainForm: UntypedFormGroup;

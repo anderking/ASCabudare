@@ -6,7 +6,6 @@ import { GroupModel } from "@models/shared/group.model";
 @Component({
   selector: "app-grouped-vertical-bar-chart",
   templateUrl: "./grouped-vertical-bar-chart.component.html",
-  styleUrls: ["./grouped-vertical-bar-chart.component.scss"],
 })
 export class GroupedVerticalBarChartComponent implements OnChanges {
   @Input() items: GroupModel<GroupModel<IngresoEgresoModel>>[] = [];

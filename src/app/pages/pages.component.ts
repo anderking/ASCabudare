@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
   selector: "app-pages",
   templateUrl: "./pages.component.html",
 })
-export class PagesComponent {
-  constructor() {}
-}
+export class PagesComponent {}

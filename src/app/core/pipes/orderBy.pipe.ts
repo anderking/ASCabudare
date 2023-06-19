@@ -1,10 +1,3 @@
-/*
- *      Example use
- *      Basic Array of single type: *ngFor="const todo of todoService.todos | orderBy : '-'"
- *      Multidimensional Array Sort on single column: *ngFor="const todo of todoService.todos | orderBy : ['-status']"
- *      Multidimensional Array Sort on multiple columns: *ngFor="const todo of todoService.todos | orderBy : ['status', '-title']"
- */
-
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({ name: "orderBy", pure: false })
@@ -54,7 +47,7 @@ export class OrderByPipe implements PipeTransform {
 
     // make a copy of the input"s reference
     this.value = [...input];
-    const value = this.value;
+    const value: any = this.value;
     if (!Array.isArray(value)) {
       return value;
     }
@@ -74,7 +67,9 @@ export class OrderByPipe implements PipeTransform {
         propertyToCheck === "-" ||
         propertyToCheck === "+"
       ) {
-        return !desc ? value.sort() : value.sort().reverse();
+        return !desc
+          ? value.sort((a, b) => a - b)
+          : value.sort((a, b) => a - b).reverse();
       } else {
         const property: string =
           propertyToCheck.substr(0, 1) === "+" ||

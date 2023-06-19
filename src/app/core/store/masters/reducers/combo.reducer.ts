@@ -48,7 +48,7 @@ const comboReducer = createReducer(
   })
 );
 
-/** Se exporta la funcion reducer que contiene todo el store */
+/** Se exporta la funcion reducer que contiene  el store */
 export function reducer(state: State | undefined, action: Action) {
   return comboReducer(state, action);
 }
