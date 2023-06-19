@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from "@angular/core";
   name: "amount",
 })
 export class AmountPipe implements PipeTransform {
-  constructor() {}
   transform(items: any[], field: string): any {
     let acumValue = 0;
     items.forEach((element: any) => {

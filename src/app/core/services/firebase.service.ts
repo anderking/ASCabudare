@@ -122,25 +122,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio para actualizar el perfil del usuario
-   * @param action Contiene el body DataActionModel
-   */
-  updateProfile$(action: DataActionModel<T>): Observable<any> {
-    const data: any = action.payload;
-    const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          const docRef = doc(this.afDB, `${action.url}`);
-          resolve(setDoc(docRef, data));
-        } catch (error) {
-          reject(error);
-        }
-      })
-    );
-    return subscription.pipe(map(() => data));
-  }
-
-  /**
    * Servicio para actualizar el perfil del usuario en autenticación
    * @param action Contiene el body DataActionModel
    */

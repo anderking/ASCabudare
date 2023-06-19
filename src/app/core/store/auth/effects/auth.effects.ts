@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
-import { catchError, map, switchMap, tap } from "rxjs/operators";
+import { catchError, map, switchMap } from "rxjs/operators";
 import {
   LoginFormModel,
   CurrentUserModel,
@@ -101,7 +101,7 @@ export class AuthEffects {
     return this._actions$.pipe(
       ofType(actions.updateProfile),
       switchMap(({ action }) =>
-        this._firebaseService.updateProfile$(action).pipe(
+        this._firebaseService.setUserDoc$(action).pipe(
           switchMap((updateProfileFB: CurrentUserModel) => {
             const message = this.translateService.instant(
               "MESSAGES.USER_UPDATE_SUCCESS"

@@ -17,14 +17,11 @@ export class VerticalBarChartComponent implements OnChanges {
   showLegend = false;
   showXAxisLabel = false;
   showYAxisLabel = false;
-  yAxisLabel = "Montos"
-  xAxisLabel = "Tipo"
+  yAxisLabel = "Montos";
+  xAxisLabel = "Tipo";
   colorScheme = {
     domain: [],
   };
-
-  constructor() {
-  }
 
   ngOnChanges(): void {
     if (this.items) {

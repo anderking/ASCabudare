@@ -57,7 +57,7 @@ describe("DashboardComponent", () => {
     component.isLoading = false;
     fixture.detectChanges();
     const htmlElement: HTMLElement = fixture.nativeElement;
-    const element = htmlElement.querySelector("h1");
+    const element = htmlElement.querySelector("h2");
 
     expect(element.textContent).toEqual("TEXTS.EARNINGS");
   });

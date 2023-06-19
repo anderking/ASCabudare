@@ -11,7 +11,6 @@ import { statusMessages } from "../utilities/status-messages";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
@@ -29,7 +28,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             )}`;
           }
         }
-        return throwError(errorMessage);
+        return throwError(() => errorMessage);
       })
     );
   }

@@ -18,13 +18,11 @@ export class GroupedVerticalBarChartComponent implements OnChanges {
   showLegend = false;
   showXAxisLabel = false;
   showYAxisLabel = false;
-  yAxisLabel = "Montos"
-  xAxisLabel = "Tipo"
+  yAxisLabel = "Montos";
+  xAxisLabel = "Tipo";
   colorScheme = {
     domain: ["#1cc88a", "#e74a3b", "#c7ebf1", "#fbe6b1"],
   };
-
-  constructor() {}
 
   ngOnChanges(): void {
     if (this.items) {

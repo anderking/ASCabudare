@@ -7,7 +7,6 @@ export interface ApiFirebaseServiceInterface<T> {
   sendEmailVerification$(action: DataActionModel<T>): Observable<any>;
   sendPasswordResetEmail$(action: DataActionModel<T>): Observable<any>;
   setUserDoc$(action: DataActionModel<T>): Observable<any>;
-  updateProfile$(action: DataActionModel<T>): Observable<any>;
   updateProfileFB$(action: DataActionModel<T>): Observable<any>;
   uploadAttachment$(action: DataActionModel<T>): Observable<any>;
   search$(action: DataActionModel<T>): Observable<T[]>;

@@ -59,22 +59,21 @@ export class OrderByPipe implements PipeTransform {
       const propertyToCheck: string = !Array.isArray(config)
         ? config
         : config[0];
-      const desc = propertyToCheck.substr(0, 1) === "-";
+      const desc = propertyToCheck.substring(0, 1) === "-";
 
       // Basic array
+      const array = value.sort((a, b) => a - b);
       if (
         !propertyToCheck ||
         propertyToCheck === "-" ||
         propertyToCheck === "+"
       ) {
-        return !desc
-          ? value.sort((a, b) => a - b)
-          : value.sort((a, b) => a - b).reverse();
+        return !desc ? array : array.reverse();
       } else {
         const property: string =
-          propertyToCheck.substr(0, 1) === "+" ||
-          propertyToCheck.substr(0, 1) === "-"
-            ? propertyToCheck.substr(1)
+          propertyToCheck.substring(0, 1) === "+" ||
+          propertyToCheck.substring(0, 1) === "-"
+            ? propertyToCheck.substring(1)
             : propertyToCheck;
 
         return value.sort((a: any, b: any) => {
@@ -90,9 +89,10 @@ export class OrderByPipe implements PipeTransform {
           ) {
             aValue = a;
             bValue = b;
-            for (let j = 0; j < propertySplit.length; j++) {
-              aValue = aValue[propertySplit[j]];
-              bValue = bValue[propertySplit[j]];
+
+            for (let value of propertySplit) {
+              aValue = aValue[value];
+              bValue = bValue[value];
             }
           }
 
@@ -104,12 +104,12 @@ export class OrderByPipe implements PipeTransform {
     } else {
       // Loop over property of the array in order and sort
       return value.sort((a: any, b: any) => {
-        for (let i = 0; i < config.length; i++) {
-          const desc = config[i].substr(0, 1) === "-";
+        for (let value of config) {
+          const desc = value.substring(0, 1) === "-";
           const property =
-            config[i].substr(0, 1) === "+" || config[i].substr(0, 1) === "-"
-              ? config[i].substr(1)
-              : config[i];
+            value.substring(0, 1) === "+" || value.substring(0, 1) === "-"
+              ? value.substring(1)
+              : value;
 
           let aValue = a[property];
           let bValue = b[property];
@@ -123,9 +123,10 @@ export class OrderByPipe implements PipeTransform {
           ) {
             aValue = a;
             bValue = b;
-            for (let j = 0; j < propertySplit.length; j++) {
-              aValue = aValue[propertySplit[j]];
-              bValue = bValue[propertySplit[j]];
+
+            for (let value of propertySplit) {
+              aValue = aValue[value];
+              bValue = bValue[value];
             }
           }
 

@@ -25,7 +25,7 @@ export class ConfiUriInterceptor<T> implements HttpInterceptor {
           if (error && error.status === 403) {
             return this.getTokenConfig(true, next, request);
           }
-          return throwError(error);
+          return throwError(() => error);
         })
       );
     }

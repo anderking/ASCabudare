@@ -255,7 +255,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   clean() {
-    console.log("paso")
+    console.log("paso");
     this.mainForm.reset({ state: true });
     this.mainForm.get("idCategory").setValue("");
     this.mainForm.get("idTypeActive").setValue("");
@@ -265,7 +265,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    console.log("paso")
+    console.log("paso");
     this._location.back();
   }
 
@@ -283,10 +283,9 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
               (i: ComboModel) => i.id === value
             );
             this.mainForm.patchValue({
-              typeActive:
-                this.typeActiveCurrent && this.typeActiveCurrent.name
-                  ? this.typeActiveCurrent.name
-                  : null,
+              typeActive: this.typeActiveCurrent
+                ? this.typeActiveCurrent.name
+                : null,
             });
           } catch (error) {
             return;
@@ -307,10 +306,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
               (i: CategoryModel) => i.id === value
             );
             this.mainForm.patchValue({
-              category:
-                this.categoryCurrent && this.categoryCurrent.name
-                  ? this.categoryCurrent.name
-                  : null,
+              category: this.categoryCurrent ? this.categoryCurrent.name : null,
             });
           } catch (error) {
             return;
