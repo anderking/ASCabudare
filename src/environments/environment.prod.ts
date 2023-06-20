@@ -3,7 +3,6 @@ export const environment = {
   firebase: {
     apiKey: "AIzaSyA2jTUN1-LY9GvAHKBWrf_SjETzf_W9x-w",
     authDomain: "ingreso-egreso-912f0.firebaseapp.com",
-    databaseURL: "https://ingreso-egreso-912f0.firebaseio.com",
     projectId: "ingreso-egreso-912f0",
     storageBucket: "ingreso-egreso-912f0.appspot.com",
     messagingSenderId: "363021279013",
