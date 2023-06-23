@@ -80,6 +80,7 @@ export function groupByMult(items: any[], groups: any[]): any[] {
       if (outputType.hasOwnProperty(key)) {
         const element = outputType[key];
         levelOne.push({
+          id: getUniqueId(5),
           name: key,
           values: element,
         });
@@ -92,6 +93,7 @@ export function groupByMult(items: any[], groups: any[]): any[] {
         if (item.values.hasOwnProperty(key)) {
           const element = item.values[key];
           levelTwo.push({
+            id: getUniqueId(5),
             name: key,
             values: element,
           });
@@ -110,4 +112,19 @@ export function clearLocalStorage(): void {
   let lang: string = localStorage.getItem("lang");
   localStorage.clear();
   localStorage.setItem("lang", lang != "null" && lang != null ? lang : "es");
+}
+
+/**
+ * generate groups of 4 random characters
+ * @example getUniqueId(1) : 607f
+ * @example getUniqueId(2) : 95ca-361a-f8a1-1e73
+ */
+export function getUniqueId(parts: number): string {
+  const stringArr = [];
+  for (let i = 0; i < parts; i++) {
+    // tslint:disable-next-line:no-bitwise
+    const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    stringArr.push(S4);
+  }
+  return stringArr.join("-");
 }

@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading">
 
-  <h1>{{ 'TEXTS.WELCOME' | translate }} {{currentUser.displayName}}</h1>
+  <h1>{{ 'TEXTS.WELCOME' | translate }} {{currentUser?.displayName}}</h1>
 
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h2 class="h3 mb-0 text-gray-800">{{ 'TEXTS.EARNINGS' | translate }}</h2>
@@ -68,6 +68,7 @@
     </div>
   </div>
 
+
   <div *ngFor="let item of items" class="row">
     <div class="col-sm-12">
       <div class="row">
@@ -79,15 +80,40 @@
         <div *ngFor="let category of item.values" class="col-xl-3 col-md-6 mb-4">
           <div class="card shadow h-100 py-2"
             [ngClass]="{'border-left-success': item.name === 'Ingreso', 'border-left-danger': item.name === 'Egreso' }">
+
             <div class="card-body">
+
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-uppercase mb-1"
                     [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
                     {{category.name}}
                   </div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{category.values | amount:'amount' |
-                    million:'1.2-2'}} {{currentUser?.currency}}</div>
+                  <a href="#open-item-{{category.id}}" data-toggle="modal" class="modal-dashboard-link">
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{category.values | amount:'amount' |
+                      million:'1.2-2'}} {{currentUser?.currency}}</div>
+                  </a>
+                  <div class="modal fade" id="open-item-{{category.id}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Total: <strong>{{category.values | amount:'amount' |
+                              million:'1.2-2'}} {{currentUser?.currency}}</strong></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <ul>
+                            <li *ngFor="let itemIE of category.values">{{itemIE.description}}
+                              <strong>{{itemIE.amount | million:'1.2-2'}}{{currentUser?.currency}}</strong>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
