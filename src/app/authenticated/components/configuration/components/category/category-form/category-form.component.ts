@@ -40,7 +40,6 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.chargeIndicatorManager();
-    this._categoryFacadeService.search();
 
     const params$ = this._activatedRoute.paramMap.pipe(
       filter((params) => !isNullOrUndefinedEmpty(params)),
@@ -110,7 +109,6 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._categoryFacadeService.reset();
     this._sharedFacadeService.reset();
     this.finisher$.next();
   }

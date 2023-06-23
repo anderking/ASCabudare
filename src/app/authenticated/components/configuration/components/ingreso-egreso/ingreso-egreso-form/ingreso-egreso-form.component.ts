@@ -60,8 +60,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._ingresoEgresoFacadeService.search();
-
     this.callsCombos();
     this.chargeIndicatorManager();
     this.controlSubscriptions();
@@ -144,9 +142,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._ingresoEgresoFacadeService.reset();
-    this._categoryFacadeService.reset();
-    this._combosFacadeService.reset();
     this._sharedFacadeService.reset();
     this.finisher$.next();
   }
@@ -160,9 +155,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
    * Se llaman a todas los subjects que se deseen manipular en el componente
    */
   callsCombos(): void {
-    this._categoryFacadeService.search();
-    this._combosFacadeService.searchTypeActive();
-
     const typeActive$ = this._combosFacadeService.getTypeActive$().pipe(
       filter((items: ComboModel[]) => !isNullOrUndefined(items)),
       map((items: ComboModel[]) => {

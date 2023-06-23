@@ -26,7 +26,6 @@ export class CategorysComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._categoryFacadeService.search();
     this._categoryFacadeService
       .getLoading$()
       .pipe(takeUntil(this._finisher))
@@ -48,7 +47,6 @@ export class CategorysComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._finisher.next();
-    this._categoryFacadeService.reset();
     this._sharedFacadeService.reset();
   }
 

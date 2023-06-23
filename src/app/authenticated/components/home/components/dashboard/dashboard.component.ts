@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { combineLatest, Subject } from "rxjs";
-import { filter, map, takeUntil } from "rxjs/operators";
+import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -64,17 +64,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.mainForm = this.initForm();
         }
       });
-    this.chargeIndicatorManager();
-    this._ingresoEgresoFacadeService.search();
-    this._categoryFacadeService.search();
-    this.loadItems();
+      this.chargeIndicatorManager();
+      this.loadItems();
   }
 
   ngOnDestroy(): void {
     this.finisher$.next();
     this._sharedFacadeService.reset();
-    this._ingresoEgresoFacadeService.reset();
-    this._categoryFacadeService.reset();
   }
 
   private initForm(): UntypedFormGroup {
@@ -107,6 +103,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private loadItems(): void {
     const ingresos_egresos$ = this._ingresoEgresoFacadeService.getAll$().pipe(
+      tap(x=>console.log(x)),
       filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
       map((items: IngresoEgresoModel[]) => {
         try {
@@ -115,6 +112,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
+      tap(x=>console.log(x)),
       map((items: IngresoEgresoModel[]) => {
         try {
           return items.filter((item: IngresoEgresoModel) => {
@@ -133,6 +131,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
+      tap(x=>console.log(x)),
       takeUntil(this.finisher$)
     );
 

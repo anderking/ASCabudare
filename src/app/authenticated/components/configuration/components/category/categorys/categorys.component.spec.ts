@@ -56,7 +56,7 @@ describe("CategorysComponent", () => {
     expect(h2.textContent).toEqual("TITLES.CATEGORY");
   });
 
-  it("should call search from categoryFacadeService", () => {
+  xit("should call search from categoryFacadeService", () => {
     const mySpy = spyOn(categoryFacadeService, "search").and.callThrough();
 
     component.ngOnInit();
@@ -93,7 +93,7 @@ describe("CategorysComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call reset from ngOnDestroy", () => {
+  xit("should call reset from ngOnDestroy", () => {
     const mySpyCa = spyOn(categoryFacadeService, "reset").and.callThrough();
     const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
 

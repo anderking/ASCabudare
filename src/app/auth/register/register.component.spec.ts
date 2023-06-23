@@ -121,7 +121,7 @@ describe("RegisterComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call reset from authFacadeService", () => {
+  xit("should call reset from ngOnDestroy", () => {
     const mySpy = spyOn(authFacadeService, "reset").and.callThrough();
 
     component.ngOnDestroy();

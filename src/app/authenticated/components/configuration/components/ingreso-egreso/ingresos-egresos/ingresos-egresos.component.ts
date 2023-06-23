@@ -74,7 +74,6 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
         this.wordFilter = currentFilter.wordFilter;
       });
 
-    this._ingresoEgresoFacadeService.search();
     this._ingresoEgresoFacadeService
       .getLoading$()
       .pipe(takeUntil(this._finisher))
@@ -86,7 +85,6 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._finisher.next();
-    this._ingresoEgresoFacadeService.reset();
     this._sharedFacadeService.reset();
     if (this.rangeDate) {
       const payload: CurrentFilterModel = {

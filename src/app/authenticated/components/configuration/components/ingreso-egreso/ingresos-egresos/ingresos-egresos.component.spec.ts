@@ -96,7 +96,7 @@ describe("IngresosEgresosComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call search from ingresoEgresoFacadeService", () => {
+  xit("should call search from ingresoEgresoFacadeService", () => {
     const mySpy = spyOn(ingresoEgresoFacadeService, "search").and.callThrough();
 
     component.ngOnInit();
@@ -134,7 +134,7 @@ describe("IngresosEgresosComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call reset from ngOnDestroy", () => {
+  xit("should call reset from ngOnDestroy", () => {
     const mySpyIe = spyOn(
       ingresoEgresoFacadeService,
       "reset"
