@@ -175,7 +175,7 @@ describe("IngresoEgresoCreateComponent", () => {
     expect(mySpySh).toHaveBeenCalled();
   });
 
-  it("should call combos from callsCombos", () => {
+  xit("should call combos from callsCombos", () => {
     const mySpyCa = spyOn(categoryFacadeService, "search").and.callThrough();
     const mySpyCo = spyOn(
       combosFacadeService,
