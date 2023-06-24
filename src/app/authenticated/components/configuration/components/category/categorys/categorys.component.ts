@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { filter, takeUntil, tap } from "rxjs/operators";
+import { filter, takeUntil } from "rxjs/operators";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { Subject } from "rxjs";

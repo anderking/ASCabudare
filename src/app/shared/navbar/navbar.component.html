@@ -47,8 +47,9 @@
     <ul class="navbar-nav d-none d-lg-block">
       <li class="nav-item">
         <a class="nav-link" [routerLink]="[ '/authenticated/configuration/profile' ]">
-          <img *ngIf="user" class="img-profile rounded-circle" [src]="user.photoURL">
-          <img *ngIf="!user" class="img-profile rounded-circle" [src]="'../../../assets/img/usernotfound.png'">
+          <img *ngIf="user" class="img-profile rounded-circle" [src]="user.photoURL" alt="img-profile" />
+          <img *ngIf="!user" class="img-profile rounded-circle" [src]="'../../../assets/img/usernotfound.png'"
+            alt="img-profile">
         </a>
       </li>
     </ul>

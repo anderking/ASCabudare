@@ -93,7 +93,7 @@ export const statusMessages = (statusCode: number, text?: string): string => {
       return (
         statusCode +
         " " +
-        "El Recurso o registro solicitado no fue encontrado en nuestro servidor, verifique los datos de la petición."
+        "El Recurso o registro solicitado ya no está disponible en el servidor de origen y es probable que esta condición sea permanente."
       );
 
     case 411:
@@ -107,7 +107,7 @@ export const statusMessages = (statusCode: number, text?: string): string => {
       return (
         statusCode +
         " " +
-        "Petición fallida, la API se encuentra fuera de servicio en estos momentos."
+        "El servidor no cumple con una de las condiciones previas que el cliente puso en sus campos de encabezado de solicitud."
       );
 
     case 500:
@@ -135,7 +135,7 @@ export const statusMessages = (statusCode: number, text?: string): string => {
       return (
         statusCode +
         " " +
-        "Servidor no disponible, puede estar congestionado o en mantenimiento, inténtelo más tarde."
+        "Servidor no disponible dentro de un período de tiempo establecido, puede estar congestionado o en mantenimiento, inténtelo más tarde."
       );
 
     case 505:
