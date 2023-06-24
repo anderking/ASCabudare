@@ -1,14 +1,14 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: import.meta.env.NG_APP_API_KEY,
-    authDomain: import.meta.env.NG_APP_AUTH_DOMAIN,
-    projectId: import.meta.env.NG_APP_PROJECT_ID,
-    storageBucket: import.meta.env.NG_APP_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.NG_APP_MESSAGING_SENDER_ID,
-    appId: import.meta.env.NG_APP_APP_ID,
-    measurementId: import.meta.env.NG_APP_MEASUREMENT_ID,
+    apiKey: "AIzaSyA2jTUN1-LY9GvAHKBWrf_SjETzf_W9x-w",
+    authDomain: "ingreso-egreso-912f0.firebaseapp.com",
+    projectId: "ingreso-egreso-912f0",
+    storageBucket: "ingreso-egreso-912f0.appspot.com",
+    messagingSenderId: "363021279013",
+    appId: "1:363021279013:web:58927a23e9b3a7381ec4cc",
+    measurementId: "G-PC73KDJKRV",
   },
-  apiUrl: import.meta.env.NG_APP_API_URL,
-  key: import.meta.env.NG_APP_KEY,
+  apiUrl: "https://www.fake.com/api/",
+  key: "EAWAutUZ^MPV4vLRJ9IY91^t$*RIhErm",
 };
