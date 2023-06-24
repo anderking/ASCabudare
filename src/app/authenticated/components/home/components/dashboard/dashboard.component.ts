@@ -112,7 +112,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      tap(x=>console.log(x)),
       map((items: IngresoEgresoModel[]) => {
         try {
           return items.filter((item: IngresoEgresoModel) => {
@@ -131,11 +130,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      tap(x=>console.log(x)),
       takeUntil(this.finisher$)
     );
 
     const categories$ = this._categoryFacadeService.getAll$().pipe(
+      tap(x=>console.log(x)),
       filter((items: CategoryModel[]) => !isNullOrUndefinedEmpty(items)),
       map((items: CategoryModel[]) => {
         try {

@@ -37,7 +37,6 @@ export class CategorysComponent implements OnInit, OnDestroy {
       .getAll$()
       .pipe(
         filter((items: CategoryModel[]) => !isNullOrUndefinedEmpty(items)),
-        tap((items: CategoryModel[]) => console.log(items)),
         takeUntil(this._finisher)
       )
       .subscribe((items: CategoryModel[]) => {
