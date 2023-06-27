@@ -17,7 +17,7 @@ export function getCurrentUserDecrypt(): CurrentUserModel {
   }
 }
 
-export function oderBy(items: any[], field: string): any[] {
+export function orderBy(items: any[], field: string): any[] {
   function compare(attr: string, obj1: any, obj2: any) {
     return obj1[attr].localeCompare(obj2[attr]);
   }
@@ -65,7 +65,7 @@ export function groupBy(inputArray: any, key: any, removeKey = false): any[] {
 
 export function groupByMult(items: any[], groups: any[]): any[] {
   const outputType = {};
-  const levelOne: any = [];
+  let levelOne: any = [];
   try {
     items.forEach((a) => {
       groups
@@ -99,12 +99,12 @@ export function groupByMult(items: any[], groups: any[]): any[] {
           });
         }
       }
-      item.values = levelTwo;
+      item.values = orderBy(levelTwo,"name");
     });
   } catch (error) {
     console.error(error);
   }
-
+  levelOne = orderBy(levelOne,"name");
   return levelOne;
 }
 

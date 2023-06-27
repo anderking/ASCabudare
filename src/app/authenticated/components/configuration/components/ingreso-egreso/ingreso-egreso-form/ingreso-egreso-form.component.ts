@@ -25,7 +25,7 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { oderBy } from "@root/core/utilities/core.utilities";
+import { orderBy } from "@root/core/utilities/core.utilities";
 
 @Component({
   selector: "app-ingreso-egreso-form",
@@ -182,7 +182,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
       }),
       map((items: CategoryModel[]) => {
         try {
-          return oderBy(items, "name");
+          return orderBy(items, "name");
         } catch (error) {
           return items;
         }
