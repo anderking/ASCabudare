@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CategoryFacadeService } from "@facades/category-facade.service";
+import { ClientFacadeService } from "@facades/client-facade.service";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -16,6 +17,7 @@ export class ContainerComponent implements OnInit {
     private _sharedFacadeService: SharedFacadeService,
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
     private _categoryFacadeService: CategoryFacadeService,
+    private _clientFacadeService: ClientFacadeService,
     private _combosFacadeService: CombosFacadeService
   ) {}
 
@@ -24,6 +26,8 @@ export class ContainerComponent implements OnInit {
     this._sharedFacadeService.messageSubscriptions();
     this._ingresoEgresoFacadeService.search();
     this._categoryFacadeService.search();
+    this._clientFacadeService.search();
     this._combosFacadeService.searchTypeActive();
+    this._combosFacadeService.searchDocumentType();
   }
 }

@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row justify-content-center my-3">
+    <div class="col-12">
+      <h2 class="text-center">{{ 'TITLES.CLIENT' | translate }}</h2>
+      <h6 *ngIf="items" class="text-center">{{items.length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
+    </div>
+  </div>
+  <div class="row justify-content-center my-3">
+    <div class="col-12">
+      <button class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' | translate }}</button>
+      <button class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' | translate }}</button>
+    </div>
+  </div>
+  <hr>
+  <div *ngIf="!isLoading">
+    <div *ngIf="items">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group">
+            <input type="text" class="form-control" id="wordFilter" name="wordFilter" [(ngModel)]="wordFilter"
+              placeholder="{{ 'TEXTS.SEARCH' | translate }}">
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover" aria-describedby="client">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">{{ 'PROPERTIES.FIRSTNAME' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.LASTNAME' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.FULLNAME' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.DOCUMENTTYPE' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.PHONENUMBER' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.CITY' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.ADRESS' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.DATE' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.STATE' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.EDIT' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.DELETE' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let item of items | orderBy : ['firstName'] | filterTableSearch: { firstName: wordFilter, lastName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumber: wordFilter, city: wordFilter, adress: wordFilter, stateText: wordFilter } : false">
+                  <td>{{item.firstName}}</td>
+                  <td>{{item.lastName}}</td>
+                  <td>{{item.fullName}}</td>
+                  <td>{{item.documentType}}</td>
+                  <td>{{item.documentNumber}}</td>
+                  <td>{{item.phoneNumber}}</td>
+                  <td>{{item.city}}</td>
+                  <td>{{item.adress}}</td>
+                  <td>{{item.createDate}}</td>
+                  <td><span class="badge"
+                      [ngClass]="{'badge-success': item.state, 'badge-danger': !item.state}">{{item.stateText}}</span>
+                  </td>
+                  <td><button (click)="goEdit(item)" class="btn btn-info">{{ 'BUTTONS.EDIT' | translate }}</button></td>
+                  <td><a href="#delete-item-{{item.id}}" class="btn btn-danger" data-toggle="modal">{{ 'BUTTONS.DELETE'
+                      | translate }}</a></td>
+                  <div class="modal fade" id="delete-item-{{item.id}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">{{ 'TITLES.CONFIRMATION' | translate }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          {{ 'TEXTS.CONFIRMATION' | translate }}
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'BUTTONS.CANCEL' |
+                            translate }}</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="goDelete(item)">{{
+                            'BUTTONS.YES' | translate }}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="spinner">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+      </div>
+    </div>
+  </div>
+</div>

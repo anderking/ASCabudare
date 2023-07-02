@@ -3,11 +3,13 @@ import {
   LoginFormModel,
 } from "@models/auth/current-user.model";
 import { CategoryModel } from "@models/configurations/category.model";
+import { ClientModel } from "@models/configurations/client.model";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { ComboModel } from "@models/masters/combo.model";
 import { AttachmentModel } from "@models/shared/attachment.model";
 import { ErrorModel } from "@models/shared/error.model";
 import { CurrentFilterModel } from "@models/shared/filter.model";
+import { buildCreateDate } from "@root/core/utilities/core.utilities";
 
 export const mockTestLoginFormOne: LoginFormModel = {
   email: "string",
@@ -82,7 +84,7 @@ export const mockTestIngresoEgresoOne: IngresoEgresoModel = {
   category: "string",
   idTypeActive: "string",
   typeActive: "string",
-  createDate: 'string',
+  createDate: "string",
   amount: 100,
   description: "string",
   state: true,
@@ -113,3 +115,39 @@ export const mockTestCurrentFilterOne: CurrentFilterModel = {
   rangeDate: { startDate: "string", endDate: "string" },
   wordFilter: "string",
 };
+
+export const mockTestClientOne: ClientModel = {
+  id: "string",
+  firstName: "string",
+  lastName: "string",
+  fullName: "string string",
+  documentType: "string",
+  documentNumber: "string",
+  phoneNumber: "string",
+  city: "string",
+  adress: "string",
+  image: "string",
+  state: true,
+  stateText: "Activo",
+  createDate: buildCreateDate().createDate,
+  createDateFB: buildCreateDate().createDateFB,
+};
+
+export const mockTestClientAll: ClientModel[] = [
+  {
+    id: "string",
+    firstName: "string",
+    lastName: "string",
+    fullName: "string string",
+    documentType: "string",
+    documentNumber: "string",
+    phoneNumber: "string",
+    city: "string",
+    adress: "string",
+    image: "string",
+    state: true,
+    stateText: "Activo",
+    createDate: buildCreateDate().createDate,
+    createDateFB: buildCreateDate().createDateFB,
+  },
+];

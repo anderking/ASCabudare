@@ -36,6 +36,7 @@
   "TITLES": {
     "INGRESS_EGRESS": "Ingreso Egreso",
     "CATEGORY": "Categoría",
+    "CLIENT": "Cliente",
     "PROFILE": "Perfil",
     "REGISTER": "Crear una cuenta",
     "LOGIN": "Bienvenido",
@@ -53,6 +54,7 @@
     "SELECT_AN_OPTION": "Seleccione una opción",
     "TYPE": "Tipo",
     "CATEGORY": "Categoría",
+    "CLIENT": "Cliente",
     "DATE": "Fecha",
     "START_DATE": "Fecha inicio",
     "END_DATE": "Fecha fin",
@@ -60,7 +62,15 @@
     "STATE": "Estado",
     "EDIT": "Editar",
     "DELETE": "Eliminar",
-    "STARTDAY": "Día de inicio"
+    "STARTDAY": "Día de inicio",
+    "FIRSTNAME": "Nombre",
+    "LASTNAME": "Apellido",
+    "FULLNAME": "Nombre completo",
+    "DOCUMENTTYPE": "Tipo de documento",
+    "DOCUMENTNUMBER": "Número de documento",
+    "PHONENUMBER": "Número de teléfono",
+    "CITY": "Ciudad",
+    "ADRESS": "Dirección"
   },
   "ROUTERS": {
     "PROFILE": "Perfil",
@@ -68,6 +78,7 @@
     "DASHBOARD": "Dashboard",
     "CONFIGURATION": "Configuraciones",
     "CATEGORY": "Categoría",
+    "CLIENT": "Cliente",
     "INGRESS_EGRESS": "Ingreso Egreso"
   },
   "MESSAGES": {

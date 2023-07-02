@@ -21,6 +21,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: "client",
+        loadChildren: () =>
+          import("./components/client/client.module").then(
+            (m) => m.ClientModule
+          ),
+      },
+      {
         path: "profile",
         loadChildren: () =>
           import("./components/profile/profile.module").then(

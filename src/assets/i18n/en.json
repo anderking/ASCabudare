@@ -36,6 +36,7 @@
   "TITLES": {
     "INGRESS_EGRESS": "Ingress Egress",
     "CATEGORY": "Category",
+    "CLIENT": "Client",
     "PROFILE": "Profile",
     "REGISTER": "Create an Account",
     "LOGIN": "Welcome",
@@ -53,6 +54,7 @@
     "SELECT_AN_OPTION": "Select an option",
     "TYPE": "Type",
     "CATEGORY": "Category",
+    "CLIENT": "Client",
     "DATE": "Date",
     "START_DATE": "Start Date",
     "END_DATE": "End Date",
@@ -60,7 +62,15 @@
     "STATE": "State",
     "EDIT": "Edit",
     "DELETE": "Delete",
-    "STARTDAY": "Day start"
+    "STARTDAY": "Day start",
+    "FIRSTNAME": "First Name",
+    "LASTNAME": "Last Name",
+    "FULLNAME": "Full Name",
+    "DOCUMENTTYPE": "Document Type",
+    "DOCUMENTNUMBER": "Document Number",
+    "PHONENUMBER": "Phone Number",
+    "CITY": "City",
+    "ADRESS": "Adress"
   },
   "ROUTERS": {
     "PROFILE": "Profile",
@@ -68,6 +78,7 @@
     "DASHBOARD": "Dashboard",
     "CONFIGURATION": "Configurations",
     "CATEGORY": "Category",
+    "CLIENT": "Client",
     "INGRESS_EGRESS": "Ingress Egress"
   },
   "MESSAGES": {

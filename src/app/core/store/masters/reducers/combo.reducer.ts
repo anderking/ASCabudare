@@ -6,6 +6,8 @@ import * as actions from "@store/masters/actions/combo.actions";
 export interface State {
   typeActive: ComboModel[];
   typeActiveLoading: boolean;
+  documentType: ComboModel[];
+  documentTypeLoading: boolean;
   loading: boolean;
 }
 
@@ -13,6 +15,8 @@ export interface State {
 export const initialState: State = {
   typeActive: [],
   typeActiveLoading: false,
+  documentType: [],
+  documentTypeLoading: false,
   loading: false,
 };
 
@@ -35,6 +39,21 @@ const comboReducer = createReducer(
     };
   }),
 
+  on(actions.searchDocumentType, (state) => ({
+    ...state,
+    documentTypeLoading: true,
+    loading: true,
+  })),
+
+  on(actions.loadDocumentType, (state, { items }) => {
+    return {
+      ...state,
+      documentType: items,
+      documentTypeLoading: false,
+      loading: false,
+    };
+  }),
+
   on(actions.resetCombos, (state) => {
     return { ...initialState };
   }),
@@ -43,6 +62,7 @@ const comboReducer = createReducer(
     return {
       ...state,
       typeActiveLoading: false,
+      documentTypeLoading: false,
       loading: false,
     };
   })
