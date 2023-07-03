@@ -7,7 +7,6 @@ import { SharedModule } from "@root/shared/shared.module";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
   mockTestCategoryAll,
-  mockTestCurrentUserOne,
   mockTestIngresoEgresoAll,
 } from "@root/core/constants/mocks/mocks-units-test";
 import { of } from "rxjs";
@@ -21,7 +20,6 @@ describe("DashboardComponent", () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let ingresoEgresoFacadeService: IngresoEgresoFacadeService;
   let categoryFacadeService: CategoryFacadeService;
-  let authFacadeService: AuthFacadeService;
   let sharedFacadeService: SharedFacadeService;
 
   beforeEach(waitForAsync(() => {
@@ -42,7 +40,6 @@ describe("DashboardComponent", () => {
     fixture = TestBed.createComponent(DashboardComponent);
     ingresoEgresoFacadeService = TestBed.inject(IngresoEgresoFacadeService);
     categoryFacadeService = TestBed.inject(CategoryFacadeService);
-    authFacadeService = TestBed.inject(AuthFacadeService);
     sharedFacadeService = TestBed.inject(SharedFacadeService);
     component = fixture.componentInstance;
 
@@ -62,47 +59,12 @@ describe("DashboardComponent", () => {
     expect(element.textContent).toEqual("TEXTS.EARNINGS");
   });
 
-  it("should call getCurrentUser$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getCurrentUser$").and.returnValue(
-      of(mockTestCurrentUserOne)
-    );
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull;
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  xit("should call search from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(ingresoEgresoFacadeService, "search").and.callThrough();
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull;
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
   it("should call getAll$ from ingresoEgresoFacadeService", () => {
     const mySpy = spyOn(ingresoEgresoFacadeService, "getAll$").and.returnValue(
       of(mockTestIngresoEgresoAll)
     );
 
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull;
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  xit("should call search from categoryFacadeService", () => {
-    const mySpy = spyOn(categoryFacadeService, "search").and.callThrough();
-
-    component.ngOnInit();
+    component.loadItems();
 
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
@@ -115,7 +77,7 @@ describe("DashboardComponent", () => {
       of(mockTestCategoryAll)
     );
 
-    component.ngOnInit();
+    component.loadItems();
 
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();
@@ -123,19 +85,12 @@ describe("DashboardComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  xit("should call reset from ngOnDestroy", () => {
-    const mySpyIe = spyOn(
-      ingresoEgresoFacadeService,
-      "reset"
-    ).and.callThrough();
-    const mySpyCa = spyOn(categoryFacadeService, "reset").and.callThrough();
-    const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
+  it("should call reset from ngOnDestroy", () => {
+    const mySpy = spyOn(sharedFacadeService, "reset").and.callThrough();
 
     component.ngOnDestroy();
 
-    expect(mySpyIe).toHaveBeenCalled();
-    expect(mySpyCa).toHaveBeenCalled();
-    expect(mySpySh).toHaveBeenCalled();
+    expect(mySpy).toHaveBeenCalled();
   });
 
   it("should call getLoading$ from chargeIndicatorManager", () => {

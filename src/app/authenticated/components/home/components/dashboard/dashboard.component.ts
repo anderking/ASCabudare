@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { combineLatest, Subject } from "rxjs";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -10,17 +10,6 @@ import { CategoryModel } from "@models/configurations/category.model";
 import { groupByMult } from "@root/core/utilities/core.utilities";
 import { GroupModel } from "@models/shared/group.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import { AuthFacadeService } from "@facades/auth-facade.service";
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from "@angular/forms";
-import {
-  ValidationsCustom,
-  getErrorMessageField,
-  isValidField,
-} from "@root/core/utilities/form-validations";
 import { RangeDate } from "@models/shared/filter.model";
 
 @Component({
@@ -28,44 +17,27 @@ import { RangeDate } from "@models/shared/filter.model";
   templateUrl: "./dashboard.component.html",
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  public mainForm: UntypedFormGroup;
   public finisher$ = new Subject<void>();
   public ingresos_egresos: IngresoEgresoModel[] = [];
   public categories: CategoryModel[] = [];
   public items: GroupModel<GroupModel<IngresoEgresoModel>>[] = [];
   public isLoading: boolean;
-
   public totalIngresos: number;
   public totalEgresos: number;
   public totalEarnings: number;
   public cantIngresos: any;
   public cantEgresos: any;
-
   public currentUser: CurrentUserModel;
-
-  private _initDay: string = null;
-  private _rangeDate: RangeDate;
+  private rangeDate: RangeDate;
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
     private _categoryFacadeService: CategoryFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _fb: UntypedFormBuilder
+    private _sharedFacadeService: SharedFacadeService
   ) {}
 
   ngOnInit() {
-    this._authFacadeService
-      .getCurrentUser$()
-      .subscribe((user: CurrentUserModel) => {
-        this.currentUser = user;
-        if (user) {
-          this._initDay = user.dayStartDashboard;
-          this.mainForm = this.initForm();
-        }
-      });
-      this.chargeIndicatorManager();
-      this.loadItems();
+    this.chargeIndicatorManager();
   }
 
   ngOnDestroy(): void {
@@ -73,37 +45,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.reset();
   }
 
-  private initForm(): UntypedFormGroup {
-    const day = this._initDay ? this._initDay : "01";
-    const today = new Date().toLocaleDateString("en-CA");
-    const todaySplit = today.split("-");
-    const initStartDate =
-      todaySplit[0] + "-" + todaySplit[1] + "-" + day + "T04:00:00.000Z";
-
-    const initEndDate = new Date(initStartDate).setMonth(
-      new Date(initStartDate).getMonth() + 1
-    );
-
-    this._rangeDate = {
-      startDate: new Date(initStartDate).toLocaleDateString("en-CA"),
-      endDate: new Date(initEndDate).toLocaleDateString("en-CA"),
-    };
-
-    return this._fb.group({
-      startDate: [
-        new Date(initStartDate).toLocaleDateString("en-CA"),
-        [Validators.required],
-      ],
-      endDate: [
-        new Date(initEndDate).toLocaleDateString("en-CA"),
-        [Validators.required],
-      ],
-    });
+  rangeDateReceived(rangeDate: RangeDate) {
+    this.rangeDate = rangeDate;
+    this.loadItems();
   }
 
-  private loadItems(): void {
+  loadItems(): void {
     const ingresos_egresos$ = this._ingresoEgresoFacadeService.getAll$().pipe(
-      tap(x=>console.log(x)),
       filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
       map((items: IngresoEgresoModel[]) => {
         try {
@@ -115,10 +63,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       map((items: IngresoEgresoModel[]) => {
         try {
           return items.filter((item: IngresoEgresoModel) => {
-            if (this._rangeDate) {
+            if (this.rangeDate) {
               const createDate = new Date(item.createDate).getTime();
-              const startDate = new Date(this._rangeDate?.startDate).getTime();
-              const endDate = new Date(this._rangeDate?.endDate).getTime();
+              const startDate = new Date(this.rangeDate?.startDate).getTime();
+              const endDate = new Date(this.rangeDate?.endDate).getTime();
               if (createDate >= startDate && createDate <= endDate) {
                 return true;
               } else {
@@ -134,7 +82,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
 
     const categories$ = this._categoryFacadeService.getAll$().pipe(
-      tap(x=>console.log(x)),
       filter((items: CategoryModel[]) => !isNullOrUndefinedEmpty(items)),
       map((items: CategoryModel[]) => {
         try {
@@ -199,46 +146,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       console.error(error);
     }
     this.totalEarnings = this.totalIngresos - this.totalEgresos;
-  }
-
-  public changeFilter(value: string, field: string): void {
-    this._rangeDate = {
-      ...this._rangeDate,
-      [field]: value,
-    };
-    console.log(this._rangeDate);
-
-    const startDateControl = this.mainForm.controls["startDate"];
-    const endDateControl = this.mainForm.controls["endDate"];
-
-    if (field === "startDate") {
-      startDateControl.setValidators([
-        ValidationsCustom.setValidatorDateDashboard(this.mainForm, field),
-      ]);
-    }
-
-    if (field === "endDate") {
-      endDateControl.setValidators([
-        ValidationsCustom.setValidatorDateDashboard(this.mainForm, field),
-      ]);
-    }
-
-    startDateControl.markAsTouched();
-    startDateControl.updateValueAndValidity();
-    endDateControl.markAsTouched();
-    endDateControl.updateValueAndValidity();
-
-    if (this.mainForm.valid) {
-      this.loadItems();
-    }
-  }
-
-  public isValidField(field: string): boolean {
-    return isValidField(field, this.mainForm);
-  }
-
-  public getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm);
   }
 
   public chargeIndicatorManager(): void {

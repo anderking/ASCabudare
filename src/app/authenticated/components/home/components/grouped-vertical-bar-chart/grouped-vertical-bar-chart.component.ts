@@ -43,7 +43,6 @@ export class GroupedVerticalBarChartComponent implements OnChanges {
       }
     );
     this.multi = multi;
-    console.log(this.multi);
   }
 
   private categories(

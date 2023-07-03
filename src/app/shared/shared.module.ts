@@ -8,12 +8,14 @@ import { PipesModule } from "@root/core/pipes/pipes-module.module";
 import { NgBoostrapModule } from "@root/core/ui/ng-bootstrap.module";
 import { ToastContainerComponent } from "./toast-container/toast-container.component";
 import { TranslateModule } from "@ngx-translate/core";
+import { CurrentFilterComponent } from './current-filter/current-filter.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
+    CurrentFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { TranslateModule } from "@ngx-translate/core";
     NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
+    CurrentFilterComponent
   ],
 })
 export class SharedModule {}

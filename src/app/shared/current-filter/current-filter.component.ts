@@ -1,56 +1,52 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { filter, map, takeUntil } from "rxjs/operators";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
-import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
-import { SharedFacadeService } from "@facades/shared-facade.service";
-import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
-import { Subject } from "rxjs";
-import { Location } from "@angular/common";
-import { Router } from "@angular/router";
-import { AuthFacadeService } from "@facades/auth-facade.service";
-import { CurrentUserModel } from "@models/auth/current-user.model";
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
+import { AuthFacadeService } from "@facades/auth-facade.service";
+import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
+import { CurrentUserModel } from "@models/auth/current-user.model";
+import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
 import {
   ValidationsCustom,
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
-import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
+import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
+import { Subject, filter, takeUntil } from "rxjs";
 
 @Component({
-  selector: "app-ingresos-egresos",
-  templateUrl: "./ingresos-egresos.component.html",
+  selector: "app-current-filter",
+  templateUrl: "./current-filter.component.html",
 })
-export class IngresosEgresosComponent implements OnInit, OnDestroy {
+export class CurrentFilterComponent implements OnInit, OnDestroy {
+  @Output() rangeDateEmit: EventEmitter<RangeDate> = new EventEmitter();
   public mainForm: UntypedFormGroup;
-  public isLoading: boolean;
-  public items: IngresoEgresoModel[] = [];
-  public wordFilter = "";
-  public currentUser: CurrentUserModel;
   public rangeDate: RangeDate;
-  private _finisher = new Subject<void>();
-  private _initDay: string = null;
+  public initDay: string = null;
+  public wordFilter = "";
+  public finisher$ = new Subject<void>();
 
   constructor(
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
+    private _fb: UntypedFormBuilder,
     private _authFacadeService: AuthFacadeService,
-    private _location: Location,
-    private _router: Router,
-    private _fb: UntypedFormBuilder
+    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._authFacadeService
       .getCurrentUser$()
+      .pipe(takeUntil(this.finisher$))
       .subscribe((user: CurrentUserModel) => {
-        this.currentUser = user;
         if (user) {
-          this._initDay = user.dayStartDashboard;
+          this.initDay = user.dayStartDashboard;
           this.mainForm = this.initForm();
         }
       });
@@ -62,7 +58,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
           (currentFilter: CurrentFilterModel) =>
             !isNullOrUndefinedEmpty(currentFilter)
         ),
-        takeUntil(this._finisher)
+        takeUntil(this.finisher$)
       )
       .subscribe((currentFilter: CurrentFilterModel) => {
         this.rangeDate = currentFilter.rangeDate;
@@ -71,20 +67,12 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
         startDateControl.setValue(currentFilter?.rangeDate?.startDate);
         endDateControl.setValue(currentFilter?.rangeDate?.endDate);
         this.wordFilter = currentFilter.wordFilter;
+        this.rangeDateEmit.emit(this.rangeDate);
       });
-
-    this._ingresoEgresoFacadeService
-      .getLoading$()
-      .pipe(takeUntil(this._finisher))
-      .subscribe((loading: boolean) => {
-        this.isLoading = loading;
-      });
-    this.loadItems();
   }
 
   ngOnDestroy(): void {
-    this._finisher.next();
-    this._sharedFacadeService.reset();
+    this.finisher$.next();
     if (this.rangeDate) {
       const payload: CurrentFilterModel = {
         rangeDate: this.rangeDate,
@@ -95,7 +83,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   }
 
   initForm(): UntypedFormGroup {
-    const day = this._initDay ? this._initDay : "01";
+    const day = this.initDay ? this.initDay : "01";
     const today = new Date().toLocaleDateString("en-CA");
     const todaySplit = today.split("-");
     const yearCurrent = todaySplit[0];
@@ -124,41 +112,12 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       startDate: startDateString,
       endDate: endDateSplit,
     };
+    this.rangeDateEmit.emit(this.rangeDate);
 
     return this._fb.group({
       startDate: [startDateString, [Validators.required]],
       endDate: [endDateSplit, [Validators.required]],
     });
-  }
-
-  private loadItems(): void {
-    this._ingresoEgresoFacadeService
-      .getAll$()
-      .pipe(
-        filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
-        map((items: IngresoEgresoModel[]) => {
-          try {
-            return items.filter((item: IngresoEgresoModel) => {
-              if (this.rangeDate) {
-                const createDate = new Date(item.createDate).getTime();
-                const startDate = new Date(this.rangeDate?.startDate).getTime();
-                const endDate = new Date(this.rangeDate?.endDate).getTime();
-                if (createDate >= startDate && createDate <= endDate) {
-                  return true;
-                } else {
-                  return false;
-                }
-              }
-            });
-          } catch (error) {
-            return items;
-          }
-        }),
-        takeUntil(this._finisher)
-      )
-      .subscribe((items: IngresoEgresoModel[]) => {
-        this.items = items;
-      });
   }
 
   public changeFilter(value: string, field: string): void {
@@ -188,7 +147,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     endDateControl.updateValueAndValidity();
 
     if (this.mainForm.valid) {
-      this.loadItems();
+      this.rangeDateEmit.emit(this.rangeDate);
     }
   }
 
@@ -198,22 +157,5 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
 
   public getErrorMessageField(field: string): string {
     return getErrorMessageField(field, this.mainForm);
-  }
-
-  public goDelete(item: IngresoEgresoModel): void {
-    this._ingresoEgresoFacadeService.delete(item);
-  }
-
-  public goNew(): void {
-    this._router.navigate(["/authenticated/configuration/ingreso-egreso/form"]);
-  }
-  public goEdit(item: IngresoEgresoModel): void {
-    this._router.navigate([
-      "/authenticated/configuration/ingreso-egreso/form",
-      { id: item?.id },
-    ]);
-  }
-  public goBack(): void {
-    this._location.back();
   }
 }
