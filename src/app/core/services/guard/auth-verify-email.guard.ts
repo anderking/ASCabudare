@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { CanLoad, Router, CanActivate } from "@angular/router";
+import { Router } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
 import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
-export class AuthVerifyEmailtGuard implements CanLoad, CanActivate {
+export class AuthVerifyEmailtGuard  {
   private IsAuth: boolean;
 
   constructor(private _authService: AuthService, private _router: Router) {}
