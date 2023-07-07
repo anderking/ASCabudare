@@ -10,7 +10,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -20,18 +20,41 @@
     ],
     "skipLibCheck": true,
     "paths": {
-      "@facades/*": ["src/app/core/facades/*"],
-      "@models/*": ["src/app/core/models/*"],
-      "@services/*": ["src/app/core/services/*"],
-      "@store/*": ["src/app/core/store/*"],
-      "@interfaces/*": ["src/app/core/interfaces/*"],
-      "@root/*": ["src/app/*"],
-      "@environments/*": ["src/environments/*"],
-      "@core/*": ["src/app/core/*"],
-      "@constants/*": ["src/app/core/constants/*"],
-      "@utilities/*": ["src/app/core/utilities/*"],
-      "@shared/*": ["src/app/shared/*"],
-    }
+      "@facades/*": [
+        "src/app/core/facades/*"
+      ],
+      "@models/*": [
+        "src/app/core/models/*"
+      ],
+      "@services/*": [
+        "src/app/core/services/*"
+      ],
+      "@store/*": [
+        "src/app/core/store/*"
+      ],
+      "@interfaces/*": [
+        "src/app/core/interfaces/*"
+      ],
+      "@root/*": [
+        "src/app/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@constants/*": [
+        "src/app/core/constants/*"
+      ],
+      "@utilities/*": [
+        "src/app/core/utilities/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ]
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
