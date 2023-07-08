@@ -1,0 +1,34 @@
+<ng-container *ngIf="data">
+  <ng-container *ngIf="data.type === 'confirmation'">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <p>
+        {{data.message}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
+        {{data.buttonCancel}}
+      </button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+        {{data.buttonYes}}
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="data.type === 'information'">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <p>
+        {{data.message}}
+      </p>
+    </div>
+  </ng-container>
+
+</ng-container>

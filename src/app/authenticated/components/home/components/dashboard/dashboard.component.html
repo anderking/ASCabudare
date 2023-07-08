@@ -27,11 +27,11 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1"
+              <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
                 [ngClass]="{'text-success': totalEarnings >= 0, 'text-danger': totalEarnings < 0 }">{{
                 'TEXTS.EARNINGS_ANNUAL' |
                 translate }}</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalEarnings | million:'1.2-2'}}
+              <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{totalEarnings | million:'1.2-2'}}
                 {{currentUser?.currency}}</div>
             </div>
             <div class="col-auto">
@@ -48,7 +48,7 @@
     <div class="col-sm-12">
       <div class="row">
         <div class="col-sm-12 d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">{{item.name}}</h1>
+          <h1 class="h3 mb-0 text-gray-800 fw-bold">{{item.name}}</h1>
         </div>
       </div>
       <div class="row">
@@ -60,24 +60,22 @@
 
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1"
+                  <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
                     [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
                     {{category.name}}
                   </div>
-                  <a href="#open-item-{{category.id}}" data-toggle="modal" class="modal-dashboard-link">
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{category.values | amount:'amount' |
+                  <a href="#open-item-{{category.id}}" data-bs-toggle="modal" class="card-link">
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{category.values | amount:'amount' |
                       million:'1.2-2'}} {{currentUser?.currency}}</div>
                   </a>
-                  <div class="modal fade" id="open-item-{{category.id}}" tabindex="-1" role="dialog"
+
+                  <div class="modal fade" id="open-item-{{category.id}}" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Total: <strong>{{category.values | amount:'amount' |
+                          <h5 class="modal-title fs-5">Total: <strong>{{category.values | amount:'amount' |
                               million:'1.2-2'}} {{currentUser?.currency}}</strong></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
                         </div>
                         <div class="modal-body">
                           <ul>

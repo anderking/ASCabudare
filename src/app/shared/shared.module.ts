@@ -9,12 +9,14 @@ import { NgBoostrapModule } from "@root/core/ui/ng-bootstrap.module";
 import { ToastContainerComponent } from "./toast-container/toast-container.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { CurrentFilterComponent } from './current-filter/current-filter.component';
+import { ModalComponent } from "./modal/modal.component";
 
 @NgModule({
   declarations: [
     NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
+    ModalComponent,
     CurrentFilterComponent,
   ],
   imports: [
@@ -37,6 +39,7 @@ import { CurrentFilterComponent } from './current-filter/current-filter.componen
     NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
+    ModalComponent,
     CurrentFilterComponent
   ],
 })

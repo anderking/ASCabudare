@@ -20,6 +20,9 @@ import {
   isValidField,
 } from "@root/core/utilities/form-validations";
 import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
+import { ModalModel } from "@models/shared/modal.model";
+import { TranslateService } from "@ngx-translate/core";
+import { ModalService } from "@services/ui/modal.service";
 
 @Component({
   selector: "app-ingresos-egresos",
@@ -41,6 +44,8 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     private _authFacadeService: AuthFacadeService,
     private _location: Location,
     private _router: Router,
+    private translateService: TranslateService,
+    private modalService: ModalService,
     private _fb: UntypedFormBuilder
   ) {}
 
@@ -215,5 +220,24 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   }
   public goBack(): void {
     this._location.back();
+  }
+
+  openModalConfirmation(item: IngresoEgresoModel) {
+    const data: ModalModel<IngresoEgresoModel> = {
+      type: "confirmation",
+      item,
+      title: this.translateService.instant("TITLES.CONFIRMATION"),
+      message: this.translateService.instant("TEXTS.CONFIRMATION"),
+      buttonYes: this.translateService.instant("BUTTONS.YES"),
+      buttonCancel: this.translateService.instant("BUTTONS.CANCEL"),
+    };
+    this.modalService
+      .openModal(data)
+      .then((data) => {
+        this.goDelete(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
