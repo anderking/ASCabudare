@@ -11,6 +11,7 @@ import { groupByMult } from "@root/core/utilities/core.utilities";
 import { GroupModel } from "@models/shared/group.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { RangeDate } from "@models/shared/filter.model";
+import { AuthFacadeService } from "@facades/auth-facade.service";
 
 @Component({
   selector: "app-dashboard",
@@ -33,10 +34,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
     private _categoryFacadeService: CategoryFacadeService,
+    private _authFacadeService: AuthFacadeService,
     private _sharedFacadeService: SharedFacadeService
   ) {}
 
   ngOnInit() {
+    this._authFacadeService
+      .getCurrentUser$()
+      .subscribe((user: CurrentUserModel) => {
+        this.currentUser = user;
+      });
     this.chargeIndicatorManager();
   }
 

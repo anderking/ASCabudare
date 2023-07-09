@@ -26,7 +26,11 @@
     "EARNINGS": "Ganancias",
     "EARNINGS_ANNUAL": "Ganancias",
     "WELCOME": "Bienvenido(a)",
-    "CHANGE_LANG": "Cambiar a"
+    "CHANGE_LANG": "Cambiar a",
+    "MONTH_BEFORE": "Mes Anterior",
+    "MONTH_NEXT": "Mes Siguiente",
+    "TODAY": "Hoy",
+    "RESET": "Reiniciar"
   },
   "VALIDATIONS": {
     "REQUIRED": "Campo requerido",

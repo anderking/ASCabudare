@@ -21,6 +21,7 @@ import {
 } from "@root/core/utilities/form-validations";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { Subject, filter, takeUntil } from "rxjs";
+import { faArrowLeft, faArrowRight, faCalendarCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-current-filter",
@@ -32,6 +33,12 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   public rangeDate: RangeDate;
   public initDay: string = null;
   public wordFilter = "";
+  public faArrowLeft = faArrowLeft;
+  public faArrowRight = faArrowRight;
+  public faTrash = faTrash;
+  public faCalendarCheck = faCalendarCheck
+  public beforeCounter = 1;
+  public nextCounter = 1;
   public finisher$ = new Subject<void>();
 
   constructor(
@@ -82,7 +89,15 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     }
   }
 
-  initForm(): UntypedFormGroup {
+  public initForm(): UntypedFormGroup {
+    this.initDates();
+    return this._fb.group({
+      startDate: [this.rangeDate.startDate, [Validators.required]],
+      endDate: [this.rangeDate.endDate, [Validators.required]],
+    });
+  }
+
+  public initDates(): void {
     const day = this.initDay ? this.initDay : "01";
     const today = new Date().toLocaleDateString("en-CA");
     const todaySplit = today.split("-");
@@ -113,11 +128,6 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
       endDate: endDateSplit,
     };
     this.rangeDateEmit.emit(this.rangeDate);
-
-    return this._fb.group({
-      startDate: [startDateString, [Validators.required]],
-      endDate: [endDateSplit, [Validators.required]],
-    });
   }
 
   public changeFilter(value: string, field: string): void {
@@ -147,6 +157,71 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     endDateControl.updateValueAndValidity();
 
     if (this.mainForm.valid) {
+      this.rangeDateEmit.emit(this.rangeDate);
+    }
+  }
+
+  public resetDates(): void {
+    this.initDates();
+    this.mainForm.reset({
+      startDate: this.rangeDate.startDate,
+      endDate: this.rangeDate.endDate,
+    });
+  }
+
+  public changeToday(): void {
+    const today = new Date().toLocaleDateString("en-CA");
+    this.rangeDate = {
+      startDate: today,
+      endDate: today,
+    };
+    this.mainForm.reset({
+      startDate: today,
+      endDate: today,
+    });
+    this.rangeDateEmit.emit(this.rangeDate);
+  }
+
+  public changeMonth(type: "before" | "next"): void {
+    let startDateNew = "";
+    let endDateNew = "";
+    const startDateString = this.rangeDate.startDate;
+    const startDateISO = startDateString + "T04:00:00.000Z";
+    const startDate = new Date(startDateISO);
+    const startDateMonth = startDate.getMonth();
+
+    const endDateString = this.rangeDate.endDate;
+    const endDateISO = endDateString + "T04:00:00.000Z";
+    const endDate = new Date(endDateISO);
+    const endDateMonth = endDate.getMonth();
+
+    if (type == "before") {
+      startDate.setMonth(startDateMonth - 1);
+      endDate.setMonth(endDateMonth - 1);
+    } else {
+      startDate.setMonth(startDateMonth + 1);
+      endDate.setMonth(endDateMonth + 1);
+    }
+
+    const startDateNext = startDate.toLocaleDateString("en-CA");
+    const startDateNextISO = startDateNext + "T04:00:00.000Z";
+    startDateNew = startDateNextISO ? startDateNextISO.split("T")[0] : "";
+
+    const endDateNext = endDate.toLocaleDateString("en-CA");
+    const endDateNextISO = endDateNext + "T04:00:00.000Z";
+    endDateNew = endDateNextISO ? endDateNextISO.split("T")[0] : "";
+
+    console.log("startDateNew", startDateNew);
+    console.log("endDateNew", endDateNew);
+    if (startDateNew && endDateNew) {
+      this.rangeDate = {
+        startDate: startDateNew,
+        endDate: endDateNew,
+      };
+      this.mainForm.reset({
+        startDate: startDateNew,
+        endDate: endDateNew,
+      });
       this.rangeDateEmit.emit(this.rangeDate);
     }
   }
