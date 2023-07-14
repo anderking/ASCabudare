@@ -7,6 +7,7 @@ import {
   DashboardComponent,
   VerticalBarChartComponent,
   GroupedVerticalBarChartComponent,
+  AdvancePieChartComponent,
 } from "./components/index";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 
@@ -16,6 +17,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
     DashboardComponent,
     VerticalBarChartComponent,
     GroupedVerticalBarChartComponent,
+    AdvancePieChartComponent,
   ],
   imports: [CommonModule, HomeRoutingModule, SharedModule, NgxChartsModule],
   providers: [DecimalPipe],

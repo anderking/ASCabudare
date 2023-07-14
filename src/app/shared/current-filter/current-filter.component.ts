@@ -21,7 +21,12 @@ import {
 } from "@root/core/utilities/form-validations";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { Subject, filter, takeUntil } from "rxjs";
-import { faArrowLeft, faArrowRight, faCalendarCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faCalendarCheck,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-current-filter",
@@ -36,7 +41,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   public faArrowLeft = faArrowLeft;
   public faArrowRight = faArrowRight;
   public faTrash = faTrash;
-  public faCalendarCheck = faCalendarCheck
+  public faCalendarCheck = faCalendarCheck;
   public beforeCounter = 1;
   public nextCounter = 1;
   public finisher$ = new Subject<void>();
@@ -211,8 +216,6 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     const endDateNextISO = endDateNext + "T04:00:00.000Z";
     endDateNew = endDateNextISO ? endDateNextISO.split("T")[0] : "";
 
-    console.log("startDateNew", startDateNew);
-    console.log("endDateNew", endDateNew);
     if (startDateNew && endDateNew) {
       this.rangeDate = {
         startDate: startDateNew,

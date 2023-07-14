@@ -39,6 +39,8 @@
   },
   "TITLES": {
     "INGRESS_EGRESS": "Ingreso Egreso",
+    "INGRESS": "Ingresos",
+    "EGRESS": "Egresos",
     "CATEGORY": "Categoría",
     "PROFILE": "Perfil",
     "REGISTER": "Crear una cuenta",

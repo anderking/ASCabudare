@@ -39,6 +39,8 @@
   },
   "TITLES": {
     "INGRESS_EGRESS": "Ingress Egress",
+    "INGRESS": "Ingress",
+    "EGRESS": "Egress",
     "CATEGORY": "Category",
     "PROFILE": "Profile",
     "REGISTER": "Create an Account",

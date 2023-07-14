@@ -1,27 +1,33 @@
-import { Injectable } from "@angular/core";
+import { inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
-import { Observable } from "rxjs";
 
-@Injectable({
-  providedIn: "root",
-})
-export class AuthGuard  {
-  constructor(private _authService: AuthService, private _router: Router) {}
-
-  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._authService.isAuthenticate()) {
-      return true;
-    } else {
-      this._router.navigateByUrl("/auth");
-    }
+export const AuthGuard = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  if (authService.isAuthenticate()) {
+    return true;
+  } else {
+    router.navigateByUrl("/auth");
   }
+};
 
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._authService.isAuthenticate()) {
-      return true;
-    } else {
-      this._router.navigateByUrl("/auth");
-    }
+export const AuthRedirectGuard = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  if (authService.isAuthRedirect()) {
+    return true;
+  } else {
+    router.navigateByUrl("/authenticated");
   }
-}
+};
+
+export const AuthVerifyEmailtGuard = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  if (authService.isVerifyEmail()) {
+    return true;
+  } else {
+    router.navigateByUrl("/pages/verify-email");
+  }
+};

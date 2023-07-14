@@ -1,3 +1,13 @@
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -46,4 +56,30 @@ a:hover {
 
 .border-none {
   border: none !important;
+}
+
+@media (max-width: 992px) {
+  .charts-advanced-pie-chart>div {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie {
+    display: block !important;
+    float: none !important;
+    margin: auto !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper {
+    width: 100% !important;
+    height: 180px !important;
+  }
+
+}
+
+@media (min-width: 993px) {
+  .charts-advanced-pie-chart>div {
+
+    height: 250px !important;
+  }
 }

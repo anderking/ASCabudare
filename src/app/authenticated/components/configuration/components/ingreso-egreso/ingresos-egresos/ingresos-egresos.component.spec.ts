@@ -65,28 +65,15 @@ describe("IngresosEgresosComponent", () => {
     const debugElement: DebugElement = fixture.debugElement;
     const htmlElement: HTMLElement = debugElement.nativeElement;
     const element = htmlElement.querySelector("h6");
+    const count = component.items.length;
 
-    expect(element.textContent).toEqual(" TEXTS.REGISTERS");
+    expect(element.textContent).toEqual(count + " TEXTS.REGISTERS");
   });
 
   it("should call getCurrentUser$ from authFacadeService", () => {
     const mySpy = spyOn(authFacadeService, "getCurrentUser$").and.returnValue(
       of(mockTestCurrentUserOne)
     );
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull;
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  it("should call getCurrentFilter$ from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(
-      ingresoEgresoFacadeService,
-      "getCurrentFilter$"
-    ).and.returnValue(of(mockTestCurrentFilterOne));
 
     component.ngOnInit();
 
@@ -112,7 +99,7 @@ describe("IngresosEgresosComponent", () => {
       of(mockTestIngresoEgresoAll)
     );
 
-    component.ngOnInit();
+    component.loadItems();
 
     expect(mySpy).not.toBeNull;
     expect(mySpy).toBeTruthy();

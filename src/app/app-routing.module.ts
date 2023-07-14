@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthGuard } from "./core/services/guard/auth.guard";
-import { AuthRedirectGuard } from "./core/services/guard/auth-redirect.guard";
+import { AuthGuard, AuthRedirectGuard } from "./core/services/guard/auth.guard";
 import { ContainerComponent } from "./shared/container/container.component";
 import { AppComponent } from "./app.component";
 

@@ -54,7 +54,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   rangeDateReceived(rangeDate: RangeDate) {
     this.rangeDate = rangeDate;
-    this.loadItems();
+    setTimeout(() => {
+      this.loadItems();
+    }, 10);
   }
 
   loadItems(): void {

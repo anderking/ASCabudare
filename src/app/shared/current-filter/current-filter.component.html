@@ -1,6 +1,6 @@
 <ng-container *ngIf="mainForm">
   <form [formGroup]="mainForm" class="row g-3 mb-3">
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
       <label class="form-label">{{ 'PROPERTIES.START_DATE' | translate }}:</label>
       <input type="date" class="form-control" formControlName="startDate"
         [ngClass]="{'is-invalid': mainForm.get('startDate')?.touched && !mainForm.get('startDate')?.valid, 'is-valid': mainForm.get('startDate')?.touched && mainForm.get('startDate')?.valid}"
@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
       <label class="form-label">{{ 'PROPERTIES.END_DATE' | translate }}:</label>
       <input type="date" class="form-control" formControlName="endDate"
         [ngClass]="{'is-invalid': mainForm.get('endDate')?.touched && !mainForm.get('endDate')?.valid, 'is-valid': mainForm.get('endDate')?.touched && mainForm.get('endDate')?.valid}"
