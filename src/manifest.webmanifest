@@ -1,8 +1,8 @@
 {
   "name": "IngresoEgreso",
   "short_name": "IngresoEgreso",
-  "theme_color": "#343a40",
-  "background_color": "#343a40",
+  "theme_color": "#000",
+  "background_color": "#000",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

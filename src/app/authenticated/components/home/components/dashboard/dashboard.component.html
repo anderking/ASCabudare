@@ -2,34 +2,25 @@
 
   <h1>{{ 'TEXTS.WELCOME' | translate }} {{currentUser?.displayName}}</h1>
 
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h2 class="h3 mb-0 text-gray-800">{{ 'TEXTS.EARNINGS' | translate }}</h2>
-  </div>
-
   <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"></app-current-filter>
 
-  <div class="d-none d-md-block">
-    <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
-    <div class="d-flex justify-content-center">
-      <div *ngIf="items.length > 0" style="margin:1em 0">
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-            <app-advanced-pie-chart [type]="'Ingreso'" [colorScheme]="'forest'"
-              [items]="items"></app-advanced-pie-chart>
-          </div>
+  <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
+  <div class="d-flex justify-content-center">
+    <div *ngIf="items.length > 0" style="margin:1em 0">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+          <app-advanced-pie-chart [type]="'Ingreso'" [colorScheme]="'forest'" [items]="items"></app-advanced-pie-chart>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="d-none d-md-block">
-    <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.EGRESS' | translate }}</h2>
-    <div class="d-flex justify-content-center">
-      <div *ngIf="items.length > 0" style="margin:1em 0">
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
-            <app-advanced-pie-chart [type]="'Egreso'" [colorScheme]="'solar'" [items]="items"></app-advanced-pie-chart>
-          </div>
+  <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.EGRESS' | translate }}</h2>
+  <div class="d-flex justify-content-center">
+    <div *ngIf="items.length > 0" style="margin:1em 0">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+          <app-advanced-pie-chart [type]="'Egreso'" [colorScheme]="'solar'" [items]="items"></app-advanced-pie-chart>
         </div>
       </div>
     </div>
