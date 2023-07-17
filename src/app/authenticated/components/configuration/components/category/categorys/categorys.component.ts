@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { filter, takeUntil } from "rxjs/operators";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";

@@ -14,6 +14,7 @@ import { routes } from "../auth-routing.module";
 import { SharedModule } from "@root/shared/shared.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { of } from "rxjs";
+import { mockTestLoginFormOne } from "@root/core/constants/mocks/mocks-units-test";
 
 describe("ForgotPasswordComponent", () => {
   let component: ForgotPasswordComponent;
@@ -58,7 +59,7 @@ describe("ForgotPasswordComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -69,7 +70,7 @@ describe("ForgotPasswordComponent", () => {
 
     component.ngAfterViewInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -80,14 +81,14 @@ describe("ForgotPasswordComponent", () => {
 
     component.ngOnDestroy();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
   });
 
   it("should submit valid form", () => {
-    const data = { email: "test@example.com", password: "password123" };
+    const data = mockTestLoginFormOne;
     const spy = spyOn(authFacadeService, "forgotPassword");
     component.mainForm = {
       form: {

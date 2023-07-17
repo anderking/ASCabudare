@@ -34,8 +34,8 @@ describe("CombosFacadeService", () => {
   describe("typeActive", () => {
     it("should expect the searchTypeActive method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "searchTypeActive");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBTypeActive).toEqual("Masters/Combos/TypeActive");
     });
 

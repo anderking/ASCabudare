@@ -40,8 +40,8 @@ describe("AuthFacadeService", () => {
   describe("login", () => {
     it("should expect the login method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "login");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBUser).toEqual("User");
     });
 
@@ -67,8 +67,8 @@ describe("AuthFacadeService", () => {
   describe("register", () => {
     it("should expect the register method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "register");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBUser).toEqual("User");
     });
 
@@ -94,8 +94,8 @@ describe("AuthFacadeService", () => {
   describe("setUserDoc", () => {
     it("should expect the setUserDoc method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "setUserDoc");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBUser).toEqual("User");
     });
 
@@ -123,8 +123,8 @@ describe("AuthFacadeService", () => {
   describe("updateProfile", () => {
     it("should expect the updateProfile method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "updateProfile");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBUser).toEqual("User");
     });
 
@@ -154,8 +154,8 @@ describe("AuthFacadeService", () => {
   describe("updateProfileFB", () => {
     it("should expect the updateProfileFB method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "updateProfileFB");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBUser).toEqual("User");
     });
 
@@ -190,8 +190,8 @@ describe("AuthFacadeService", () => {
   describe("forgotPassword", () => {
     it("should expect the forgotPassword method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "forgotPassword");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBUser).toEqual("User");
     });
 
@@ -209,8 +209,8 @@ describe("AuthFacadeService", () => {
   describe("setCurrentUser", () => {
     it("should expect the setCurrentUser method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "setCurrentUser");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
     });
 
     it("should expect dispatch setCurrentUser action with the correct props", () => {

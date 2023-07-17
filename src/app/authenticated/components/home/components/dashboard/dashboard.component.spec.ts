@@ -69,7 +69,7 @@ describe("DashboardComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -82,7 +82,7 @@ describe("DashboardComponent", () => {
 
     component.loadItems();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -95,7 +95,7 @@ describe("DashboardComponent", () => {
 
     component.loadItems();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
