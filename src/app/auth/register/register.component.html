@@ -12,7 +12,7 @@
                 </div>
                 <form class="user" #mainForm="ngForm">
 
-                  <div class="form-group">
+                  <div class="mb-3">
                     <input type="email"
                       [ngClass]="{'is-invalid': validationEmail.touched && !validationEmail.valid, 'is-valid': validationEmail.touched && validationEmail.valid}"
                       class="form-control form-control-user" name="email" #validationEmail="ngModel" placeholder="Email"
@@ -25,7 +25,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <div class="mb-3">
 
                     <input type="password"
                       [ngClass]="{'is-invalid': validationPassword.touched && !validationPassword.valid, 'is-valid': validationPassword.touched && validationPassword.valid}"
@@ -40,16 +40,18 @@
 
                   </div>
 
-                  <div class="form-group">
-                    <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
-                      [disabled]="mainForm.invalid" (click)="onSubmit()">
-                      {{ 'BUTTONS.REGISTER' | translate }}
-                    </button>
-                    <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
-                      <div class="spinner-border spinner-border-sm" role="status"></div>
-                    </button>
+                  <div class="mb-3">
+                    <div class="d-grid gap-2">
+                      <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
+                        [disabled]="mainForm.invalid" (click)="onSubmit()">
+                        {{ 'BUTTONS.REGISTER' | translate }}
+                      </button>
+                      <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
+                        <div class="spinner-border spinner-border-sm" role="status"></div>
+                      </button>
+                    </div>
                   </div>
-                  <div class="form-group">
+                  <div class="mb-3">
                     <div class="text-center">
                       <a class="small" [routerLink]="[ '/login' ]">{{ 'TEXTS.BACK_LOGIN' | translate }}</a>
                     </div>

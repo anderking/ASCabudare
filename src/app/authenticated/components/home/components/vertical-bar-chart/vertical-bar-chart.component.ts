@@ -30,7 +30,6 @@ export class VerticalBarChartComponent implements OnChanges {
   }
 
   private buildChartItems(): void {
-    console.log(this.items);
     let single = [];
     let domain: string[] = [];
     this.items.forEach(

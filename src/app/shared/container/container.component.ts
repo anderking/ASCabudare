@@ -12,6 +12,7 @@ import { AuthService } from "@services/auth/auth.service";
   styleUrls: ["./container.component.scss"],
 })
 export class ContainerComponent implements OnInit {
+  sidebarExpanded = true;
   constructor(
     private authService: AuthService,
     private _sharedFacadeService: SharedFacadeService,

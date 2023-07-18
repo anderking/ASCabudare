@@ -65,8 +65,9 @@ describe("IngresosEgresosComponent", () => {
     const debugElement: DebugElement = fixture.debugElement;
     const htmlElement: HTMLElement = debugElement.nativeElement;
     const element = htmlElement.querySelector("h6");
+    const count = component.items.length;
 
-    expect(element.textContent).toEqual(" TEXTS.REGISTERS");
+    expect(element.textContent).toEqual(count + " TEXTS.REGISTERS");
   });
 
   it("should call getCurrentUser$ from authFacadeService", () => {
@@ -76,21 +77,7 @@ describe("IngresosEgresosComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  it("should call getCurrentFilter$ from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(
-      ingresoEgresoFacadeService,
-      "getCurrentFilter$"
-    ).and.returnValue(of(mockTestCurrentFilterOne));
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -101,7 +88,7 @@ describe("IngresosEgresosComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -112,9 +99,9 @@ describe("IngresosEgresosComponent", () => {
       of(mockTestIngresoEgresoAll)
     );
 
-    component.ngOnInit();
+    component.loadItems();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -128,7 +115,7 @@ describe("IngresosEgresosComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();

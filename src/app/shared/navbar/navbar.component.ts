@@ -3,6 +3,7 @@ import { AuthService } from "src/app/core/services/auth/auth.service";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { TranslateService } from "@ngx-translate/core";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: "app-navbar",
@@ -14,6 +15,7 @@ export class NavbarComponent implements OnInit {
   public changeLang: string;
   public lang: boolean;
   public langStorage = localStorage.getItem("lang");
+  public finisher$ = new Subject<void>();
 
   constructor(
     private auth: AuthService,
@@ -32,6 +34,7 @@ export class NavbarComponent implements OnInit {
     this.changeLang = "EN";
     this.authFacadeService
       .getCurrentUser$()
+      .pipe(takeUntil(this.finisher$))
       .subscribe((user: CurrentUserModel) => {
         this.user = user;
       });

@@ -2,48 +2,29 @@
 
   <h1>{{ 'TEXTS.WELCOME' | translate }} {{currentUser?.displayName}}</h1>
 
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h2 class="h3 mb-0 text-gray-800">{{ 'TEXTS.EARNINGS' | translate }}</h2>
-  </div>
+  <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"></app-current-filter>
 
-
-  <ng-container *ngIf="mainForm">
-    <form [formGroup]="mainForm">
-      <div class="form-row">
-        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-6">
-          <label>{{ 'PROPERTIES.START_DATE' | translate }}:</label>
-          <input type="date" class="form-control" formControlName="startDate"
-            [ngClass]="{'is-invalid': mainForm.get('startDate')?.touched && !mainForm.get('startDate')?.valid, 'is-valid': mainForm.get('startDate')?.touched && mainForm.get('startDate')?.valid}"
-            (change)="changeFilter($event.target.value,'startDate')">
-          <div class="invalid-feedback" *ngIf="isValidField('startDate')">
-            {{ getErrorMessageField('startDate') }}
-          </div>
+  <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
+  <div class="d-flex justify-content-center">
+    <div *ngIf="items.length > 0" style="margin:1em 0">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+          <app-advanced-pie-chart [type]="'Ingreso'" [colorScheme]="'forest'" [items]="items"></app-advanced-pie-chart>
         </div>
-
-        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-6">
-          <label>{{ 'PROPERTIES.END_DATE' | translate }}:</label>
-          <input type="date" class="form-control" formControlName="endDate"
-            [ngClass]="{'is-invalid': mainForm.get('endDate')?.touched && !mainForm.get('endDate')?.valid, 'is-valid': mainForm.get('endDate')?.touched && mainForm.get('endDate')?.valid}"
-            (change)="changeFilter($event.target.value,'endDate')">
-          <div class="invalid-feedback" *ngIf="isValidField('endDate')">
-            {{ getErrorMessageField('endDate') }}
-          </div>
-        </div>
-      </div>
-    </form>
-  </ng-container>
-
-  <div class="d-none d-md-block" *ngIf="items.length > 0" style="margin:1em 0">
-    <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-4">
-        <app-vertical-bar-chart [items]="items"></app-vertical-bar-chart>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-4">
-        <app-grouped-vertical-bar-chart [items]="items"></app-grouped-vertical-bar-chart>
       </div>
     </div>
   </div>
 
+  <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.EGRESS' | translate }}</h2>
+  <div class="d-flex justify-content-center">
+    <div *ngIf="items.length > 0" style="margin:1em 0">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+          <app-advanced-pie-chart [type]="'Egreso'" [colorScheme]="'solar'" [items]="items"></app-advanced-pie-chart>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
@@ -52,11 +33,11 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1"
+              <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
                 [ngClass]="{'text-success': totalEarnings >= 0, 'text-danger': totalEarnings < 0 }">{{
                 'TEXTS.EARNINGS_ANNUAL' |
                 translate }}</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalEarnings | million:'1.2-2'}}
+              <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{totalEarnings | million:'1.2-2'}}
                 {{currentUser?.currency}}</div>
             </div>
             <div class="col-auto">
@@ -73,7 +54,7 @@
     <div class="col-sm-12">
       <div class="row">
         <div class="col-sm-12 d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">{{item.name}}</h1>
+          <h1 class="h3 mb-0 text-gray-800 fw-bold">{{item.name}}</h1>
         </div>
       </div>
       <div class="row">
@@ -85,24 +66,23 @@
 
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1"
+                  <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
                     [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
                     {{category.name}}
                   </div>
-                  <a href="#open-item-{{category.id}}" data-toggle="modal" class="modal-dashboard-link">
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{category.values | amount:'amount' |
+                  <a href="#open-item-{{category.id}}" data-bs-toggle="modal" class="card-link">
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{category.values | amount:'amount' |
                       million:'1.2-2'}} {{currentUser?.currency}}</div>
                   </a>
-                  <div class="modal fade" id="open-item-{{category.id}}" tabindex="-1" role="dialog"
+
+                  <div class="modal fade" id="open-item-{{category.id}}" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Total: <strong>{{category.values | amount:'amount' |
+                          <h5 class="modal-title fs-5">Total: <strong>{{category.values | amount:'amount' |
                               million:'1.2-2'}} {{currentUser?.currency}}</strong></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                           <ul>

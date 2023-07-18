@@ -22,7 +22,7 @@ export const mockTestCurrentUserOne: CurrentUserModel = {
   emailVerified: false,
   phoneNumber: "string",
   currency: "string",
-  dayStartDashboard: "string",
+  dayStartDashboard: "01",
   photoURL: "string",
   uploadPhoto: "string",
   accessToken: "string",
@@ -112,7 +112,7 @@ export const mockTestIngresoEgresoAll: IngresoEgresoModel[] = [
 ];
 
 export const mockTestCurrentFilterOne: CurrentFilterModel = {
-  rangeDate: { startDate: "string", endDate: "string" },
+  rangeDate: { startDate: "2023-01-01", endDate: "2023-01-31" },
   wordFilter: "string",
 };
 

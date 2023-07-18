@@ -66,6 +66,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
 
     this._authFacadeService
       .getCurrentUser$()
+      .pipe(takeUntil(this.finisher$))
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
       });

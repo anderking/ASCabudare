@@ -15,62 +15,67 @@
 
             <div class="p-5">
 
-              <form [formGroup]="mainForm">
-                <div class="form-row">
+              <form [formGroup]="mainForm" class="row g-3">
 
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <label>{{ 'PROPERTIES.NAME' | translate }}:</label>
-                    <input type="text" class="form-control" formControlName="name"
-                      [ngClass]="{'is-invalid': mainForm.get('name')?.touched && !mainForm.get('name')?.valid, 'is-valid': mainForm.get('name')?.touched && mainForm.get('name')?.valid}">
-                    <div class="invalid-feedback" *ngIf="isValidField('name')">
-                      {{ getErrorMessageField('name') }}
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <label class="form-label">{{ 'PROPERTIES.NAME' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="name"
+                    [ngClass]="{'is-invalid': mainForm.get('name')?.touched && !mainForm.get('name')?.valid, 'is-valid': mainForm.get('name')?.touched && mainForm.get('name')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('name')">
+                    {{ getErrorMessageField('name') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <label class="form-label">{{ 'PROPERTIES.DESCRIPTION' | translate }}:</label>
+                  <textarea class="form-control" formControlName="description"
+                    [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
+                  <div class="invalid-feedback" *ngIf="isValidField('description')">
+                    {{ getErrorMessageField('description') }}
+                  </div>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="state" formControlName="state"
+                      [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
+                    <label class="form-check-label" for="state">
+                      {{ 'PROPERTIES.STATE' | translate }}
+                    </label>
+                    <div class="invalid-feedback" *ngIf="isValidField('state')">
+                      {{ getErrorMessageField('state') }}
                     </div>
                   </div>
+                </div>
 
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <label>{{ 'PROPERTIES.DESCRIPTION' | translate }}:</label>
-                    <textarea class="form-control" formControlName="description"
-                      [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
-                    <div class="invalid-feedback" *ngIf="isValidField('description')">
-                      {{ getErrorMessageField('description') }}
-                    </div>
-                  </div>
-
-                  <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id ="state" formControlName="state"
-                        [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
-                      <label class="form-check-label" for="state">
-                        {{ 'PROPERTIES.STATE' | translate }}
-                      </label>
-                      <div class="invalid-feedback" *ngIf="isValidField('state')">
-                        {{ getErrorMessageField('state') }}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                    <button *ngIf="!isLoading" class="btn btn-primary btn-user btn-block" (click)="onSubmit()"
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button *ngIf="!isLoading" class="btn btn-primary" (click)="onSubmit()"
                       [disabled]="mainForm.invalid">
                       {{ 'BUTTONS.SAVE' | translate }}
                     </button>
-                    <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
+                    <button *ngIf="isLoading" class="btn btn-primary">
                       <div class="spinner-border spinner-border-sm" role="status"></div>
                     </button>
                   </div>
+                </div>
 
-                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                    <button type="button" class="btn btn-secondary btn-user btn-block" (click)="clean()">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button type="button" class="btn btn-info" (click)="clean()">
                       {{ 'BUTTONS.CLEAN' | translate }}
                     </button>
                   </div>
+                </div>
 
-                  <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                    <button type="button" class="btn btn-info btn-user btn-block" (click)="goBack()">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button type="button" class="btn btn-dark" (click)="goBack()">
                       {{ 'BUTTONS.BACK' | translate }}
                     </button>
                   </div>
                 </div>
+
               </form>
             </div>
           </div>

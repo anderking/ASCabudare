@@ -7,6 +7,9 @@ import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { CategoryModel } from "@models/configurations/category.model";
 import { CategoryFacadeService } from "@facades/category-facade.service";
+import { ModalService } from "@services/ui/modal.service";
+import { TranslateService } from "@ngx-translate/core";
+import { ModalModel } from "@models/shared/modal.model";
 
 @Component({
   selector: "app-categorys",
@@ -22,7 +25,9 @@ export class CategorysComponent implements OnInit, OnDestroy {
     private _categoryFacadeService: CategoryFacadeService,
     private _sharedFacadeService: SharedFacadeService,
     private _location: Location,
-    private _router: Router
+    private _router: Router,
+    private translateService: TranslateService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -64,5 +69,23 @@ export class CategorysComponent implements OnInit, OnDestroy {
   }
   goBack(): void {
     this._location.back();
+  }
+  openModalConfirmation(item: CategoryModel) {
+    const data: ModalModel<CategoryModel> = {
+      type: "confirmation",
+      item,
+      title: this.translateService.instant("TITLES.CONFIRMATION"),
+      message: this.translateService.instant("TEXTS.CONFIRMATION"),
+      buttonYes: this.translateService.instant("BUTTONS.YES"),
+      buttonCancel: this.translateService.instant("BUTTONS.CANCEL"),
+    };
+    this.modalService
+      .openModal(data)
+      .then((data) => {
+        this.goDelete(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }

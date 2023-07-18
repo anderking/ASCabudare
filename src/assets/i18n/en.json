@@ -26,7 +26,11 @@
     "EARNINGS": "Earnings",
     "EARNINGS_ANNUAL": "Earnings",
     "WELCOME": "Welcome",
-    "CHANGE_LANG": "Change to"
+    "CHANGE_LANG": "Change to",
+    "MONTH_BEFORE": "Before month",
+    "MONTH_NEXT": "Next month",
+    "TODAY": "Today",
+    "RESET": "Reset"
   },
   "VALIDATIONS": {
     "REQUIRED": "Field required",
@@ -35,6 +39,8 @@
   },
   "TITLES": {
     "INGRESS_EGRESS": "Ingress Egress",
+    "INGRESS": "Ingress",
+    "EGRESS": "Egress",
     "CATEGORY": "Category",
     "CLIENT": "Client",
     "PROFILE": "Profile",

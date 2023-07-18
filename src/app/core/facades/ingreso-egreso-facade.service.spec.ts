@@ -42,8 +42,8 @@ describe("IngresoEgresoFacadeService", () => {
   describe("search", () => {
     it("should expect the search method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "search");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFB).toEqual("IngresoEgreso");
       expect(collectionFBSecond).toEqual("Items");
     });
@@ -74,8 +74,8 @@ describe("IngresoEgresoFacadeService", () => {
   describe("searchOne", () => {
     it("should expect the searchOne method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "searchOne");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFB).toEqual("IngresoEgreso");
       expect(collectionFBSecond).toEqual("Items");
     });
@@ -108,8 +108,8 @@ describe("IngresoEgresoFacadeService", () => {
   describe("create", () => {
     it("should expect the create method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "create");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFB).toEqual("IngresoEgreso");
       expect(collectionFBSecond).toEqual("Items");
     });
@@ -132,8 +132,8 @@ describe("IngresoEgresoFacadeService", () => {
   describe("update", () => {
     it("should expect the update method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "update");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFB).toEqual("IngresoEgreso");
       expect(collectionFBSecond).toEqual("Items");
     });
@@ -156,8 +156,8 @@ describe("IngresoEgresoFacadeService", () => {
   describe("delete", () => {
     it("should expect the delete method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "delete");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFB).toEqual("IngresoEgreso");
       expect(collectionFBSecond).toEqual("Items");
     });

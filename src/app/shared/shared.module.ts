@@ -8,12 +8,20 @@ import { PipesModule } from "@root/core/pipes/pipes-module.module";
 import { NgBoostrapModule } from "@root/core/ui/ng-bootstrap.module";
 import { ToastContainerComponent } from "./toast-container/toast-container.component";
 import { TranslateModule } from "@ngx-translate/core";
+import { CurrentFilterComponent } from "./current-filter/current-filter.component";
+import { ModalComponent } from "./modal/modal.component";
+import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { faArrowLeft, faArrowRight, faCalendarCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
+    ModalComponent,
+    CurrentFilterComponent,
+    SidebarComponent,
   ],
   imports: [
     CommonModule,
@@ -23,6 +31,7 @@ import { TranslateModule } from "@ngx-translate/core";
     PipesModule,
     NgBoostrapModule,
     TranslateModule,
+    FontAwesomeModule,
   ],
   exports: [
     CommonModule,
@@ -35,6 +44,12 @@ import { TranslateModule } from "@ngx-translate/core";
     NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
+    ModalComponent,
+    CurrentFilterComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule {
+  constructor(library: FaIconLibrary) {
+    library.addIcons(faArrowRight, faArrowLeft, faTrash, faCalendarCheck);
+  }
+}

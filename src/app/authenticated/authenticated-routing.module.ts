@@ -1,8 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ContainerComponent } from "@root/shared/container/container.component";
-import { AuthVerifyEmailtGuard } from "@services/guard/auth-verify-email.guard";
-import { AuthGuard } from "@services/guard/auth.guard";
+import { AuthGuard, AuthVerifyEmailtGuard } from "@services/guard/auth.guard";
 
 const routes: Routes = [
   {

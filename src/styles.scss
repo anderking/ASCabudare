@@ -1,8 +1,34 @@
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  background-color: #000 !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+
 .cursor {
   cursor: pointer;
 }
 
-.btn-primary {
+.btn-info {
   color: #fff !important;
 }
 
@@ -24,9 +50,132 @@
   color: #e74a3b;
 }
 
-.modal-dashboard-link {
+.card-link {
   color: #000;
 }
-.modal-dashboard-link:hover {
-  text-decoration: none !important;
+
+.card-link:hover {
+  color: #0d6efd;
+}
+
+.border-none {
+  border: none !important;
+}
+
+/** Styles for charts*/
+
+@media (min-width: 320px) {
+  .charts-advanced-pie-chart>div {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie {
+    display: block !important;
+    float: none !important;
+    margin: auto !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper {
+    width: 100% !important;
+    height: 150px !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 295px !important;
+  }
+}
+
+@media (min-width: 360px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 335px !important;
+  }
+}
+
+@media (min-width: 420px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 395px !important;
+  }
+}
+
+@media (min-width: 480px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 455px !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 550px !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 615px !important;
+  }
+}
+
+@media (min-width: 720px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 695px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 745px !important;
+  }
+}
+
+@media (min-width: 840px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 815px !important;
+  }
+}
+
+@media (min-width: 920px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 895px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 935px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .charts-advanced-pie-chart>div {
+    width: 1000px !important;
+    height: 300px !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie {
+    display: inline-block !important;
+    float: left !important;
+    margin: auto !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper {
+    width: 707px !important;
+    height: 300px !important;
+  }
+
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 687px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .ngx-charts-outer {
+    width: 300px !important;
+    height: 300px !important;
+  }
+
+  .ngx-charts {
+    width: 300px !important;
+    height: 300px !important;
+  }
 }

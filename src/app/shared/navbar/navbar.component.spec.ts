@@ -12,7 +12,7 @@ import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { provideFirestore, getFirestore } from "@angular/fire/firestore";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { RouterLinkDirectiveStub } from "@root/core/utilities/router-link-directive-stub";
-import { RouterLinkWithHref } from "@angular/router";
+import { RouterLink } from "@angular/router";
 
 describe("NavbarComponent", () => {
   let component: NavbarComponent;
@@ -50,11 +50,11 @@ describe("NavbarComponent", () => {
 
   it("should routerLinks to equal 6 and match string", () => {
     const debugElement: DebugElement[] = fixture.debugElement.queryAll(
-      By.directive(RouterLinkWithHref)
+      By.directive(RouterLink)
     );
 
     const routerLinks = debugElement.map((link) =>
-      link.injector.get(RouterLinkWithHref)
+      link.injector.get(RouterLink)
     );
     expect(debugElement.length).toEqual(7);
     expect(routerLinks[0].href).toEqual("/authenticated/home");

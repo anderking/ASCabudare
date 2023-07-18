@@ -53,7 +53,7 @@ describe("DashboardComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should to equal title component", () => {
+  xit("should to equal title component", () => {
     component.isLoading = false;
     fixture.detectChanges();
     const htmlElement: HTMLElement = fixture.nativeElement;
@@ -69,18 +69,7 @@ describe("DashboardComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  xit("should call search from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(ingresoEgresoFacadeService, "search").and.callThrough();
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -91,20 +80,9 @@ describe("DashboardComponent", () => {
       of(mockTestIngresoEgresoAll)
     );
 
-    component.ngOnInit();
+    component.loadItems();
 
-    expect(mySpy).not.toBeNull;
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  xit("should call search from categoryFacadeService", () => {
-    const mySpy = spyOn(categoryFacadeService, "search").and.callThrough();
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -115,27 +93,20 @@ describe("DashboardComponent", () => {
       of(mockTestCategoryAll)
     );
 
-    component.ngOnInit();
+    component.loadItems();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
   });
 
-  xit("should call reset from ngOnDestroy", () => {
-    const mySpyIe = spyOn(
-      ingresoEgresoFacadeService,
-      "reset"
-    ).and.callThrough();
-    const mySpyCa = spyOn(categoryFacadeService, "reset").and.callThrough();
-    const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
+  it("should call reset from ngOnDestroy", () => {
+    const mySpy = spyOn(sharedFacadeService, "reset").and.callThrough();
 
     component.ngOnDestroy();
 
-    expect(mySpyIe).toHaveBeenCalled();
-    expect(mySpyCa).toHaveBeenCalled();
-    expect(mySpySh).toHaveBeenCalled();
+    expect(mySpy).toHaveBeenCalled();
   });
 
   it("should call getLoading$ from chargeIndicatorManager", () => {

@@ -20,6 +20,7 @@ import { ToastService } from "@services/ui/toast.service";
 import { TranslateService } from "@ngx-translate/core";
 import { startDaySelect } from "@root/core/constants/mocks/mocks-const";
 import { AttachmentModel } from "@models/shared/attachment.model";
+import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 
 @Component({
   selector: "app-profile-update",
@@ -46,7 +47,8 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     private _authFacadeService: AuthFacadeService,
     private _attachmentFacadeService: AttachmentFacadeService,
     private _toastService: ToastService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService
   ) {
     this.mainForm = this.initForm();
   }
@@ -125,10 +127,13 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       ...this.currentItem,
       ...this.mainForm.getRawValue(),
     };
-    console.log(this.mainForm.controls);
     if (this.mainForm.valid) {
-      console.log(this.dataForm);
       this._authFacadeService.updateProfile(this.dataForm);
+      if (
+        this.currentItem.dayStartDashboard != this.dataForm.dayStartDashboard
+      ) {
+        this._ingresoEgresoFacadeService.setCurrentFilter(null);
+      }
     }
   }
 

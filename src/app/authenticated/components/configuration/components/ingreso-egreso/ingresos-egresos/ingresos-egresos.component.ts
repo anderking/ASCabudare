@@ -9,31 +9,22 @@ import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from "@angular/forms";
-import {
-  ValidationsCustom,
-  getErrorMessageField,
-  isValidField,
-} from "@root/core/utilities/form-validations";
-import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
+import { RangeDate } from "@models/shared/filter.model";
+import { ModalModel } from "@models/shared/modal.model";
+import { TranslateService } from "@ngx-translate/core";
+import { ModalService } from "@services/ui/modal.service";
 
 @Component({
   selector: "app-ingresos-egresos",
   templateUrl: "./ingresos-egresos.component.html",
 })
 export class IngresosEgresosComponent implements OnInit, OnDestroy {
-  public mainForm: UntypedFormGroup;
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
   public wordFilter = "";
   public currentUser: CurrentUserModel;
   public rangeDate: RangeDate;
   private _finisher = new Subject<void>();
-  private _initDay: string = null;
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
@@ -41,7 +32,8 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     private _authFacadeService: AuthFacadeService,
     private _location: Location,
     private _router: Router,
-    private _fb: UntypedFormBuilder
+    private translateService: TranslateService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -49,29 +41,6 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
-        if (user) {
-          this._initDay = user.dayStartDashboard;
-          this.mainForm = this.initForm();
-        }
-      });
-
-    this._ingresoEgresoFacadeService
-      .getCurrentFilter$()
-      .pipe(
-        filter(
-          (currentFilter: CurrentFilterModel) =>
-            !isNullOrUndefinedEmpty(currentFilter)
-        ),
-        takeUntil(this._finisher)
-      )
-      .subscribe((currentFilter: CurrentFilterModel) => {
-        console.log(currentFilter);
-        this.rangeDate = currentFilter.rangeDate;
-        const startDateControl = this.mainForm.controls["startDate"];
-        const endDateControl = this.mainForm.controls["endDate"];
-        startDateControl.setValue(currentFilter?.rangeDate?.startDate);
-        endDateControl.setValue(currentFilter?.rangeDate?.endDate);
-        this.wordFilter = currentFilter.wordFilter;
       });
 
     this._ingresoEgresoFacadeService
@@ -80,50 +49,21 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       .subscribe((loading: boolean) => {
         this.isLoading = loading;
       });
-    this.loadItems();
   }
 
   ngOnDestroy(): void {
     this._finisher.next();
     this._sharedFacadeService.reset();
-    if (this.rangeDate) {
-      const payload: CurrentFilterModel = {
-        rangeDate: this.rangeDate,
-        wordFilter: this.wordFilter,
-      };
-      this._ingresoEgresoFacadeService.setCurrentFilter(payload);
-    }
   }
 
-  initForm(): UntypedFormGroup {
-    const day = this._initDay ? this._initDay : "01";
-    const today = new Date().toLocaleDateString("en-CA");
-    const todaySplit = today.split("-");
-    const initStartDate =
-      todaySplit[0] + "-" + todaySplit[1] + "-" + day + "T04:00:00.000Z";
-
-    const initEndDate = new Date(initStartDate).setMonth(
-      new Date(initStartDate).getMonth() + 1
-    );
-
-    this.rangeDate = {
-      startDate: new Date(initStartDate).toLocaleDateString("en-CA"),
-      endDate: new Date(initEndDate).toLocaleDateString("en-CA"),
-    };
-
-    return this._fb.group({
-      startDate: [
-        new Date(initStartDate).toLocaleDateString("en-CA"),
-        [Validators.required],
-      ],
-      endDate: [
-        new Date(initEndDate).toLocaleDateString("en-CA"),
-        [Validators.required],
-      ],
-    });
+  public rangeDateReceived(rangeDate: RangeDate): void {
+    this.rangeDate = rangeDate;
+    setTimeout(() => {
+      this.loadItems();
+    }, 10);
   }
 
-  private loadItems(): void {
+  public loadItems(): void {
     this._ingresoEgresoFacadeService
       .getAll$()
       .pipe(
@@ -133,9 +73,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
             return items.filter((item: IngresoEgresoModel) => {
               if (this.rangeDate) {
                 const createDate = new Date(item.createDate).getTime();
-                const startDate = new Date(
-                  this.rangeDate?.startDate
-                ).getTime();
+                const startDate = new Date(this.rangeDate?.startDate).getTime();
                 const endDate = new Date(this.rangeDate?.endDate).getTime();
                 if (createDate >= startDate && createDate <= endDate) {
                   return true;
@@ -155,46 +93,6 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       });
   }
 
-  public changeFilter(value: string, field: string): void {
-    this.rangeDate = {
-      ...this.rangeDate,
-      [field]: value,
-    };
-    console.log(this.rangeDate);
-
-    const startDateControl = this.mainForm.controls["startDate"];
-    const endDateControl = this.mainForm.controls["endDate"];
-
-    if (field === "startDate") {
-      startDateControl.setValidators([
-        ValidationsCustom.setValidatorDateDashboard(this.mainForm, field),
-      ]);
-    }
-
-    if (field === "endDate") {
-      endDateControl.setValidators([
-        ValidationsCustom.setValidatorDateDashboard(this.mainForm, field),
-      ]);
-    }
-
-    startDateControl.markAsTouched();
-    startDateControl.updateValueAndValidity();
-    endDateControl.markAsTouched();
-    endDateControl.updateValueAndValidity();
-
-    if (this.mainForm.valid) {
-      this.loadItems();
-    }
-  }
-
-  public isValidField(field: string): boolean {
-    return isValidField(field, this.mainForm);
-  }
-
-  public getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm);
-  }
-
   public goDelete(item: IngresoEgresoModel): void {
     this._ingresoEgresoFacadeService.delete(item);
   }
@@ -210,5 +108,24 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   }
   public goBack(): void {
     this._location.back();
+  }
+
+  public openModalConfirmation(item: IngresoEgresoModel): void {
+    const data: ModalModel<IngresoEgresoModel> = {
+      type: "confirmation",
+      item,
+      title: this.translateService.instant("TITLES.CONFIRMATION"),
+      message: this.translateService.instant("TEXTS.CONFIRMATION"),
+      buttonYes: this.translateService.instant("BUTTONS.YES"),
+      buttonCancel: this.translateService.instant("BUTTONS.CANCEL"),
+    };
+    this.modalService
+      .openModal(data)
+      .then((data) => {
+        this.goDelete(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
