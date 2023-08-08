@@ -12,10 +12,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.navbar {
-  background-color: #000 !important;
-}
-
 a {
   text-decoration: none !important;
 }
@@ -33,14 +29,10 @@ a:hover {
 }
 
 .img-profile {
-  height: 30px !important;
-  width: 30px !important;
-  border: 2px solid hsla(0, 0%, 100%, .8) !important;
+  height: 50px !important;
+  width: 20px !important;
+  border: 3px solid rgb(201, 202, 206) !important;
   border-radius: 50%;
-}
-
-#content {
-  margin-top: 2em;
 }
 
 .invalid-feedback-custom {
@@ -83,6 +75,10 @@ a:hover {
 
   .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
     width: 295px !important;
+    float: none !important;
+    position: unset !important;
+    transform: none !important;
+    margin: auto !important;
   }
 }
 
@@ -124,32 +120,32 @@ a:hover {
 
 @media (min-width: 768px) {
   .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
-    width: 745px !important;
+    width: 665px !important;
   }
 }
 
 @media (min-width: 840px) {
   .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
-    width: 815px !important;
+    width: 715px !important;
   }
 }
 
 @media (min-width: 920px) {
   .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
-    width: 895px !important;
+    width: 815px !important;
   }
 }
 
 @media (min-width: 992px) {
   .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
-    width: 935px !important;
+    width: 890px !important;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .charts-advanced-pie-chart>div {
     width: 1000px !important;
-    height: 300px !important;
+    height: 260px !important;
   }
 
   .charts-advanced-pie-chart .advanced-pie {
@@ -164,7 +160,17 @@ a:hover {
   }
 
   .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
-    width: 687px !important;
+    width: 805px !important;
+    float: left !important;
+    position: relative !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .charts-advanced-pie-chart .advanced-pie-legend-wrapper .advanced-pie-legend {
+    width: 900px !important;
   }
 }
 

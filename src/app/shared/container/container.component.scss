@@ -3,9 +3,9 @@
 }
 
 .content {
-  margin-left: 100px;
+  margin-left: 60px;
   transition: 0.3s;
   &.sidebarExpanded {
-    margin-left: 160px;
+    margin-left: 200px;
   }
 }

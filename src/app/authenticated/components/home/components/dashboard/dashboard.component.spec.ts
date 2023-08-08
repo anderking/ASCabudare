@@ -53,13 +53,13 @@ describe("DashboardComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  xit("should to equal title component", () => {
+  it("should to equal title component", () => {
     component.isLoading = false;
     fixture.detectChanges();
     const htmlElement: HTMLElement = fixture.nativeElement;
-    const element = htmlElement.querySelector("h2");
+    const element = htmlElement.querySelector("h1");
 
-    expect(element.textContent).toEqual("TEXTS.EARNINGS");
+    expect(element.textContent).toEqual("TEXTS.WELCOME");
   });
 
   it("should call getCurrentUser$ from authFacadeService", () => {
