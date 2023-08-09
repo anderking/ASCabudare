@@ -9,7 +9,7 @@ import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
+import { RangeDate } from "@models/shared/filter.model";
 import { ModalModel } from "@models/shared/modal.model";
 import { TranslateService } from "@ngx-translate/core";
 import { ModalService } from "@services/ui/modal.service";
@@ -110,7 +110,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     this._location.back();
   }
 
-  public openModalConfirmation(item: IngresoEgresoModel): void {
+  public openModal(item: IngresoEgresoModel): void {
     const data: ModalModel<IngresoEgresoModel> = {
       type: "confirmation",
       item,

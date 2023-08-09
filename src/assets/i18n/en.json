@@ -26,11 +26,12 @@
     "EARNINGS": "Earnings",
     "EARNINGS_ANNUAL": "Earnings",
     "WELCOME": "Welcome",
-    "CHANGE_LANG": "Change to",
+    "CHANGE_LANG": "Change language",
     "MONTH_BEFORE": "Before month",
     "MONTH_NEXT": "Next month",
     "TODAY": "Today",
-    "RESET": "Reset"
+    "RESET": "Reset",
+    "DARK_MODE": "Dark mode"
   },
   "VALIDATIONS": {
     "REQUIRED": "Field required",
@@ -42,11 +43,13 @@
     "INGRESS": "Ingress",
     "EGRESS": "Egress",
     "CATEGORY": "Category",
+    "CLIENT": "Client",
     "PROFILE": "Profile",
     "REGISTER": "Create an Account",
     "LOGIN": "Welcome",
     "FORGOT_PASSWORD": "Forgot Password",
-    "CONFIRMATION": "Confirmation"
+    "CONFIRMATION": "Confirmation",
+    "TOTAL": "Total"
   },
   "PROPERTIES": {
     "NAME": "Name",
@@ -59,6 +62,7 @@
     "SELECT_AN_OPTION": "Select an option",
     "TYPE": "Type",
     "CATEGORY": "Category",
+    "CLIENT": "Client",
     "DATE": "Date",
     "START_DATE": "Start Date",
     "END_DATE": "End Date",
@@ -66,14 +70,23 @@
     "STATE": "State",
     "EDIT": "Edit",
     "DELETE": "Delete",
-    "STARTDAY": "Day start"
+    "STARTDAY": "Day start",
+    "FIRSTNAME": "First Name",
+    "LASTNAME": "Last Name",
+    "FULLNAME": "Full Name",
+    "DOCUMENTTYPE": "Document Type",
+    "DOCUMENTNUMBER": "Document Number",
+    "PHONENUMBER": "Phone Number",
+    "CITY": "City",
+    "ADRESS": "Adress"
   },
   "ROUTERS": {
     "PROFILE": "Profile",
     "LOGOUT": "Logout",
     "DASHBOARD": "Dashboard",
     "CONFIGURATION": "Configurations",
-    "CATEGORY": "Category",
+    "CATEGORY": "Categories",
+    "CLIENT": "Clients",
     "INGRESS_EGRESS": "Ingress Egress"
   },
   "MESSAGES": {

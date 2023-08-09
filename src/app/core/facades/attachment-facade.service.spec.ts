@@ -32,8 +32,8 @@ describe("AttachmentFacadeService", () => {
 
   it("should expect the create method to exist", () => {
     spy = spyOn(facadeService, "create");
-    expect(spy).not.toBeNull;
-    expect(spy).toBeDefined;
+    expect(spy).not.toBeNull();
+    expect(spy).toBeDefined();
   });
 
   it("should expect dispatch create action with the correct props", () => {

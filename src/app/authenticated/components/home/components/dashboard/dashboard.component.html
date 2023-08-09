@@ -1,11 +1,12 @@
 <div *ngIf="!isLoading">
 
-  <h1>{{ 'TEXTS.WELCOME' | translate }} {{currentUser?.displayName}}</h1>
+  <h1>{{ 'TEXTS.WELCOME' | translate }}</h1>
+  <h2>{{currentUser?.displayName}}</h2>
 
   <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"></app-current-filter>
 
   <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
-  <div class="d-flex justify-content-center">
+  <div>
     <div *ngIf="items.length > 0" style="margin:1em 0">
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
@@ -16,7 +17,7 @@
   </div>
 
   <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.EGRESS' | translate }}</h2>
-  <div class="d-flex justify-content-center">
+  <div>
     <div *ngIf="items.length > 0" style="margin:1em 0">
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
@@ -70,30 +71,10 @@
                     [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
                     {{category.name}}
                   </div>
-                  <a href="#open-item-{{category.id}}" data-bs-toggle="modal" class="card-link">
+                  <a (click)="openModal(category)" class="card-link cursor">
                     <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{category.values | amount:'amount' |
                       million:'1.2-2'}} {{currentUser?.currency}}</div>
                   </a>
-
-                  <div class="modal fade" id="open-item-{{category.id}}" tabindex="-1"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title fs-5">Total: <strong>{{category.values | amount:'amount' |
-                              million:'1.2-2'}} {{currentUser?.currency}}</strong></h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <ul>
-                            <li *ngFor="let itemIE of category.values">{{itemIE.description}}
-                              <strong>{{itemIE.amount | million:'1.2-2'}}{{currentUser?.currency}}</strong>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

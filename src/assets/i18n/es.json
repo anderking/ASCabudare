@@ -26,11 +26,12 @@
     "EARNINGS": "Ganancias",
     "EARNINGS_ANNUAL": "Ganancias",
     "WELCOME": "Bienvenido(a)",
-    "CHANGE_LANG": "Cambiar a",
+    "CHANGE_LANG": "Cambiar idioma",
     "MONTH_BEFORE": "Mes Anterior",
     "MONTH_NEXT": "Mes Siguiente",
     "TODAY": "Hoy",
-    "RESET": "Reiniciar"
+    "RESET": "Reiniciar",
+    "DARK_MODE": "Modo oscuro"
   },
   "VALIDATIONS": {
     "REQUIRED": "Campo requerido",
@@ -42,11 +43,13 @@
     "INGRESS": "Ingresos",
     "EGRESS": "Egresos",
     "CATEGORY": "Categoría",
+    "CLIENT": "Cliente",
     "PROFILE": "Perfil",
     "REGISTER": "Crear una cuenta",
     "LOGIN": "Bienvenido",
     "FORGOT_PASSWORD": "Recuperar contraseña",
-    "CONFIRMATION": "Confirmación"
+    "CONFIRMATION": "Confirmación",
+    "TOTAL": "Total"
   },
   "PROPERTIES": {
     "NAME": "Nombre",
@@ -59,6 +62,7 @@
     "SELECT_AN_OPTION": "Seleccione una opción",
     "TYPE": "Tipo",
     "CATEGORY": "Categoría",
+    "CLIENT": "Cliente",
     "DATE": "Fecha",
     "START_DATE": "Fecha inicio",
     "END_DATE": "Fecha fin",
@@ -66,14 +70,23 @@
     "STATE": "Estado",
     "EDIT": "Editar",
     "DELETE": "Eliminar",
-    "STARTDAY": "Día de inicio"
+    "STARTDAY": "Día de inicio",
+    "FIRSTNAME": "Nombre",
+    "LASTNAME": "Apellido",
+    "FULLNAME": "Nombre completo",
+    "DOCUMENTTYPE": "Tipo de documento",
+    "DOCUMENTNUMBER": "Número de documento",
+    "PHONENUMBER": "Número de teléfono",
+    "CITY": "Ciudad",
+    "ADRESS": "Dirección"
   },
   "ROUTERS": {
     "PROFILE": "Perfil",
     "LOGOUT": "Cerrar sesión",
     "DASHBOARD": "Dashboard",
     "CONFIGURATION": "Configuraciones",
-    "CATEGORY": "Categoría",
+    "CATEGORY": "Categorías",
+    "CLIENT": "Clientes",
     "INGRESS_EGRESS": "Ingreso Egreso"
   },
   "MESSAGES": {

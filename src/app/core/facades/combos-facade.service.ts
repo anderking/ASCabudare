@@ -5,7 +5,10 @@ import { DataActionModel } from "@models/common/data-action.model";
 import * as selectors from "@store/masters/selectors/combo.selectors";
 import * as actions from "@store/masters/actions/combo.actions";
 import { ComboModel } from "@models/masters/combo.model";
-import { collectionFBTypeActive } from "@constants/masters/masters.constants";
+import {
+  collectionFBDocumentType,
+  collectionFBTypeActive,
+} from "@constants/masters/masters.constants";
 
 @Injectable({
   providedIn: "root",
@@ -33,6 +36,24 @@ export class CombosFacadeService {
    */
   public getTypeActive$(): Observable<ComboModel[]> {
     return this._store.select(selectors.selectTypeActive);
+  }
+
+  /**
+   * Dispara la acción para buscar todos los registros sin filtro en la api
+   */
+  public searchDocumentType(): void {
+    const props: DataActionModel<ComboModel> = {
+      url: collectionFBDocumentType,
+    };
+    const action = actions.searchDocumentType({ props });
+    this._store.dispatch(action);
+  }
+
+  /**
+   * Obtiene todos los registros del store disparados por los diferentes search
+   */
+  public getDocumentType$(): Observable<ComboModel[]> {
+    return this._store.select(selectors.selectDocumentType);
   }
 
   /**

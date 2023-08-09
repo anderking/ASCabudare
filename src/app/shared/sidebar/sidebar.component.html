@@ -1,0 +1,99 @@
+<div class="menu">
+  <fa-icon class="md hydrated" [icon]="faBars" style="display: block;"></fa-icon>
+  <fa-icon class="md hydrated" [icon]="faXmark" style="display: none;"></fa-icon>
+</div>
+
+<div class="barra-lateral">
+  <div class="nombre-pagina">
+    <img id="cloud" name="cloud-outline" [src]="'../../../assets/img/logo.png'" alt="Logo" width="40" height="30"
+      class="d-inline-block align-text-top cursor">
+    <span>Ingreso Egreso</span>
+  </div>
+
+  <div class="usuario">
+    <a [routerLink]="[ '/authenticated/configuration/profile' ]">
+      <img *ngIf="user" class="img-profile rounded-circle" [src]="user.photoURL" alt="img-profile" />
+      <img *ngIf="!user" class="img-profile rounded-circle" src="../../../assets/img/usernotfound.png"
+        alt="img-profile">
+    </a>
+    <div class="info-usuario">
+      <div class="nombre-email">
+        <span class="nombre white-space-normal">{{user?.displayName}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="linea"></div>
+
+  <nav class="navegacion">
+    <ul>
+      <li>
+        <a [routerLink]="[ '/authenticated/home' ]" [routerLinkActive]="'inbox'">
+          <fa-icon [icon]="faGauge"></fa-icon>
+          <span>{{ 'ROUTERS.DASHBOARD' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="[ '/authenticated/configuration/ingreso-egreso' ]" [routerLinkActive]="'inbox'">
+          <fa-icon [icon]="faMoneyBillTransfer"></fa-icon>
+          <span>{{'ROUTERS.INGRESS_EGRESS' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="[ '/authenticated/configuration/category' ]" [routerLinkActive]="'inbox'">
+          <fa-icon [icon]="faTags"></fa-icon>
+          <span>{{'ROUTERS.CATEGORY' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="[ '/authenticated/configuration/client' ]" [routerLinkActive]="'inbox'">
+          <fa-icon [icon]="faUsers"></fa-icon>
+          <span>{{ 'ROUTERS.CLIENT' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="[ '/authenticated/configuration/profile' ]" [routerLinkActive]="'inbox'">
+          <fa-icon [icon]="faGear"></fa-icon>
+          <span>{{'ROUTERS.PROFILE' | translate}}</span>
+        </a>
+      </li>
+      <li>
+        <a class="cursor" (click)="logout()">
+          <fa-icon [icon]="faRightFromBracket"></fa-icon>
+          <span>{{ 'ROUTERS.LOGOUT' | translate }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div>
+    <div class="linea"></div>
+
+    <div class="modo-oscuro">
+      <div class="info">
+        <fa-icon [icon]="faMoon"></fa-icon>
+        <span class="white-space-normal">{{ 'TEXTS.DARK_MODE' | translate }}</span>
+      </div>
+      <div class="switch">
+        <div class="base">
+          <div class="circulo">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modo-lang">
+      <div class="info">
+        <fa-icon [icon]="faLanguage"></fa-icon>
+        <span class="white-space-normal">{{ 'TEXTS.CHANGE_LANG' | translate }}</span>
+      </div>
+      <div class="switch-lang">
+        <div class="base">
+          <div class="circulo-lang">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

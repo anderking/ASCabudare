@@ -6,7 +6,10 @@ import * as actions from "@store/masters/actions/combo.actions";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { ComboModel } from "@models/masters/combo.model";
 import { mockTestComboAll } from "@constants/mocks/mocks-units-test";
-import { collectionFBTypeActive } from "@constants/masters/masters.constants";
+import {
+  collectionFBDocumentType,
+  collectionFBTypeActive,
+} from "@constants/masters/masters.constants";
 
 describe("CombosFacadeService", () => {
   let facadeService: CombosFacadeService;
@@ -34,8 +37,8 @@ describe("CombosFacadeService", () => {
   describe("typeActive", () => {
     it("should expect the searchTypeActive method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "searchTypeActive");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBTypeActive).toEqual("Masters/Combos/TypeActive");
     });
 
@@ -50,6 +53,32 @@ describe("CombosFacadeService", () => {
       const mock: ComboModel[] = mockTestComboAll;
       spyOn(facadeService, "getTypeActive$").and.returnValue(of(mock));
       const result$ = facadeService.getTypeActive$();
+      expect(result$).toBeDefined();
+      result$.subscribe((result) => {
+        expect(result).toEqual(mock);
+      });
+    });
+  });
+
+  describe("documentType", () => {
+    it("should expect the searchDocumentType method to exist and to call the correct endpoint", () => {
+      spy = spyOn(facadeService, "searchDocumentType");
+      expect(spy).not.toBeNull;
+      expect(spy).toBeDefined;
+      expect(collectionFBDocumentType).toEqual("Masters/Combos/DocumentType");
+    });
+
+    it("should expect dispatch searchDocumentType action with the correct props", () => {
+      facadeService.searchDocumentType();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        actions.searchDocumentType({ props: { url: collectionFBDocumentType } })
+      );
+    });
+
+    it("should return the getDocumentType$ observable type ComboModel[]", () => {
+      const mock: ComboModel[] = mockTestComboAll;
+      spyOn(facadeService, "getDocumentType$").and.returnValue(of(mock));
+      const result$ = facadeService.getDocumentType$();
       expect(result$).toBeDefined();
       result$.subscribe((result) => {
         expect(result).toEqual(mock);

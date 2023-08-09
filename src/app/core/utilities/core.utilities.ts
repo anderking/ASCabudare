@@ -99,19 +99,21 @@ export function groupByMult(items: any[], groups: any[]): any[] {
           });
         }
       }
-      item.values = orderBy(levelTwo,"name");
+      item.values = orderBy(levelTwo, "name");
     });
   } catch (error) {
     console.error(error);
   }
-  levelOne = orderBy(levelOne,"name");
+  levelOne = orderBy(levelOne, "name");
   return levelOne;
 }
 
 export function clearLocalStorage(): void {
   let lang: string = localStorage.getItem("lang");
+  let darkMode: string = localStorage.getItem("dark-mode");
   localStorage.clear();
   localStorage.setItem("lang", lang != "null" && lang != null ? lang : "es");
+  localStorage.setItem("dark-mode", darkMode != "null" && darkMode != null ? darkMode : "off");
 }
 
 /**
@@ -127,4 +129,21 @@ export function getUniqueId(parts: number): string {
     stringArr.push(S4);
   }
   return stringArr.join("-");
+}
+
+export function buildCreateDate(): {
+  createDate: string;
+  createDateFB: object;
+} {
+  const currentDate = new Date();
+  const currentDateLocal = new Date(
+    currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
+  );
+  const currentDateLocalISO = currentDateLocal.toISOString();
+  const createDate = currentDateLocalISO.split("T")[0];
+  const hoursISO = currentDateLocalISO.split("T")[1];
+  const hours = hoursISO.split(".")[0];
+  const newDate = createDate + "T" + hours;
+  const date = new Date(newDate);
+  return { createDate: newDate, createDateFB: date };
 }

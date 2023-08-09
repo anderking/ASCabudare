@@ -67,7 +67,7 @@ describe("SharedFacadeService", () => {
 
   it("should expect the messageSubscriptions method to exist and to call the correct endpoint", () => {
     spy = spyOn(facadeService, "messageSubscriptions");
-    expect(spy).not.toBeNull;
-    expect(spy).toBeDefined;
+    expect(spy).not.toBeNull();
+    expect(spy).toBeDefined();
   });
 });

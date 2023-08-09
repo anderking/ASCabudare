@@ -20,6 +20,5 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
     AdvancePieChartComponent,
   ],
   imports: [CommonModule, HomeRoutingModule, SharedModule, NgxChartsModule],
-  providers: [DecimalPipe],
 })
 export class HomeModule {}

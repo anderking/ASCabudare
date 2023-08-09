@@ -40,7 +40,7 @@ describe("AuthService", () => {
     it("should call reset from authFacadeService", () => {
       let mySpy = spyOn(authFacadeService, "reset").and.callThrough();
       authService.logout();
-      expect(mySpy).not.toBeNull;
+      expect(mySpy).not.toBeNull();
       expect(mySpy).toBeTruthy();
       expect(mySpy).toBeDefined();
       expect(mySpy).toHaveBeenCalled();
@@ -48,7 +48,7 @@ describe("AuthService", () => {
     it("should call signOut from afAuth", () => {
       let mySpy = spyOn(afAuth, "signOut").and.callThrough();
       authService.logout();
-      expect(mySpy).not.toBeNull;
+      expect(mySpy).not.toBeNull();
       expect(mySpy).toBeTruthy();
       expect(mySpy).toBeDefined();
       expect(mySpy).toHaveBeenCalled();

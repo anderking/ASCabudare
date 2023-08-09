@@ -15,7 +15,7 @@ import { SharedModule } from "@root/shared/shared.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { of } from "rxjs";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import { mockTestCurrentUserOne } from "@root/core/constants/mocks/mocks-units-test";
+import { mockTestCurrentUserOne, mockTestLoginFormOne } from "@root/core/constants/mocks/mocks-units-test";
 
 describe("RegisterComponent", () => {
   let component: RegisterComponent;
@@ -60,7 +60,7 @@ describe("RegisterComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -71,7 +71,7 @@ describe("RegisterComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe("RegisterComponent", () => {
     spyOn(authFacadeService, "getRegister$").and.returnValue(of(payload));
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalledWith(payload);
@@ -104,7 +104,7 @@ describe("RegisterComponent", () => {
 
     component.ngOnInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -115,7 +115,7 @@ describe("RegisterComponent", () => {
 
     component.ngAfterViewInit();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
@@ -126,14 +126,14 @@ describe("RegisterComponent", () => {
 
     component.ngOnDestroy();
 
-    expect(mySpy).not.toBeNull;
+    expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
   });
 
   it("should submit valid form", () => {
-    const data = { email: "test@example.com", password: "password123" };
+    const data = mockTestLoginFormOne;
     const spy = spyOn(authFacadeService, "register");
     component.mainForm = {
       form: {

@@ -1,0 +1,155 @@
+<div class="container-fluid">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-12">
+
+      <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">{{ 'TITLES.CLIENT' | translate }}</h1>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <div class="card o-hidden border-0 my-5">
+          <div class="card-body p-0">
+
+            <div class="p-5">
+
+              <form [formGroup]="mainForm" class="row g-3">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label class="form-label">{{ 'PROPERTIES.FIRSTNAME' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="firstName"
+                    [ngClass]="{'is-invalid': mainForm.get('firstName')?.touched && !mainForm.get('firstName')?.valid, 'is-valid': mainForm.get('firstName')?.touched && mainForm.get('firstName')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('firstName')">
+                    {{ getErrorMessageField('firstName') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label class="form-label">{{ 'PROPERTIES.LASTNAME' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="lastName"
+                    [ngClass]="{'is-invalid': mainForm.get('lastName')?.touched && !mainForm.get('lastName')?.valid, 'is-valid': mainForm.get('lastName')?.touched && mainForm.get('lastName')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('lastName')">
+                    {{ getErrorMessageField('lastName') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <label class="form-label">{{ 'PROPERTIES.FULLNAME' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="fullName"
+                    [ngClass]="{'is-invalid': mainForm.get('fullName')?.touched && !mainForm.get('fullName')?.valid, 'is-valid': mainForm.get('fullName')?.touched && mainForm.get('fullName')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('fullName')">
+                    {{ getErrorMessageField('fullName') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label class="form-label">{{ 'PROPERTIES.DOCUMENTTYPE' | translate }}:</label>
+                  <select class="form-select" formControlName="documentType"
+                    [ngClass]="{'is-invalid': mainForm.get('documentType')?.touched && !mainForm.get('documentType')?.valid, 'is-valid':  mainForm.get('documentType')?.touched && mainForm.get('documentType')?.valid}">
+                    <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
+                    <option *ngFor="let item of documentTypeCombo$ | async" [ngValue]="item.id">
+                      {{item?.name}}</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="isValidField('documentType')">
+                    {{ getErrorMessageField('documentType') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label class="form-label">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="documentNumber"
+                    [ngClass]="{'is-invalid': mainForm.get('documentNumber')?.touched && !mainForm.get('documentNumber')?.valid, 'is-valid': mainForm.get('documentNumber')?.touched && mainForm.get('documentNumber')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('documentNumber')">
+                    {{ getErrorMessageField('documentNumber') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label class="form-label">{{ 'PROPERTIES.PHONENUMBER' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="phoneNumber"
+                    [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('phoneNumber')">
+                    {{ getErrorMessageField('phoneNumber') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label class="form-label">{{ 'PROPERTIES.CITY' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="city"
+                    [ngClass]="{'is-invalid': mainForm.get('city')?.touched && !mainForm.get('city')?.valid, 'is-valid': mainForm.get('city')?.touched && mainForm.get('city')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('city')">
+                    {{ getErrorMessageField('city') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <label class="form-label">{{ 'PROPERTIES.ADRESS' | translate }}:</label>
+                  <textarea class="form-control" formControlName="adress"
+                    [ngClass]="{'is-invalid': mainForm.get('adress')?.touched && !mainForm.get('adress')?.valid, 'is-valid': mainForm.get('adress')?.touched && mainForm.get('adress')?.valid}"></textarea>
+                  <div class="invalid-feedback" *ngIf="isValidField('adress')">
+                    {{ getErrorMessageField('adress') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <label class="form-label">{{ 'PROPERTIES.PHOTO_URL' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="image"
+                    [ngClass]="{'is-invalid': mainForm.get('image')?.touched && !mainForm.get('image')?.valid, 'is-valid': mainForm.get('image')?.touched && mainForm.get('image')?.valid}">
+                  <div class="invalid-feedback" *ngIf="isValidField('image')">
+                    {{ getErrorMessageField('image') }}
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="state" formControlName="state"
+                      [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
+                    <label class="form-check-label" for="state">
+                      {{ 'PROPERTIES.STATE' | translate }}
+                    </label>
+                    <div class="invalid-feedback" *ngIf="isValidField('state')">
+                      {{ getErrorMessageField('state') }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button *ngIf="!isLoading" class="btn btn-primary" (click)="onSubmit(createDate, createDateFB)"
+                      [disabled]="mainForm.invalid">
+                      {{ 'BUTTONS.SAVE' | translate }}
+                    </button>
+                    <button *ngIf="isLoading" class="btn btn-primary">
+                      <div class="spinner-border spinner-border-sm" role="status"></div>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button type="button" class="btn btn-info" (click)="clean()">
+                      {{ 'BUTTONS.CLEAN' | translate }}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button type="button" class="btn btn-dark" (click)="goBack()">
+                      {{ 'BUTTONS.BACK' | translate }}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isLoading">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

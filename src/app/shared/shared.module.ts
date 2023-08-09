@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DecimalPipe } from "@angular/common";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { RouterModule } from "@angular/router";
 import { ContainerComponent } from "./container/container.component";
@@ -10,8 +10,29 @@ import { ToastContainerComponent } from "./toast-container/toast-container.compo
 import { TranslateModule } from "@ngx-translate/core";
 import { CurrentFilterComponent } from "./current-filter/current-filter.component";
 import { ModalComponent } from "./modal/modal.component";
-import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { faArrowLeft, faArrowRight, faCalendarCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  FaIconLibrary,
+  FontAwesomeModule,
+} from "@fortawesome/angular-fontawesome";
+import {
+  faArrowRight,
+  faArrowLeft,
+  faTrash,
+  faCalendarCheck,
+  faGauge,
+  faTags,
+  faUsers,
+  faMoneyBillTransfer,
+  faGear,
+  faRightFromBracket,
+  faBars,
+  faXmark,
+  faMoon,
+  faLanguage,
+} from "@fortawesome/free-solid-svg-icons";
+import { SidebarComponent } from "./sidebar/sidebar.component";
+import { AmountPipe } from "@root/core/pipes/amount.pipe";
+import { MillionPipe } from "@root/core/pipes/million.pipe";
 
 @NgModule({
   declarations: [
@@ -20,6 +41,7 @@ import { faArrowLeft, faArrowRight, faCalendarCheck, faTrash } from "@fortawesom
     ToastContainerComponent,
     ModalComponent,
     CurrentFilterComponent,
+    SidebarComponent,
   ],
   imports: [
     CommonModule,
@@ -45,9 +67,25 @@ import { faArrowLeft, faArrowRight, faCalendarCheck, faTrash } from "@fortawesom
     ModalComponent,
     CurrentFilterComponent,
   ],
+  providers: [DecimalPipe, AmountPipe, MillionPipe],
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faArrowRight, faArrowLeft, faTrash, faCalendarCheck);
+    library.addIcons(
+      faArrowRight,
+      faArrowLeft,
+      faTrash,
+      faCalendarCheck,
+      faGauge,
+      faTags,
+      faUsers,
+      faMoneyBillTransfer,
+      faGear,
+      faRightFromBracket,
+      faBars,
+      faXmark,
+      faMoon,
+      faLanguage
+    );
   }
 }

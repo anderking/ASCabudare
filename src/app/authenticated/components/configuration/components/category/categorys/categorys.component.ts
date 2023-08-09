@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { filter, takeUntil } from "rxjs/operators";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
@@ -70,7 +70,7 @@ export class CategorysComponent implements OnInit, OnDestroy {
   goBack(): void {
     this._location.back();
   }
-  openModalConfirmation(item: CategoryModel) {
+  openModal(item: CategoryModel) {
     const data: ModalModel<CategoryModel> = {
       type: "confirmation",
       item,
