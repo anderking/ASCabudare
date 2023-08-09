@@ -70,7 +70,7 @@ export class CategorysComponent implements OnInit, OnDestroy {
   goBack(): void {
     this._location.back();
   }
-  openModalConfirmation(item: CategoryModel) {
+  openModal(item: CategoryModel) {
     const data: ModalModel<CategoryModel> = {
       type: "confirmation",
       item,

@@ -12,6 +12,11 @@ import { GroupModel } from "@models/shared/group.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { RangeDate } from "@models/shared/filter.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
+import { TranslateService } from "@ngx-translate/core";
+import { ModalService } from "@services/ui/modal.service";
+import { ModalModel } from "@models/shared/modal.model";
+import { AmountPipe } from "@root/core/pipes/amount.pipe";
+import { MillionPipe } from "@root/core/pipes/million.pipe";
 
 @Component({
   selector: "app-dashboard",
@@ -35,7 +40,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
     private _categoryFacadeService: CategoryFacadeService,
     private _authFacadeService: AuthFacadeService,
-    private _sharedFacadeService: SharedFacadeService
+    private _sharedFacadeService: SharedFacadeService,
+    private translateService: TranslateService,
+    private modalService: ModalService,
+    private _amountPipe: AmountPipe,
+    private _millionPipe: MillionPipe
   ) {}
 
   ngOnInit() {
@@ -131,6 +140,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           "typeActive",
           "category",
         ]);
+        console.log(this.items);
       });
   }
 
@@ -155,6 +165,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
       console.error(error);
     }
     this.totalEarnings = this.totalIngresos - this.totalEgresos;
+  }
+
+  openModal(item: GroupModel<IngresoEgresoModel>) {
+    const amountAcum = this._amountPipe.transform(item.values, "amount");
+    const amountAcumFormat = this._millionPipe.transform(amountAcum, "1.2-2");
+    const title =
+      this.translateService.instant("TITLES.TOTAL") + " " + amountAcumFormat;
+    const data: ModalModel<GroupModel<IngresoEgresoModel>> = {
+      type: "custom",
+      item,
+      title,
+      currentUser: this.currentUser,
+    };
+    this.modalService
+      .openModal(data)
+      .then((data) => {})
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   public chargeIndicatorManager(): void {

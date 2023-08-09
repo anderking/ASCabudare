@@ -110,8 +110,10 @@ export function groupByMult(items: any[], groups: any[]): any[] {
 
 export function clearLocalStorage(): void {
   let lang: string = localStorage.getItem("lang");
+  let darkMode: string = localStorage.getItem("dark-mode");
   localStorage.clear();
   localStorage.setItem("lang", lang != "null" && lang != null ? lang : "es");
+  localStorage.setItem("dark-mode", darkMode != "null" && darkMode != null ? darkMode : "off");
 }
 
 /**

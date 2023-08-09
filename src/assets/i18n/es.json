@@ -26,11 +26,12 @@
     "EARNINGS": "Ganancias",
     "EARNINGS_ANNUAL": "Ganancias",
     "WELCOME": "Bienvenido(a)",
-    "CHANGE_LANG": "Cambiar a",
+    "CHANGE_LANG": "Cambiar idioma",
     "MONTH_BEFORE": "Mes Anterior",
     "MONTH_NEXT": "Mes Siguiente",
     "TODAY": "Hoy",
-    "RESET": "Reiniciar"
+    "RESET": "Reiniciar",
+    "DARK_MODE": "Modo oscuro"
   },
   "VALIDATIONS": {
     "REQUIRED": "Campo requerido",
@@ -47,7 +48,8 @@
     "REGISTER": "Crear una cuenta",
     "LOGIN": "Bienvenido",
     "FORGOT_PASSWORD": "Recuperar contraseña",
-    "CONFIRMATION": "Confirmación"
+    "CONFIRMATION": "Confirmación",
+    "TOTAL": "Total"
   },
   "PROPERTIES": {
     "NAME": "Nombre",
@@ -83,8 +85,8 @@
     "LOGOUT": "Cerrar sesión",
     "DASHBOARD": "Dashboard",
     "CONFIGURATION": "Configuraciones",
-    "CATEGORY": "Categoría",
-    "CLIENT": "Cliente",
+    "CATEGORY": "Categorías",
+    "CLIENT": "Clientes",
     "INGRESS_EGRESS": "Ingreso Egreso"
   },
   "MESSAGES": {

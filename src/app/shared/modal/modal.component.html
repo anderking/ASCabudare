@@ -31,4 +31,21 @@
     </div>
   </ng-container>
 
+  <ng-container *ngIf="data.type === 'custom'">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <ul>
+        <li *ngFor="let itemIE of data.item.values">
+          <a [routerLink]="[ '/authenticated/configuration/ingreso-egreso/form',{id: itemIE.id} ]"
+            (click)="closeModal()">{{itemIE.description}}
+          </a>
+          <strong>{{itemIE.amount | million:'1.2-2'}}{{data.currentUser?.currency}}</strong>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+
 </ng-container>

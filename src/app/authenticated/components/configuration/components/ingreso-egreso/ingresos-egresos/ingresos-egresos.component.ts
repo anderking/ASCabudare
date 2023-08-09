@@ -110,7 +110,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     this._location.back();
   }
 
-  public openModalConfirmation(item: IngresoEgresoModel): void {
+  public openModal(item: IngresoEgresoModel): void {
     const data: ModalModel<IngresoEgresoModel> = {
       type: "confirmation",
       item,

@@ -26,11 +26,12 @@
     "EARNINGS": "Earnings",
     "EARNINGS_ANNUAL": "Earnings",
     "WELCOME": "Welcome",
-    "CHANGE_LANG": "Change to",
+    "CHANGE_LANG": "Change language",
     "MONTH_BEFORE": "Before month",
     "MONTH_NEXT": "Next month",
     "TODAY": "Today",
-    "RESET": "Reset"
+    "RESET": "Reset",
+    "DARK_MODE": "Dark mode"
   },
   "VALIDATIONS": {
     "REQUIRED": "Field required",
@@ -47,7 +48,8 @@
     "REGISTER": "Create an Account",
     "LOGIN": "Welcome",
     "FORGOT_PASSWORD": "Forgot Password",
-    "CONFIRMATION": "Confirmation"
+    "CONFIRMATION": "Confirmation",
+    "TOTAL": "Total"
   },
   "PROPERTIES": {
     "NAME": "Name",
@@ -83,8 +85,8 @@
     "LOGOUT": "Logout",
     "DASHBOARD": "Dashboard",
     "CONFIGURATION": "Configurations",
-    "CATEGORY": "Category",
-    "CLIENT": "Client",
+    "CATEGORY": "Categories",
+    "CLIENT": "Clients",
     "INGRESS_EGRESS": "Ingress Egress"
   },
   "MESSAGES": {

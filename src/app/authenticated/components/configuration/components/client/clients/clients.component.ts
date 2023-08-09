@@ -71,7 +71,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
     this._location.back();
   }
 
-  openModalConfirmation(item: ClientModel) {
+  openModal(item: ClientModel) {
     const data: ModalModel<ClientModel> = {
       type: "confirmation",
       item,

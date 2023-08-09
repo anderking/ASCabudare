@@ -248,7 +248,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   clean() {
-    console.log("paso");
     this.mainForm.reset({ state: true });
     this.mainForm.get("idCategory").setValue("");
     this.mainForm.get("idTypeActive").setValue("");
@@ -258,7 +257,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    console.log("paso");
     this._location.back();
   }
 

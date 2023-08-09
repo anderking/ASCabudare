@@ -47,7 +47,7 @@
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
                   </td>
                   <td><button (click)="goEdit(item)" class="btn btn-info">{{ 'BUTTONS.EDIT' | translate }}</button></td>
-                  <td><button (click)="openModalConfirmation(item)" class="btn btn-danger">{{ 'BUTTONS.DELETE'
+                  <td><button (click)="openModal(item)" class="btn btn-danger">{{ 'BUTTONS.DELETE'
                       | translate }}</button></td>
                 </tr>
               </tbody>

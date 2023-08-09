@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DecimalPipe } from "@angular/common";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { RouterModule } from "@angular/router";
 import { ContainerComponent } from "./container/container.component";
@@ -31,6 +31,8 @@ import {
   faLanguage,
 } from "@fortawesome/free-solid-svg-icons";
 import { SidebarComponent } from "./sidebar/sidebar.component";
+import { AmountPipe } from "@root/core/pipes/amount.pipe";
+import { MillionPipe } from "@root/core/pipes/million.pipe";
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
     ModalComponent,
     CurrentFilterComponent,
   ],
+  providers: [DecimalPipe, AmountPipe, MillionPipe],
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {
