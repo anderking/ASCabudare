@@ -19,6 +19,7 @@ export class CategorysComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public items: CategoryModel[] = [];
   public wordFilter = "";
+  public wordFilterActive = false;
   private _finisher = new Subject<void>();
 
   constructor(
@@ -54,18 +55,28 @@ export class CategorysComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.reset();
   }
 
+  wordFilterReceived(wordFilter: string): void {
+    this.wordFilter = wordFilter;
+  }
+
   goDelete(item: CategoryModel): void {
     this._categoryFacadeService.delete(item);
   }
 
   goNew(): void {
-    this._router.navigate(["/authenticated/configuration/category/form"]);
+    this.wordFilterActive = true;
+    setTimeout(() => {
+      this._router.navigate(["/authenticated/configuration/category/form"]);
+    }, 0);
   }
   goEdit(item: CategoryModel): void {
-    this._router.navigate([
-      "/authenticated/configuration/category/form",
-      { id: item?.id },
-    ]);
+    this.wordFilterActive = true;
+    setTimeout(() => {
+      this._router.navigate([
+        "/authenticated/configuration/category/form",
+        { id: item?.id },
+      ]);
+    }, 0);
   }
   goBack(): void {
     this._location.back();

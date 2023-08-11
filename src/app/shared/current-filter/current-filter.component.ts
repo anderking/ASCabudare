@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -34,6 +35,9 @@ import {
 })
 export class CurrentFilterComponent implements OnInit, OnDestroy {
   @Output() rangeDateEmit: EventEmitter<RangeDate> = new EventEmitter();
+  @Output() wordFilterEmit: EventEmitter<string> = new EventEmitter();
+  @Input() wordFilterActive = false;
+  @Input() showRangeDates = true;
   public mainForm: UntypedFormGroup;
   public rangeDate: RangeDate;
   public initDay: string = null;
@@ -80,11 +84,13 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         endDateControl.setValue(currentFilter?.rangeDate?.endDate);
         this.wordFilter = currentFilter.wordFilter;
         this.rangeDateEmit.emit(this.rangeDate);
+        this.wordFilterEmit.emit(this.wordFilter);
       });
   }
 
   ngOnDestroy(): void {
     this.finisher$.next();
+    if (!this.wordFilterActive) this.wordFilter = "";
     if (this.rangeDate) {
       const payload: CurrentFilterModel = {
         rangeDate: this.rangeDate,
@@ -227,6 +233,16 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
       });
       this.rangeDateEmit.emit(this.rangeDate);
     }
+  }
+
+  public changeWordFilter(wordFilter: string) {
+    this.wordFilter = wordFilter;
+    this.wordFilterEmit.emit(wordFilter);
+  }
+
+  public resetWordFilter(): void {
+    this.wordFilter = "";
+    this.wordFilterEmit.emit(this.wordFilter);
   }
 
   public isValidField(field: string): boolean {

@@ -19,6 +19,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public items: ClientModel[] = [];
   public wordFilter = "";
+  public wordFilterActive = false;
   private _finisher = new Subject<void>();
 
   constructor(
@@ -54,18 +55,28 @@ export class ClientsComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.reset();
   }
 
+  wordFilterReceived(wordFilter: string): void {
+    this.wordFilter = wordFilter;
+  }
+
   goDelete(item: ClientModel): void {
     this._clientFacadeService.delete(item);
   }
 
   goNew(): void {
-    this._router.navigate(["/authenticated/configuration/client/form"]);
+    this.wordFilterActive = true;
+    setTimeout(() => {
+      this._router.navigate(["/authenticated/configuration/client/form"]);
+    }, 0);
   }
   goEdit(item: ClientModel): void {
-    this._router.navigate([
-      "/authenticated/configuration/client/form",
-      { id: item?.id },
-    ]);
+    this.wordFilterActive = true;
+    setTimeout(() => {
+      this._router.navigate([
+        "/authenticated/configuration/client/form",
+        { id: item?.id },
+      ]);
+    }, 0);
   }
   goBack(): void {
     this._location.back();

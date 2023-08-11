@@ -1,53 +1,66 @@
 <ng-container *ngIf="mainForm">
-  <form [formGroup]="mainForm" class="row g-3 mb-3">
-    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-      <label class="form-label">{{ 'PROPERTIES.START_DATE' | translate }}:</label>
-      <input type="date" class="form-control" formControlName="startDate"
-        [ngClass]="{'is-invalid': mainForm.get('startDate')?.touched && !mainForm.get('startDate')?.valid, 'is-valid': mainForm.get('startDate')?.touched && mainForm.get('startDate')?.valid}"
-        (change)="changeFilter($event.target.value,'startDate')">
-      <div class="invalid-feedback" *ngIf="isValidField('startDate')">
-        {{ getErrorMessageField('startDate') }}
+  <ng-container *ngIf="showRangeDates">
+    <form [formGroup]="mainForm" class="row g-3 mb-3">
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <label class="form-label">{{ 'PROPERTIES.START_DATE' | translate }}:</label>
+        <input type="date" class="form-control" formControlName="startDate"
+          [ngClass]="{'is-invalid': mainForm.get('startDate')?.touched && !mainForm.get('startDate')?.valid, 'is-valid': mainForm.get('startDate')?.touched && mainForm.get('startDate')?.valid}"
+          (change)="changeFilter($event.target.value,'startDate')">
+        <div class="invalid-feedback" *ngIf="isValidField('startDate')">
+          {{ getErrorMessageField('startDate') }}
+        </div>
       </div>
-    </div>
 
-    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-      <label class="form-label">{{ 'PROPERTIES.END_DATE' | translate }}:</label>
-      <input type="date" class="form-control" formControlName="endDate"
-        [ngClass]="{'is-invalid': mainForm.get('endDate')?.touched && !mainForm.get('endDate')?.valid, 'is-valid': mainForm.get('endDate')?.touched && mainForm.get('endDate')?.valid}"
-        (change)="changeFilter($event.target.value,'endDate')">
-      <div class="invalid-feedback" *ngIf="isValidField('endDate')">
-        {{ getErrorMessageField('endDate') }}
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <label class="form-label">{{ 'PROPERTIES.END_DATE' | translate }}:</label>
+        <input type="date" class="form-control" formControlName="endDate"
+          [ngClass]="{'is-invalid': mainForm.get('endDate')?.touched && !mainForm.get('endDate')?.valid, 'is-valid': mainForm.get('endDate')?.touched && mainForm.get('endDate')?.valid}"
+          (change)="changeFilter($event.target.value,'endDate')">
+        <div class="invalid-feedback" *ngIf="isValidField('endDate')">
+          {{ getErrorMessageField('endDate') }}
+        </div>
       </div>
-    </div>
-  </form>
-  <div class="row mb-3">
-    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-      <div class="d-grid gap-2 col-12 mx-auto">
-        <button type="button" class="btn btn-dark btn-sm mb-1" (click)="changeMonth('before')"><fa-icon
-            [icon]="faArrowLeft"></fa-icon> {{ 'TEXTS.MONTH_BEFORE' | translate }}</button>
-      </div>
-    </div>
+    </form>
+  </ng-container>
 
-    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-      <div class="d-grid gap-2 col-12 mx-auto">
-        <button type="button" class="btn btn-secondary btn-sm mb-1" (click)="resetDates()"><fa-icon
-            [icon]="faTrash"></fa-icon> {{ 'TEXTS.RESET' | translate }}</button>
-      </div>
-    </div>
-
-    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-      <div class="d-grid gap-2 col-12 mx-auto">
-        <button type="button" class="btn btn-secondary btn-sm mb-1" (click)="changeToday()"><fa-icon
-            [icon]="faCalendarCheck"></fa-icon> {{ 'TEXTS.TODAY' | translate }}</button>
-      </div>
-    </div>
-
-    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-      <div class="d-grid gap-2 col-12 mx-auto">
-        <button type="button" class="btn btn-dark btn-sm mb-1" (click)="changeMonth('next')">{{ 'TEXTS.MONTH_NEXT' |
-          translate }}
-          <fa-icon [icon]="faArrowRight"></fa-icon></button>
-      </div>
-    </div>
+  <div class="input-group mb-3">
+    <button class="btn btn-outline-secondary" type="button" (click)="resetWordFilter()"><fa-icon
+        [icon]="faTrash"></fa-icon></button>
+    <input type="text" class="form-control" id="wordFilter" name="wordFilter" [(ngModel)]="wordFilter"
+      (ngModelChange)="changeWordFilter($event)" placeholder="{{ 'TEXTS.SEARCH' | translate }}">
   </div>
+
+  <ng-container *ngIf="showRangeDates">
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+        <div class="d-grid gap-2 col-12 mx-auto">
+          <button type="button" class="btn btn-dark btn-sm mb-1" (click)="changeMonth('before')"><fa-icon
+              [icon]="faArrowLeft"></fa-icon> {{ 'TEXTS.MONTH_BEFORE' | translate }}</button>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+        <div class="d-grid gap-2 col-12 mx-auto">
+          <button type="button" class="btn btn-secondary btn-sm mb-1" (click)="resetDates()"><fa-icon
+              [icon]="faTrash"></fa-icon> {{ 'TEXTS.RESET' | translate }}</button>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+        <div class="d-grid gap-2 col-12 mx-auto">
+          <button type="button" class="btn btn-secondary btn-sm mb-1" (click)="changeToday()"><fa-icon
+              [icon]="faCalendarCheck"></fa-icon> {{ 'TEXTS.TODAY' | translate }}</button>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+        <div class="d-grid gap-2 col-12 mx-auto">
+          <button type="button" class="btn btn-dark btn-sm mb-1" (click)="changeMonth('next')">{{ 'TEXTS.MONTH_NEXT' |
+            translate }}
+            <fa-icon [icon]="faArrowRight"></fa-icon></button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
 </ng-container>

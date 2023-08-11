@@ -33,6 +33,7 @@ import {
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { AmountPipe } from "@root/core/pipes/amount.pipe";
 import { MillionPipe } from "@root/core/pipes/million.pipe";
+import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe";
 
 @NgModule({
   declarations: [
@@ -67,7 +68,7 @@ import { MillionPipe } from "@root/core/pipes/million.pipe";
     ModalComponent,
     CurrentFilterComponent,
   ],
-  providers: [DecimalPipe, AmountPipe, MillionPipe],
+  providers: [DecimalPipe, AmountPipe, MillionPipe, FilterTableSearchPipe],
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {
