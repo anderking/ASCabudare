@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule, DecimalPipe } from "@angular/common";
-import { NavbarComponent } from "./navbar/navbar.component";
 import { RouterModule } from "@angular/router";
 import { ContainerComponent } from "./container/container.component";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -37,7 +36,6 @@ import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe
 
 @NgModule({
   declarations: [
-    NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
     ModalComponent,
@@ -62,7 +60,6 @@ import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe
     PipesModule,
     NgBoostrapModule,
     TranslateModule,
-    NavbarComponent,
     ContainerComponent,
     ToastContainerComponent,
     ModalComponent,

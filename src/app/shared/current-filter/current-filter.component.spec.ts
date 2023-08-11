@@ -84,4 +84,12 @@ describe("CurrentFilterComponent", () => {
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalledWith(mockTestCurrentFilterOne);
   });
+
+  it("should return a FormGroup with startDate and endDate controls", () => {
+    const form = component.initForm();
+    expect(form.get("startDate")).toBeTruthy();
+    expect(form.get("endDate")).toBeTruthy();
+    expect(form.get("startDate").value).toEqual(component.rangeDate.startDate);
+    expect(form.get("endDate").value).toEqual(component.rangeDate.endDate);
+  });
 });
