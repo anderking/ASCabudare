@@ -75,6 +75,7 @@ describe("CurrentFilterComponent", () => {
     const mySpy = spyOn(ingresoEgresoFacadeService, "setCurrentFilter");
     component.rangeDate = { startDate: "2023-01-01", endDate: "2023-01-31" };
     component.wordFilter = "string";
+    component.wordFilterActive = true;
 
     component.ngOnDestroy();
 
