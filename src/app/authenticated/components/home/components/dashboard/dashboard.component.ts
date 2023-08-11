@@ -17,6 +17,7 @@ import { ModalService } from "@services/ui/modal.service";
 import { ModalModel } from "@models/shared/modal.model";
 import { AmountPipe } from "@root/core/pipes/amount.pipe";
 import { MillionPipe } from "@root/core/pipes/million.pipe";
+import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe";
 
 @Component({
   selector: "app-dashboard",
@@ -24,6 +25,7 @@ import { MillionPipe } from "@root/core/pipes/million.pipe";
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
+  public wordFilter = "";
   public ingresos_egresos: IngresoEgresoModel[] = [];
   public categories: CategoryModel[] = [];
   public items: GroupModel<GroupModel<IngresoEgresoModel>>[] = [];
@@ -44,7 +46,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private modalService: ModalService,
     private _amountPipe: AmountPipe,
-    private _millionPipe: MillionPipe
+    private _millionPipe: MillionPipe,
+    private _filterTableSearchPipe: FilterTableSearchPipe
   ) {}
 
   ngOnInit() {
@@ -61,7 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.reset();
   }
 
-  rangeDateReceived(rangeDate: RangeDate) {
+  rangeDateReceived(rangeDate: RangeDate): void {
     this.rangeDate = rangeDate;
     setTimeout(() => {
       this.loadItems();
@@ -133,15 +136,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         console.log("DATA", data);
-        this.calculate(data.ingresos_egresos);
+        const ingresos_egresos = this._filterTableSearchPipe.transform(
+          data.ingresos_egresos,
+          { category: this.wordFilter },
+          false
+        );
         this.ingresos_egresos = data.ingresos_egresos;
         this.categories = data.categories;
-        this.items = groupByMult(this.ingresos_egresos, [
-          "typeActive",
-          "category",
-        ]);
-        console.log(this.items);
+        this.calculateRender(ingresos_egresos);
       });
+  }
+
+  wordFilterReceived(wordFilter: string): void {
+    this.wordFilter = wordFilter;
+    const ingresos_egresos = this._filterTableSearchPipe.transform(
+      this.ingresos_egresos,
+      { category: this.wordFilter },
+      false
+    );
+    this.calculateRender(ingresos_egresos);
+  }
+
+  calculateRender(ingresos_egresos: IngresoEgresoModel[]): void {
+    this.calculate(ingresos_egresos);
+    this.items = groupByMult(ingresos_egresos, ["typeActive", "category"]);
   }
 
   private calculate(items: IngresoEgresoModel[]): void {
@@ -167,7 +185,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.totalEarnings = this.totalIngresos - this.totalEgresos;
   }
 
-  openModal(item: GroupModel<IngresoEgresoModel>) {
+  openModal(item: GroupModel<IngresoEgresoModel>): void {
     const amountAcum = this._amountPipe.transform(item.values, "amount");
     const amountAcumFormat = this._millionPipe.transform(amountAcum, "1.2-2");
     const title =
@@ -180,10 +198,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
     this.modalService
       .openModal(data)
-      .then((data) => {})
-      .catch((error) => {
-        console.error(error);
-      });
+      .then(() => {})
+      .catch(() => {});
   }
 
   public chargeIndicatorManager(): void {

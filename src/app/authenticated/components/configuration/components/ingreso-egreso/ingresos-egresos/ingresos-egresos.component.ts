@@ -22,6 +22,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
   public wordFilter = "";
+  public wordFilterActive = false;
   public currentUser: CurrentUserModel;
   public rangeDate: RangeDate;
   private _finisher = new Subject<void>();
@@ -63,6 +64,10 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     }, 10);
   }
 
+  public wordFilterReceived(wordFilter: string): void {
+    this.wordFilter = wordFilter;
+  }
+
   public loadItems(): void {
     this._ingresoEgresoFacadeService
       .getAll$()
@@ -98,13 +103,21 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   }
 
   public goNew(): void {
-    this._router.navigate(["/authenticated/configuration/ingreso-egreso/form"]);
+    this.wordFilterActive = true;
+    setTimeout(() => {
+      this._router.navigate([
+        "/authenticated/configuration/ingreso-egreso/form",
+      ]);
+    }, 0);
   }
   public goEdit(item: IngresoEgresoModel): void {
-    this._router.navigate([
-      "/authenticated/configuration/ingreso-egreso/form",
-      { id: item?.id },
-    ]);
+    this.wordFilterActive = true;
+    setTimeout(() => {
+      this._router.navigate([
+        "/authenticated/configuration/ingreso-egreso/form",
+        { id: item?.id },
+      ]);
+    }, 0);
   }
   public goBack(): void {
     this._location.back();
