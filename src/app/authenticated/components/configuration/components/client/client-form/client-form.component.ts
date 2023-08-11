@@ -3,7 +3,6 @@ import {
   UntypedFormGroup,
   Validators,
   UntypedFormBuilder,
-  FormControlName,
   FormControl,
   FormGroup,
 } from "@angular/forms";
@@ -11,7 +10,7 @@ import { BehaviorSubject, combineLatest, Observable, of, Subject } from "rxjs";
 import { ClientFacadeService } from "@facades/client-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { ClientModel } from "@models/configurations/client.model";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { ComboModel } from "@models/masters/combo.model";
 import { Location } from "@angular/common";

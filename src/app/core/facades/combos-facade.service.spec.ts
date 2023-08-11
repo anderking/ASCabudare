@@ -63,8 +63,8 @@ describe("CombosFacadeService", () => {
   describe("documentType", () => {
     it("should expect the searchDocumentType method to exist and to call the correct endpoint", () => {
       spy = spyOn(facadeService, "searchDocumentType");
-      expect(spy).not.toBeNull;
-      expect(spy).toBeDefined;
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
       expect(collectionFBDocumentType).toEqual("Masters/Combos/DocumentType");
     });
 

@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule, DecimalPipe } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { HomeRoutingModule } from "./home-routing.module";
 import { SharedModule } from "@root/shared/shared.module";
 import {
