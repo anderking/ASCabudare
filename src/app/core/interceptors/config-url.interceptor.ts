@@ -52,6 +52,8 @@ export class ConfiUriInterceptor<T> implements HttpInterceptor {
     const headers: { [name: string]: string | string[] } = {
       ["Content-Type"]: "application/json;odata=nometadata",
       ["Accept"]: "application/json;odata=nometadata",
+      ["X-Content-Type-Options"]: "nosniff",
+      ["X-Frame-Options"]: "deny",
     };
     let url = `${request.url}`;
     if (

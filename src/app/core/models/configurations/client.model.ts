@@ -7,7 +7,7 @@ export interface ClientModel {
   documentNumber: string;
   phoneNumber: string;
   city: string;
-  adress: string;
+  address: string;
   image: string;
   state: boolean;
   stateText: string;

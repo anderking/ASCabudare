@@ -10,8 +10,8 @@
 
   <div *ngIf="!isLoading">
     <div class="d-grid gap-2 d-sm-flex mb-3">
-      <button class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' | translate }}</button>
-      <button class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' | translate }}</button>
+      <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' | translate }}</button>
+      <button type="button" aria-label="name" class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' | translate }}</button>
     </div>
 
     <div *ngIf="items">
@@ -42,8 +42,8 @@
                   <td><span class="badge"
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
                   </td>
-                  <td><button (click)="goEdit(item)" class="btn btn-info">{{ 'BUTTONS.EDIT' | translate }}</button></td>
-                  <td><button (click)="openModal(item)" class="btn btn-danger">{{ 'BUTTONS.DELETE'
+                  <td><button type="button" aria-label="name" (click)="goEdit(item)" class="btn btn-info">{{ 'BUTTONS.EDIT' | translate }}</button></td>
+                  <td><button type="button" aria-label="name" (click)="openModal(item)" class="btn btn-danger">{{ 'BUTTONS.DELETE'
                       | translate }}</button></td>
                 </tr>
               </tbody>

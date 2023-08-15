@@ -73,10 +73,10 @@
                     [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
                     {{category.name}}
                   </div>
-                  <a (click)="openModal(category)" class="card-link cursor">
+                  <div (click)="openModal(category)" class="card-link cursor">
                     <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{category.values | amount:'amount' |
                       million:'1.2-2'}} {{currentUser?.currency}}</div>
-                  </a>
+                  </div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

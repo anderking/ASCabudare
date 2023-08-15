@@ -15,7 +15,7 @@
                   <div class="mb-3">
                     <input type="email"
                       [ngClass]="{'is-invalid': validationEmail.touched && !validationEmail.valid, 'is-valid': validationEmail.touched && validationEmail.valid}"
-                      class="form-control form-control-user" name="email" #validationEmail="ngModel" placeholder="Email"
+                      class="form-control form-control-user" name="email" aria-label="email" #validationEmail="ngModel" placeholder="Email"
                       [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
 
 
@@ -29,7 +29,7 @@
 
                     <input type="password"
                       [ngClass]="{'is-invalid': validationPassword.touched && !validationPassword.valid, 'is-valid': validationPassword.touched && validationPassword.valid}"
-                      class="form-control form-control-user" name="password" #validationPassword="ngModel"
+                      class="form-control form-control-user" name="password" aria-label="password" #validationPassword="ngModel"
                       placeholder="Password" [(ngModel)]="password"
                       pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
 
@@ -46,7 +46,7 @@
                         [disabled]="mainForm.invalid" (click)="onSubmit()">
                         {{ 'BUTTONS.REGISTER' | translate }}
                       </button>
-                      <button *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
+                      <button type="button" aria-label="name" *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
                         <div class="spinner-border spinner-border-sm" role="status"></div>
                       </button>
                     </div>

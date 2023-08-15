@@ -18,7 +18,7 @@
               <form [formGroup]="mainForm" class="row g-3">
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label class="form-label">{{ 'PROPERTIES.FIRSTNAME' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="firstName"
+                  <input type="text" class="form-control" formControlName="firstName" aria-label="firstName"
                     [ngClass]="{'is-invalid': mainForm.get('firstName')?.touched && !mainForm.get('firstName')?.valid, 'is-valid': mainForm.get('firstName')?.touched && mainForm.get('firstName')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('firstName')">
                     {{ getErrorMessageField('firstName') }}
@@ -27,7 +27,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label class="form-label">{{ 'PROPERTIES.LASTNAME' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="lastName"
+                  <input type="text" class="form-control" formControlName="lastName" aria-label="lastName"
                     [ngClass]="{'is-invalid': mainForm.get('lastName')?.touched && !mainForm.get('lastName')?.valid, 'is-valid': mainForm.get('lastName')?.touched && mainForm.get('lastName')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('lastName')">
                     {{ getErrorMessageField('lastName') }}
@@ -36,7 +36,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <label class="form-label">{{ 'PROPERTIES.FULLNAME' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="fullName"
+                  <input type="text" class="form-control" formControlName="fullName" aria-label="fullName"
                     [ngClass]="{'is-invalid': mainForm.get('fullName')?.touched && !mainForm.get('fullName')?.valid, 'is-valid': mainForm.get('fullName')?.touched && mainForm.get('fullName')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('fullName')">
                     {{ getErrorMessageField('fullName') }}
@@ -45,7 +45,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label class="form-label">{{ 'PROPERTIES.DOCUMENTTYPE' | translate }}:</label>
-                  <select class="form-select" formControlName="documentType"
+                  <select class="form-select" formControlName="documentType" aria-label="documentType"
                     [ngClass]="{'is-invalid': mainForm.get('documentType')?.touched && !mainForm.get('documentType')?.valid, 'is-valid':  mainForm.get('documentType')?.touched && mainForm.get('documentType')?.valid}">
                     <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
                     <option *ngFor="let item of documentTypeCombo$ | async" [ngValue]="item.id">
@@ -58,7 +58,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label class="form-label">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="documentNumber"
+                  <input type="text" class="form-control" formControlName="documentNumber" aria-label="documentNumber"
                     [ngClass]="{'is-invalid': mainForm.get('documentNumber')?.touched && !mainForm.get('documentNumber')?.valid, 'is-valid': mainForm.get('documentNumber')?.touched && mainForm.get('documentNumber')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('documentNumber')">
                     {{ getErrorMessageField('documentNumber') }}
@@ -67,7 +67,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label class="form-label">{{ 'PROPERTIES.PHONENUMBER' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="phoneNumber"
+                  <input type="text" class="form-control" formControlName="phoneNumber" aria-label="phoneNumber"
                     [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('phoneNumber')">
                     {{ getErrorMessageField('phoneNumber') }}
@@ -76,7 +76,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label class="form-label">{{ 'PROPERTIES.CITY' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="city"
+                  <input type="text" class="form-control" formControlName="city" aria-label="city"
                     [ngClass]="{'is-invalid': mainForm.get('city')?.touched && !mainForm.get('city')?.valid, 'is-valid': mainForm.get('city')?.touched && mainForm.get('city')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('city')">
                     {{ getErrorMessageField('city') }}
@@ -85,16 +85,16 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <label class="form-label">{{ 'PROPERTIES.ADRESS' | translate }}:</label>
-                  <textarea class="form-control" formControlName="adress"
-                    [ngClass]="{'is-invalid': mainForm.get('adress')?.touched && !mainForm.get('adress')?.valid, 'is-valid': mainForm.get('adress')?.touched && mainForm.get('adress')?.valid}"></textarea>
-                  <div class="invalid-feedback" *ngIf="isValidField('adress')">
-                    {{ getErrorMessageField('adress') }}
+                  <textarea class="form-control" formControlName="address" aria-label="address"
+                    [ngClass]="{'is-invalid': mainForm.get('address')?.touched && !mainForm.get('address')?.valid, 'is-valid': mainForm.get('address')?.touched && mainForm.get('address')?.valid}"></textarea>
+                  <div class="invalid-feedback" *ngIf="isValidField('address')">
+                    {{ getErrorMessageField('address') }}
                   </div>
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <label class="form-label">{{ 'PROPERTIES.PHOTO_URL' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="image"
+                  <input type="text" class="form-control" formControlName="image" aria-label="image"
                     [ngClass]="{'is-invalid': mainForm.get('image')?.touched && !mainForm.get('image')?.valid, 'is-valid': mainForm.get('image')?.touched && mainForm.get('image')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('image')">
                     {{ getErrorMessageField('image') }}
@@ -103,7 +103,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="state" formControlName="state"
+                    <input class="form-check-input" type="checkbox" id="state" formControlName="state" aria-label="state"
                       [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
                     <label class="form-check-label" for="state">
                       {{ 'PROPERTIES.STATE' | translate }}
@@ -116,11 +116,11 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
-                    <button *ngIf="!isLoading" class="btn btn-primary" (click)="onSubmit(createDate, createDateFB)"
+                    <button type="button" aria-label="name" *ngIf="!isLoading" class="btn btn-primary" (click)="onSubmit(createDate, createDateFB)"
                       [disabled]="mainForm.invalid">
                       {{ 'BUTTONS.SAVE' | translate }}
                     </button>
-                    <button *ngIf="isLoading" class="btn btn-primary">
+                    <button type="button" aria-label="name" *ngIf="isLoading" class="btn btn-primary">
                       <div class="spinner-border spinner-border-sm" role="status"></div>
                     </button>
                   </div>
@@ -128,7 +128,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
-                    <button type="button" class="btn btn-info" (click)="clean()">
+                    <button type="button" aria-label="name" class="btn btn-info" (click)="clean()">
                       {{ 'BUTTONS.CLEAN' | translate }}
                     </button>
                   </div>
@@ -136,7 +136,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
-                    <button type="button" class="btn btn-dark" (click)="goBack()">
+                    <button type="button" aria-label="name" class="btn btn-dark" (click)="goBack()">
                       {{ 'BUTTONS.BACK' | translate }}
                     </button>
                   </div>

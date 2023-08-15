@@ -192,7 +192,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
       documentNumber: ["", [Validators.required]],
       phoneNumber: ["", [Validators.required]],
       city: ["", [Validators.required]],
-      adress: ["", [Validators.required]],
+      address: ["", [Validators.required]],
       image: [""],
       state: [true],
     });

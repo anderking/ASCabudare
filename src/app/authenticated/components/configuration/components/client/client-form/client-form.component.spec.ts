@@ -155,7 +155,7 @@ describe("ClientCreateComponent", () => {
     expect(component.mainForm.contains("documentNumber")).toBeTruthy();
     expect(component.mainForm.contains("phoneNumber")).toBeTruthy();
     expect(component.mainForm.contains("city")).toBeTruthy();
-    expect(component.mainForm.contains("adress")).toBeTruthy();
+    expect(component.mainForm.contains("address")).toBeTruthy();
     expect(component.mainForm.contains("image")).toBeTruthy();
     expect(component.mainForm.contains("state")).toBeTruthy();
     expect(countControls).toEqual(11);

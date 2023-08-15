@@ -2,7 +2,7 @@
   <ng-container *ngIf="data.type === 'confirmation'">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
-      <button type="button" class="btn-close" (click)="closeModal()"></button>
+      <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
     </div>
     <div class="modal-body">
       <p>
@@ -10,10 +10,10 @@
       </p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
+      <button type="button" aria-label="name" class="btn btn-outline-secondary" (click)="closeModal()">
         {{data.buttonCancel}}
       </button>
-      <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+      <button type="button" aria-label="name" class="btn btn-danger" (click)="confirmDelete()">
         {{data.buttonYes}}
       </button>
     </div>
@@ -22,7 +22,7 @@
   <ng-container *ngIf="data.type === 'information'">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
-      <button type="button" class="btn-close" (click)="closeModal()"></button>
+      <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
     </div>
     <div class="modal-body">
       <p>
@@ -34,7 +34,7 @@
   <ng-container *ngIf="data.type === 'custom'">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
-      <button type="button" class="btn-close" (click)="closeModal()"></button>
+      <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
     </div>
     <div class="modal-body">
       <ul>

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://ingreso-egreso.vercel.app/
