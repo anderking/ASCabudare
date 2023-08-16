@@ -2,7 +2,7 @@
   <div class="row justify-content-center my-3">
     <div class="col-12">
       <h2 class="text-center">{{ 'TITLES.CLIENT' | translate }}</h2>
-      <h6 *ngIf="items" class="text-center">{{items.length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
+      <h6 *ngIf="items" class="text-center">{{(items | filterTableSearch: { firstName: wordFilter, lastName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumber: wordFilter, city: wordFilter, address: wordFilter, stateText: wordFilter } : false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
     </div>
   </div>
 

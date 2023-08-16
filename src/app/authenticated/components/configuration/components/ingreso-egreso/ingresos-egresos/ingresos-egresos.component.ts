@@ -25,6 +25,8 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public wordFilterActive = false;
   public currentUser: CurrentUserModel;
   public rangeDate: RangeDate;
+  public numberOfDecimal: string = "2";
+  public decimePipe: string = "1.2-2";
   private _finisher = new Subject<void>();
 
   constructor(
@@ -42,6 +44,13 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
+        this.numberOfDecimal =
+          user && user.numberOfDecimal
+            ? user.numberOfDecimal
+            : this.numberOfDecimal;
+        this.decimePipe = this.numberOfDecimal
+          ? `1.${this.numberOfDecimal}-${this.numberOfDecimal}`
+          : this.decimePipe;
       });
 
     this._ingresoEgresoFacadeService

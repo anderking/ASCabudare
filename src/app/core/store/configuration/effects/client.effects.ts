@@ -63,7 +63,6 @@ export class ClientEffects {
               "MESSAGES.CREATE_SUCCESS"
             );
             const payload: any = params.props.payload;
-            console.log(payload);
             if (payload.id) {
               message = this.translateService.instant(
                 "MESSAGES.UPDATE_SUCCESS"

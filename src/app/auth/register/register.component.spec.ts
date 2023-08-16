@@ -85,6 +85,7 @@ describe("RegisterComponent", () => {
       phoneNumber: "string",
       currency: "",
       dayStartDashboard: "",
+      numberOfDecimal: "",
       photoURL: "string",
       uid: "string",
     };

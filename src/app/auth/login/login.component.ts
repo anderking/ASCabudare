@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this._finisher)
       )
       .subscribe((login: CurrentUserModel) => {
-        console.log("LOGIN RESPONSE", login);
         this._router.navigate(["/login-time"]);
         this._authService.theParamsToLoginTime = login;
       });

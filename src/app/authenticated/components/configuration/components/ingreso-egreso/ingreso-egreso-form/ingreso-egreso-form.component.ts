@@ -45,6 +45,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   public categoryCombo$ = new BehaviorSubject<CategoryModel[]>([]);
   public currentUser: CurrentUserModel;
   public createDateFB: object = null;
+  public numberOfDecimal: string = "2";
 
   constructor(
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
@@ -55,20 +56,22 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
     private _location: Location,
     private _fb: UntypedFormBuilder,
     private _activatedRoute: ActivatedRoute
-  ) {
-    this.mainForm = this.initForm();
-  }
+  ) {}
 
   ngOnInit() {
-    this.callsCombos();
-    this.chargeIndicatorManager();
-    this.controlSubscriptions();
-
     this._authFacadeService
       .getCurrentUser$()
       .pipe(takeUntil(this.finisher$))
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
+        this.numberOfDecimal =
+          user && user.numberOfDecimal
+            ? user.numberOfDecimal
+            : this.numberOfDecimal;
+        this.mainForm = this.initForm();
+        this.callsCombos();
+        this.chargeIndicatorManager();
+        this.controlSubscriptions();
       });
 
     const params$ = this._activatedRoute.paramMap.pipe(
@@ -204,6 +207,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
     const newDate = createDate + "T" + hours;
     const date = new Date(newDate);
     this.createDateFB = date;
+    let pattern = `^([0-9]{1,10}(.[0-9]{1,${this.numberOfDecimal}})?)$`;
 
     return this._fb.group({
       id: null,
@@ -215,13 +219,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
         new Date().toLocaleDateString("en-CA"),
         [Validators.required],
       ],
-      amount: [
-        "",
-        [
-          Validators.required,
-          Validators.pattern("^([0-9]{1,10}(.[0-9]{1,2})?)$"),
-        ],
-      ],
+      amount: ["", [Validators.required, Validators.pattern(pattern)]],
       description: ["", [Validators.required, Validators.maxLength(700)]],
       state: [true],
     });
@@ -234,7 +232,6 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
       stateText: this.mainForm.getRawValue().state ? "Activa" : "Inactiva",
     };
     if (this.mainForm.valid) {
-      console.log(this.dataForm);
       this._ingresoEgresoFacadeService.create(this.dataForm);
     }
   }
@@ -260,7 +257,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
     this._location.back();
   }
 
-  private controlSubscriptions(): void {
+  controlSubscriptions(): void {
     this.mainForm
       .get("idTypeActive")
       .valueChanges.pipe(

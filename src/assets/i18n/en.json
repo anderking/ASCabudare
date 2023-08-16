@@ -57,6 +57,7 @@
     "DESCRIPTION": "Description",
     "PHONE_NUMBER": "PhoneNumber",
     "LOCAL_CURRENCY": "Local Currency",
+    "NUMBER_DECIMAL": "Number of decimal",
     "PHOTO_URL": "PhotoURL",
     "UPLOAD_FILE": "Upload File",
     "SELECT_AN_OPTION": "Select an option",

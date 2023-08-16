@@ -2,19 +2,22 @@
   <div class="row justify-content-center my-3">
     <div class="col-12">
       <h2 class="text-center">{{ 'TITLES.INGRESS_EGRESS' | translate }}</h2>
-      <h6 *ngIf="items" class="text-center">{{items.length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
+      <h6 *ngIf="items" class="text-center">{{(items | filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } : false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
     </div>
   </div>
 
-  <app-current-filter (rangeDateEmit)="rangeDateReceived($event)" (wordFilterEmit)="wordFilterReceived($event)" [wordFilterActive]="wordFilterActive"></app-current-filter>
+  <app-current-filter (rangeDateEmit)="rangeDateReceived($event)" (wordFilterEmit)="wordFilterReceived($event)"
+    [wordFilterActive]="wordFilterActive"></app-current-filter>
 
   <div *ngIf="!isLoading">
     <div class="d-grid gap-2 d-sm-flex mb-3">
-      <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' | translate }}</button>
-      <button type="button" aria-label="name" class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' | translate }}</button>
+      <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' | translate
+        }}</button>
+      <button type="button" aria-label="name" class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' | translate
+        }}</button>
     </div>
 
-    <div *ngIf="items">
+    <div *ngIf="items && currentUser">
       <div class="row justify-content-center">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
           <div class="table-responsive">
@@ -38,12 +41,14 @@
                   <td>{{item.category}}</td>
                   <td>{{item.description}}</td>
                   <td>{{item.createDate}}</td>
-                  <td>{{item.amount | million:'1.2-2'}} {{currentUser?.currency}}</td>
+                  <td>{{item.amount | million: decimePipe}} {{currentUser?.currency}}</td>
                   <td><span class="badge"
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
                   </td>
-                  <td><button type="button" aria-label="name" (click)="goEdit(item)" class="btn btn-info">{{ 'BUTTONS.EDIT' | translate }}</button></td>
-                  <td><button type="button" aria-label="name" (click)="openModal(item)" class="btn btn-danger">{{ 'BUTTONS.DELETE'
+                  <td><button type="button" aria-label="name" (click)="goEdit(item)" class="btn btn-info">{{
+                      'BUTTONS.EDIT' | translate }}</button></td>
+                  <td><button type="button" aria-label="name" (click)="openModal(item)" class="btn btn-danger">{{
+                      'BUTTONS.DELETE'
                       | translate }}</button></td>
                 </tr>
               </tbody>

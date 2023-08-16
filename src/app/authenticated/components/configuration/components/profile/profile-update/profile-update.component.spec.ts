@@ -113,7 +113,7 @@ describe("ProfileUpdateComponent", () => {
     expect(mySpy).toHaveBeenCalledWith(data);
   });
 
-  it("should to contain 5 fields the form", () => {
+  it("should to contain 6 fields the form", () => {
     let controls: object = component.mainForm.controls;
     let countControls: number = Object.keys(controls).length;
 
@@ -122,7 +122,8 @@ describe("ProfileUpdateComponent", () => {
     expect(component.mainForm.contains("currency")).toBeTruthy();
     expect(component.mainForm.contains("photoURL")).toBeTruthy();
     expect(component.mainForm.contains("dayStartDashboard")).toBeTruthy();
-    expect(countControls).toEqual(5);
+    expect(component.mainForm.contains("numberOfDecimal")).toBeTruthy();
+    expect(countControls).toEqual(6);
   });
 
   it("should dayStartDashboard be invalid", () => {
@@ -139,6 +140,24 @@ describe("ProfileUpdateComponent", () => {
     const days = controls["dayStartDashboard"] as FormControl;
 
     days.setValue("16");
+
+    expect(days.valid).toBeTruthy();
+  });
+
+  it("should numberOfDecimal be invalid", () => {
+    let controls: object = component.mainForm.controls;
+    const days = controls["numberOfDecimal"] as FormControl;
+
+    days.setValue("x,ss/*");
+
+    expect(days.invalid).toBeTruthy();
+  });
+
+  it("should numberOfDecimal be valid", () => {
+    let controls: object = component.mainForm.controls;
+    const days = controls["numberOfDecimal"] as FormControl;
+
+    days.setValue("2");
 
     expect(days.valid).toBeTruthy();
   });

@@ -15,7 +15,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
       catchError((error) => {
-        console.log(error);
         let errorMessage = "";
         if (error instanceof ErrorEvent) {
           errorMessage = `Error del navegador: ${error.error.message}`;

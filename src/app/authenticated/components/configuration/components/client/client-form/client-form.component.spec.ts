@@ -146,7 +146,6 @@ describe("ClientCreateComponent", () => {
   it("should to contain 11 fields the form", () => {
     let controls: object = component.mainForm.controls;
     let countControls: number = Object.keys(controls).length;
-    console.log(controls);
 
     expect(component.mainForm.contains("id")).toBeTruthy();
     expect(component.mainForm.contains("firstName")).toBeTruthy();
@@ -162,7 +161,6 @@ describe("ClientCreateComponent", () => {
   });
 
   it("should to contain fields disable in form", () => {
-    console.log(component.mainForm.controls);
     expect(component.mainForm.controls["fullName"]).toBeDefined();
     expect(component.mainForm.controls["fullName"].disabled).toBeTruthy();
   });

@@ -10,6 +10,7 @@ export interface CurrentUserModel {
   phoneNumber: string;
   currency: string;
   dayStartDashboard: string;
+  numberOfDecimal?: string;
   photoURL: string;
   uploadPhoto?: any;
   accessToken?: string;

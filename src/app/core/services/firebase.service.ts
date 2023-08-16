@@ -51,7 +51,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     );
 
     return subscription.pipe(
-      tap((x) => console.log("signInWithEmailAndPassword", x)),
       map((response: any) => response.user)
     );
   }
@@ -67,7 +66,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     );
 
     return subscription.pipe(
-      tap((x) => console.log("createUserWithEmailAndPassword", x)),
       map((response: any) => response.user)
     );
   }
@@ -160,7 +158,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     );
 
     return subscription.pipe(
-      tap((x) => console.log("uploadAttachment", x)),
       map((response: any) => response)
     );
   }
@@ -232,7 +229,6 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
       return onSnapshot(
         docRef,
         (snapshot) => {
-          console.log(snapshot.data());
           observer.next(snapshot.data());
         },
         (error) => observer.error(error.message)

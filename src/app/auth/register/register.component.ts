@@ -52,7 +52,6 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this._finisher)
       )
       .subscribe((register: CurrentUserModel) => {
-        console.log("REGISTER RESPONSE", register);
         this.registerFB = register;
         const userDoc: CurrentUserModel = {
           displayName: register.displayName,
@@ -61,6 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
           phoneNumber: register.phoneNumber,
           currency: "",
           dayStartDashboard: "",
+          numberOfDecimal: "",
           photoURL: register.photoURL,
           uid: register.uid,
         };

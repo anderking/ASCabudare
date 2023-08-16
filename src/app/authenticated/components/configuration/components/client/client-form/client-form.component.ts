@@ -106,6 +106,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((data) => {
+        console.log("DATA", data);
         if (data.item) {
           this.selectCurrentItem(data.item);
         }
@@ -118,6 +119,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((currentItem) => {
+        console.log("currentItem", currentItem);
         this.currentItem = currentItem;
       });
 
@@ -283,7 +285,6 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((data) => {
-        console.log("fullNameResult", data);
         const fullName = data.firstName + " " + data.lastName;
         const control = this.mainForm.controls["fullName"] as FormControl;
         control.setValue(fullName.trim());

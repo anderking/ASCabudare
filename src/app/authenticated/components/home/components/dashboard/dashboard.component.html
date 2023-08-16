@@ -1,85 +1,87 @@
 <div *ngIf="!isLoading">
+  <ng-container *ngIf="currentUser">
 
-  <h1>{{ 'TEXTS.WELCOME' | translate }}</h1>
-  <h2>{{currentUser?.displayName}}</h2>
+    <h1>{{ 'TEXTS.WELCOME' | translate }}</h1>
+    <h2>{{currentUser.displayName}}</h2>
 
-  <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"
-    (wordFilterEmit)="wordFilterReceived($event)"></app-current-filter>
+    <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"
+      (wordFilterEmit)="wordFilterReceived($event)"></app-current-filter>
 
-  <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
+    <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
 
-  <div *ngIf="items.length > 0" style="margin:1em 0">
-    <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
-        <app-advanced-pie-chart [type]="'Ingreso'" [colorScheme]="'forest'" [items]="items"></app-advanced-pie-chart>
+    <div *ngIf="items.length > 0" style="margin:1em 0">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+          <app-advanced-pie-chart [type]="'Ingreso'" [colorScheme]="'forest'" [items]="items"></app-advanced-pie-chart>
+        </div>
       </div>
     </div>
-  </div>
 
 
-  <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.EGRESS' | translate }}</h2>
+    <h2 *ngIf="items.length > 0" class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.EGRESS' | translate }}</h2>
 
-  <div *ngIf="items.length > 0" style="margin:1em 0">
-    <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
-        <app-advanced-pie-chart [type]="'Egreso'" [colorScheme]="'solar'" [items]="items"></app-advanced-pie-chart>
+    <div *ngIf="items.length > 0" style="margin:1em 0">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+          <app-advanced-pie-chart [type]="'Egreso'" [colorScheme]="'solar'" [items]="items"></app-advanced-pie-chart>
+        </div>
       </div>
     </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card shadow h-100 py-2"
-        [ngClass]="{'border-left-success': totalEarnings >= 0, 'border-left-danger': totalEarnings < 0 }">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
-                [ngClass]="{'text-success': totalEarnings >= 0, 'text-danger': totalEarnings < 0 }">{{
-                'TEXTS.EARNINGS_ANNUAL' |
-                translate }}</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{totalEarnings | million:'1.2-2'}}
-                {{currentUser?.currency}}</div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+    <div class="row">
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card shadow h-100 py-2"
+          [ngClass]="{'border-left-success': totalEarnings >= 0, 'border-left-danger': totalEarnings < 0 }">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
+                  [ngClass]="{'text-success': totalEarnings >= 0, 'text-danger': totalEarnings < 0 }">{{
+                  'TEXTS.EARNINGS_ANNUAL' |
+                  translate }}</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{totalEarnings | million: decimePipe}}
+                  {{currentUser.currency}}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
 
-  <div *ngFor="let item of items" class="row">
-    <div class="col-sm-12">
-      <div class="row">
-        <div class="col-sm-12 d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800 fw-bold">{{item.name}}</h1>
+    <div *ngFor="let item of items" class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-12 d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800 fw-bold">{{item.name}}</h1>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div *ngFor="let category of item.values | filterTableSearch: { name: wordFilter } : false"
-          class="col-xl-3 col-md-6 mb-4">
-          <div class="card shadow h-100 py-2"
-            [ngClass]="{'border-left-success': item.name === 'Ingreso', 'border-left-danger': item.name === 'Egreso' }">
+        <div class="row">
+          <div *ngFor="let category of item.values | filterTableSearch: { name: wordFilter } : false"
+            class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow h-100 py-2"
+              [ngClass]="{'border-left-success': item.name === 'Ingreso', 'border-left-danger': item.name === 'Egreso' }">
 
-            <div class="card-body">
+              <div class="card-body">
 
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
-                    [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
-                    {{category.name}}
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
+                      [ngClass]="{'text-success': item.name === 'Ingreso', 'text-danger': item.name === 'Egreso' }">
+                      {{category.name}}
+                    </div>
+                    <div (click)="openModal(category)" class="card-link cursor">
+                      <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{category.values | amount:'amount' |
+                        million: decimePipe}} {{currentUser.currency}}</div>
+                    </div>
                   </div>
-                  <div (click)="openModal(category)" class="card-link cursor">
-                    <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{category.values | amount:'amount' |
-                      million:'1.2-2'}} {{currentUser?.currency}}</div>
+                  <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                   </div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                 </div>
               </div>
             </div>
@@ -87,8 +89,7 @@
         </div>
       </div>
     </div>
-  </div>
-
+  </ng-container>
 </div>
 
 <div *ngIf="isLoading" class="spinner">

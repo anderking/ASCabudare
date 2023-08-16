@@ -23,6 +23,7 @@ export const mockTestCurrentUserOne: CurrentUserModel = {
   phoneNumber: "string",
   currency: "string",
   dayStartDashboard: "01",
+  numberOfDecimal: "2",
   photoURL: "string",
   uploadPhoto: "string",
   accessToken: "string",

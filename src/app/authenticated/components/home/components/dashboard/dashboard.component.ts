@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { combineLatest, Subject } from "rxjs";
-import { filter, map, takeUntil } from "rxjs/operators";
+import { filter, first, map, takeUntil } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -10,7 +10,7 @@ import { CategoryModel } from "@models/configurations/category.model";
 import { groupByMult } from "@root/core/utilities/core.utilities";
 import { GroupModel } from "@models/shared/group.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import { RangeDate } from "@models/shared/filter.model";
+import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { TranslateService } from "@ngx-translate/core";
 import { ModalService } from "@services/ui/modal.service";
@@ -18,6 +18,7 @@ import { ModalModel } from "@models/shared/modal.model";
 import { AmountPipe } from "@root/core/pipes/amount.pipe";
 import { MillionPipe } from "@root/core/pipes/million.pipe";
 import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe";
+import { UrlService } from "@services/ui/url-service.service";
 
 @Component({
   selector: "app-dashboard",
@@ -36,6 +37,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public cantIngresos: any;
   public cantEgresos: any;
   public currentUser: CurrentUserModel;
+  public numberOfDecimal: string = "2";
+  public decimePipe: string = "1.2-2";
   private rangeDate: RangeDate;
 
   constructor(
@@ -44,18 +47,47 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _authFacadeService: AuthFacadeService,
     private _sharedFacadeService: SharedFacadeService,
     private translateService: TranslateService,
-    private modalService: ModalService,
+    private _modalService: ModalService,
     private _amountPipe: AmountPipe,
     private _millionPipe: MillionPipe,
-    private _filterTableSearchPipe: FilterTableSearchPipe
-  ) {}
+    private _filterTableSearchPipe: FilterTableSearchPipe,
+    private _urlService: UrlService
+  ) {
+    const previousUrl = this._urlService.getPreviousUrl();
+    if (previousUrl && previousUrl.includes("/form")) {
+      this._ingresoEgresoFacadeService
+        .getCurrentFilter$()
+        .pipe(
+          first(
+            (currentFilter: CurrentFilterModel) =>
+              !isNullOrUndefinedEmpty(currentFilter)
+          ),
+          takeUntil(this.finisher$)
+        )
+        .subscribe((currentFilter: CurrentFilterModel) => {
+          const payload: CurrentFilterModel = {
+            rangeDate: currentFilter.rangeDate,
+            wordFilter: "",
+          };
+          this._ingresoEgresoFacadeService.setCurrentFilter(payload);
+        });
+    }
+  }
 
   ngOnInit() {
     this._authFacadeService
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
+        this.numberOfDecimal =
+          user && user.numberOfDecimal
+            ? user.numberOfDecimal
+            : this.numberOfDecimal;
+        this.decimePipe = this.numberOfDecimal
+          ? `1.${this.numberOfDecimal}-${this.numberOfDecimal}`
+          : this.decimePipe;
       });
+
     this.chargeIndicatorManager();
   }
 
@@ -196,7 +228,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       title,
       currentUser: this.currentUser,
     };
-    this.modalService
+    this._modalService
       .openModal(data)
       .then(() => {})
       .catch(() => {});

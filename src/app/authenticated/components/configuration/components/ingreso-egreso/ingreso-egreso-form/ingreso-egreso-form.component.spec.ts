@@ -224,6 +224,22 @@ describe("IngresoEgresoCreateComponent", () => {
     expect(mySpyCo).toHaveBeenCalled();
   });
 
+  it("should call the necessary methods inside subscribe", () => {
+    spyOn(authFacadeService, "getCurrentUser$").and.returnValue(
+      of(mockTestCurrentUserOne)
+    );
+
+    spyOn(component, "callsCombos");
+    spyOn(component, "chargeIndicatorManager");
+    spyOn(component, "controlSubscriptions");
+
+    component.ngOnInit();
+
+    expect(component.callsCombos).toHaveBeenCalled();
+    expect(component.chargeIndicatorManager).toHaveBeenCalled();
+    expect(component.controlSubscriptions).toHaveBeenCalled();
+  });
+
   it("should to contain 9 fields the form", () => {
     let controls: object = component.mainForm.controls;
     let countControls: number = Object.keys(controls).length;

@@ -18,7 +18,7 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { ToastService } from "@services/ui/toast.service";
 import { TranslateService } from "@ngx-translate/core";
-import { startDaySelect } from "@root/core/constants/mocks/mocks-const";
+import { numberOfDecimal, startDaySelect } from "@root/core/constants/mocks/mocks-const";
 import { AttachmentModel } from "@models/shared/attachment.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 
@@ -39,6 +39,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public currentFile: AttachmentModel = null;
 
   public startDay$: any = of(startDaySelect);
+  public numberOfDecimal$: any = of(numberOfDecimal);
 
   constructor(
     private _sharedFacadeService: SharedFacadeService,
@@ -118,7 +119,8 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       phoneNumber: [""],
       currency: [""],
       photoURL: [""],
-      dayStartDashboard: [null, [Validators.required]],
+      dayStartDashboard: [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
+      numberOfDecimal: [null, [Validators.pattern(/^[0-9]\d*$/)]],
     });
   }
 
@@ -166,7 +168,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
 
     if (filesInput.length > 0) {
       for (let value of filesInput) {
-        console.log(value);
         const currentFile: any = value;
         const extension = allowed_types.includes(currentFile.type);
         let isValid = true;
