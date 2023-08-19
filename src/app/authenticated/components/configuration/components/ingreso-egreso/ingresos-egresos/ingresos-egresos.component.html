@@ -2,7 +2,9 @@
   <div class="row justify-content-center my-3">
     <div class="col-12">
       <h2 class="text-center">{{ 'TITLES.INGRESS_EGRESS' | translate }}</h2>
-      <h6 *ngIf="items" class="text-center">{{(items | filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } : false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
+      <h6 *ngIf="items" class="text-center">{{(items | filterTableSearch: { typeActive: wordFilter, category:
+        wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } :
+        false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
     </div>
   </div>
 
@@ -41,7 +43,7 @@
                   <td>{{item.category}}</td>
                   <td>{{item.description}}</td>
                   <td>{{item.createDate}}</td>
-                  <td>{{item.amount | million: decimePipe}} {{currentUser?.currency}}</td>
+                  <td>{{item.amount | customDecimal: systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</td>
                   <td><span class="badge"
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
                   </td>

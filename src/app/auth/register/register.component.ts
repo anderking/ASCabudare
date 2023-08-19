@@ -61,6 +61,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
           currency: "",
           dayStartDashboard: "",
           numberOfDecimal: "",
+          systemDecimal: "",
           photoURL: register.photoURL,
           uid: register.uid,
         };

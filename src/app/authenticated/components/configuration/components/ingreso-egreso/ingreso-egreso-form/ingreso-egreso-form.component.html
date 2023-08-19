@@ -50,7 +50,7 @@
                   <label class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
                   <div class="input-group mb-3">
                     <span class="input-group-text">{{currentUser?.currency}}</span>
-                    <input type="number" class="form-control" formControlName="amount" aria-label="amount"
+                    <input appNumericInput type="number" class="form-control" formControlName="amount" aria-label="amount"
                       [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
                     <div class="invalid-feedback" *ngIf="isValidField('amount')">
                       {{ getErrorMessageField('amount') }}

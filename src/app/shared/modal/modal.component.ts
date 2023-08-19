@@ -12,7 +12,7 @@ export class ModalComponent<T> implements OnInit {
   @Output() deleteConfirmed: EventEmitter<any> = new EventEmitter<any>();
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
   public numberOfDecimal: string = "2";
-  public decimePipe: string = "1.2-2";
+  public systemDecimal: string = "comma";
 
   constructor(private _authFacadeService: AuthFacadeService) {}
 
@@ -24,9 +24,8 @@ export class ModalComponent<T> implements OnInit {
           user && user.numberOfDecimal
             ? user.numberOfDecimal
             : this.numberOfDecimal;
-        this.decimePipe = this.numberOfDecimal
-          ? `1.${this.numberOfDecimal}-${this.numberOfDecimal}`
-          : this.decimePipe;
+        this.systemDecimal =
+          user && user.systemDecimal ? user.systemDecimal : this.systemDecimal;
       });
   }
 

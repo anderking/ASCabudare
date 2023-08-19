@@ -40,7 +40,8 @@
                   [ngClass]="{'text-success': totalEarnings >= 0, 'text-danger': totalEarnings < 0 }">{{
                   'TEXTS.EARNINGS_ANNUAL' |
                   translate }}</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{totalEarnings | million: decimePipe}}
+                <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{totalEarnings | customDecimal:
+                  systemDecimal: numberOfDecimal}}
                   {{currentUser.currency}}</div>
               </div>
               <div class="col-auto">
@@ -76,7 +77,7 @@
                     </div>
                     <div (click)="openModal(category)" class="card-link cursor">
                       <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{category.values | amount:'amount' |
-                        million: decimePipe}} {{currentUser.currency}}</div>
+                        customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</div>
                     </div>
                   </div>
                   <div class="col-auto">

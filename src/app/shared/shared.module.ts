@@ -31,8 +31,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { AmountPipe } from "@root/core/pipes/amount.pipe";
-import { MillionPipe } from "@root/core/pipes/million.pipe";
 import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe";
+import { DirectivesModule } from "@root/core/directives/directives-module.module";
+import { CustomDecimalPipe } from "@root/core/pipes/custom-decimal.pipe";
+import { OrderByPipe } from "@root/core/pipes/orderBy.pipe";
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
+    DirectivesModule,
     NgBoostrapModule,
     TranslateModule,
     FontAwesomeModule,
@@ -58,6 +61,7 @@ import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
+    DirectivesModule,
     NgBoostrapModule,
     TranslateModule,
     ContainerComponent,
@@ -65,7 +69,13 @@ import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe
     ModalComponent,
     CurrentFilterComponent,
   ],
-  providers: [DecimalPipe, AmountPipe, MillionPipe, FilterTableSearchPipe],
+  providers: [
+    DecimalPipe,
+    AmountPipe,
+    CustomDecimalPipe,
+    FilterTableSearchPipe,
+    OrderByPipe,
+  ],
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {

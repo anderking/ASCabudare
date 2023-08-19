@@ -113,7 +113,7 @@ describe("ProfileUpdateComponent", () => {
     expect(mySpy).toHaveBeenCalledWith(data);
   });
 
-  it("should to contain 6 fields the form", () => {
+  it("should to contain 7 fields the form", () => {
     let controls: object = component.mainForm.controls;
     let countControls: number = Object.keys(controls).length;
 
@@ -123,7 +123,8 @@ describe("ProfileUpdateComponent", () => {
     expect(component.mainForm.contains("photoURL")).toBeTruthy();
     expect(component.mainForm.contains("dayStartDashboard")).toBeTruthy();
     expect(component.mainForm.contains("numberOfDecimal")).toBeTruthy();
-    expect(countControls).toEqual(6);
+    expect(component.mainForm.contains("systemDecimal")).toBeTruthy();
+    expect(countControls).toEqual(7);
   });
 
   it("should dayStartDashboard be invalid", () => {

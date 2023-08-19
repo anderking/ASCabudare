@@ -1,15 +1,15 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FilterTableSearchPipe } from "./filter-table-search.pipe";
-import { MillionPipe } from "./million.pipe";
 import { OrderByPipe } from "./orderBy.pipe";
 import { AmountPipe } from "./amount.pipe";
+import { CustomDecimalPipe } from "./custom-decimal.pipe";
 
-const PIPES = [FilterTableSearchPipe, MillionPipe, OrderByPipe, AmountPipe];
+const pipes = [FilterTableSearchPipe, OrderByPipe, AmountPipe, CustomDecimalPipe];
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [...PIPES],
-  exports: [...PIPES],
+  declarations: [...pipes],
+  exports: [...pipes],
 })
 export class PipesModule {}

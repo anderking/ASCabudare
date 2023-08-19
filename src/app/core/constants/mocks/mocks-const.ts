@@ -39,3 +39,8 @@ export const numberOfDecimal: any = [
   { id: "4", name: "4" },
   { id: "5", name: "5" },
 ];
+
+export const systemDecimal: any = [
+  { id: "dot", name: "Punto" },
+  { id: "comma", name: "Coma" },
+];

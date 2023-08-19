@@ -42,7 +42,8 @@
           <a [routerLink]="[ '/authenticated/configuration/ingreso-egreso/form',{id: itemIE.id} ]"
             (click)="closeModal()">{{itemIE.description}}
           </a>
-          <strong>{{itemIE.amount | million: decimePipe}}{{data.currentUser?.currency}}</strong>
+          <strong>{{itemIE.amount | customDecimal: systemDecimal :
+            numberOfDecimal}}{{data.currentUser?.currency}}</strong>
         </li>
       </ul>
     </div>

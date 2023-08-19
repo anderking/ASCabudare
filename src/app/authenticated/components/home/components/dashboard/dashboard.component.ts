@@ -16,9 +16,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { ModalService } from "@services/ui/modal.service";
 import { ModalModel } from "@models/shared/modal.model";
 import { AmountPipe } from "@root/core/pipes/amount.pipe";
-import { MillionPipe } from "@root/core/pipes/million.pipe";
 import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe";
 import { UrlService } from "@services/ui/url-service.service";
+import { CustomDecimalPipe } from "@root/core/pipes/custom-decimal.pipe";
 
 @Component({
   selector: "app-dashboard",
@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public cantEgresos: any;
   public currentUser: CurrentUserModel;
   public numberOfDecimal: string = "2";
-  public decimePipe: string = "1.2-2";
+  public systemDecimal: string = "comma";
   private rangeDate: RangeDate;
 
   constructor(
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private _modalService: ModalService,
     private _amountPipe: AmountPipe,
-    private _millionPipe: MillionPipe,
+    private _customDecimalPipe: CustomDecimalPipe,
     private _filterTableSearchPipe: FilterTableSearchPipe,
     private _urlService: UrlService
   ) {
@@ -83,9 +83,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           user && user.numberOfDecimal
             ? user.numberOfDecimal
             : this.numberOfDecimal;
-        this.decimePipe = this.numberOfDecimal
-          ? `1.${this.numberOfDecimal}-${this.numberOfDecimal}`
-          : this.decimePipe;
+        this.systemDecimal =
+          user && user.systemDecimal ? user.systemDecimal : this.systemDecimal;
       });
 
     this.chargeIndicatorManager();
@@ -219,7 +218,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   openModal(item: GroupModel<IngresoEgresoModel>): void {
     const amountAcum = this._amountPipe.transform(item.values, "amount");
-    const amountAcumFormat = this._millionPipe.transform(amountAcum, "1.2-2");
+    const amountAcumFormat = this._customDecimalPipe.transform(
+      amountAcum,
+      this.systemDecimal,
+      this.numberOfDecimal
+    );
     const title =
       this.translateService.instant("TITLES.TOTAL") + " " + amountAcumFormat;
     const data: ModalModel<GroupModel<IngresoEgresoModel>> = {

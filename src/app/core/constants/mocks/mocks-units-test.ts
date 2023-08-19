@@ -24,6 +24,7 @@ export const mockTestCurrentUserOne: CurrentUserModel = {
   currency: "string",
   dayStartDashboard: "01",
   numberOfDecimal: "2",
+  systemDecimal: "comma",
   photoURL: "string",
   uploadPhoto: "string",
   accessToken: "string",

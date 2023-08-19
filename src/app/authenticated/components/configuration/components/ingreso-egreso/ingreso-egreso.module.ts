@@ -13,6 +13,5 @@ import { SharedModule } from "@root/shared/shared.module";
     IngresoEgresoCreateComponent,
   ],
   imports: [IngresoEgresoRoutingModule, SharedModule],
-  providers: [DecimalPipe],
 })
 export class IngresoEgresoModule {}

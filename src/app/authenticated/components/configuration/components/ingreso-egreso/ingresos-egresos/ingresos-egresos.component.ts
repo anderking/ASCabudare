@@ -26,7 +26,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public currentUser: CurrentUserModel;
   public rangeDate: RangeDate;
   public numberOfDecimal: string = "2";
-  public decimePipe: string = "1.2-2";
+  public systemDecimal: string = "comma";
   private _finisher = new Subject<void>();
 
   constructor(
@@ -48,9 +48,8 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
           user && user.numberOfDecimal
             ? user.numberOfDecimal
             : this.numberOfDecimal;
-        this.decimePipe = this.numberOfDecimal
-          ? `1.${this.numberOfDecimal}-${this.numberOfDecimal}`
-          : this.decimePipe;
+        this.systemDecimal =
+          user && user.systemDecimal ? user.systemDecimal : this.systemDecimal;
       });
 
     this._ingresoEgresoFacadeService

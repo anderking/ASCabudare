@@ -11,6 +11,7 @@ export interface CurrentUserModel {
   currency: string;
   dayStartDashboard: string;
   numberOfDecimal?: string;
+  systemDecimal?: string;
   photoURL: string;
   uploadPhoto?: any;
   accessToken?: string;

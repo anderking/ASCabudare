@@ -86,6 +86,7 @@ describe("RegisterComponent", () => {
       currency: "",
       dayStartDashboard: "",
       numberOfDecimal: "",
+      systemDecimal: "",
       photoURL: "string",
       uid: "string",
     };
