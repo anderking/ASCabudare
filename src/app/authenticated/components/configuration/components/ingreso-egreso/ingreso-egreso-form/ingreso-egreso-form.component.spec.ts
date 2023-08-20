@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
-import { IngresoEgresoCreateComponent } from "./ingreso-egreso-form.component";
+import { IngresoEgresoFormComponent } from "./ingreso-egreso-form.component";
 import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
 import { TranslateModule } from "@ngx-translate/core";
@@ -26,9 +26,9 @@ import { By } from "@angular/platform-browser";
 import { ComboModel } from "@models/masters/combo.model";
 import { CategoryModel } from "@models/configurations/category.model";
 
-describe("IngresoEgresoCreateComponent", () => {
-  let component: IngresoEgresoCreateComponent;
-  let fixture: ComponentFixture<IngresoEgresoCreateComponent>;
+describe("IngresoEgresoFormComponent", () => {
+  let component: IngresoEgresoFormComponent;
+  let fixture: ComponentFixture<IngresoEgresoFormComponent>;
   let ingresoEgresoFacadeService: IngresoEgresoFacadeService;
   let categoryFacadeService: CategoryFacadeService;
   let combosFacadeService: CombosFacadeService;
@@ -48,12 +48,12 @@ describe("IngresoEgresoCreateComponent", () => {
           useValue: storeMock,
         },
       ],
-      declarations: [IngresoEgresoCreateComponent],
+      declarations: [IngresoEgresoFormComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IngresoEgresoCreateComponent);
+    fixture = TestBed.createComponent(IngresoEgresoFormComponent);
     ingresoEgresoFacadeService = TestBed.inject(IngresoEgresoFacadeService);
     categoryFacadeService = TestBed.inject(CategoryFacadeService);
     combosFacadeService = TestBed.inject(CombosFacadeService);

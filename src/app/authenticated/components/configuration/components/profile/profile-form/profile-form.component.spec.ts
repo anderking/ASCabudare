@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
-import { ProfileUpdateComponent } from "./profile-update.component";
+import { ProfileUpdateComponent } from "./profile-form.component";
 import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
 import { TranslateModule } from "@ngx-translate/core";

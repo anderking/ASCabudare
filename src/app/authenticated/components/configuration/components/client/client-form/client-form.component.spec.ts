@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
-import { ClientCreateComponent } from "./client-form.component";
+import { ClientFormComponent } from "./client-form.component";
 import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
 import { TranslateModule } from "@ngx-translate/core";
@@ -20,9 +20,9 @@ import { ComboModel } from "@models/masters/combo.model";
 import { ClientModel } from "@models/configurations/client.model";
 import { buildCreateDate } from "@root/core/utilities/core.utilities";
 
-describe("ClientCreateComponent", () => {
-  let component: ClientCreateComponent;
-  let fixture: ComponentFixture<ClientCreateComponent>;
+describe("ClientFormComponent", () => {
+  let component: ClientFormComponent;
+  let fixture: ComponentFixture<ClientFormComponent>;
   let clientFacadeService: ClientFacadeService;
   let sharedFacadeService: SharedFacadeService;
 
@@ -39,12 +39,12 @@ describe("ClientCreateComponent", () => {
           useValue: storeMock,
         },
       ],
-      declarations: [ClientCreateComponent],
+      declarations: [ClientFormComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClientCreateComponent);
+    fixture = TestBed.createComponent(ClientFormComponent);
     clientFacadeService = TestBed.inject(ClientFacadeService);
     sharedFacadeService = TestBed.inject(SharedFacadeService);
     component = fixture.componentInstance;

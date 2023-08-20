@@ -26,12 +26,13 @@ import { CategoryModel } from "@models/configurations/category.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { orderBy } from "@root/core/utilities/core.utilities";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-ingreso-egreso-form",
   templateUrl: "./ingreso-egreso-form.component.html",
 })
-export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
+export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
   public mainForm: UntypedFormGroup;
   public dataForm: IngresoEgresoModel;
@@ -56,7 +57,8 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
     private _authFacadeService: AuthFacadeService,
     private _location: Location,
     private _fb: UntypedFormBuilder,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private translateService: TranslateService
   ) {
     this.mainForm = this.initForm();
   }
@@ -249,7 +251,7 @@ export class IngresoEgresoCreateComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm);
+    return getErrorMessageField(field, this.mainForm, this.translateService);
   }
 
   clean() {

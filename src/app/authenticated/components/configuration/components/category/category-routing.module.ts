@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { CategoryComponent } from "./category.component";
-import { CategorysComponent } from "./categorys/categorys.component";
-import { CategoryCreateComponent } from "./category-form/category-form.component";
+import { CategoriesComponent } from "./categories/categories.component";
+import { CategoryFormComponent } from "./category-form/category-form.component";
 
 export const routes: Routes = [
   {
@@ -10,8 +10,8 @@ export const routes: Routes = [
     component: CategoryComponent,
     canActivate: [],
     children: [
-      { path: "", component: CategorysComponent },
-      { path: "form", component: CategoryCreateComponent },
+      { path: "", component: CategoriesComponent },
+      { path: "form", component: CategoryFormComponent },
       { path: "**", redirectTo: "", pathMatch: "full" },
     ],
   },

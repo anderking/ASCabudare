@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
-import { CategoryCreateComponent } from "./category-form.component";
+import { CategoryFormComponent } from "./category-form.component";
 import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
 import { TranslateModule } from "@ngx-translate/core";
@@ -17,9 +17,9 @@ import { routes } from "../category-routing.module";
 import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
-describe("CategoryCreateComponent", () => {
-  let component: CategoryCreateComponent;
-  let fixture: ComponentFixture<CategoryCreateComponent>;
+describe("CategoryFormComponent", () => {
+  let component: CategoryFormComponent;
+  let fixture: ComponentFixture<CategoryFormComponent>;
   let categoryFacadeService: CategoryFacadeService;
   let sharedFacadeService: SharedFacadeService;
 
@@ -36,12 +36,12 @@ describe("CategoryCreateComponent", () => {
           useValue: storeMock,
         },
       ],
-      declarations: [CategoryCreateComponent],
+      declarations: [CategoryFormComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategoryCreateComponent);
+    fixture = TestBed.createComponent(CategoryFormComponent);
     categoryFacadeService = TestBed.inject(CategoryFacadeService);
     sharedFacadeService = TestBed.inject(SharedFacadeService);
     component = fixture.componentInstance;

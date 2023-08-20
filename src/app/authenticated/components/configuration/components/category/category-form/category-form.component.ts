@@ -16,12 +16,13 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryModel } from "@models/configurations/category.model";
 import { CategoryFacadeService } from "@facades/category-facade.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-category-form",
   templateUrl: "./category-form.component.html",
 })
-export class CategoryCreateComponent implements OnInit, OnDestroy {
+export class CategoryFormComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
   public mainForm: UntypedFormGroup;
   public dataForm: CategoryModel;
@@ -33,7 +34,8 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
     private _sharedFacadeService: SharedFacadeService,
     private _location: Location,
     private _fb: UntypedFormBuilder,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private translateService: TranslateService
   ) {
     this.mainForm = this.initForm();
   }
@@ -142,7 +144,7 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm);
+    return getErrorMessageField(field, this.mainForm, this.translateService);
   }
 
   clean() {

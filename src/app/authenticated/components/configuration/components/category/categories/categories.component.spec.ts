@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
-import { CategorysComponent } from "./categorys.component";
+import { CategoriesComponent } from "./categories.component";
 import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
 import { TranslateModule } from "@ngx-translate/core";
@@ -14,9 +14,9 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
 import { RouterTestingModule } from "@angular/router/testing";
 import { routes } from "../category-routing.module";
 
-describe("CategorysComponent", () => {
-  let component: CategorysComponent;
-  let fixture: ComponentFixture<CategorysComponent>;
+describe("CategoriesComponent", () => {
+  let component: CategoriesComponent;
+  let fixture: ComponentFixture<CategoriesComponent>;
   let categoryFacadeService: CategoryFacadeService;
   let sharedFacadeService: SharedFacadeService;
 
@@ -33,12 +33,12 @@ describe("CategorysComponent", () => {
           useValue: storeMock,
         },
       ],
-      declarations: [CategorysComponent],
+      declarations: [CategoriesComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategorysComponent);
+    fixture = TestBed.createComponent(CategoriesComponent);
     categoryFacadeService = TestBed.inject(CategoryFacadeService);
     sharedFacadeService = TestBed.inject(SharedFacadeService);
     component = fixture.componentInstance;

@@ -36,7 +36,17 @@
   "VALIDATIONS": {
     "REQUIRED": "Field required",
     "EMAIL": "Email incorrect, example: name@company.com",
-    "PASSWORD": "The password must have a minimum of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+    "PASSWORD": "The password must have a minimum of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character",
+    "UPLOAD_FILE_REQUERID": "File required",
+    "VALID_FILE_EXTENSION": "Only IMG or PNG files are allowed",
+    "VALID_FILE_SIZE": "Maximum size allowed",
+    "FIELD_REQUIRED": "Field required",
+    "FIELD_INVALID": "Field invalid",
+    "FIELD_INVALID_MUST_BE": "Field invalid, must be",
+    "FIELD_LESS_CHARACTERS": "or less characters",
+    "FIELD_MORE_CHARACTERS": "o more characters",
+    "LESS_THAN_START_DATE": "The start date must be less than or equal to the end date.",
+    "LESS_GREATER_END_DATE": "The end date must be greater than or equal to the start date."
   },
   "TITLES": {
     "INGRESS_EGRESS": "Ingress Egress",
@@ -97,8 +107,6 @@
     "DELETE_SUCCESS": "Registry deleted successfully",
     "USER_UPDATE_SUCCESS": "User updated successfully",
     "UPLOAD_FILE_SUCCESS": "File uploaded successfully",
-    "UPLOAD_FILE_REQUERID": "File required",
-    "VALID_FILE_EXTENSION": "Only IMG or PNG files are allowed",
-    "VALID_FILE_SIZE": "Maximum size allowed"
+    "SEND_EMAIL": "Email sent, remember to check your inbox, junk mail or spam."
   }
 }

@@ -36,7 +36,17 @@
   "VALIDATIONS": {
     "REQUIRED": "Campo requerido",
     "EMAIL": "Email incorrecto, ejemplo: name@company.com",
-    "PASSWORD": "La contraseña debe tener un mínimo de ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial"
+    "PASSWORD": "La contraseña debe tener un mínimo de ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial",
+    "UPLOAD_FILE_REQUERID": "Archivo requerido",
+    "VALID_FILE_EXTENSION": "Solo se permiten archivos de tipo IMG o PNG",
+    "VALID_FILE_SIZE": "Tamaño maximo permitido",
+    "FIELD_REQUIRED": "Campo requerido",
+    "FIELD_INVALID": "Campo invalido",
+    "FIELD_INVALID_MUST_BE": "Campo inválido, debe tener",
+    "FIELD_LESS_CHARACTERS": "o menos caracteres",
+    "FIELD_MORE_CHARACTERS": "o más caracteres",
+    "LESS_THAN_START_DATE": "La fecha de inicio debe ser menor o igual a la fecha de finalización.",
+    "LESS_GREATER_END_DATE": "La fecha de fin debe ser mayor o igual que la fecha de inicio."
   },
   "TITLES": {
     "INGRESS_EGRESS": "Ingreso Egreso",
@@ -97,8 +107,6 @@
     "DELETE_SUCCESS": "Registro eliminado exitosamente",
     "USER_UPDATE_SUCCESS": "Usuario actualizado exitosamente",
     "UPLOAD_FILE_SUCCESS": "Archivo subido exitosamente",
-    "UPLOAD_FILE_REQUERID": "Archivo requerido",
-    "VALID_FILE_EXTENSION": "Solo se permiten archivos de tipo IMG o PNG",
-    "VALID_FILE_SIZE": "Tamaño maximo permitido"
+    "SEND_EMAIL": "Email enviado, recuerde revisar su bandeja de entrada, correos no deseado o spam."
   }
 }

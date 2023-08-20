@@ -53,6 +53,7 @@ export class SharedFacadeService implements SharedInterface {
     this.getMessage$()
       .pipe(filter((message) => !isNullOrUndefinedEmpty(message)))
       .subscribe((message) => {
+        console.log(message)
         this._toastService.show(message, {
           classname: "bg-success text-light",
           delay: 5000,

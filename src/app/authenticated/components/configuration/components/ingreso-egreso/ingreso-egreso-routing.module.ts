@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { IngresoEgresoComponent } from "./ingreso-egreso.component";
 import { IngresosEgresosComponent } from "./ingresos-egresos/ingresos-egresos.component";
-import { IngresoEgresoCreateComponent } from "./ingreso-egreso-form/ingreso-egreso-form.component";
+import { IngresoEgresoFormComponent } from "./ingreso-egreso-form/ingreso-egreso-form.component";
 
 export const routes: Routes = [
   {
@@ -11,7 +11,7 @@ export const routes: Routes = [
     canActivate: [],
     children: [
       { path: "", component: IngresosEgresosComponent },
-      { path: "form", component: IngresoEgresoCreateComponent },
+      { path: "form", component: IngresoEgresoFormComponent },
       { path: "**", redirectTo: "", pathMatch: "full" },
     ],
   },

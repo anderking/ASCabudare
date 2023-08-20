@@ -12,10 +12,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { ModalModel } from "@models/shared/modal.model";
 
 @Component({
-  selector: "app-categorys",
-  templateUrl: "./categorys.component.html",
+  selector: "app-categories",
+  templateUrl: "./categories.component.html",
 })
-export class CategorysComponent implements OnInit, OnDestroy {
+export class CategoriesComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public items: CategoryModel[] = [];
   public wordFilter = "";

@@ -4,6 +4,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from "@angular/forms";
+import { TranslateService } from "@ngx-translate/core";
 
 export function isValidField(
   field: string,
@@ -17,19 +18,28 @@ export function isValidField(
 
 export function getErrorMessageField(
   field: string,
-  mainForm: UntypedFormGroup
+  mainForm: UntypedFormGroup,
+  translateService: TranslateService
 ): string {
   let message = "";
-  if (mainForm.get(field).errors.required) {
-    message = "Field required";
+  if (mainForm.get(field).hasError("required")) {
+    message = translateService.instant("VALIDATIONS.FIELD_REQUIRED");
   } else if (mainForm.get(field).hasError("pattern")) {
-    message = "Field invalid";
+    message = translateService.instant("VALIDATIONS.FIELD_INVALID");
   } else if (mainForm.get(field).hasError("maxlength")) {
     const maxLength = mainForm.get(field)?.errors?.maxlength?.requiredLength;
-    message = "Field invalid, must be " + maxLength + " or less characters";
+    message = `${translateService.instant(
+      "VALIDATIONS.FIELD_INVALID_MUST_BE"
+    )} ${maxLength} ${translateService.instant(
+      "VALIDATIONS.FIELD_LESS_CHARACTERS"
+    )}`;
   } else if (mainForm.get(field).hasError("minlength")) {
     const minLength = mainForm.get(field)?.errors?.minlength?.requiredLength;
-    message = "Field invalid, must be " + minLength + " or less characters";
+    message = `${translateService.instant(
+      "VALIDATIONS.FIELD_INVALID_MUST_BE"
+    )} ${minLength} ${translateService.instant(
+      "VALIDATIONS.FIELD_MORE_CHARACTERS"
+    )}`;
   } else if (mainForm.get(field).hasError("greaterOrEqualDate")) {
     const greaterOrEqualDate = mainForm.get(field)?.errors?.greaterOrEqualDate;
     message = greaterOrEqualDate;
@@ -41,38 +51,39 @@ export function getErrorMessageField(
   return message;
 }
 
-export class ValidationsCustom {
-  public static setValidatorDateDashboard(
-    mainForm: UntypedFormGroup,
-    field: string
-  ): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const date = control.value + "T04:00:00.000Z";
-      const dateTime = new Date(date).getTime();
+export const setValidatorDateDashboard = (
+  mainForm: UntypedFormGroup,
+  field: string,
+  translateService: TranslateService
+): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const date = control.value + "T04:00:00.000Z";
+    const dateTime = new Date(date).getTime();
 
-      if (field === "startDate") {
-        const endDateString = mainForm.get("endDate").value + "T04:00:00.000Z";
-        const endDateTime = new Date(endDateString).getTime();
-        if (dateTime > endDateTime) {
-          return {
-            lessThanOrEqualDate:
-              "The start date must be less than or equal to the end date.",
-          };
-        }
+    if (field === "startDate") {
+      const endDateString = mainForm.get("endDate").value + "T04:00:00.000Z";
+      const endDateTime = new Date(endDateString).getTime();
+      if (dateTime > endDateTime) {
+        return {
+          lessThanOrEqualDate: translateService.instant(
+            "VALIDATIONS.LESS_THAN_START_DATE"
+          ),
+        };
       }
-      if (field === "endDate") {
-        const startDateString =
-          mainForm.get("startDate").value + "T04:00:00.000Z";
-        const startDateTime = new Date(startDateString).getTime();
-        if (dateTime < startDateTime) {
-          return {
-            greaterOrEqualDate:
-              "The end date must be greater than or equal to the start date.",
-          };
-        }
+    }
+    if (field === "endDate") {
+      const startDateString =
+        mainForm.get("startDate").value + "T04:00:00.000Z";
+      const startDateTime = new Date(startDateString).getTime();
+      if (dateTime < startDateTime) {
+        return {
+          greaterOrEqualDate: translateService.instant(
+            "VALIDATIONS.LESS_GREATER_END_DATE"
+          ),
+        };
       }
+    }
 
-      return null;
-    };
-  }
-}
+    return null;
+  };
+};

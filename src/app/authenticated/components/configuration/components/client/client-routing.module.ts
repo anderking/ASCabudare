@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ClientComponent } from "./client.component";
 import { ClientsComponent } from "./clients/clients.component";
-import { ClientCreateComponent } from "./client-form/client-form.component";
+import { ClientFormComponent } from "./client-form/client-form.component";
 
 export const routes: Routes = [
   {
@@ -11,7 +11,7 @@ export const routes: Routes = [
     canActivate: [],
     children: [
       { path: "", component: ClientsComponent },
-      { path: "form", component: ClientCreateComponent },
+      { path: "form", component: ClientFormComponent },
       { path: "**", redirectTo: "", pathMatch: "full" },
     ],
   },

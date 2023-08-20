@@ -16,7 +16,7 @@ import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.servi
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
 import {
-  ValidationsCustom,
+  setValidatorDateDashboard,
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
@@ -28,6 +28,7 @@ import {
   faCalendarCheck,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-current-filter",
@@ -53,7 +54,8 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   constructor(
     private _fb: UntypedFormBuilder,
     private _authFacadeService: AuthFacadeService,
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService
+    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -152,13 +154,13 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
 
     if (field === "startDate") {
       startDateControl.setValidators([
-        ValidationsCustom.setValidatorDateDashboard(this.mainForm, field),
+        setValidatorDateDashboard(this.mainForm, field, this.translateService),
       ]);
     }
 
     if (field === "endDate") {
       endDateControl.setValidators([
-        ValidationsCustom.setValidatorDateDashboard(this.mainForm, field),
+        setValidatorDateDashboard(this.mainForm, field, this.translateService),
       ]);
     }
 
@@ -250,6 +252,6 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   }
 
   public getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm);
+    return getErrorMessageField(field, this.mainForm, this.translateService);
   }
 }

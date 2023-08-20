@@ -23,8 +23,8 @@ import { AttachmentModel } from "@models/shared/attachment.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 
 @Component({
-  selector: "app-profile-update",
-  templateUrl: "./profile-update.component.html",
+  selector: "app-profile-form",
+  templateUrl: "./profile-form.component.html",
 })
 export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
@@ -90,13 +90,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getUrlAttachment$()
       .pipe(filter((x) => !isNullOrUndefinedEmpty(x)))
       .subscribe((url) => {
-        this._toastService.show(
-          this.translateService.instant("MESSAGES.UPLOAD_FILE_SUCCESS"),
-          {
-            classname: "bg-success text-light",
-            delay: 5000,
-          }
-        );
+
         this.currentFile = null;
         this.fileName = "";
         this.mainForm.get("photoURL").setValue(url);
@@ -146,7 +140,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm);
+    return getErrorMessageField(field, this.mainForm, this.translateService);
   }
 
   clean() {
@@ -176,14 +170,14 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
 
         if (!extension) {
           this.errorFiles = this.translateService.instant(
-            "MESSAGES.VALID_FILE_EXTENSION"
+            "VALIDATIONS.VALID_FILE_EXTENSION"
           );
           isValid = false;
         }
 
         if (currentFile.size > max_size) {
           this.errorFiles =
-            this.translateService.instant("MESSAGES.VALID_FILE_SIZE") +
+            this.translateService.instant("VALIDATIONS.VALID_FILE_SIZE") +
             " " +
             max_size / 1000000 +
             "Mb";
@@ -205,7 +199,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       this._attachmentFacadeService.create(this.currentFile);
     } else {
       this._toastService.show(
-        this.translateService.instant("MESSAGES.UPLOAD_FILE_REQUERID"),
+        this.translateService.instant("VALIDATIONS.UPLOAD_FILE_REQUERID"),
         {
           classname: "bg-danger text-light",
           delay: 5000,

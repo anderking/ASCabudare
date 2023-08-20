@@ -19,7 +19,7 @@ import {
   onSnapshot,
   setDoc,
 } from "@angular/fire/firestore";
-import { finalize, map, switchMap, tap } from "rxjs/operators";
+import { finalize, map, switchMap } from "rxjs/operators";
 import { ApiFirebaseServiceInterface } from "@interfaces/api-firebase-service.interface";
 import {
   getDownloadURL,
@@ -28,6 +28,7 @@ import {
   uploadBytes,
 } from "@angular/fire/storage";
 import { AuthService } from "@services/auth/auth.service";
+import { TranslateService } from "@ngx-translate/core";
 @Injectable({
   providedIn: "root",
 })
@@ -36,7 +37,8 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     public afAuth: Auth,
     private afDB: Firestore,
     private storage: Storage,
-    private authService: AuthService
+    private authService: AuthService,
+    private translateService: TranslateService
   ) {}
 
   /**
@@ -50,9 +52,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
       signInWithEmailAndPassword(this.afAuth, data.email, data.password)
     );
 
-    return subscription.pipe(
-      map((response: any) => response.user)
-    );
+    return subscription.pipe(map((response: any) => response.user));
   }
 
   /**
@@ -65,9 +65,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
       createUserWithEmailAndPassword(this.afAuth, data.email, data.password)
     );
 
-    return subscription.pipe(
-      map((response: any) => response.user)
-    );
+    return subscription.pipe(map((response: any) => response.user));
   }
 
   /**
@@ -76,12 +74,8 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   sendEmailVerification$(): Observable<any> {
     const auth = getAuth();
     const subscription = from(sendEmailVerification(auth.currentUser));
-    return subscription.pipe(
-      map(
-        () =>
-          "Email enviado, recuerde revisar su bandeja de entrada, correos no deseado o spam."
-      )
-    );
+    const message = this.translateService.instant("MESSAGES.SEND_EMAIL");
+    return subscription.pipe(map(() => message));
   }
 
   /**
@@ -92,12 +86,8 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     const data: any = action.payload;
     const auth = getAuth();
     const subscription = from(sendPasswordResetEmail(auth, data.email));
-    return subscription.pipe(
-      map(
-        () =>
-          "Email enviado, recuerde revisar su bandeja de entrada, correos no deseado o spam."
-      )
-    );
+    const message = this.translateService.instant("MESSAGES.SEND_EMAIL");
+    return subscription.pipe(map(() => message));
   }
 
   /**
@@ -157,9 +147,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
       finalize(() => {})
     );
 
-    return subscription.pipe(
-      map((response: any) => response)
-    );
+    return subscription.pipe(map((response: any) => response));
   }
 
   /**

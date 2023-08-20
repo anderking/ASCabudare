@@ -26,12 +26,13 @@ import {
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { buildCreateDate } from "@root/core/utilities/core.utilities";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-client-form",
   templateUrl: "./client-form.component.html",
 })
-export class ClientCreateComponent implements OnInit, OnDestroy {
+export class ClientFormComponent implements OnInit, OnDestroy {
   public finisher$ = new Subject<void>();
   public mainForm: UntypedFormGroup;
   public dataForm: ClientModel;
@@ -51,7 +52,8 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     private _authFacadeService: AuthFacadeService,
     private _location: Location,
     private _fb: UntypedFormBuilder,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private translateService: TranslateService
   ) {
     this.mainForm = this.initForm();
   }
@@ -227,7 +229,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm);
+    return getErrorMessageField(field, this.mainForm, this.translateService);
   }
 
   clean() {

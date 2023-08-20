@@ -5,6 +5,7 @@ import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import * as attachmentActions from "@store/shared/actions/attachment.actions";
 import * as sharedActions from "@store/shared/actions/shared.actions";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class SharedEffects {
@@ -17,8 +18,12 @@ export class SharedEffects {
       switchMap((params) =>
         this.firebaseService.uploadAttachment$(params.props).pipe(
           switchMap((urlAttachment: string) => {
+            const message = this.translateService.instant(
+              "MESSAGES.UPLOAD_FILE_SUCCESS"
+            );
             return [
               attachmentActions.createAttachmentSuccess({ urlAttachment }),
+              sharedActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>
@@ -39,6 +44,7 @@ export class SharedEffects {
    */
   constructor(
     private _actions$: Actions,
-    private firebaseService: FirebaseService<any>
+    private firebaseService: FirebaseService<any>,
+    private translateService: TranslateService
   ) {}
 }
