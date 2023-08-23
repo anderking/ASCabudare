@@ -44,12 +44,12 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
-        this.numberOfDecimal =
-          user && user.numberOfDecimal
-            ? user.numberOfDecimal
-            : this.numberOfDecimal;
-        this.systemDecimal =
-          user && user.systemDecimal ? user.systemDecimal : this.systemDecimal;
+        this.numberOfDecimal = user?.numberOfDecimal
+          ? user.numberOfDecimal
+          : this.numberOfDecimal;
+        this.systemDecimal = user?.systemDecimal
+          ? user.systemDecimal
+          : this.systemDecimal;
       });
 
     this._ingresoEgresoFacadeService

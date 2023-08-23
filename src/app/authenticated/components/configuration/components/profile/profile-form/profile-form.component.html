@@ -18,7 +18,7 @@
               <form [formGroup]="mainForm" class="row g-3">
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label class="form-label">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
+                  <label for="displayName" class="form-label">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="displayName"
                     [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('displayName')">
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
+                  <label for="phoneNumber" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="phoneNumber"
                     [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('phoneNumber')">
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                  <label class="form-label">{{ 'PROPERTIES.LOCAL_CURRENCY' | translate }}:</label>
+                  <label for="currency" class="form-label">{{ 'PROPERTIES.LOCAL_CURRENCY' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="currency"
                     [ngClass]="{'is-invalid': mainForm.get('currency')?.touched && !mainForm.get('currency')?.valid, 'is-valid': mainForm.get('currency')?.touched && mainForm.get('currency')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('currency')">
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                  <label class="form-label">{{ 'PROPERTIES.STARTDAY' | translate }}:</label>
+                  <label for="dayStartDashboard" class="form-label">{{ 'PROPERTIES.STARTDAY' | translate }}:</label>
                   <select class="form-select" formControlName="dayStartDashboard"
                     [ngClass]="{'is-invalid': mainForm.get('dayStartDashboard')?.touched && !mainForm.get('dayStartDashboard')?.valid, 'is-valid':  mainForm.get('dayStartDashboard')?.touched && mainForm.get('dayStartDashboard')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                  <label class="form-label">{{ 'PROPERTIES.NUMBER_DECIMAL' | translate }}:</label>
+                  <label for="numberOfDecimal" class="form-label">{{ 'PROPERTIES.NUMBER_DECIMAL' | translate }}:</label>
                   <select class="form-select" formControlName="numberOfDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('numberOfDecimal')?.touched && !mainForm.get('numberOfDecimal')?.valid, 'is-valid':  mainForm.get('numberOfDecimal')?.touched && mainForm.get('numberOfDecimal')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                  <label class="form-label">{{ 'PROPERTIES.SYSTEM_DECIMAL' | translate }}:</label>
+                  <label for="systemDecimal" class="form-label">{{ 'PROPERTIES.SYSTEM_DECIMAL' | translate }}:</label>
                   <select class="form-select" formControlName="systemDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('systemDecimal')?.touched && !mainForm.get('systemDecimal')?.valid, 'is-valid':  mainForm.get('systemDecimal')?.touched && mainForm.get('systemDecimal')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
@@ -84,8 +84,8 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <label>{{ 'PROPERTIES.PHOTO_URL' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="photoURL"
+                  <label for="photoURL" class="form-label">{{ 'PROPERTIES.PHOTO_URL' | translate }}:</label>
+                  <input type="text" class="form-control" formControlName="photoURL" aria-label="photoURL"
                     [ngClass]="{'is-invalid': mainForm.get('photoURL')?.touched && !mainForm.get('photoURL')?.valid, 'is-valid': mainForm.get('photoURL')?.touched && mainForm.get('photoURL')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('photoURL')">
                     {{ getErrorMessageField('photoURL') }}

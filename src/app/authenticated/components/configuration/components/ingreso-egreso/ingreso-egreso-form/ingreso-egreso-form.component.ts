@@ -73,12 +73,12 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.finisher$))
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
-        this.numberOfDecimal =
-          user && user.numberOfDecimal
-            ? user.numberOfDecimal
-            : this.numberOfDecimal;
-        this.systemDecimal =
-          user && user.systemDecimal ? user.systemDecimal : this.systemDecimal;
+        this.numberOfDecimal = user?.numberOfDecimal
+          ? user.numberOfDecimal
+          : this.numberOfDecimal;
+        this.systemDecimal = user?.systemDecimal
+          ? user.systemDecimal
+          : this.systemDecimal;
       });
 
     const params$ = this._activatedRoute.paramMap.pipe(

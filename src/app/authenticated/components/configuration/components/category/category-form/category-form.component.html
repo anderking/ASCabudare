@@ -18,7 +18,7 @@
               <form [formGroup]="mainForm" class="row g-3">
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <label class="form-label">{{ 'PROPERTIES.NAME' | translate }}:</label>
+                  <label for="name" class="form-label">{{ 'PROPERTIES.NAME' | translate }}:</label>
                   <input type="text" class="form-control" aria-label="name" formControlName="name"
                     [ngClass]="{'is-invalid': mainForm.get('name')?.touched && !mainForm.get('name')?.valid, 'is-valid': mainForm.get('name')?.touched && mainForm.get('name')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('name')">
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <label class="form-label">{{ 'PROPERTIES.DESCRIPTION' | translate }}:</label>
+                  <label for="description" class="form-label">{{ 'PROPERTIES.DESCRIPTION' | translate }}:</label>
                   <textarea class="form-control" formControlName="description" aria-label="description"
                     [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
                   <div class="invalid-feedback" *ngIf="isValidField('description')">

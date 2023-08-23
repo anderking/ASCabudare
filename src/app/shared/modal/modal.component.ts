@@ -20,12 +20,12 @@ export class ModalComponent<T> implements OnInit {
     this._authFacadeService
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
-        this.numberOfDecimal =
-          user && user.numberOfDecimal
-            ? user.numberOfDecimal
-            : this.numberOfDecimal;
-        this.systemDecimal =
-          user && user.systemDecimal ? user.systemDecimal : this.systemDecimal;
+        this.numberOfDecimal = user?.numberOfDecimal
+          ? user.numberOfDecimal
+          : this.numberOfDecimal;
+        this.systemDecimal = user?.systemDecimal
+          ? user.systemDecimal
+          : this.systemDecimal;
       });
   }
 
