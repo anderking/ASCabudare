@@ -19,7 +19,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="displayName" class="form-label">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="displayName"
+                  <input type="text" class="form-control" formControlName="displayName" aria-label="displayName"
                     [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('displayName')">
                     {{ getErrorMessageField('displayName') }}
@@ -28,7 +28,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="phoneNumber" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="phoneNumber"
+                  <input type="text" class="form-control" formControlName="phoneNumber" aria-label="phoneNumber"
                     [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('phoneNumber')">
                     {{ getErrorMessageField('phoneNumber') }}
@@ -37,7 +37,7 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                   <label for="currency" class="form-label">{{ 'PROPERTIES.LOCAL_CURRENCY' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="currency"
+                  <input type="text" class="form-control" formControlName="currency" aria-label="currency"
                     [ngClass]="{'is-invalid': mainForm.get('currency')?.touched && !mainForm.get('currency')?.valid, 'is-valid': mainForm.get('currency')?.touched && mainForm.get('currency')?.valid}">
                   <div class="invalid-feedback" *ngIf="isValidField('currency')">
                     {{ getErrorMessageField('currency') }}
@@ -46,7 +46,7 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                   <label for="dayStartDashboard" class="form-label">{{ 'PROPERTIES.STARTDAY' | translate }}:</label>
-                  <select class="form-select" formControlName="dayStartDashboard"
+                  <select class="form-select" formControlName="dayStartDashboard" aria-label="dayStartDashboard"
                     [ngClass]="{'is-invalid': mainForm.get('dayStartDashboard')?.touched && !mainForm.get('dayStartDashboard')?.valid, 'is-valid':  mainForm.get('dayStartDashboard')?.touched && mainForm.get('dayStartDashboard')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
                     <option *ngFor="let item of startDay$ | async" [ngValue]="item.id">
@@ -59,7 +59,7 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                   <label for="numberOfDecimal" class="form-label">{{ 'PROPERTIES.NUMBER_DECIMAL' | translate }}:</label>
-                  <select class="form-select" formControlName="numberOfDecimal"
+                  <select class="form-select" formControlName="numberOfDecimal" aria-label="numberOfDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('numberOfDecimal')?.touched && !mainForm.get('numberOfDecimal')?.valid, 'is-valid':  mainForm.get('numberOfDecimal')?.touched && mainForm.get('numberOfDecimal')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
                     <option *ngFor="let item of numberOfDecimal$ | async" [ngValue]="item.id">
@@ -72,7 +72,7 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                   <label for="systemDecimal" class="form-label">{{ 'PROPERTIES.SYSTEM_DECIMAL' | translate }}:</label>
-                  <select class="form-select" formControlName="systemDecimal"
+                  <select class="form-select" formControlName="systemDecimal" aria-label="systemDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('systemDecimal')?.touched && !mainForm.get('systemDecimal')?.valid, 'is-valid':  mainForm.get('systemDecimal')?.touched && mainForm.get('systemDecimal')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
                     <option *ngFor="let item of systemDecimal$ | async" [ngValue]="item.id">
@@ -94,10 +94,10 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <div class="input-group">
-                    <input type="file" class="form-control" id="inputGroupFile" aria-describedby="inputGroupFileAddon"
-                      aria-label="Upload" (change)="changeFile($event)">
-                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon"
-                      (click)="uploadFile()" [disabled]="currentFile === null">
+                    <input type="file" class="form-control" id="file" aria-describedby="file" aria-label="file"
+                      (change)="changeFile($event)">
+                    <button class="btn btn-outline-secondary" type="button" id="fileButton" (click)="uploadFile()"
+                      [disabled]="currentFile === null">
                       <div *ngIf="!isLoadingAttachment">{{ 'BUTTONS.UPLOAD' | translate }}</div>
                       <div *ngIf="isLoadingAttachment">
                         <div class="d-flex justify-content-center">
