@@ -4,7 +4,7 @@ import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import * as actions from "@store/masters/actions/combo.actions";
-import * as sharedActions from "@store/shared/actions/shared.actions";
+import * as notificationActions from "@store/shared/actions/notification.actions";
 import { ComboModel } from "@models/masters/combo.model";
 /**
  * Efecto para escuchar acciones de la entidad
@@ -23,7 +23,7 @@ export class ComboEffects {
             return [actions.loadTypeActive({ items })];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -42,7 +42,7 @@ export class ComboEffects {
             return [actions.loadDocumentType({ items })];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )

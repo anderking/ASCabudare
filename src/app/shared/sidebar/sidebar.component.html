@@ -34,9 +34,15 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="[ '/authenticated/configuration/ingreso-egreso' ]" [routerLinkActive]="'inbox'">
+        <a [routerLink]="[ '/authenticated/management/ingreso-egreso' ]" [routerLinkActive]="'inbox'">
           <fa-icon [icon]="faMoneyBillTransfer"></fa-icon>
           <span>{{'ROUTERS.INGRESS_EGRESS' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="[ '/authenticated/management/lending' ]" [routerLinkActive]="'inbox'">
+          <fa-icon [icon]="faMoneyBill"></fa-icon>
+          <span>{{'ROUTERS.LENDING' | translate }}</span>
         </a>
       </li>
       <li>

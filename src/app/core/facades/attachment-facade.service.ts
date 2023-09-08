@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
-import * as selectors from "@store/shared/selectors/shared.selectors";
+import * as selectors from "@store/shared/selectors/attachment.selectors";
 import * as actions from "@store/shared/actions/attachment.actions";
 import { DataActionModel } from "@models/common/data-action.model";
 import { AttachmentModel } from "@models/shared/attachment.model";

@@ -7,7 +7,7 @@ import {
   CurrentUserModel,
 } from "@models/auth/current-user.model";
 import * as actions from "@store/auth/actions/auth.actions";
-import * as sharedActions from "@store/shared/actions/shared.actions";
+import * as notificationActions from "@store/shared/actions/notification.actions";
 import { FirebaseService } from "@services/firebase.service";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -45,7 +45,7 @@ export class AuthEffects {
           }),
           map((login: CurrentUserModel) => actions.loginSucess({ login })),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -78,7 +78,7 @@ export class AuthEffects {
             actions.registerSucess({ register })
           ),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -94,7 +94,7 @@ export class AuthEffects {
             actions.setUserDocSuccess({ userDoc })
           ),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -112,11 +112,11 @@ export class AuthEffects {
             );
             return [
               actions.updateProfileSuccess({ updateProfileFB }),
-              sharedActions.setMessage({ message }),
+              notificationActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -132,7 +132,7 @@ export class AuthEffects {
             return [actions.updateProfileFBSuccess({ updateProfileFB })];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -147,11 +147,11 @@ export class AuthEffects {
           switchMap((message: string) => {
             return [
               actions.verifyEmailSuccess({ message }),
-              sharedActions.setMessage({ message }),
+              notificationActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -166,11 +166,11 @@ export class AuthEffects {
           switchMap((message: string) => {
             return [
               actions.forgotPasswordSuccess({ message }),
-              sharedActions.setMessage({ message }),
+              notificationActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )

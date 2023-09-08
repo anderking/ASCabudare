@@ -3,22 +3,29 @@ import {
   ActionReducerMap,
   createSelector,
 } from "@ngrx/store";
-import { sharedReducer } from "@store/shared/reducers";
-
+import { notificationReducer, attachmentReducer } from "@store/shared/reducers";
 
 export const sharedFeatureKey = "shared";
 
 export interface SharedState {
-  shared: sharedReducer.State;
+  notification: notificationReducer.State;
+  attachment: attachmentReducer.State;
 }
 
 export const reducers: ActionReducerMap<SharedState> = {
-  shared: sharedReducer.reducer,
+  notification: notificationReducer.reducer,
+  attachment: attachmentReducer.reducer,
 };
 
-export const getSharedState = createFeatureSelector<SharedState>(sharedFeatureKey);
+export const getSharedState =
+  createFeatureSelector<SharedState>(sharedFeatureKey);
 
-export const getShared = createSelector(
+export const getNotification = createSelector(
   getSharedState,
-  (state: SharedState) => state.shared
+  (state: SharedState) => state.notification
+);
+
+export const getAttachment = createSelector(
+  getSharedState,
+  (state: SharedState) => state.attachment
 );

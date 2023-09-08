@@ -1,3 +1,4 @@
-import * as sharedReducer from "@store/shared/reducers/shared.reducer";
+import * as notificationReducer from "@store/shared/reducers/notification.reducer";
+import * as attachmentReducer from "@store/shared/reducers/attachment.reducer";
 
-export { sharedReducer };
+export { notificationReducer, attachmentReducer };

@@ -7,13 +7,6 @@ const routes: Routes = [
     children: [
       { path: "", redirectTo: "profile", pathMatch: "full" },
       {
-        path: "ingreso-egreso",
-        loadChildren: () =>
-          import("./components/ingreso-egreso/ingreso-egreso.module").then(
-            (m) => m.IngresoEgresoModule
-          ),
-      },
-      {
         path: "category",
         loadChildren: () =>
           import("./components/category/category.module").then(
@@ -36,6 +29,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: "**", redirectTo: "", pathMatch: "full" },
 ];
 
 @NgModule({

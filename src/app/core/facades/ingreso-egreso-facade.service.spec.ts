@@ -1,9 +1,9 @@
 import { TestBed, waitForAsync } from "@angular/core/testing";
 import { Store } from "@ngrx/store";
 import { of } from "rxjs";
-import { storeMock } from "@root/core/constants/mocks/mocks";
+import { storeMock } from "@core/constants/mocks/mocks";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
-import * as actions from "@store/ingreso-egreso/actions/ingreso-egreso.actions";
+import * as actions from "@store/management/actions/ingreso-egreso.actions";
 import {
   mockTestIngresoEgresoAll,
   mockTestIngresoEgresoOne,
@@ -12,9 +12,9 @@ import {
 import {
   collectionFB,
   collectionFBSecond,
-} from "@constants/ingreso-egreso/ingreso-egreso.constants";
+} from "@constants/management/ingreso-egreso.constants";
 import { CurrentUserModel } from "@models/auth/current-user.model";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
+import { IngresoEgresoModel } from "@models/management/ingreso-egreso.model";
 
 describe("IngresoEgresoFacadeService", () => {
   let facadeService: IngresoEgresoFacadeService;

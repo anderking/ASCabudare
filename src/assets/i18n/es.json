@@ -52,6 +52,7 @@
     "INGRESS_EGRESS": "Ingreso Egreso",
     "INGRESS": "Ingresos",
     "EGRESS": "Egresos",
+    "LENDING": "Préstamos",
     "CATEGORY": "Categoría",
     "CLIENT": "Cliente",
     "PROFILE": "Perfil",
@@ -99,7 +100,8 @@
     "CONFIGURATION": "Configuraciones",
     "CATEGORY": "Categorías",
     "CLIENT": "Clientes",
-    "INGRESS_EGRESS": "Ingreso Egreso"
+    "INGRESS_EGRESS": "Ingreso Egreso",
+    "LENDING": "Préstamos"
   },
   "MESSAGES": {
     "CREATE_SUCCESS": "Registro agregado exitosamente",

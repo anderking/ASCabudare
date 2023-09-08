@@ -18,7 +18,11 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { ToastService } from "@services/ui/toast.service";
 import { TranslateService } from "@ngx-translate/core";
-import { numberOfDecimal, startDaySelect, systemDecimal } from "@root/core/constants/mocks/mocks-const";
+import {
+  numberOfDecimal,
+  startDaySelect,
+  systemDecimal,
+} from "@root/core/constants/mocks/mocks-const";
 import { AttachmentModel } from "@models/shared/attachment.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 
@@ -90,7 +94,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getUrlAttachment$()
       .pipe(filter((x) => !isNullOrUndefinedEmpty(x)))
       .subscribe((url) => {
-
         this.currentFile = null;
         this.fileName = "";
         this.mainForm.get("photoURL").setValue(url);
@@ -114,7 +117,10 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       phoneNumber: [""],
       currency: [""],
       photoURL: [""],
-      dayStartDashboard: [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
+      dayStartDashboard: [
+        null,
+        [Validators.required, Validators.pattern(/^[0-9]\d*$/)],
+      ],
       numberOfDecimal: [null, [Validators.pattern(/^[0-9]\d*$/)]],
       systemDecimal: [null],
     });
@@ -215,16 +221,10 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     const isLoading$ = this._authFacadeService.getLoading$();
     const isLoadingUpdateProfile$ =
       this._authFacadeService.getUpdateProfileLoading$();
-    const isLoadingUpdateProfileFB$ =
-      this._authFacadeService.getUpdateProfileFBLoading$();
 
-    const result$ = combineLatest([
-      isLoading$,
-      isLoadingUpdateProfile$,
-      isLoadingUpdateProfileFB$,
-    ]).pipe(
+    const result$ = combineLatest([isLoading$, isLoadingUpdateProfile$]).pipe(
       map(
-        ([isLoading, isLoadingUpdateProfile, isLoadingUpdateProfileFB]) =>
+        ([isLoading, isLoadingUpdateProfile]) =>
           isLoading || isLoadingUpdateProfile
       ),
       takeUntil(this.finisher$)

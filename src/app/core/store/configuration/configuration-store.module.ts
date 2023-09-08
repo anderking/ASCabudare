@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
-import { CategoryEffects } from "./effects/category.effects";
+import { CategoryEffects } from "@store/configuration/effects/category.effects";
+import { ClientEffects } from "@store/configuration/effects/client.effects";
 import { reducers, configurationFeatureKey } from "./index";
-import { ClientEffects } from "./effects/client.effects";
 
 @NgModule({
   imports: [

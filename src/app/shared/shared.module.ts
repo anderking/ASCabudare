@@ -9,26 +9,7 @@ import { ToastContainerComponent } from "./toast-container/toast-container.compo
 import { TranslateModule } from "@ngx-translate/core";
 import { CurrentFilterComponent } from "./current-filter/current-filter.component";
 import { ModalComponent } from "./modal/modal.component";
-import {
-  FaIconLibrary,
-  FontAwesomeModule,
-} from "@fortawesome/angular-fontawesome";
-import {
-  faArrowRight,
-  faArrowLeft,
-  faTrash,
-  faCalendarCheck,
-  faGauge,
-  faTags,
-  faUsers,
-  faMoneyBillTransfer,
-  faGear,
-  faRightFromBracket,
-  faBars,
-  faXmark,
-  faMoon,
-  faLanguage,
-} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { AmountPipe } from "@root/core/pipes/amount.pipe";
 import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe";
@@ -77,23 +58,4 @@ import { OrderByPipe } from "@root/core/pipes/orderBy.pipe";
     OrderByPipe,
   ],
 })
-export class SharedModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(
-      faArrowRight,
-      faArrowLeft,
-      faTrash,
-      faCalendarCheck,
-      faGauge,
-      faTags,
-      faUsers,
-      faMoneyBillTransfer,
-      faGear,
-      faRightFromBracket,
-      faBars,
-      faXmark,
-      faMoon,
-      faLanguage
-    );
-  }
-}
+export class SharedModule {}

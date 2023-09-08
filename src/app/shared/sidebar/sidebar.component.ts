@@ -11,6 +11,7 @@ import {
   faXmark,
   faMoon,
   faLanguage,
+  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { TranslateService } from "@ngx-translate/core";
@@ -33,6 +34,7 @@ export class SidebarComponent implements OnInit {
   public faTags = faTags;
   public faUsers = faUsers;
   public faMoneyBillTransfer = faMoneyBillTransfer;
+  public faMoneyBill = faMoneyBill;
   public faGear = faGear;
   public faRightFromBracket = faRightFromBracket;
   public faBars = faBars;

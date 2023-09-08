@@ -3,13 +3,13 @@ import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { FacadeInterface } from "@interfaces/facade-interface";
 import { DataActionModel } from "@models/common/data-action.model";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
-import * as selectors from "@store/ingreso-egreso/selectors/ingreso-egreso.selectors";
-import * as actions from "@store/ingreso-egreso/actions/ingreso-egreso.actions";
+import { IngresoEgresoModel } from "@models/management/ingreso-egreso.model";
+import * as selectors from "@store/management/selectors/ingreso-egreso.selectors";
+import * as actions from "@store/management/actions/ingreso-egreso.actions";
 import {
   collectionFB,
   collectionFBSecond,
-} from "@constants/ingreso-egreso/ingreso-egreso.constants";
+} from "@constants/management/ingreso-egreso.constants";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { getCurrentUserDecrypt } from "@core/utilities/core.utilities";
 import { mockTestCurrentUserOne } from "@constants/mocks/mocks-units-test";

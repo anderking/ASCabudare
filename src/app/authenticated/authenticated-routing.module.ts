@@ -22,6 +22,13 @@ const routes: Routes = [
             (m) => m.ConfigurationModule
           ),
       },
+      {
+        path: "management",
+        loadChildren: () =>
+          import("./components/management/management.module").then(
+            (m) => m.ManagementModule
+          ),
+      },
     ],
   },
 ];
