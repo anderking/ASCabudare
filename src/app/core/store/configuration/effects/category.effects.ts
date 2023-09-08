@@ -4,7 +4,7 @@ import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import * as actions from "@store/configuration/actions/category.actions";
-import * as sharedActions from "@store/shared/actions/shared.actions";
+import * as notificationActions from "@store/shared/actions/notification.actions";
 import { CategoryModel } from "@models/configurations/category.model";
 import { TranslateService } from "@ngx-translate/core";
 /**
@@ -24,7 +24,7 @@ export class CategoryEffects {
             return [actions.setAll({ items })];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -43,7 +43,7 @@ export class CategoryEffects {
             return [actions.setOne({ item })];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -70,11 +70,11 @@ export class CategoryEffects {
             }
             return [
               actions.addOne({ item }),
-              sharedActions.setMessage({ message }),
+              notificationActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )
@@ -97,11 +97,11 @@ export class CategoryEffects {
             const id = item.id;
             return [
               actions.removeOne({ id }),
-              sharedActions.setMessage({ message }),
+              notificationActions.setMessage({ message }),
             ];
           }),
           catchError((error) =>
-            of(sharedActions.setError({ error }), actions.resetLoading())
+            of(notificationActions.setError({ error }), actions.resetLoading())
           )
         )
       )

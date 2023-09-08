@@ -1,7 +1,8 @@
 :host {
   position: fixed;
-  top: 0;
-  right: 0;
+  bottom: 0;
+  left: 48%;
   margin: 0.5em;
   z-index: 1200;
+  transform: translate(-50%, 0%);
 }

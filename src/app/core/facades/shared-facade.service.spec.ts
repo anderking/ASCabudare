@@ -2,7 +2,7 @@ import { TestBed, waitForAsync } from "@angular/core/testing";
 import { Store } from "@ngrx/store";
 import { of } from "rxjs";
 import { storeMock } from "@root/core/constants/mocks/mocks";
-import * as actions from "@store/shared/actions/shared.actions";
+import * as actions from "@store/shared/actions/notification.actions";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { mockTestErrorOne } from "@constants/mocks/mocks-units-test";
 import { ErrorModel } from "@models/shared/error.model";

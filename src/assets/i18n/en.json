@@ -52,6 +52,7 @@
     "INGRESS_EGRESS": "Ingress Egress",
     "INGRESS": "Ingress",
     "EGRESS": "Egress",
+    "LENDING": "Lendings",
     "CATEGORY": "Category",
     "CLIENT": "Client",
     "PROFILE": "Profile",
@@ -99,7 +100,8 @@
     "CONFIGURATION": "Configurations",
     "CATEGORY": "Categories",
     "CLIENT": "Clients",
-    "INGRESS_EGRESS": "Ingress Egress"
+    "INGRESS_EGRESS": "Ingress Egress",
+    "LENDING": "Lendings"
   },
   "MESSAGES": {
     "CREATE_SUCCESS": "Registry added successfully",

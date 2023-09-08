@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from "@angular/core";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
+import { IngresoEgresoModel } from "@models/management/ingreso-egreso.model";
 import { MultiModel, SingleModel } from "@models/shared/dashboard.model";
 import { GroupModel } from "@models/shared/group.model";
 

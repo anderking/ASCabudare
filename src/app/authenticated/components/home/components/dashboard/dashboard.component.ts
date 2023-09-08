@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { combineLatest, Subject } from "rxjs";
 import { filter, first, map, takeUntil } from "rxjs/operators";
-import { IngresoEgresoModel } from "@models/ingreso-egreso/ingreso-egreso.model";
+import { IngresoEgresoModel } from "@models/management/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
