@@ -26,8 +26,8 @@
             <table class="table table-striped table-hover" aria-describedby="ingreso-egreso">
               <thead>
                 <tr>
-                  <th scope="col">{{ 'PROPERTIES.TYPE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.CATEGORY' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.TYPE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DESCRIPTION' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DATE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.AMOUNT' | translate }}</th>
@@ -38,9 +38,9 @@
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let item of items | orderBy : ['-typeActive','category','description'] | filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } : false">
-                  <td>{{item.typeActive}}</td>
+                  *ngFor="let item of items | orderBy : ['category', '-typeActive','-createDate','description'] | filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } : false">
                   <td>{{item.category}}</td>
+                  <td>{{item.typeActive}}</td>
                   <td>{{item.description}}</td>
                   <td>{{item.createDate}}</td>
                   <td>{{item.amount | customDecimal: systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</td>

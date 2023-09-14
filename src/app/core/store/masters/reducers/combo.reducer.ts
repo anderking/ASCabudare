@@ -8,6 +8,8 @@ export interface State {
   typeActiveLoading: boolean;
   documentType: ComboModel[];
   documentTypeLoading: boolean;
+  stateSolvency: ComboModel[];
+  stateSolvencyLoading: boolean;
   loading: boolean;
 }
 
@@ -17,6 +19,8 @@ export const initialState: State = {
   typeActiveLoading: false,
   documentType: [],
   documentTypeLoading: false,
+  stateSolvency: [],
+  stateSolvencyLoading: false,
   loading: false,
 };
 
@@ -54,6 +58,21 @@ const comboReducer = createReducer(
     };
   }),
 
+  on(actions.searchStateSolvency, (state) => ({
+    ...state,
+    stateSolvencyLoading: true,
+    loading: true,
+  })),
+
+  on(actions.loadStateSolvency, (state, { items }) => {
+    return {
+      ...state,
+      stateSolvency: items,
+      stateSolvencyLoading: false,
+      loading: false,
+    };
+  }),
+
   on(actions.resetCombos, (state) => {
     return { ...initialState };
   }),
@@ -63,6 +82,7 @@ const comboReducer = createReducer(
       ...state,
       typeActiveLoading: false,
       documentTypeLoading: false,
+      stateSolvencyLoading: false,
       loading: false,
     };
   })

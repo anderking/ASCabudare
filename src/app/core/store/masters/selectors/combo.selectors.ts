@@ -23,6 +23,17 @@ export const selectDocumentTypeLoading = createSelector(
   (state) => state.documentTypeLoading
 );
 
+/** Exporta el select para el facade */
+export const selectStateSolvency = createSelector(
+  getMasters,
+  (state) => state.stateSolvency
+);
+/** Exporta el loading para el facade */
+export const selectStateSolvencyLoading = createSelector(
+  getMasters,
+  (state) => state.stateSolvencyLoading
+);
+
 /** Exporta el loading para el facade */
 export const selectLoading = createSelector(
   getMasters,

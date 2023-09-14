@@ -8,6 +8,7 @@ import { ComboModel } from "@models/masters/combo.model";
 import { mockTestComboAll } from "@constants/mocks/mocks-units-test";
 import {
   collectionFBDocumentType,
+  collectionFBStateSolvency,
   collectionFBTypeActive,
 } from "@constants/masters/masters.constants";
 
@@ -79,6 +80,34 @@ describe("CombosFacadeService", () => {
       const mock: ComboModel[] = mockTestComboAll;
       spyOn(facadeService, "getDocumentType$").and.returnValue(of(mock));
       const result$ = facadeService.getDocumentType$();
+      expect(result$).toBeDefined();
+      result$.subscribe((result) => {
+        expect(result).toEqual(mock);
+      });
+    });
+  });
+
+  describe("stateSolvency", () => {
+    it("should expect the searchStateSolvency method to exist and to call the correct endpoint", () => {
+      spy = spyOn(facadeService, "searchStateSolvency");
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
+      expect(collectionFBStateSolvency).toEqual("Masters/Combos/StateSolvency");
+    });
+
+    it("should expect dispatch searchStateSolvency action with the correct props", () => {
+      facadeService.searchStateSolvency();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        actions.searchStateSolvency({
+          props: { url: collectionFBStateSolvency },
+        })
+      );
+    });
+
+    it("should return the getStateSolvency$ observable type ComboModel[]", () => {
+      const mock: ComboModel[] = mockTestComboAll;
+      spyOn(facadeService, "getStateSolvency$").and.returnValue(of(mock));
+      const result$ = facadeService.getStateSolvency$();
       expect(result$).toBeDefined();
       result$.subscribe((result) => {
         expect(result).toEqual(mock);

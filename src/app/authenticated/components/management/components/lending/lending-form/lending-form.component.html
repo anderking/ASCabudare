@@ -26,6 +26,15 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                  <label for="idStateSolvency" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate }}:</label>
+                  <div class="form-check" *ngFor="let item of stateSolvencyCombo$ | async">
+                    <input type="radio" class="form-check-input" formControlName="idStateSolvency"
+                      aria-label="idStateSolvency" value="{{item.code}}">
+                    <label class="form-check-label">{{item?.name}}</label>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="idClient" class="form-label">{{ 'PROPERTIES.CLIENT' | translate }}:</label>
                   <select class="form-select" formControlName="idClient" aria-label="idClient"
                     [ngClass]="{'is-invalid': mainForm.get('idClient')?.touched && !mainForm.get('idClient')?.valid, 'is-valid':  mainForm.get('idClient')?.touched && mainForm.get('idClient')?.valid}">

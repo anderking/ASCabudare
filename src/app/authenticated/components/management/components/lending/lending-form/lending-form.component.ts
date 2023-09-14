@@ -3,8 +3,10 @@ import {
   UntypedFormGroup,
   Validators,
   UntypedFormBuilder,
+  FormGroup,
+  FormControl,
 } from "@angular/forms";
-import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
+import { BehaviorSubject, combineLatest, Observable, of, Subject } from "rxjs";
 import { LendingFacadeService } from "@facades/lending-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { LendingModel } from "@models/management/lending.model";
@@ -41,6 +43,9 @@ export class LendingFormComponent implements OnInit, OnDestroy {
   public typeActivesArray: ComboModel[] = [];
   public typeActiveCurrent: ComboModel;
   public typeActiveCombo$ = new BehaviorSubject<ComboModel[]>([]);
+  public stateSolvencysArray: ComboModel[] = [];
+  public stateSolvencyCurrent: ComboModel;
+  public stateSolvencyCombo$ = new BehaviorSubject<ComboModel[]>([]);
   public clientsArray: any[] = [];
   public clientCurrent: ClientModel;
   public clientCombo$ = new BehaviorSubject<ClientModel[]>([]);
@@ -85,7 +90,8 @@ export class LendingFormComponent implements OnInit, OnDestroy {
       filter((params) => !isNullOrUndefinedEmpty(params)),
       map((params: ParamMap) => {
         const id = params.get("id");
-        return { id };
+        const idClient = params.get("idClient");
+        return { id, idClient };
       }),
       takeUntil(this.finisher$)
     );
@@ -108,6 +114,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
               item: items.find((item: LendingModel) => item.id === params.id),
               params,
               mainForm,
+              idClient: params.idClient,
             };
           } catch (error) {
             return {
@@ -123,6 +130,8 @@ export class LendingFormComponent implements OnInit, OnDestroy {
         console.log("DATA", data);
         if (data.item) {
           this.selectCurrentItem(data.item);
+        } else if (data.idClient) {
+          this.disabledInputs(of(data.mainForm), data.idClient);
         }
       });
 
@@ -155,6 +164,23 @@ export class LendingFormComponent implements OnInit, OnDestroy {
     this.finisher$.next();
   }
 
+  disabledInputs(form$: Observable<FormGroup>, idClient: string): void {
+    form$
+      .pipe(
+        map((form) => {
+          return {
+            idClient: <FormControl>form.get("idClient"),
+          };
+        }),
+        filter((i) => !isNullOrUndefined(i)),
+        takeUntil(this.finisher$)
+      )
+      .subscribe((control) => {
+        control.idClient.disable();
+        control.idClient.setValue(idClient);
+      });
+  }
+
   selectCurrentItem(item: LendingModel): void {
     this.mainForm.reset(item, { emitEvent: false });
     this._lendingFacadeService.select(item);
@@ -178,6 +204,22 @@ export class LendingFormComponent implements OnInit, OnDestroy {
     typeActive$.subscribe((i: ComboModel[]) => {
       this.typeActiveCombo$.next(i);
       this.typeActivesArray = i;
+    });
+
+    const stateSolvency$ = this._combosFacadeService.getStateSolvency$().pipe(
+      filter((items: ComboModel[]) => !isNullOrUndefined(items)),
+      map((items: ComboModel[]) => {
+        try {
+          return items.filter((item: ComboModel) => item.state);
+        } catch (error) {
+          return items;
+        }
+      }),
+      takeUntil(this.finisher$)
+    );
+    stateSolvency$.subscribe((i: ComboModel[]) => {
+      this.stateSolvencyCombo$.next(i);
+      this.stateSolvencysArray = i;
     });
 
     const client$ = this._clientFacadeService.getAll$().pipe(
@@ -219,6 +261,8 @@ export class LendingFormComponent implements OnInit, OnDestroy {
       client: ["", [Validators.required]],
       idTypeActive: ["", [Validators.required]],
       typeActive: ["", [Validators.required]],
+      idStateSolvency: ["", [Validators.required]],
+      stateSolvency: ["", [Validators.required]],
       createDate: [
         new Date().toLocaleDateString("en-CA"),
         [Validators.required],
@@ -256,6 +300,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
     this.mainForm.reset({ state: true });
     this.mainForm.get("idClient").setValue("");
     this.mainForm.get("idTypeActive").setValue("");
+    this.mainForm.get("idStateSolvency").setValue("");
     this.mainForm
       .get("createDate")
       .setValue(new Date().toLocaleDateString("en-CA"));
@@ -281,6 +326,29 @@ export class LendingFormComponent implements OnInit, OnDestroy {
             this.mainForm.patchValue({
               typeActive: this.typeActiveCurrent
                 ? this.typeActiveCurrent.name
+                : null,
+            });
+          } catch (error) {
+            return;
+          }
+        }
+      });
+
+    this.mainForm
+      .get("idStateSolvency")
+      .valueChanges.pipe(
+        filter((value) => !isNullOrUndefined(value)),
+        takeUntil(this.finisher$)
+      )
+      .subscribe((value: string) => {
+        if (this.stateSolvencysArray && this.stateSolvencysArray.length > 0) {
+          try {
+            this.stateSolvencyCurrent = this.stateSolvencysArray.find(
+              (i: ComboModel) => i.id === value
+            );
+            this.mainForm.patchValue({
+              stateSolvency: this.stateSolvencyCurrent
+                ? this.stateSolvencyCurrent.name
                 : null,
             });
           } catch (error) {

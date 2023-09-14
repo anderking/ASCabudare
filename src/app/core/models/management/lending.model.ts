@@ -4,6 +4,8 @@ export interface LendingModel {
   amount: number;
   typeActive: string;
   idTypeActive: string;
+  stateSolvency: string;
+  idStateSolvency: string;
   idClient: string;
   client: string;
   state: boolean;

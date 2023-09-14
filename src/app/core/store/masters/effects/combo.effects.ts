@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { FirebaseService } from "@services/firebase.service";
 import { of } from "rxjs";
-import { catchError, switchMap } from "rxjs/operators";
+import { catchError, switchMap, tap } from "rxjs/operators";
 import * as actions from "@store/masters/actions/combo.actions";
 import * as notificationActions from "@store/shared/actions/notification.actions";
 import { ComboModel } from "@models/masters/combo.model";
@@ -40,6 +40,26 @@ export class ComboEffects {
         this.firebaseService.searchCombo$(params.props).pipe(
           switchMap((items: ComboModel[]) => {
             return [actions.loadDocumentType({ items })];
+          }),
+          catchError((error) =>
+            of(notificationActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Efecto que escucha la acción de buscar todos los registros de la entidad
+   */
+  searchStateSolvency$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(actions.searchStateSolvency),
+      switchMap((params) =>
+        this.firebaseService.searchCombo$(params.props).pipe(
+          tap(x=>console.log(x)),
+          switchMap((items: ComboModel[]) => {
+            return [actions.loadStateSolvency({ items })];
           }),
           catchError((error) =>
             of(notificationActions.setError({ error }), actions.resetLoading())

@@ -54,6 +54,7 @@ export function groupBy(inputArray: any, key: any, removeKey = false): any[] {
     if (outputType.hasOwnProperty(id)) {
       const element = outputType[id];
       levelOne.push({
+        id: getUniqueId(5),
         name: id,
         values: element,
       });

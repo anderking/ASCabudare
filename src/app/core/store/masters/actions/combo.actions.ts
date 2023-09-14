@@ -26,6 +26,17 @@ export const loadDocumentType = createAction(
   props<{ items: ComboModel[] }>()
 );
 
+/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener todos los registros del combo */
+export const searchStateSolvency = createAction(
+  "[Combo/API] searchStateSolvency Combo",
+  props<{ props: DataActionModel<ComboModel> }>()
+);
+/** Al disparar la acción del search, esta se dispara a traves del efecto para reemplazar la colección actual con la colección provista */
+export const loadStateSolvency = createAction(
+  "[Combo/API] loadStateSolvency Combo",
+  props<{ items: ComboModel[] }>()
+);
+
 /** Esta acción permite limpiar el store */
 export const resetCombos = createAction("[Combo/API] resetCombos Combo");
 /** Esta acción permite limpiar el store */

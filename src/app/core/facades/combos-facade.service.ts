@@ -8,6 +8,7 @@ import { ComboModel } from "@models/masters/combo.model";
 import {
   collectionFBDocumentType,
   collectionFBTypeActive,
+  collectionFBStateSolvency,
 } from "@constants/masters/masters.constants";
 
 @Injectable({
@@ -54,6 +55,24 @@ export class CombosFacadeService {
    */
   public getDocumentType$(): Observable<ComboModel[]> {
     return this._store.select(selectors.selectDocumentType);
+  }
+
+  /**
+   * Dispara la acción para buscar todos los registros sin filtro en la api
+   */
+  public searchStateSolvency(): void {
+    const props: DataActionModel<ComboModel> = {
+      url: collectionFBStateSolvency,
+    };
+    const action = actions.searchStateSolvency({ props });
+    this._store.dispatch(action);
+  }
+
+  /**
+   * Obtiene todos los registros del store disparados por los diferentes search
+   */
+  public getStateSolvency$(): Observable<ComboModel[]> {
+    return this._store.select(selectors.selectStateSolvency);
   }
 
   /**

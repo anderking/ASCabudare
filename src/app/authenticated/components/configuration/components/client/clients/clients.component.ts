@@ -78,6 +78,17 @@ export class ClientsComponent implements OnInit, OnDestroy {
       ]);
     }, 0);
   }
+
+  goShow(item: ClientModel): void {
+    this.wordFilterActive = true;
+    setTimeout(() => {
+      this._router.navigate([
+        "/authenticated/configuration/client/show",
+        { id: item?.id },
+      ]);
+    }, 0);
+  }
+
   goBack(): void {
     this._location.back();
   }
