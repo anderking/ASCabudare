@@ -41,7 +41,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of items | orderBy : ['client','-typeActive', '-createDate', 'description']">
+                  <tr *ngFor="let item of items | orderBy : ['-createDate', '-typeActive', 'description']">
                     <td>{{item.typeActive}}</td>
                     <td>{{item.description}}</td>
                     <td>{{item.createDate}}</td>
