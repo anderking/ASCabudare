@@ -82,6 +82,9 @@ describe("LendingFormComponent", () => {
     component.clientCombo$ = new BehaviorSubject<ClientModel[]>(
       mockTestClientAll
     );
+    component.stateSolvencyCombo$ = new BehaviorSubject<ComboModel[]>(
+      mockTestComboAll
+    );
     component.isLoading = false;
     fixture.detectChanges();
     const debugElement: DebugElement[] = fixture.debugElement.queryAll(
@@ -224,7 +227,7 @@ describe("LendingFormComponent", () => {
     expect(mySpyCo).toHaveBeenCalled();
   });
 
-  it("should to contain 9 fields the form", () => {
+  it("should to contain 11 fields the form", () => {
     let controls: object = component.mainForm.controls;
     let countControls: number = Object.keys(controls).length;
 
@@ -233,11 +236,13 @@ describe("LendingFormComponent", () => {
     expect(component.mainForm.contains("client")).toBeTruthy();
     expect(component.mainForm.contains("idTypeActive")).toBeTruthy();
     expect(component.mainForm.contains("typeActive")).toBeTruthy();
+    expect(component.mainForm.contains("idStateSolvency")).toBeTruthy();
+    expect(component.mainForm.contains("stateSolvency")).toBeTruthy();
     expect(component.mainForm.contains("createDate")).toBeTruthy();
     expect(component.mainForm.contains("amount")).toBeTruthy();
     expect(component.mainForm.contains("description")).toBeTruthy();
     expect(component.mainForm.contains("state")).toBeTruthy();
-    expect(countControls).toEqual(9);
+    expect(countControls).toEqual(11);
   });
 
   it("should description be valid", () => {
@@ -256,6 +261,9 @@ describe("LendingFormComponent", () => {
     );
     component.clientCombo$ = new BehaviorSubject<ClientModel[]>(
       mockTestClientAll
+    );
+    component.stateSolvencyCombo$ = new BehaviorSubject<ComboModel[]>(
+      mockTestComboAll
     );
     component.isLoading = false;
     const createDateISO: string = new Date().toISOString();

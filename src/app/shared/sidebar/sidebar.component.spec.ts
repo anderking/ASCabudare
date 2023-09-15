@@ -95,10 +95,10 @@ describe("SidebarComponent", () => {
       "/authenticated/management/ingreso-egreso"
     );
     expect(routerLinks[3].href).toEqual("/authenticated/management/lending");
-    expect(routerLinks[4].href).toEqual(
+    expect(routerLinks[4].href).toEqual("/authenticated/configuration/client");
+    expect(routerLinks[5].href).toEqual(
       "/authenticated/configuration/category"
     );
-    expect(routerLinks[5].href).toEqual("/authenticated/configuration/client");
     expect(routerLinks[6].href).toEqual("/authenticated/configuration/profile");
   });
 

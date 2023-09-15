@@ -39,7 +39,7 @@
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let item of items | orderBy : ['client','-typeActive', '-createDate', 'description'] | filterTableSearch: { typeActive: wordFilter, client: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } : false">
+                  *ngFor="let item of items | orderBy : ['client', '-createDate', 'description'] | filterTableSearch: { typeActive: wordFilter, client: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } : false">
                   <td>{{item.client}}</td>
                   <td>{{item.typeActive}}</td>
                   <td>{{item.description}}</td>
