@@ -65,18 +65,18 @@ export class LendingsComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.reset();
   }
 
-  public rangeDateReceived(rangeDate: RangeDate): void {
+  rangeDateReceived(rangeDate: RangeDate): void {
     this.rangeDate = rangeDate;
     setTimeout(() => {
       this.loadItems();
     }, 10);
   }
 
-  public wordFilterReceived(wordFilter: string): void {
+  wordFilterReceived(wordFilter: string): void {
     this.wordFilter = wordFilter;
   }
 
-  public loadItems(): void {
+  loadItems(): void {
     this._lendingFacadeService
       .getAll$()
       .pipe(
@@ -106,17 +106,14 @@ export class LendingsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public goDelete(item: LendingModel): void {
-    this._lendingFacadeService.delete(item);
-  }
-
-  public goNew(): void {
+  goNew(): void {
     this.wordFilterActive = true;
     setTimeout(() => {
       this._router.navigate(["/authenticated/management/lending/form"]);
     }, 0);
   }
-  public goEdit(item: LendingModel): void {
+
+  goEdit(item: LendingModel): void {
     this.wordFilterActive = true;
     setTimeout(() => {
       this._router.navigate([
@@ -125,11 +122,16 @@ export class LendingsComponent implements OnInit, OnDestroy {
       ]);
     }, 0);
   }
-  public goBack(): void {
+
+  goBack(): void {
     this._location.back();
   }
 
-  public openModal(item: LendingModel): void {
+  goDelete(item: LendingModel): void {
+    this._lendingFacadeService.delete(item);
+  }
+
+  openModal(item: LendingModel): void {
     const data: ModalModel<LendingModel> = {
       type: "confirmation",
       item,

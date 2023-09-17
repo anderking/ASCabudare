@@ -77,13 +77,6 @@ export class ClientShowComponent implements OnInit, OnDestroy {
 
     const lendings$ = this._lendingFacadeService.getAll$().pipe(
       filter((items: LendingModel[]) => !isNullOrUndefinedEmpty(items)),
-      map((items: LendingModel[]) => {
-        try {
-          return items.filter((item: LendingModel) => item.state);
-        } catch (error) {
-          return items;
-        }
-      }),
       takeUntil(this.finisher$)
     );
 
@@ -133,22 +126,18 @@ export class ClientShowComponent implements OnInit, OnDestroy {
 
   goNew(): void {
     this.wordFilterActive = true;
-    setTimeout(() => {
-      this._router.navigate([
-        "/authenticated/management/lending/form",
-        { idClient: this.currentItem?.id },
-      ]);
-    }, 0);
+    this._router.navigate([
+      "/authenticated/management/lending/form",
+      { idClient: this.currentItem?.id },
+    ]);
   }
 
   goEdit(item: LendingModel): void {
     this.wordFilterActive = true;
-    setTimeout(() => {
-      this._router.navigate([
-        "/authenticated/management/lending/form",
-        { id: item?.id },
-      ]);
-    }, 0);
+    this._router.navigate([
+      "/authenticated/management/lending/form",
+      { id: item?.id, idClient: this.currentItem?.id },
+    ]);
   }
 
   goDelete(item: LendingModel): void {

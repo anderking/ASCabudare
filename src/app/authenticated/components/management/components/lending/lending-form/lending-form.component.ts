@@ -29,6 +29,7 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { orderBy } from "@root/core/utilities/core.utilities";
 import { TranslateService } from "@ngx-translate/core";
+import { UrlService } from "@services/ui/url-service.service";
 
 @Component({
   selector: "app-lending-form",
@@ -63,7 +64,8 @@ export class LendingFormComponent implements OnInit, OnDestroy {
     private _location: Location,
     private _fb: UntypedFormBuilder,
     private _activatedRoute: ActivatedRoute,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private _urlService: UrlService
   ) {
     this.mainForm = this.initForm();
   }
@@ -114,7 +116,6 @@ export class LendingFormComponent implements OnInit, OnDestroy {
               item: items.find((item: LendingModel) => item.id === params.id),
               params,
               mainForm,
-              idClient: params.idClient,
             };
           } catch (error) {
             return {
@@ -130,8 +131,12 @@ export class LendingFormComponent implements OnInit, OnDestroy {
         console.log("DATA", data);
         if (data.item) {
           this.selectCurrentItem(data.item);
-        } else if (data.idClient) {
-          this.disabledInputs(of(data.mainForm), data.idClient);
+        }
+        if (
+          data.params.idClient ||
+          (data.params.id && data.params.idClient)
+        ) {
+          this.disabledInputs(of(data.mainForm), data.params.idClient);
         }
       });
 
@@ -164,7 +169,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
     this.finisher$.next();
   }
 
-  disabledInputs(form$: Observable<FormGroup>, idClient: string): void {
+  disabledInputs(form$: Observable<FormGroup>, id: string): void {
     form$
       .pipe(
         map((form) => {
@@ -177,7 +182,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
       )
       .subscribe((control) => {
         control.idClient.disable();
-        control.idClient.setValue(idClient);
+        control.idClient.setValue(id);
       });
   }
 

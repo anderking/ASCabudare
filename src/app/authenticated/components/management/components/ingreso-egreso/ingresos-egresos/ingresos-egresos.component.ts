@@ -65,18 +65,18 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.reset();
   }
 
-  public rangeDateReceived(rangeDate: RangeDate): void {
+  rangeDateReceived(rangeDate: RangeDate): void {
     this.rangeDate = rangeDate;
     setTimeout(() => {
       this.loadItems();
     }, 10);
   }
 
-  public wordFilterReceived(wordFilter: string): void {
+  wordFilterReceived(wordFilter: string): void {
     this.wordFilter = wordFilter;
   }
 
-  public loadItems(): void {
+  loadItems(): void {
     this._ingresoEgresoFacadeService
       .getAll$()
       .pipe(
@@ -106,19 +106,14 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       });
   }
 
-  public goDelete(item: IngresoEgresoModel): void {
-    this._ingresoEgresoFacadeService.delete(item);
-  }
-
-  public goNew(): void {
+  goNew(): void {
     this.wordFilterActive = true;
     setTimeout(() => {
-      this._router.navigate([
-        "/authenticated/management/ingreso-egreso/form",
-      ]);
+      this._router.navigate(["/authenticated/management/ingreso-egreso/form"]);
     }, 0);
   }
-  public goEdit(item: IngresoEgresoModel): void {
+
+  goEdit(item: IngresoEgresoModel): void {
     this.wordFilterActive = true;
     setTimeout(() => {
       this._router.navigate([
@@ -127,11 +122,16 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       ]);
     }, 0);
   }
-  public goBack(): void {
+
+  goDelete(item: IngresoEgresoModel): void {
+    this._ingresoEgresoFacadeService.delete(item);
+  }
+
+  goBack(): void {
     this._location.back();
   }
 
-  public openModal(item: IngresoEgresoModel): void {
+  openModal(item: IngresoEgresoModel): void {
     const data: ModalModel<IngresoEgresoModel> = {
       type: "confirmation",
       item,

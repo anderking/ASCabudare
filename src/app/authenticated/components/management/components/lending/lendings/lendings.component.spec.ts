@@ -1,4 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+  waitForAsync,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from "@angular/core/testing";
 import { LendingsComponent } from "./lendings.component";
 import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
@@ -6,9 +12,9 @@ import { TranslateModule } from "@ngx-translate/core";
 import { SharedModule } from "@root/shared/shared.module";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
-  mockTestCurrentFilterOne,
   mockTestCurrentUserOne,
   mockTestLendingAll,
+  mockTestLendingOne,
 } from "@root/core/constants/mocks/mocks-units-test";
 import { of } from "rxjs";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -16,6 +22,10 @@ import { routes } from "../lending-routing.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { LendingFacadeService } from "@facades/lending-facade.service";
 import { DebugElement } from "@angular/core";
+import { ModalService } from "@services/ui/modal.service";
+import { Router } from "@angular/router";
+import { LendingModel } from "@models/management/lending.model";
+import { ModalModel } from "@models/shared/modal.model";
 
 describe("LendingsComponent", () => {
   let component: LendingsComponent;
@@ -23,6 +33,8 @@ describe("LendingsComponent", () => {
   let lendingFacadeService: LendingFacadeService;
   let authFacadeService: AuthFacadeService;
   let sharedFacadeService: SharedFacadeService;
+  let modalService: ModalService;
+  let router: Router;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -46,6 +58,8 @@ describe("LendingsComponent", () => {
     lendingFacadeService = TestBed.inject(LendingFacadeService);
     authFacadeService = TestBed.inject(AuthFacadeService);
     sharedFacadeService = TestBed.inject(SharedFacadeService);
+    modalService = TestBed.inject(ModalService);
+    router = TestBed.inject(Router);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -83,8 +97,10 @@ describe("LendingsComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  xit("should call search from lendingFacadeService", () => {
-    const mySpy = spyOn(lendingFacadeService, "search").and.callThrough();
+  it("should call getLoading$ from lendingFacadeService", () => {
+    const mySpy = spyOn(lendingFacadeService, "getLoading$").and.returnValue(
+      of(true)
+    );
 
     component.ngOnInit();
 
@@ -92,6 +108,14 @@ describe("LendingsComponent", () => {
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
+  });
+
+  it("should call reset from ngOnDestroy", () => {
+    const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
+
+    component.ngOnDestroy();
+
+    expect(mySpySh).toHaveBeenCalled();
   });
 
   it("should call getAll$ from lendingFacadeService", () => {
@@ -107,28 +131,63 @@ describe("LendingsComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call getLoading$ from lendingFacadeService", () => {
-    const mySpy = spyOn(lendingFacadeService, "getLoading$").and.returnValue(
-      of(true)
-    );
+  it("should call navigate from router", fakeAsync(() => {
+    const mySpy = spyOn(router, "navigate").and.callThrough();
 
-    component.ngOnInit();
+    component.goNew();
+    tick(0);
 
     expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
+    expect(mySpy).toHaveBeenCalledWith([
+      "/authenticated/management/lending/form",
+    ]);
+  }));
+
+  it("should call navigate from router", fakeAsync(() => {
+    const mySpy = spyOn(router, "navigate").and.callThrough();
+
+    component.goEdit(mockTestLendingOne);
+    tick(0);
+
+    expect(mySpy).not.toBeNull();
+    expect(mySpy).toBeTruthy();
+    expect(mySpy).toBeDefined();
+    expect(mySpy).toHaveBeenCalledWith([
+      "/authenticated/management/lending/form",
+      { id: mockTestLendingOne.id },
+    ]);
+  }));
+
+  it("should call delete from lendingFacadeService from goDelete", () => {
+    const data = mockTestLendingOne;
+    const mySpy = spyOn(lendingFacadeService, "delete");
+
+    component.goDelete(data);
+
+    expect(mySpy).toHaveBeenCalledWith(data);
   });
 
-  xit("should call reset from ngOnDestroy", () => {
-    const mySpyIe = spyOn(lendingFacadeService, "reset").and.callThrough();
-    const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
-    component.rangeDate = { startDate: "string", endDate: "string" };
-    component.wordFilter = "string";
+  it("should call openModal from modalService", () => {
+    const mySpy = spyOn(modalService, "openModal").and.returnValue(
+      Promise.resolve({} as LendingModel)
+    );
 
-    component.ngOnDestroy();
+    const mockTestModalOne: ModalModel<LendingModel> = {
+      type: "confirmation",
+      item: mockTestLendingOne,
+      title: "TITLES.CONFIRMATION",
+      message: "TEXTS.CONFIRMATION",
+      buttonYes: "BUTTONS.YES",
+      buttonCancel: "BUTTONS.CANCEL",
+    };
 
-    expect(mySpyIe).toHaveBeenCalled();
-    expect(mySpySh).toHaveBeenCalled();
+    component.openModal(mockTestLendingOne);
+
+    expect(mySpy).not.toBeNull();
+    expect(mySpy).toBeTruthy();
+    expect(mySpy).toBeDefined();
+    expect(mySpy).toHaveBeenCalledWith(mockTestModalOne);
   });
 });

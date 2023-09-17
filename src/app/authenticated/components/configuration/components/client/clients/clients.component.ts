@@ -59,16 +59,13 @@ export class ClientsComponent implements OnInit, OnDestroy {
     this.wordFilter = wordFilter;
   }
 
-  goDelete(item: ClientModel): void {
-    this._clientFacadeService.delete(item);
-  }
-
   goNew(): void {
     this.wordFilterActive = true;
     setTimeout(() => {
       this._router.navigate(["/authenticated/configuration/client/form"]);
     }, 0);
   }
+
   goEdit(item: ClientModel): void {
     this.wordFilterActive = true;
     setTimeout(() => {
@@ -87,6 +84,10 @@ export class ClientsComponent implements OnInit, OnDestroy {
         { id: item?.id },
       ]);
     }, 0);
+  }
+
+  goDelete(item: ClientModel): void {
+    this._clientFacadeService.delete(item);
   }
 
   goBack(): void {

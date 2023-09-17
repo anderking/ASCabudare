@@ -87,7 +87,7 @@ describe("LoginComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  xit("should call reset from ngOnDestroy", () => {
+  it("should call reset from ngOnDestroy", () => {
     const mySpy = spyOn(authFacadeService, "reset").and.callThrough();
 
     component.ngOnDestroy();

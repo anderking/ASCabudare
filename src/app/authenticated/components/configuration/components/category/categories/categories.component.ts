@@ -59,16 +59,13 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.wordFilter = wordFilter;
   }
 
-  goDelete(item: CategoryModel): void {
-    this._categoryFacadeService.delete(item);
-  }
-
   goNew(): void {
     this.wordFilterActive = true;
     setTimeout(() => {
       this._router.navigate(["/authenticated/configuration/category/form"]);
     }, 0);
   }
+
   goEdit(item: CategoryModel): void {
     this.wordFilterActive = true;
     setTimeout(() => {
@@ -78,9 +75,15 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       ]);
     }, 0);
   }
+
+  goDelete(item: CategoryModel): void {
+    this._categoryFacadeService.delete(item);
+  }
+
   goBack(): void {
     this._location.back();
   }
+
   openModal(item: CategoryModel) {
     const data: ModalModel<CategoryModel> = {
       type: "confirmation",

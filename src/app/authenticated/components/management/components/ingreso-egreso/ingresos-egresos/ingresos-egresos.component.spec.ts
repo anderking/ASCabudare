@@ -1,4 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+  waitForAsync,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from "@angular/core/testing";
 import { IngresosEgresosComponent } from "./ingresos-egresos.component";
 import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
@@ -6,9 +12,9 @@ import { TranslateModule } from "@ngx-translate/core";
 import { SharedModule } from "@root/shared/shared.module";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
-  mockTestCurrentFilterOne,
   mockTestCurrentUserOne,
   mockTestIngresoEgresoAll,
+  mockTestIngresoEgresoOne,
 } from "@root/core/constants/mocks/mocks-units-test";
 import { of } from "rxjs";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -16,6 +22,10 @@ import { routes } from "../ingreso-egreso-routing.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { DebugElement } from "@angular/core";
+import { ModalService } from "@services/ui/modal.service";
+import { Router } from "@angular/router";
+import { IngresoEgresoModel } from "@models/management/ingreso-egreso.model";
+import { ModalModel } from "@models/shared/modal.model";
 
 describe("IngresosEgresosComponent", () => {
   let component: IngresosEgresosComponent;
@@ -23,6 +33,8 @@ describe("IngresosEgresosComponent", () => {
   let ingresoEgresoFacadeService: IngresoEgresoFacadeService;
   let authFacadeService: AuthFacadeService;
   let sharedFacadeService: SharedFacadeService;
+  let modalService: ModalService;
+  let router: Router;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -46,6 +58,8 @@ describe("IngresosEgresosComponent", () => {
     ingresoEgresoFacadeService = TestBed.inject(IngresoEgresoFacadeService);
     authFacadeService = TestBed.inject(AuthFacadeService);
     sharedFacadeService = TestBed.inject(SharedFacadeService);
+    modalService = TestBed.inject(ModalService);
+    router = TestBed.inject(Router);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -83,8 +97,11 @@ describe("IngresosEgresosComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  xit("should call search from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(ingresoEgresoFacadeService, "search").and.callThrough();
+  it("should call getLoading$ from ingresoEgresoFacadeService", () => {
+    const mySpy = spyOn(
+      ingresoEgresoFacadeService,
+      "getLoading$"
+    ).and.returnValue(of(true));
 
     component.ngOnInit();
 
@@ -92,6 +109,14 @@ describe("IngresosEgresosComponent", () => {
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
+  });
+
+  it("should call reset from ngOnDestroy", () => {
+    const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
+
+    component.ngOnDestroy();
+
+    expect(mySpySh).toHaveBeenCalled();
   });
 
   it("should call getAll$ from ingresoEgresoFacadeService", () => {
@@ -107,34 +132,63 @@ describe("IngresosEgresosComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call getLoading$ from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(
-      ingresoEgresoFacadeService,
-      "getLoading$"
-    ).and.returnValue(of(true));
+  it("should call navigate from router", fakeAsync(() => {
+    const mySpy = spyOn(router, "navigate").and.callThrough();
 
-    component.ngOnInit();
+    component.goNew();
+    tick(0);
 
     expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
+    expect(mySpy).toHaveBeenCalledWith([
+      "/authenticated/management/ingreso-egreso/form",
+    ]);
+  }));
+
+  it("should call navigate from router", fakeAsync(() => {
+    const mySpy = spyOn(router, "navigate").and.callThrough();
+
+    component.goEdit(mockTestIngresoEgresoOne);
+    tick(0);
+
+    expect(mySpy).not.toBeNull();
+    expect(mySpy).toBeTruthy();
+    expect(mySpy).toBeDefined();
+    expect(mySpy).toHaveBeenCalledWith([
+      "/authenticated/management/ingreso-egreso/form",
+      { id: mockTestIngresoEgresoOne.id },
+    ]);
+  }));
+
+  it("should call delete from ingresoEgresoFacadeService from goDelete", () => {
+    const data = mockTestIngresoEgresoOne;
+    const mySpy = spyOn(ingresoEgresoFacadeService, "delete");
+
+    component.goDelete(data);
+
+    expect(mySpy).toHaveBeenCalledWith(data);
   });
 
-  xit("should call reset from ngOnDestroy", () => {
-    const mySpyIe = spyOn(
-      ingresoEgresoFacadeService,
-      "reset"
-    ).and.callThrough();
-    const mySpySe = spyOn(ingresoEgresoFacadeService, "setCurrentFilter");
-    const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
-    component.rangeDate = { startDate: "string", endDate: "string" };
-    component.wordFilter = "string";
+  it("should call openModal from modalService", () => {
+    const mySpy = spyOn(modalService, "openModal").and.returnValue(
+      Promise.resolve({} as IngresoEgresoModel)
+    );
 
-    component.ngOnDestroy();
+    const mockTestModalOne: ModalModel<IngresoEgresoModel> = {
+      type: "confirmation",
+      item: mockTestIngresoEgresoOne,
+      title: "TITLES.CONFIRMATION",
+      message: "TEXTS.CONFIRMATION",
+      buttonYes: "BUTTONS.YES",
+      buttonCancel: "BUTTONS.CANCEL",
+    };
 
-    expect(mySpyIe).toHaveBeenCalled();
-    expect(mySpySe).toHaveBeenCalledWith(mockTestCurrentFilterOne);
-    expect(mySpySh).toHaveBeenCalled();
+    component.openModal(mockTestIngresoEgresoOne);
+
+    expect(mySpy).not.toBeNull();
+    expect(mySpy).toBeTruthy();
+    expect(mySpy).toBeDefined();
+    expect(mySpy).toHaveBeenCalledWith(mockTestModalOne);
   });
 });

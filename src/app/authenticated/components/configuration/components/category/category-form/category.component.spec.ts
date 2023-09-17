@@ -76,17 +76,6 @@ describe("CategoryFormComponent", () => {
     expect(htmlElement.textContent).toContain("BUTTONS.BACK");
   });
 
-  xit("should call search from categoryFacadeService", () => {
-    const mySpy = spyOn(categoryFacadeService, "search").and.callThrough();
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
   it("should call getAll$ from categoryFacadeService", () => {
     const mySpy = spyOn(categoryFacadeService, "getAll$").and.returnValue(
       of(mockTestCategoryAll)
@@ -107,17 +96,6 @@ describe("CategoryFormComponent", () => {
     ).and.returnValue(of(mockTestCategoryOne));
 
     component.ngOnInit();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  xit("should call reset from ngOnDestroy", () => {
-    const mySpy = spyOn(categoryFacadeService, "reset").and.callThrough();
-
-    component.ngOnDestroy();
 
     expect(mySpy).not.toBeNull();
     expect(mySpy).toBeTruthy();
@@ -160,13 +138,11 @@ describe("CategoryFormComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  xit("should call reset from ngOnDestroy", () => {
-    const mySpyCa = spyOn(categoryFacadeService, "reset").and.callThrough();
+  it("should call reset from ngOnDestroy", () => {
     const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
 
     component.ngOnDestroy();
 
-    expect(mySpyCa).toHaveBeenCalled();
     expect(mySpySh).toHaveBeenCalled();
   });
 

@@ -178,7 +178,7 @@ export const mockTestLendingAll: LendingModel[] = [
     idTypeActive: "string",
     typeActive: "string",
     idStateSolvency: "string",
-  stateSolvency: "string",
+    stateSolvency: "string",
     createDate: new Date().toLocaleDateString("en-CA"),
     amount: 100,
     description: "string",

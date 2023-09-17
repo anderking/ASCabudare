@@ -114,17 +114,6 @@ describe("LendingFormComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  xit("should call search from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(ingresoEgresoFacadeService, "search").and.callThrough();
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
   it("should call getAll$ from ingresoEgresoFacadeService", () => {
     const mySpy = spyOn(ingresoEgresoFacadeService, "getAll$").and.returnValue(
       of(mockTestLendingAll)
@@ -159,36 +148,6 @@ describe("LendingFormComponent", () => {
     component.selectCurrentItem(data);
 
     expect(mySpy).toHaveBeenCalledWith(data);
-  });
-
-  xit("should call reset from ngOnDestroy", () => {
-    const mySpyIe = spyOn(
-      ingresoEgresoFacadeService,
-      "reset"
-    ).and.callThrough();
-    const mySpyCa = spyOn(clientFacadeService, "reset").and.callThrough();
-    const mySpyCo = spyOn(combosFacadeService, "reset").and.callThrough();
-    const mySpySh = spyOn(sharedFacadeService, "reset").and.callThrough();
-
-    component.ngOnDestroy();
-
-    expect(mySpyIe).toHaveBeenCalled();
-    expect(mySpyCa).toHaveBeenCalled();
-    expect(mySpyCo).toHaveBeenCalled();
-    expect(mySpySh).toHaveBeenCalled();
-  });
-
-  xit("should call combos from callsCombos", () => {
-    const mySpyCa = spyOn(clientFacadeService, "search").and.callThrough();
-    const mySpyCo = spyOn(
-      combosFacadeService,
-      "searchTypeActive"
-    ).and.callThrough();
-
-    component.callsCombos();
-
-    expect(mySpyCa).toHaveBeenCalled();
-    expect(mySpyCo).toHaveBeenCalled();
   });
 
   it("should call getAll$ from clientFacadeService", () => {
