@@ -4,7 +4,7 @@
 El cliente requiere de un sistema que permita gestionar los ingresos y egresos de los usuarios a través de diversas categorías que ellos mismos pueden configurar y ver en un dashboard el resumen de dicha gestión.
 
 ## Scope (Description)
-Aplicación para el manejo de los ingresos y egresos donde además  puedes configurar perfiles de usuarios, categorías, visualizar en un dashboard el resumen de todos los gastos y ganancias y filtrar por rango de fechas.
+Aplicación para el manejo de los ingresos y egresos donde además  puedes configurar perfiles de usuarios, categorías, clientes y prestamos, podrás visualizar en un dashboard el resumen de todos los gastos y ganancias y filtrar por rango de fechas y palabras claves.
 
 ## Use cases (Functionalities)
 * Como usuario se puede gestionar su propio perfil.
