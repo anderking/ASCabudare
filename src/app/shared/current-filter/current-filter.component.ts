@@ -79,7 +79,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((currentFilter: CurrentFilterModel) => {
-        console.log(currentFilter)
+        console.log(currentFilter);
         this.rangeDate = currentFilter.rangeDate;
         const startDateControl = this.mainForm.controls["startDate"];
         const endDateControl = this.mainForm.controls["endDate"];
@@ -115,12 +115,19 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     const day = this.initDay ? this.initDay : "01";
     const today = new Date().toLocaleDateString("en-CA");
     const todaySplit = today.split("-");
-    const yearCurrent = todaySplit[0];
+    let yearCurrent = todaySplit[0];
     let monthCurrent = todaySplit[1];
     const dayCurrent = todaySplit[2];
 
     if (parseInt(dayCurrent) < parseInt(day)) {
-      monthCurrent = "0" + (parseInt(monthCurrent) - 1).toString();
+      if (parseInt(monthCurrent) == 1) {
+        monthCurrent = "12";
+        yearCurrent = (parseInt(yearCurrent) - 1).toString();
+      } else if (parseInt(monthCurrent) >= 12 && parseInt(monthCurrent) <= 10) {
+        monthCurrent = "0" + (parseInt(monthCurrent) - 1).toString();
+      } else {
+        monthCurrent = (parseInt(monthCurrent) - 1).toString();
+      }
     }
 
     const startDateString = yearCurrent + "-" + monthCurrent + "-" + day;
