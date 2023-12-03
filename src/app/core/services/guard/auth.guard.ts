@@ -8,7 +8,6 @@ export const AuthGuard = () => {
   const router = inject(Router);
   return authService.isAuthenticate$.pipe(
     take(1),
-    tap((x) => console.log("AuthGuard", x)),
     tap((user) => {
       if (user) {
         return true;
@@ -24,8 +23,13 @@ export const AuthRedirectGuard = () => {
   const router = inject(Router);
   return authService.isAuthenticate$.pipe(
     take(1),
-    tap((x) => console.log("AuthRedirectGuard", x)),
-    tap((user) => (!user ? true : router.navigateByUrl("/authenticated")))
+    tap((user) => {
+      if (!user) {
+        return true;
+      } else {
+        router.navigateByUrl("/authenticated");
+      }
+    })
   );
 };
 
@@ -34,12 +38,13 @@ export const AuthVerifyEmailtGuard = () => {
   const router = inject(Router);
   return authService.isAuthenticate$.pipe(
     take(1),
-    tap((x) => console.log("AuthVerifyEmailtGuard", x)),
-    tap((user) =>
-      user && user.emailVerified
-        ? true
-        : router.navigateByUrl("/pages/verify-email")
-    )
+    tap((user) => {
+      if (user && user.emailVerified) {
+        return true;
+      } else {
+        router.navigateByUrl("/pages/verify-email");
+      }
+    })
   );
 };
 
@@ -48,12 +53,13 @@ export const AuthVerifyEmailtRedirectGuard = () => {
   const router = inject(Router);
   return authService.isAuthenticate$.pipe(
     take(1),
-    tap((x) => console.log("AuthVerifyEmailtRedirectGuard", x)),
-    tap((user) =>
-      user && !user.emailVerified
-        ? true
-        : router.navigateByUrl("/authenticated")
-    )
+    tap((user) => {
+      if (user && !user.emailVerified) {
+        return true;
+      } else {
+        router.navigateByUrl("/authenticated");
+      }
+    })
   );
 };
 
@@ -85,6 +91,5 @@ export const AuthTokenGuard = () => {
 
 function logoutSesion(authService: AuthService, router: Router) {
   authService.logout();
-  const actualRoute = window.location.origin;
-  window.location.replace(actualRoute + "/auth");
+  router.navigateByUrl("/auth");
 }

@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, Subscriber } from "rxjs";
 import { DataActionModel } from "@models/common/data-action.model";
 
 export interface ApiFirebaseServiceInterface<T> {
@@ -13,5 +13,5 @@ export interface ApiFirebaseServiceInterface<T> {
   searchCombo$(action: DataActionModel<T>): Observable<T[]>;
   searchOne$(action: DataActionModel<T>): Observable<T>;
   create$(action: DataActionModel<T>): Observable<T>;
-  delete$(action: DataActionModel<T>): Observable<T>;
+  delete$(action: DataActionModel<T>): Observable<string | Subscriber<string>>;
 }

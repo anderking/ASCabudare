@@ -89,12 +89,10 @@ export class LendingEffects {
       ofType(actions.deleteApi),
       switchMap((params) =>
         this.firebaseService.delete$(params.props).pipe(
-          switchMap(() => {
+          switchMap((id : string) => {
             const message = this.translateService.instant(
               "MESSAGES.DELETE_SUCCESS"
             );
-            const item: any = params.props.payload;
-            const id = item.id;
             return [
               actions.removeOne({ id }),
               notificationActions.setMessage({ message }),

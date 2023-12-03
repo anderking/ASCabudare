@@ -83,7 +83,6 @@ describe("ClientShowComponent", () => {
     fixture.detectChanges();
 
     const element = htmlElement.querySelector("h2");
-    const count = component.items.length;
 
     expect(element.textContent).toEqual("TITLES.LENDING");
   });

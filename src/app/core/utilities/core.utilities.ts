@@ -21,7 +21,7 @@ export function parseCurrentUserAfterAuth(
   userAuth: UserAuthModel
 ): UserAuthModel {
   try {
-    return (userAuth = {
+    return userAuth = {
       accessToken: userAuth.accessToken,
       displayName: userAuth.displayName,
       email: userAuth.email,
@@ -31,7 +31,7 @@ export function parseCurrentUserAfterAuth(
       photoURL: userAuth.photoURL,
       stsTokenManager: userAuth.stsTokenManager,
       uid: userAuth.uid,
-    });
+    };
   } catch {
     return null;
   }

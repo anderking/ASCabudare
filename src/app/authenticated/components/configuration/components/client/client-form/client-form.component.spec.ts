@@ -4,7 +4,6 @@ import { Store } from "@ngrx/store";
 import { storeMock } from "@root/core/constants/mocks/mocks";
 import { TranslateModule } from "@ngx-translate/core";
 import { SharedModule } from "@root/shared/shared.module";
-import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
   mockTestClientAll,
   mockTestClientOne,

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { from, Observable, of } from "rxjs";
+import { from, Observable, of, Subscriber } from "rxjs";
 import { DataActionModel } from "@models/common/data-action.model";
 import {
   Auth,
@@ -21,7 +21,7 @@ import {
   onSnapshot,
   setDoc,
 } from "@angular/fire/firestore";
-import { finalize, map, switchMap } from "rxjs/operators";
+import { finalize, map, switchMap, tap } from "rxjs/operators";
 import { ApiFirebaseServiceInterface } from "@interfaces/api-firebase-service.interface";
 import {
   getDownloadURL,
@@ -125,17 +125,14 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
    */
   setUserDoc$(action: DataActionModel<T>): Observable<any> {
     const data: any = action.payload;
-    const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          const docRef = doc(this.afDB, `${action.url}`);
-          resolve(setDoc(docRef, data));
-        } catch (error) {
-          reject(error);
-        }
-      })
-    );
-    return subscription.pipe(map(() => data));
+    try {
+      const docRef = doc(this.afDB, `${action.url}`);
+      return from(setDoc(docRef, data)).pipe(map(() => data));
+    } catch (error) {
+      return new Observable((observer) => {
+        observer.error(error);
+      });
+    }
   }
 
   /**
@@ -145,20 +142,18 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   updateProfileFB$(action: DataActionModel<T>): Observable<any> {
     const data: any = action.payload;
     const auth = getAuth();
-    const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          const update = updateProfile(auth.currentUser, {
-            displayName: data.displayName,
-            photoURL: data.photoURL,
-          });
-          resolve(update);
-        } catch (error) {
-          reject(error);
-        }
-      })
-    );
-    return subscription.pipe(map(() => data));
+    try {
+      return from(
+        updateProfile(auth.currentUser, {
+          displayName: data.displayName,
+          photoURL: data.photoURL,
+        })
+      ).pipe(map(() => data));
+    } catch (error) {
+      return new Observable((observer) => {
+        observer.error(error);
+      });
+    }
   }
 
   /**
@@ -288,27 +283,24 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
         }
       })
     );
-    return subscription.pipe(map((response: any) => data));
+    return subscription.pipe(map(() => data));
   }
 
   /**
    * Servicio para eliminar registros
    * @param action Contiene el body DataActionModel
    */
-  delete$(action: DataActionModel<T>): Observable<T> {
+  delete$(action: DataActionModel<T>): Observable<string | Subscriber<string>> {
     const payload: any = action.payload;
     const id: string = payload?.id;
-    const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          const docRef = doc(this.afDB, `${action.url}`, `${id}`);
-          resolve(deleteDoc(docRef));
-        } catch (error) {
-          reject(error);
-        }
-      })
-    );
-    return subscription.pipe(map((response: any) => response));
+    const docRef = doc(this.afDB, `${action.url}`, `${id}`);
+    try {
+      return from(deleteDoc(docRef)).pipe(map(() => id));
+    } catch (error) {
+      return new Observable((observer) => {
+        observer.error(error);
+      });
+    }
   }
 
   getToken$(isExpired: boolean): Observable<string> {
