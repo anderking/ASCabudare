@@ -27,6 +27,7 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { buildCreateDate } from "@root/core/utilities/core.utilities";
 import { TranslateService } from "@ngx-translate/core";
+import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 
 @Component({
   selector: "app-client-form",
@@ -50,6 +51,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
     private _combosFacadeService: CombosFacadeService,
     private _sharedFacadeService: SharedFacadeService,
     private _authFacadeService: AuthFacadeService,
+    private _attachmentFacadeService: AttachmentFacadeService,
     private _location: Location,
     private _fb: UntypedFormBuilder,
     private _activatedRoute: ActivatedRoute,
@@ -125,16 +127,11 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         this.currentItem = currentItem;
       });
 
-    this._sharedFacadeService
-      .getMessage$()
-      .pipe(
-        filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
-        takeUntil(this.finisher$)
-      )
-      .subscribe(() => {
-        if (!this.currentItem) {
-          this.clean();
-        }
+    this._attachmentFacadeService
+      .getUrlAttachment$()
+      .pipe(filter((x) => !isNullOrUndefinedEmpty(x)))
+      .subscribe((url) => {
+        this.mainForm.get("image").setValue(url);
       });
 
     this.disabledInputs(mainForm$);

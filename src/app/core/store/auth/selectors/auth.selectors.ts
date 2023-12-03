@@ -1,12 +1,7 @@
 import { createSelector } from "@ngrx/store";
 import { getLogin } from "..";
 
-export const selectLogin = createSelector(getLogin, (state) => state.login);
-
-export const selectRegister = createSelector(
-  getLogin,
-  (state) => state.register
-);
+export const selectUserAuth = createSelector(getLogin, (state) => state.userAuth);
 
 export const selectCurrentUser = createSelector(getLogin, (state) => state.currentUser);
 

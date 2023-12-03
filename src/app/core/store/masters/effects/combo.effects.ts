@@ -57,7 +57,6 @@ export class ComboEffects {
       ofType(actions.searchStateSolvency),
       switchMap((params) =>
         this.firebaseService.searchCombo$(params.props).pipe(
-          tap(x=>console.log(x)),
           switchMap((items: ComboModel[]) => {
             return [actions.loadStateSolvency({ items })];
           }),

@@ -1,6 +1,9 @@
 import {
   CurrentUserModel,
   LoginFormModel,
+  StsTokenManagerModel,
+  UserAuthModel,
+  UserMetadataModel,
 } from "@models/auth/current-user.model";
 import { ComboModel } from "@models/masters/combo.model";
 import { AttachmentModel } from "@models/shared/attachment.model";
@@ -17,20 +20,38 @@ export const mockTestLoginFormOne: LoginFormModel = {
   password: "string",
 };
 
-export const mockTestCurrentUserOne: CurrentUserModel = {
+export const mockTestUserMetadataOne: UserMetadataModel = {
+  createdAt: "string",
+  creationTime: "string",
+  lastLoginAt: "string",
+  lastSignInTime: "string",
+};
+
+export const mockTestStsTokenManagerOne: StsTokenManagerModel = {
+  accessToken: "string",
+  expirationTime: "string",
+  refreshToken: "string",
+};
+
+export const mockTestUserAuthOne: UserAuthModel = {
+  accessToken: "string",
   displayName: "string",
-  email: "string@company.com",
+  email: "string",
   emailVerified: false,
+  metadata: mockTestUserMetadataOne,
   phoneNumber: "string",
+  photoURL: "string",
+  stsTokenManager: mockTestStsTokenManagerOne,
+  uid: "string",
+};
+
+export const mockTestCurrentUserOne: CurrentUserModel = {
+  ...mockTestUserAuthOne,
   currency: "string",
   dayStartDashboard: "01",
   numberOfDecimal: "2",
   systemDecimal: "comma",
-  photoURL: "string",
   uploadPhoto: "string",
-  accessToken: "string",
-  uid: "string",
-  refreshToken: "string",
 };
 
 export const mockTestAttachmentOne: AttachmentModel = {

@@ -53,10 +53,10 @@ describe("AuthFacadeService", () => {
       );
     });
 
-    it("should return the getLogin$ observable type CurrentUserModel", () => {
+    it("should return the getUserAuth$ observable type CurrentUserModel", () => {
       const mock: CurrentUserModel = mockTestCurrentUserOne;
-      spyOn(facadeService, "getLogin$").and.returnValue(of(mock));
-      const result$ = facadeService.getLogin$();
+      spyOn(facadeService, "getUserAuth$").and.returnValue(of(mock));
+      const result$ = facadeService.getUserAuth$();
       expect(result$).toBeDefined();
       result$.subscribe((result) => {
         expect(result).toEqual(mock);
@@ -78,16 +78,6 @@ describe("AuthFacadeService", () => {
       expect(store.dispatch).toHaveBeenCalledWith(
         actions.register({ action: { url: collectionFBUser, payload } })
       );
-    });
-
-    it("should return the getRegister$ observable type CurrentUserModel", () => {
-      const mock: CurrentUserModel = mockTestCurrentUserOne;
-      spyOn(facadeService, "getRegister$").and.returnValue(of(mock));
-      const result$ = facadeService.getRegister$();
-      expect(result$).toBeDefined();
-      result$.subscribe((result) => {
-        expect(result).toEqual(mock);
-      });
     });
   });
 

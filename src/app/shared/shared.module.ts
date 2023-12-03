@@ -16,6 +16,7 @@ import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe
 import { DirectivesModule } from "@root/core/directives/directives-module.module";
 import { CustomDecimalPipe } from "@root/core/pipes/custom-decimal.pipe";
 import { OrderByPipe } from "@root/core/pipes/orderBy.pipe";
+import { UploadFileComponent } from "./upload-file/upload-file.component";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { OrderByPipe } from "@root/core/pipes/orderBy.pipe";
     ModalComponent,
     CurrentFilterComponent,
     SidebarComponent,
+    UploadFileComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { OrderByPipe } from "@root/core/pipes/orderBy.pipe";
     ToastContainerComponent,
     ModalComponent,
     CurrentFilterComponent,
+    UploadFileComponent
   ],
   providers: [
     DecimalPipe,

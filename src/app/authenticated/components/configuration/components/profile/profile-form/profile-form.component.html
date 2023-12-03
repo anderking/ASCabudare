@@ -92,24 +92,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <div class="input-group">
-                    <input type="file" class="form-control" id="file" aria-describedby="file" aria-label="file"
-                      (change)="changeFile($event)">
-                    <button class="btn btn-outline-secondary" type="button" id="fileButton" (click)="uploadFile()"
-                      [disabled]="currentFile === null">
-                      <div *ngIf="!isLoadingAttachment">{{ 'BUTTONS.UPLOAD' | translate }}</div>
-                      <div *ngIf="isLoadingAttachment">
-                        <div class="d-flex justify-content-center">
-                          <div class="spinner-border spinner-border-sm" role="status"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="invalid-feedback-custom" *ngIf="errorFiles">
-                      {{ errorFiles }}
-                    </div>
-                  </div>
-                </div>
+                <app-upload-file></app-upload-file>
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">

@@ -162,6 +162,6 @@ export class SidebarComponent implements OnInit {
   public logout(): void {
     this.auth.logout();
     const actualRoute = window.location.origin;
-    window.location.replace(actualRoute);
+    window.location.replace(actualRoute + "/auth");
   }
 }

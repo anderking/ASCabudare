@@ -14,7 +14,6 @@ import { routes } from "../auth-routing.module";
 import { SharedModule } from "@root/shared/shared.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { of } from "rxjs";
-import { CurrentUserModel } from "@models/auth/current-user.model";
 import { mockTestCurrentUserOne, mockTestLoginFormOne } from "@root/core/constants/mocks/mocks-units-test";
 
 describe("RegisterComponent", () => {
@@ -66,43 +65,8 @@ describe("RegisterComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call getRegister$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getRegister$").and.returnValue(of(mockTestCurrentUserOne));
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  it("should call setUserDoc with payload from getRegister$", () => {
-    const payload: CurrentUserModel = {
-      displayName: "string",
-      email: "string",
-      emailVerified: true,
-      phoneNumber: "string",
-      currency: "",
-      dayStartDashboard: "",
-      numberOfDecimal: "",
-      systemDecimal: "",
-      photoURL: "string",
-      uid: "string",
-    };
-    const mySpy = spyOn(authFacadeService, "setUserDoc");
-
-    spyOn(authFacadeService, "getRegister$").and.returnValue(of(payload));
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalledWith(payload);
-  });
-
-  it("should call getUserDoc$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getUserDoc$").and.returnValue(of(mockTestCurrentUserOne));
+  it("should call getUserAuth$ from authFacadeService", () => {
+    const mySpy = spyOn(authFacadeService, "getUserAuth$").and.returnValue(of(mockTestCurrentUserOne));
 
     component.ngOnInit();
 

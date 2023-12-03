@@ -19,12 +19,13 @@ import { By } from "@angular/platform-browser";
 import { ComboModel } from "@models/masters/combo.model";
 import { ClientModel } from "@models/configurations/client.model";
 import { buildCreateDate } from "@root/core/utilities/core.utilities";
+import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 
 describe("ClientFormComponent", () => {
   let component: ClientFormComponent;
   let fixture: ComponentFixture<ClientFormComponent>;
   let clientFacadeService: ClientFacadeService;
-  let sharedFacadeService: SharedFacadeService;
+  let attachmentFacadeService: AttachmentFacadeService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -46,7 +47,7 @@ describe("ClientFormComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClientFormComponent);
     clientFacadeService = TestBed.inject(ClientFacadeService);
-    sharedFacadeService = TestBed.inject(SharedFacadeService);
+    attachmentFacadeService = TestBed.inject(AttachmentFacadeService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -72,13 +73,13 @@ describe("ClientFormComponent", () => {
       By.css("button.btn")
     );
 
-    let htmlElement: HTMLElement = debugElement[0].nativeElement;
+    let htmlElement: HTMLElement = debugElement[1].nativeElement;
     expect(htmlElement.textContent).toContain("BUTTONS.SAVE");
 
-    htmlElement = debugElement[1].nativeElement;
+    htmlElement = debugElement[2].nativeElement;
     expect(htmlElement.textContent).toContain("BUTTONS.CLEAN");
 
-    htmlElement = debugElement[2].nativeElement;
+    htmlElement = debugElement[3].nativeElement;
     expect(htmlElement.textContent).toContain("BUTTONS.BACK");
   });
 
@@ -130,10 +131,11 @@ describe("ClientFormComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call getMessage$ from sharedFacadeService", () => {
-    const mySpy = spyOn(sharedFacadeService, "getMessage$").and.returnValue(
-      of("string")
-    );
+  it("should call getUrlAttachment$ from attachmentFacadeService", () => {
+    const mySpy = spyOn(
+      attachmentFacadeService,
+      "getUrlAttachment$"
+    ).and.returnValue(of("string"));
 
     component.ngOnInit();
 
@@ -187,7 +189,7 @@ describe("ClientFormComponent", () => {
       By.css("button.btn")
     );
 
-    debugElement[0].triggerEventHandler("click", null);
+    debugElement[1].triggerEventHandler("click", null);
 
     expect(component.mainForm.valid).toBeTruthy();
     expect(mySpy).toHaveBeenCalledWith(data);

@@ -15,7 +15,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { ModalService } from "@services/ui/modal.service";
 import { ClientFacadeService } from "@facades/client-facade.service";
 import { ClientModel } from "@models/configurations/client.model";
-import { groupBy, groupByMult } from "@root/core/utilities/core.utilities";
+import { groupBy } from "@root/core/utilities/core.utilities";
 import { GroupModel } from "@models/shared/group.model";
 
 @Component({
@@ -110,7 +110,9 @@ export class ClientShowComponent implements OnInit, OnDestroy {
         console.log("DATA", data);
         this.currentItem = data.client;
         this.items = data.items;
-        this.itemsGroup = groupBy(data.items, ["typeActive"]);
+
+        let newItems = data.items.filter((item: LendingModel) => item.state);
+        this.itemsGroup = groupBy(newItems, ["typeActive"]);
         console.log(this.itemsGroup);
       });
   }

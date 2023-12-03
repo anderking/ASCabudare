@@ -34,6 +34,7 @@ export const routes: Routes = [
     path: "pages",
     loadChildren: () =>
       import("@root/pages/pages.module").then((m) => m.PagesModule),
+    canLoad: [AuthGuard],
   },
 
   { path: "**", redirectTo: "/pages/404" },

@@ -19,6 +19,7 @@
   "TEXTS": {
     "FORGOT_PASSWORD": "¿Recuperar contraseña?",
     "CREATE_ACCOUNT": "Crear una cuenta",
+    "LOGIN_GOOGLE": "Ingresar con Google",
     "BACK_LOGIN": "¿Ya tienes una cuenta? Accede",
     "CONFIRMATION": "¿Está seguro de que desea eliminar este registro?",
     "SEARCH": "Buscar",

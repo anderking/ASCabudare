@@ -65,8 +65,8 @@ describe("LoginComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call getLogin$ from authFacadeService", () => {
-    const mySpy = spyOn(authFacadeService, "getLogin$").and.returnValue(of(mockTestCurrentUserOne));
+  it("should call getUserAuth$ from authFacadeService", () => {
+    const mySpy = spyOn(authFacadeService, "getUserAuth$").and.returnValue(of(mockTestCurrentUserOne));
 
     component.ngOnInit();
 
@@ -112,5 +112,13 @@ describe("LoginComponent", () => {
 
     expect(component.mainForm.form.valid).toBeTruthy();
     expect(spy).toHaveBeenCalledWith(data);
+  });
+
+  it("should call loginGoogle from authFacadeService", () => {
+    const spy = spyOn(authFacadeService, "loginGoogle");
+
+    component.google();
+
+    expect(spy).toHaveBeenCalled();
   });
 });

@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AuthTokenGuard } from "@services/guard/auth.guard";
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
           import("./components/category/category.module").then(
             (m) => m.CategoryModule
           ),
+        canActivate: [AuthTokenGuard],
       },
       {
         path: "client",
@@ -19,6 +21,7 @@ const routes: Routes = [
           import("./components/client/client.module").then(
             (m) => m.ClientModule
           ),
+        canActivate: [AuthTokenGuard],
       },
       {
         path: "profile",
@@ -26,6 +29,7 @@ const routes: Routes = [
           import("./components/profile/profile.module").then(
             (m) => m.ProfileModule
           ),
+        canActivate: [AuthTokenGuard],
       },
     ],
   },

@@ -8,7 +8,6 @@ import { AuthFacadeService } from "@facades/auth-facade.service";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import {
-  mockTestAttachmentOne,
   mockTestCurrentUserOne,
 } from "@root/core/constants/mocks/mocks-units-test";
 import { of } from "rxjs";
@@ -101,16 +100,6 @@ describe("ProfileUpdateComponent", () => {
     expect(mySpy).toBeTruthy();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalled();
-  });
-
-  it("should call create from attachmentFacadeService", () => {
-    const data = mockTestAttachmentOne;
-    component.currentFile = data;
-    const mySpy = spyOn(attachmentFacadeService, "create");
-
-    component.uploadFile();
-
-    expect(mySpy).toHaveBeenCalledWith(data);
   });
 
   it("should to contain 7 fields the form", () => {

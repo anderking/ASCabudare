@@ -1,11 +1,10 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { CurrentUserModel } from "@models/auth/current-user.model";
+import { CurrentUserModel, UserAuthModel } from "@models/auth/current-user.model";
 import * as actions from "../actions/auth.actions";
 
 /** Se declara la interface del reducer */
 export interface State {
-  login: CurrentUserModel;
-  register: CurrentUserModel;
+  userAuth: UserAuthModel;
   userDoc: CurrentUserModel;
   currentUser: CurrentUserModel;
   updateProfile: boolean;
@@ -15,8 +14,7 @@ export interface State {
 
 /** Inicializamos el state */
 export const initialState: State = {
-  login: null,
-  register: null,
+  userAuth: null,
   userDoc: null,
   currentUser: null,
   updateProfile: false,
@@ -33,9 +31,20 @@ const entityReducer = createReducer(
     loading: true,
   })),
 
-  on(actions.loginSucess, (state, { login }) => ({
+  on(actions.loginSucess, (state, { userAuth }) => ({
     ...state,
-    login,
+    userAuth,
+    loading: false,
+  })),
+
+  on(actions.loginGoogle, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(actions.loginGoogleSucess, (state, { userAuth }) => ({
+    ...state,
+    userAuth,
     loading: false,
   })),
 
@@ -44,9 +53,9 @@ const entityReducer = createReducer(
     loading: true,
   })),
 
-  on(actions.registerSucess, (state, { register }) => ({
+  on(actions.registerSucess, (state, { userAuth }) => ({
     ...state,
-    register,
+    userAuth,
     loading: false,
   })),
 

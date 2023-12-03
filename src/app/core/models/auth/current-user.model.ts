@@ -2,19 +2,33 @@ export interface LoginFormModel {
   email: string;
   password: string;
 }
-
-export interface CurrentUserModel {
+export interface UserAuthModel {
+  accessToken?: string;
   displayName: string;
   email: string;
   emailVerified: boolean;
+  metadata?: UserMetadataModel;
   phoneNumber: string;
-  currency: string;
-  dayStartDashboard: string;
+  photoURL: string;
+  stsTokenManager?: StsTokenManagerModel;
+  uid: string;
+}
+
+export interface CurrentUserModel extends UserAuthModel {
+  currency?: string;
+  dayStartDashboard?: string;
   numberOfDecimal?: string;
   systemDecimal?: string;
-  photoURL: string;
   uploadPhoto?: any;
-  accessToken?: string;
-  uid: string;
-  refreshToken?: string;
+}
+export interface UserMetadataModel {
+  createdAt: string;
+  creationTime: string;
+  lastLoginAt: string;
+  lastSignInTime: string;
+}
+export interface StsTokenManagerModel {
+  accessToken: string;
+  expirationTime: string;
+  refreshToken: string;
 }

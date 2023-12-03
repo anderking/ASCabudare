@@ -1,8 +1,8 @@
-import { CurrentUserModel } from "@models/auth/current-user.model";
+import { UserAuthModel } from "@models/auth/current-user.model";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
 
-export function getCurrentUserDecrypt(): CurrentUserModel {
+export function getCurrentUserDecrypt(): UserAuthModel {
   try {
     const getCookieEncrypt = localStorage.getItem("currentUser");
     const textDecrypt = CryptoJS.AES.decrypt(getCookieEncrypt, environment.key);
@@ -12,6 +12,26 @@ export function getCurrentUserDecrypt(): CurrentUserModel {
     } else {
       return null;
     }
+  } catch {
+    return null;
+  }
+}
+
+export function parseCurrentUserAfterAuth(
+  userAuth: UserAuthModel
+): UserAuthModel {
+  try {
+    return (userAuth = {
+      accessToken: userAuth.accessToken,
+      displayName: userAuth.displayName,
+      email: userAuth.email,
+      emailVerified: userAuth.emailVerified,
+      metadata: userAuth.metadata,
+      phoneNumber: userAuth.phoneNumber,
+      photoURL: userAuth.photoURL,
+      stsTokenManager: userAuth.stsTokenManager,
+      uid: userAuth.uid,
+    });
   } catch {
     return null;
   }
@@ -114,7 +134,10 @@ export function clearLocalStorage(): void {
   let darkMode: string = localStorage.getItem("dark-mode");
   localStorage.clear();
   localStorage.setItem("lang", lang != "null" && lang != null ? lang : "es");
-  localStorage.setItem("dark-mode", darkMode != "null" && darkMode != null ? darkMode : "off");
+  localStorage.setItem(
+    "dark-mode",
+    darkMode != "null" && darkMode != null ? darkMode : "off"
+  );
 }
 
 /**

@@ -1,8 +1,16 @@
-import { Injectable } from "@angular/core";
-import { Auth } from "@angular/fire/auth";
+import { Injectable, inject } from "@angular/core";
+import {
+  Auth,
+  authState,
+  getAuth,
+  onAuthStateChanged,
+} from "@angular/fire/auth";
 import { doc, Firestore, onSnapshot } from "@angular/fire/firestore";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
-import { CurrentUserModel } from "@models/auth/current-user.model";
+import { BehaviorSubject, Observable, Subscription, combineLatest } from "rxjs";
+import {
+  UserAuthModel,
+  CurrentUserModel,
+} from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import * as CryptoJS from "crypto-js";
 import { environment } from "@environments/environment";
@@ -10,13 +18,15 @@ import {
   clearLocalStorage,
   getCurrentUserDecrypt,
 } from "@root/core/utilities/core.utilities";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   public userSubcription: Subscription = new Subscription();
-  public paramsToLoginTime = new BehaviorSubject<CurrentUserModel>(null);
+  public paramsToLoginTime = new BehaviorSubject<UserAuthModel>(null);
+  private readonly auth = inject(Auth);
 
   constructor(
     public afAuth: Auth,
@@ -26,9 +36,9 @@ export class AuthService {
 
   /**
    * Setea el subject
-   * @param {CurrentUserModel} value es un boleano
+   * @param {UserAuthModel} value es un boleano
    */
-  set theParamsToLoginTime(value: CurrentUserModel) {
+  set theParamsToLoginTime(value: UserAuthModel) {
     this.paramsToLoginTime.next(value);
   }
 
@@ -46,36 +56,79 @@ export class AuthService {
    * Escucha los cambios del currentUser desde FireBase
    */
   public initAuthListener(): void {
-    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
-    if (currentUser) {
-      const subscription = new Observable((observer) => {
-        const docRef = doc(this.afDB, `${currentUser.uid}/User`);
-        return onSnapshot(
-          docRef,
-          (snapshot) => {
-            observer.next(snapshot.data());
-          },
-          (error) => observer.error(error.message)
-        );
+    const currentUser: UserAuthModel = this.getCurrentUserDecrypt();
+
+    const userAuth$ = new Observable<UserAuthModel>((observer) => {
+      const auth = getAuth();
+      return onAuthStateChanged(
+        auth,
+        (user) => {
+          const newUser = user as unknown as UserAuthModel;
+          observer.next(newUser);
+        },
+        (error) => observer.error(error.message)
+      );
+    });
+
+    const userDoc$ = new Observable<CurrentUserModel>((observer) => {
+      const docRef = doc(this.afDB, `${currentUser?.uid}/User`);
+      return onSnapshot(
+        docRef,
+        (snapshot) => {
+          const userDoc = snapshot.data() as unknown as CurrentUserModel;
+          userDoc as any as CurrentUserModel;
+          observer.next(userDoc);
+        },
+        (error) => observer.error(error.message)
+      );
+    });
+
+    const results$ = combineLatest([userAuth$, userDoc$]);
+    results$
+      .pipe(
+        map(([userAuth, userDoc]) => {
+          try {
+            return {
+              userAuth,
+              userDoc,
+            };
+          } catch (error) {
+            return {
+              userAuth: null,
+              userDoc: null,
+            };
+          }
+        })
+      )
+      .subscribe((data) => {
+        console.log("DATA", data);
+        const userAuth = data.userAuth;
+        let userDoc = data.userDoc;
+        const currentUser = {
+          displayName: userAuth?.displayName,
+          email: userAuth?.email,
+          emailVerified: userAuth?.emailVerified,
+          phoneNumber: userDoc?.phoneNumber ? userDoc?.phoneNumber : "",
+          currency: userDoc?.currency ? userDoc?.currency : "",
+          dayStartDashboard: userDoc?.dayStartDashboard
+            ? userDoc?.dayStartDashboard
+            : "",
+          numberOfDecimal: userDoc?.numberOfDecimal
+            ? userDoc?.numberOfDecimal
+            : "",
+          systemDecimal: userDoc?.systemDecimal ? userDoc?.systemDecimal : "",
+          photoURL: userDoc?.photoURL ? userDoc?.photoURL : "",
+          uid: userAuth?.uid,
+        };
+        this._authFacadeService.setCurrentUser(currentUser);
       });
-      subscription.subscribe((user: CurrentUserModel) => {
-        if (user) {
-          user = {
-            ...user,
-            emailVerified: currentUser.emailVerified,
-          };
-          this._authFacadeService.updateProfileFB(user);
-          this._authFacadeService.setCurrentUser(user);
-        }
-      });
-    }
   }
 
   /**
    * Setea el currentUser en el localStorage de forma encriptada
    * @param currentUser Contiene el usuario actual en sesión
    */
-  public setCurrentUserEncrypt(currentUser: CurrentUserModel): void {
+  public setCurrentUserEncrypt(currentUser: UserAuthModel): void {
     const textToEncrypt = JSON.stringify(currentUser).trim();
     const cookieEncrypt = CryptoJS.AES.encrypt(textToEncrypt, environment.key);
     localStorage.setItem("currentUser", cookieEncrypt);
@@ -86,52 +139,22 @@ export class AuthService {
   /**
    * Retorna el currentUser del localStorage y lo desencripta
    */
-  private getCurrentUserDecrypt(): CurrentUserModel {
+  private getCurrentUserDecrypt(): UserAuthModel {
     return getCurrentUserDecrypt();
   }
 
   /**
    * Retorna un boolean si el usuario esta autenticado y si no lo está cierra la sesion automaticamente
    */
-  public isAuthenticate(): boolean {
-    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
-    if (currentUser != null) {
-      return true;
-    } else {
-      this.logout();
-      return false;
-    }
-  }
-  /**
-   * Verifica si hay un un usuario autenticado que intente accedeer al login o register para retornar el Guard
-   */
-  public isAuthRedirect(): boolean {
-    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
-    if (currentUser == null) {
-      clearLocalStorage();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * Verifica si hay un un usuario autenticado que intente accedeer al login o register para retornar el Guard
-   */
-  public isVerifyEmail(): boolean {
-    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
-    if (currentUser?.emailVerified) {
-      return true;
-    } else {
-      return false;
-    }
+  get isAuthenticate$() {
+    return authState(this.auth);
   }
 
   /**
    * Retorna el token de sesion
    */
   public getToken(): string {
-    const currentUser: CurrentUserModel = this.getCurrentUserDecrypt();
+    const currentUser: UserAuthModel = this.getCurrentUserDecrypt();
     return currentUser ? currentUser.accessToken : null;
   }
 }

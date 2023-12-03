@@ -5,11 +5,13 @@ import { catchError, map, switchMap } from "rxjs/operators";
 import {
   LoginFormModel,
   CurrentUserModel,
+  UserAuthModel,
 } from "@models/auth/current-user.model";
 import * as actions from "@store/auth/actions/auth.actions";
 import * as notificationActions from "@store/shared/actions/notification.actions";
 import { FirebaseService } from "@services/firebase.service";
 import { TranslateService } from "@ngx-translate/core";
+import { parseCurrentUserAfterAuth } from "@root/core/utilities/core.utilities";
 
 @Injectable()
 export class AuthEffects {
@@ -26,24 +28,27 @@ export class AuthEffects {
       ofType(actions.login),
       switchMap(({ action }) =>
         this._firebaseService.signInWithEmailAndPassword$(action).pipe(
-          map((login: any) => {
-            const user: CurrentUserModel = {
-              displayName: login.displayName,
-              email: login.email,
-              emailVerified: login.emailVerified,
-              phoneNumber: login.phoneNumber,
-              currency: "",
-              dayStartDashboard: "",
-              numberOfDecimal: "",
-              systemDecimal: "",
-              photoURL: login.photoURL,
-              accessToken: login.accessToken,
-              uid: login.uid,
-              refreshToken: login.refreshToken,
-            };
-            return user;
+          map((userAuth: UserAuthModel) => {
+            userAuth = parseCurrentUserAfterAuth(userAuth);
+            return actions.loginSucess({ userAuth });
           }),
-          map((login: CurrentUserModel) => actions.loginSucess({ login })),
+          catchError((error) =>
+            of(notificationActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    );
+  });
+
+  loginGoogle$ = createEffect(() => {
+    return this._actions$.pipe(
+      ofType(actions.loginGoogle),
+      switchMap(() =>
+        this._firebaseService.signInGoogle().pipe(
+          map((userAuth: UserAuthModel) => {
+            userAuth = parseCurrentUserAfterAuth(userAuth);
+            return actions.loginGoogleSucess({ userAuth });
+          }),
           catchError((error) =>
             of(notificationActions.setError({ error }), actions.resetLoading())
           )
@@ -57,26 +62,10 @@ export class AuthEffects {
       ofType(actions.register),
       switchMap(({ action }) =>
         this._firebaseService.createUserWithEmailAndPassword$(action).pipe(
-          map((register: any) => {
-            const user: CurrentUserModel = {
-              displayName: register.displayName,
-              email: register.email,
-              emailVerified: register.emailVerified,
-              phoneNumber: register.phoneNumber,
-              currency: "",
-              dayStartDashboard: "",
-              numberOfDecimal: "",
-              systemDecimal: "",
-              photoURL: register.photoURL,
-              accessToken: register.accessToken,
-              uid: register.uid,
-              refreshToken: register.refreshToken,
-            };
-            return user;
+          map((userAuth: UserAuthModel) => {
+            userAuth = parseCurrentUserAfterAuth(userAuth);
+            return actions.registerSucess({ userAuth });
           }),
-          map((register: CurrentUserModel) =>
-            actions.registerSucess({ register })
-          ),
           catchError((error) =>
             of(notificationActions.setError({ error }), actions.resetLoading())
           )

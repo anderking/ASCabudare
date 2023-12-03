@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import {
   LoginFormModel,
   CurrentUserModel,
+  UserAuthModel,
 } from "@models/auth/current-user.model";
 import { DataActionModel } from "@models/common/data-action.model";
 import { Store } from "@ngrx/store";
@@ -32,8 +33,16 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  public getLogin$(): Observable<CurrentUserModel> {
-    return this._store.select(selectors.selectLogin);
+  public loginGoogle(payload: LoginFormModel): void {
+    const action: DataActionModel<LoginFormModel> = {
+      url: collectionFBUser,
+      payload,
+    };
+
+    const props = actions.loginGoogle({
+      action,
+    });
+    this._store.dispatch(props);
   }
 
   public register(payload: LoginFormModel): void {
@@ -48,8 +57,8 @@ export class AuthFacadeService {
     this._store.dispatch(props);
   }
 
-  public getRegister$(): Observable<CurrentUserModel> {
-    return this._store.select(selectors.selectRegister);
+  public getUserAuth$(): Observable<UserAuthModel> {
+    return this._store.select(selectors.selectUserAuth);
   }
 
   public setUserDoc(payload: CurrentUserModel): void {

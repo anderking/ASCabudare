@@ -2,6 +2,7 @@ import { DataActionModel } from "@models/common/data-action.model";
 import {
   LoginFormModel,
   CurrentUserModel,
+  UserAuthModel,
 } from "@models/auth/current-user.model";
 import { createAction, props } from "@ngrx/store";
 
@@ -12,7 +13,17 @@ export const login = createAction(
 
 export const loginSucess = createAction(
   "[Auth] loginSucess Auth",
-  props<{ login: CurrentUserModel }>()
+  props<{ userAuth: UserAuthModel | CurrentUserModel }>()
+);
+
+export const loginGoogle = createAction(
+  "[Auth] loginGoogle Auth",
+  props<{ action: DataActionModel<LoginFormModel> }>()
+);
+
+export const loginGoogleSucess = createAction(
+  "[Auth] loginGoogleSucess Auth",
+  props<{ userAuth: UserAuthModel }>()
 );
 
 export const register = createAction(
@@ -22,7 +33,7 @@ export const register = createAction(
 
 export const registerSucess = createAction(
   "[Auth] registerSucess Auth",
-  props<{ register: CurrentUserModel }>()
+  props<{ userAuth: UserAuthModel }>()
 );
 
 export const setUserDoc = createAction(

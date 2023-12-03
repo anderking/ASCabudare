@@ -19,6 +19,7 @@
   "TEXTS": {
     "FORGOT_PASSWORD": "Forgot Password?",
     "CREATE_ACCOUNT": "Create an Account",
+    "LOGIN_GOOGLE": "Login with Google",
     "BACK_LOGIN": "Already have an account? Login",
     "CONFIRMATION": "Are you sure you want to delete this record?",
     "SEARCH": "Search",

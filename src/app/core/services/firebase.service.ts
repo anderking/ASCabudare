@@ -5,9 +5,11 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   getAuth,
+  GoogleAuthProvider,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   updateProfile,
 } from "@angular/fire/auth";
 import {
@@ -29,6 +31,8 @@ import {
 } from "@angular/fire/storage";
 import { AuthService } from "@services/auth/auth.service";
 import { TranslateService } from "@ngx-translate/core";
+import { UserAuthModel } from "@models/auth/current-user.model";
+
 @Injectable({
   providedIn: "root",
 })
@@ -42,30 +46,55 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   ) {}
 
   /**
+   * Servicio para autenticar con google
+   * @param action Contiene el body DataActionModel
+   */
+  signInGoogle(): Observable<UserAuthModel> {
+    try {
+      const subscription = from(
+        signInWithPopup(this.afAuth, new GoogleAuthProvider())
+      );
+      return subscription.pipe(
+        map((response) => response.user as unknown as UserAuthModel)
+      );
+    } catch (error) {
+      console.log("Google login", error);
+    }
+  }
+
+  /**
    * Servicio para autenticar un usuario por email y password
    * @param action Contiene el body DataActionModel
    */
-  signInWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
+  signInWithEmailAndPassword$(
+    action: DataActionModel<T>
+  ): Observable<UserAuthModel> {
     const data: any = action.payload;
 
     const subscription = from(
       signInWithEmailAndPassword(this.afAuth, data.email, data.password)
     );
 
-    return subscription.pipe(map((response: any) => response.user));
+    return subscription.pipe(
+      map((response: any) => response.user as unknown as UserAuthModel)
+    );
   }
 
   /**
    * Servicio para crear un usuario con email y password
    * @param action Contiene el body DataActionModel
    */
-  createUserWithEmailAndPassword$(action: DataActionModel<T>): Observable<any> {
+  createUserWithEmailAndPassword$(
+    action: DataActionModel<T>
+  ): Observable<UserAuthModel> {
     const data: any = action.payload;
     const subscription = from(
       createUserWithEmailAndPassword(this.afAuth, data.email, data.password)
     );
 
-    return subscription.pipe(map((response: any) => response.user));
+    return subscription.pipe(
+      map((response: any) => response.user as unknown as UserAuthModel)
+    );
   }
 
   /**
@@ -91,7 +120,7 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
   }
 
   /**
-   * Servicio para setear los datos del usuario
+   * Servicio para setear los datos del usuario personalizado
    * @param action Contiene el body DataActionModel
    */
   setUserDoc$(action: DataActionModel<T>): Observable<any> {

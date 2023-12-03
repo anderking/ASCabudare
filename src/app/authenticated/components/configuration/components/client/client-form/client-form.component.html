@@ -16,7 +16,7 @@
             <div class="p-5">
 
               <form [formGroup]="mainForm" class="row g-3">
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <label for="firstName" class="form-label">{{ 'PROPERTIES.FIRSTNAME' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="firstName" aria-label="firstName"
                     [ngClass]="{'is-invalid': mainForm.get('firstName')?.touched && !mainForm.get('firstName')?.valid, 'is-valid': mainForm.get('firstName')?.touched && mainForm.get('firstName')?.valid}">
@@ -25,7 +25,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <label for="lastName" class="form-label">{{ 'PROPERTIES.LASTNAME' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="lastName" aria-label="lastName"
                     [ngClass]="{'is-invalid': mainForm.get('lastName')?.touched && !mainForm.get('lastName')?.valid, 'is-valid': mainForm.get('lastName')?.touched && mainForm.get('lastName')?.valid}">
@@ -34,7 +34,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
                   <label for="fullName" class="form-label">{{ 'PROPERTIES.FULLNAME' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="fullName" aria-label="fullName"
                     [ngClass]="{'is-invalid': mainForm.get('fullName')?.touched && !mainForm.get('fullName')?.valid, 'is-valid': mainForm.get('fullName')?.touched && mainForm.get('fullName')?.valid}">
@@ -43,7 +43,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <label for="documentType" class="form-label">{{ 'PROPERTIES.DOCUMENTTYPE' | translate }}:</label>
                   <select class="form-select" formControlName="documentType" aria-label="documentType"
                     [ngClass]="{'is-invalid': mainForm.get('documentType')?.touched && !mainForm.get('documentType')?.valid, 'is-valid':  mainForm.get('documentType')?.touched && mainForm.get('documentType')?.valid}">
@@ -56,7 +56,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <label for="documentNumber" class="form-label">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="documentNumber" aria-label="documentNumber"
                     [ngClass]="{'is-invalid': mainForm.get('documentNumber')?.touched && !mainForm.get('documentNumber')?.valid, 'is-valid': mainForm.get('documentNumber')?.touched && mainForm.get('documentNumber')?.valid}">
@@ -65,7 +65,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <label for="phoneNumber" class="form-label">{{ 'PROPERTIES.PHONENUMBER' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="phoneNumber" aria-label="phoneNumber"
                     [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
@@ -74,7 +74,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <label for="city" class="form-label">{{ 'PROPERTIES.CITY' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="city" aria-label="city"
                     [ngClass]="{'is-invalid': mainForm.get('city')?.touched && !mainForm.get('city')?.valid, 'is-valid': mainForm.get('city')?.touched && mainForm.get('city')?.valid}">
@@ -100,6 +100,8 @@
                     {{ getErrorMessageField('image') }}
                   </div>
                 </div>
+
+                <app-upload-file></app-upload-file>
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <div class="form-check">

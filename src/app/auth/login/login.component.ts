@@ -10,12 +10,14 @@ import { NgForm } from "@angular/forms";
 import {
   LoginFormModel,
   CurrentUserModel,
+  UserAuthModel,
 } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
 import { first, takeUntil } from "rxjs/operators";
 import { AuthService } from "@services/auth/auth.service";
 import { Router } from "@angular/router";
+import { Auth } from "@angular/fire/auth";
 
 @Component({
   selector: "app-login",
@@ -27,12 +29,14 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   public isLoading: boolean;
   public email: string;
   public password: string;
+  public loginGoogleFB: CurrentUserModel;
   private _finisher = new Subject<void>();
 
   constructor(
     private _authService: AuthService,
     private _authFacadeService: AuthFacadeService,
-    private _router: Router
+    private _router: Router,
+    public afAuth: Auth,
   ) {}
 
   ngOnInit() {
@@ -44,14 +48,13 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     this._authFacadeService
-      .getLogin$()
+      .getUserAuth$()
       .pipe(
-        first((login) => !isNullOrUndefined(login)),
+        first((userAuth) => !isNullOrUndefined(userAuth)),
         takeUntil(this._finisher)
       )
-      .subscribe((login: CurrentUserModel) => {
-        this._router.navigate(["/login-time"]);
-        this._authService.theParamsToLoginTime = login;
+      .subscribe((userAuth: UserAuthModel) => {
+        this._authService.theParamsToLoginTime = userAuth;
       });
   }
 
@@ -68,6 +71,13 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataForm = { ...this.mainForm.form.getRawValue() };
     if (this.mainForm.form.valid) {
       this._authFacadeService.login(this.dataForm);
+    }
+  }
+
+  google() {
+    this.dataForm = { ...this.mainForm.form.getRawValue() };
+    if (this.mainForm.form.valid) {
+      this._authFacadeService.loginGoogle(this.dataForm);
     }
   }
 }

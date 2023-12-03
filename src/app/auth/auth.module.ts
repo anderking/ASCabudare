@@ -5,11 +5,13 @@ import { AuthRoutingModule } from "./auth-routing.module";
 import { AuthComponent } from "./auth.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { SharedModule } from "@root/shared/shared.module";
+import { LoginTimeComponent } from "./login-time/login-time.component";
 
 @NgModule({
   declarations: [
     AuthComponent,
     LoginComponent,
+    LoginTimeComponent,
     RegisterComponent,
     ForgotPasswordComponent,
   ],

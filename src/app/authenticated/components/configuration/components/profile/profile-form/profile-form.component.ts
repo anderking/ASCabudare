@@ -16,14 +16,12 @@ import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefine
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
-import { ToastService } from "@services/ui/toast.service";
 import { TranslateService } from "@ngx-translate/core";
 import {
   numberOfDecimal,
   startDaySelect,
   systemDecimal,
 } from "@root/core/constants/mocks/mocks-const";
-import { AttachmentModel } from "@models/shared/attachment.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 
 @Component({
@@ -38,10 +36,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
-  public fileName = "";
-  public errorFiles = "";
-  public currentFile: AttachmentModel = null;
-
   public startDay$: any = of(startDaySelect);
   public numberOfDecimal$: any = of(numberOfDecimal);
   public systemDecimal$: any = of(systemDecimal);
@@ -52,7 +46,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     private _fb: UntypedFormBuilder,
     private _authFacadeService: AuthFacadeService,
     private _attachmentFacadeService: AttachmentFacadeService,
-    private _toastService: ToastService,
     private translateService: TranslateService,
     private _ingresoEgresoFacadeService: IngresoEgresoFacadeService
   ) {
@@ -94,8 +87,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       .getUrlAttachment$()
       .pipe(filter((x) => !isNullOrUndefinedEmpty(x)))
       .subscribe((url) => {
-        this.currentFile = null;
-        this.fileName = "";
         this.mainForm.get("photoURL").setValue(url);
       });
   }
@@ -133,6 +124,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     };
     if (this.mainForm.valid) {
       this._authFacadeService.updateProfile(this.dataForm);
+      this._authFacadeService.updateProfileFB(this.dataForm);
       if (
         this.currentItem.dayStartDashboard != this.dataForm.dayStartDashboard
       ) {
@@ -151,73 +143,13 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
 
   clean() {
     this.mainForm.reset();
-    this.errorFiles = "";
-    this.fileName = "";
   }
 
   goBack() {
     this._location.back();
   }
 
-  changeFile(event: any): void {
-    const jpg = "image/jpg";
-    const jpeg = "image/jpeg";
-    const png = "image/png";
-    const max_size = 1000000;
-    const allowed_types = [jpg, jpeg, png];
-
-    const filesInput = event.target.files;
-
-    if (filesInput.length > 0) {
-      for (let value of filesInput) {
-        const currentFile: any = value;
-        const extension = allowed_types.includes(currentFile.type);
-        let isValid = true;
-
-        if (!extension) {
-          this.errorFiles = this.translateService.instant(
-            "VALIDATIONS.VALID_FILE_EXTENSION"
-          );
-          isValid = false;
-        }
-
-        if (currentFile.size > max_size) {
-          this.errorFiles =
-            this.translateService.instant("VALIDATIONS.VALID_FILE_SIZE") +
-            " " +
-            max_size / 1000000 +
-            "Mb";
-          isValid = false;
-        }
-        if (isValid) {
-          this.errorFiles = "";
-          this.fileName = currentFile.name;
-          this.currentFile = currentFile;
-        } else {
-          this.currentFile = null;
-        }
-      }
-    }
-  }
-
-  public uploadFile() {
-    if (this.currentFile) {
-      this._attachmentFacadeService.create(this.currentFile);
-    } else {
-      this._toastService.show(
-        this.translateService.instant("VALIDATIONS.UPLOAD_FILE_REQUERID"),
-        {
-          classname: "bg-danger text-light",
-          delay: 5000,
-        }
-      );
-    }
-  }
-
   private chargeIndicatorManager(): void {
-    this._attachmentFacadeService
-      .getLoading$()
-      .subscribe((loading) => (this.isLoadingAttachment = loading));
     const isLoading$ = this._authFacadeService.getLoading$();
     const isLoadingUpdateProfile$ =
       this._authFacadeService.getUpdateProfileLoading$();

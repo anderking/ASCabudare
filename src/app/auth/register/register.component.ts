@@ -9,6 +9,7 @@ import { NgForm } from "@angular/forms";
 import {
   CurrentUserModel,
   LoginFormModel,
+  UserAuthModel,
 } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
@@ -46,37 +47,13 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     this._authFacadeService
-      .getRegister$()
+      .getUserAuth$()
       .pipe(
-        first((register) => !isNullOrUndefined(register)),
+        first((userAuth) => !isNullOrUndefined(userAuth)),
         takeUntil(this._finisher)
       )
-      .subscribe((register: CurrentUserModel) => {
-        this.registerFB = register;
-        const userDoc: CurrentUserModel = {
-          displayName: register.displayName,
-          email: register.email,
-          emailVerified: register.emailVerified,
-          phoneNumber: register.phoneNumber,
-          currency: "",
-          dayStartDashboard: "",
-          numberOfDecimal: "",
-          systemDecimal: "",
-          photoURL: register.photoURL,
-          uid: register.uid,
-        };
-        this._authFacadeService.setUserDoc(userDoc);
-      });
-
-    this._authFacadeService
-      .getUserDoc$()
-      .pipe(
-        first((userDoc) => !isNullOrUndefined(userDoc)),
-        takeUntil(this._finisher)
-      )
-      .subscribe(() => {
-        this._router.navigate(["/login-time"]);
-        this._authService.theParamsToLoginTime = this.registerFB;
+      .subscribe((userAuth: UserAuthModel) => {
+        this._authService.theParamsToLoginTime = userAuth;
       });
   }
 
