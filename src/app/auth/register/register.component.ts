@@ -4,6 +4,7 @@ import {
   OnDestroy,
   ViewChild,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import {
@@ -25,18 +26,16 @@ import { Router } from "@angular/router";
 })
 export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
+
+  private _authService = inject(AuthService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _finisher = new Subject<void>();
+
   public dataForm: LoginFormModel;
   public isLoading: boolean;
   public email: string;
   public password: string;
   public registerFB: CurrentUserModel;
-  private _finisher = new Subject<void>();
-
-  constructor(
-    private _authService: AuthService,
-    private _authFacadeService: AuthFacadeService,
-    private _router: Router
-  ) {}
 
   ngOnInit() {
     this._authFacadeService

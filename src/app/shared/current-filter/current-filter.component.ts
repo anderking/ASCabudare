@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  inject,
 } from "@angular/core";
 import {
   UntypedFormBuilder,
@@ -39,6 +40,12 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   @Output() wordFilterEmit: EventEmitter<string> = new EventEmitter();
   @Input() wordFilterActive = false;
   @Input() showRangeDates = true;
+
+  private _fb = inject(UntypedFormBuilder);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
+  private _translateService = inject(TranslateService);
+
   public mainForm: UntypedFormGroup;
   public rangeDate: RangeDate;
   public initDay: string = null;
@@ -50,13 +57,6 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   public beforeCounter = 1;
   public nextCounter = 1;
   public finisher$ = new Subject<void>();
-
-  constructor(
-    private _fb: UntypedFormBuilder,
-    private _authFacadeService: AuthFacadeService,
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit(): void {
     this._authFacadeService
@@ -162,13 +162,13 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
 
     if (field === "startDate") {
       startDateControl.setValidators([
-        setValidatorDateDashboard(this.mainForm, field, this.translateService),
+        setValidatorDateDashboard(this.mainForm, field, this._translateService),
       ]);
     }
 
     if (field === "endDate") {
       endDateControl.setValidators([
-        setValidatorDateDashboard(this.mainForm, field, this.translateService),
+        setValidatorDateDashboard(this.mainForm, field, this._translateService),
       ]);
     }
 
@@ -260,6 +260,6 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   }
 
   public getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm, this.translateService);
+    return getErrorMessageField(field, this.mainForm, this._translateService);
   }
 }

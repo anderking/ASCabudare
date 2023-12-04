@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { filter, map, takeUntil } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/management/ingreso-egreso.model";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
@@ -19,6 +19,15 @@ import { ModalService } from "@services/ui/modal.service";
   templateUrl: "./ingresos-egresos.component.html",
 })
 export class IngresosEgresosComponent implements OnInit, OnDestroy {
+  private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _translateService = inject(TranslateService);
+  private _modalService = inject(ModalService);
+  private _location = inject(Location);
+  private _router = inject(Router);
+  private _finisher$ = new Subject<void>();
+
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
   public wordFilter = "";
@@ -27,17 +36,6 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
   public rangeDate: RangeDate;
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
-  private _finisher = new Subject<void>();
-
-  constructor(
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _location: Location,
-    private _router: Router,
-    private translateService: TranslateService,
-    private modalService: ModalService
-  ) {}
 
   ngOnInit() {
     this._authFacadeService
@@ -54,14 +52,14 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
 
     this._ingresoEgresoFacadeService
       .getLoading$()
-      .pipe(takeUntil(this._finisher))
+      .pipe(takeUntil(this._finisher$))
       .subscribe((loading: boolean) => {
         this.isLoading = loading;
       });
   }
 
   ngOnDestroy(): void {
-    this._finisher.next();
+    this._finisher$.next();
     this._sharedFacadeService.reset();
   }
 
@@ -99,7 +97,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
             return items;
           }
         }),
-        takeUntil(this._finisher)
+        takeUntil(this._finisher$)
       )
       .subscribe((items: IngresoEgresoModel[]) => {
         this.items = items;
@@ -135,12 +133,12 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
     const data: ModalModel<IngresoEgresoModel> = {
       type: "confirmation",
       item,
-      title: this.translateService.instant("TITLES.CONFIRMATION"),
-      message: this.translateService.instant("TEXTS.CONFIRMATION"),
-      buttonYes: this.translateService.instant("BUTTONS.YES"),
-      buttonCancel: this.translateService.instant("BUTTONS.CANCEL"),
+      title: this._translateService.instant("TITLES.CONFIRMATION"),
+      message: this._translateService.instant("TEXTS.CONFIRMATION"),
+      buttonYes: this._translateService.instant("BUTTONS.YES"),
+      buttonCancel: this._translateService.instant("BUTTONS.CANCEL"),
     };
-    this.modalService
+    this._modalService
       .openModal(data)
       .then((data) => {
         this.goDelete(data);

@@ -7,6 +7,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileComponent,
+    title: 'Profile',
     canActivate: [],
     children: [
       { path: "", component: ProfileUpdateComponent },

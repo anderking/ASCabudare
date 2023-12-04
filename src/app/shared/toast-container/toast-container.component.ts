@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from "@angular/core";
+import { Component, TemplateRef, inject } from "@angular/core";
 import { ToastService } from "@services/ui/toast.service";
 
 @Component({
@@ -7,7 +7,7 @@ import { ToastService } from "@services/ui/toast.service";
   styleUrls: ["./toast-container.component.scss"],
 })
 export class ToastContainerComponent {
-  constructor(public toastService: ToastService) {}
+  public toastService = inject(ToastService);
 
   isTemplate(toast) {
     return toast.textOrTpl instanceof TemplateRef;

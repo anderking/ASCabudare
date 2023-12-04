@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 
 @Component({
@@ -6,7 +6,7 @@ import { SharedFacadeService } from "@facades/shared-facade.service";
   templateUrl: "./auth.component.html",
 })
 export class AuthComponent implements OnInit {
-  constructor(private _sharedFacadeService: SharedFacadeService) {}
+  private _sharedFacadeService = inject(SharedFacadeService);
 
   ngOnInit(): void {
     this._sharedFacadeService.messageSubscriptions();

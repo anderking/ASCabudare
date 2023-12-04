@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { filter, map, takeUntil } from "rxjs/operators";
 import { LendingModel } from "@models/management/lending.model";
 import { LendingFacadeService } from "@facades/lending-facade.service";
@@ -19,6 +19,15 @@ import { ModalService } from "@services/ui/modal.service";
   templateUrl: "./lendings.component.html",
 })
 export class LendingsComponent implements OnInit, OnDestroy {
+  private _lendingFacadeService = inject(LendingFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private translateService = inject(TranslateService);
+  private modalService = inject(ModalService);
+  private _location = inject(Location);
+  private _router = inject(Router);
+  private _finisher$ = new Subject<void>();
+
   public isLoading: boolean;
   public items: LendingModel[] = [];
   public wordFilter = "";
@@ -27,17 +36,6 @@ export class LendingsComponent implements OnInit, OnDestroy {
   public rangeDate: RangeDate;
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
-  private _finisher = new Subject<void>();
-
-  constructor(
-    private _lendingFacadeService: LendingFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _location: Location,
-    private _router: Router,
-    private translateService: TranslateService,
-    private modalService: ModalService
-  ) {}
 
   ngOnInit() {
     this._authFacadeService
@@ -54,14 +52,14 @@ export class LendingsComponent implements OnInit, OnDestroy {
 
     this._lendingFacadeService
       .getLoading$()
-      .pipe(takeUntil(this._finisher))
+      .pipe(takeUntil(this._finisher$))
       .subscribe((loading: boolean) => {
         this.isLoading = loading;
       });
   }
 
   ngOnDestroy(): void {
-    this._finisher.next();
+    this._finisher$.next();
     this._sharedFacadeService.reset();
   }
 
@@ -99,7 +97,7 @@ export class LendingsComponent implements OnInit, OnDestroy {
             return items;
           }
         }),
-        takeUntil(this._finisher)
+        takeUntil(this._finisher$)
       )
       .subscribe((items: LendingModel[]) => {
         this.items = items;

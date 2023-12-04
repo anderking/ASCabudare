@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { CategoryFacadeService } from "@facades/category-facade.service";
 import { ClientFacadeService } from "@facades/client-facade.service";
 import { CombosFacadeService } from "@facades/combos-facade.service";
@@ -13,16 +13,15 @@ import { AuthService } from "@services/auth/auth.service";
   styleUrls: ["./container.component.scss"],
 })
 export class ContainerComponent implements OnInit {
-  sidebarExpanded = true;
-  constructor(
-    private _authService: AuthService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _combosFacadeService: CombosFacadeService,
-    private _categoryFacadeService: CategoryFacadeService,
-    private _clientFacadeService: ClientFacadeService,
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
-    private _lendingFacadeService: LendingFacadeService
-  ) {}
+  private _authService = inject(AuthService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _combosFacadeService = inject(CombosFacadeService);
+  private _categoryFacadeService = inject(CategoryFacadeService);
+  private _clientFacadeService = inject(ClientFacadeService);
+  private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
+  private _lendingFacadeService = inject(LendingFacadeService);
+
+  public sidebarExpanded = true;
 
   ngOnInit(): void {
     this._authService.initAuthListener();

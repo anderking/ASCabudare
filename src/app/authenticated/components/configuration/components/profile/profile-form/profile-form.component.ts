@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -23,13 +23,23 @@ import {
   systemDecimal,
 } from "@root/core/constants/mocks/mocks-const";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
+import { CombosFacadeService } from "@facades/combos-facade.service";
 
 @Component({
   selector: "app-profile-form",
   templateUrl: "./profile-form.component.html",
 })
 export class ProfileUpdateComponent implements OnInit, OnDestroy {
-  public finisher$ = new Subject<void>();
+  private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
+  private _attachmentFacadeService = inject(AttachmentFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _combosFacadeService = inject(CombosFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _translateService = inject(TranslateService);
+  private _fb = inject(UntypedFormBuilder);
+  private _location = inject(Location);
+  private finisher$ = new Subject<void>();
+
   public mainForm: UntypedFormGroup;
   public dataForm: CurrentUserModel;
   public currentItem: CurrentUserModel;
@@ -40,19 +50,8 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public numberOfDecimal$: any = of(numberOfDecimal);
   public systemDecimal$: any = of(systemDecimal);
 
-  constructor(
-    private _sharedFacadeService: SharedFacadeService,
-    private _location: Location,
-    private _fb: UntypedFormBuilder,
-    private _authFacadeService: AuthFacadeService,
-    private _attachmentFacadeService: AttachmentFacadeService,
-    private translateService: TranslateService,
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService
-  ) {
-    this.mainForm = this.initForm();
-  }
-
   ngOnInit() {
+    this.mainForm = this.initForm();
     this.dataForm = { ...this.mainForm.getRawValue() };
     this.chargeIndicatorManager();
 
@@ -138,7 +137,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm, this.translateService);
+    return getErrorMessageField(field, this.mainForm, this._translateService);
   }
 
   clean() {
@@ -151,13 +150,18 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
 
   private chargeIndicatorManager(): void {
     const isLoading$ = this._authFacadeService.getLoading$();
+    const isLoadingCombos$ = this._combosFacadeService.getLoading$();
     const isLoadingUpdateProfile$ =
       this._authFacadeService.getUpdateProfileLoading$();
 
-    const result$ = combineLatest([isLoading$, isLoadingUpdateProfile$]).pipe(
+    const result$ = combineLatest([
+      isLoading$,
+      isLoadingCombos$,
+      isLoadingUpdateProfile$,
+    ]).pipe(
       map(
-        ([isLoading, isLoadingUpdateProfile]) =>
-          isLoading || isLoadingUpdateProfile
+        ([isLoading, isLoadingCombos, isLoadingUpdateProfile]) =>
+          isLoading || isLoadingCombos || isLoadingUpdateProfile
       ),
       takeUntil(this.finisher$)
     );

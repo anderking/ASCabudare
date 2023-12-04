@@ -8,6 +8,7 @@ export const routes: Routes = [
   {
     path: "",
     component: IngresoEgresoComponent,
+    title: 'Ingress - Egress',
     canActivate: [],
     children: [
       { path: "", component: IngresosEgresosComponent },

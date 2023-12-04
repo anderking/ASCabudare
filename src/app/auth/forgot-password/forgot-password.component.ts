@@ -4,6 +4,7 @@ import {
   OnDestroy,
   ViewChild,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
@@ -18,16 +19,15 @@ import { AuthService } from "@services/auth/auth.service";
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("mainForm", { read: NgForm }) mainForm: NgForm;
+
+  private _authService = inject(AuthService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _finisher = new Subject<void>();
+
   public dataForm: LoginFormModel;
   public isLoading: boolean;
   public email: string;
   public password: string;
-  private _finisher = new Subject<void>();
-
-  constructor(
-    private _authService: AuthService,
-    private _authFacadeService: AuthFacadeService
-  ) {}
 
   ngOnInit() {
     this._authFacadeService

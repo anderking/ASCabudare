@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -34,7 +34,17 @@ import { AttachmentFacadeService } from "@facades/attachment-facade.service";
   templateUrl: "./client-form.component.html",
 })
 export class ClientFormComponent implements OnInit, OnDestroy {
-  public finisher$ = new Subject<void>();
+  private _attachmentFacadeService = inject(AttachmentFacadeService);
+  private _clientFacadeService = inject(ClientFacadeService);
+  private _combosFacadeService = inject(CombosFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _translateService = inject(TranslateService);
+  private _activatedRoute = inject(ActivatedRoute);
+  private _fb = inject(UntypedFormBuilder);
+  private _location = inject(Location);
+  private _finisher$ = new Subject<void>();
+
   public mainForm: UntypedFormGroup;
   public dataForm: ClientModel;
   public currentItem: ClientModel = null;
@@ -46,21 +56,8 @@ export class ClientFormComponent implements OnInit, OnDestroy {
   public createDateFB: object = null;
   public createDate: string = null;
 
-  constructor(
-    private _clientFacadeService: ClientFacadeService,
-    private _combosFacadeService: CombosFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _attachmentFacadeService: AttachmentFacadeService,
-    private _location: Location,
-    private _fb: UntypedFormBuilder,
-    private _activatedRoute: ActivatedRoute,
-    private translateService: TranslateService
-  ) {
-    this.mainForm = this.initForm();
-  }
-
   ngOnInit() {
+    this.mainForm = this.initForm();
     this.callsCombos();
     this.chargeIndicatorManager();
     this.controlSubscriptions();
@@ -77,12 +74,12 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         const id = params.get("id");
         return { id };
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const items$ = this._clientFacadeService.getAll$().pipe(
       filter((items: ClientModel[]) => !isNullOrUndefinedEmpty(items)),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const mainForm$ = of(this.mainForm);
@@ -107,7 +104,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
             };
           }
         }),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((data) => {
         console.log("DATA", data);
@@ -120,7 +117,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
       .getCurrentItem$()
       .pipe(
         filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((currentItem) => {
         console.log("currentItem", currentItem);
@@ -139,7 +136,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
-    this.finisher$.next();
+    this._finisher$.next();
   }
 
   selectCurrentItem(item: ClientModel): void {
@@ -156,7 +153,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
           };
         }),
         filter((i) => !isNullOrUndefined(i)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((control) => {
         control.fullName.disable();
@@ -173,7 +170,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
     documentType$.subscribe((i: ComboModel[]) => {
       this.documentTypeCombo$.next(i);
@@ -226,7 +223,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm, this.translateService);
+    return getErrorMessageField(field, this.mainForm, this._translateService);
   }
 
   clean() {
@@ -243,7 +240,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
       .get("documentType")
       .valueChanges.pipe(
         filter((value) => !isNullOrUndefined(value)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((value: string) => {
         if (this.documentTypesArray && this.documentTypesArray.length > 0) {
@@ -281,7 +278,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
             lastName,
           };
         }),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((data) => {
         const fullName = data.firstName + " " + data.lastName;
@@ -299,10 +296,11 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         ([isLoadingClient, isLoadingCombos]) =>
           isLoadingClient || isLoadingCombos
       ),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
-    result$.pipe(takeUntil(this.finisher$)).subscribe((i) => {
+    result$.pipe(takeUntil(this._finisher$)).subscribe((i) => {
+      console.log(i)
       this.isLoading = i;
     });
   }

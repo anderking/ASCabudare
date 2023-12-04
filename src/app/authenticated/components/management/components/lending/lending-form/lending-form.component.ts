@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -29,14 +29,23 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { orderBy } from "@root/core/utilities/core.utilities";
 import { TranslateService } from "@ngx-translate/core";
-import { UrlService } from "@services/ui/url-service.service";
 
 @Component({
   selector: "app-lending-form",
   templateUrl: "./lending-form.component.html",
 })
 export class LendingFormComponent implements OnInit, OnDestroy {
-  public finisher$ = new Subject<void>();
+  private _lendingFacadeService = inject(LendingFacadeService);
+  private _clientFacadeService = inject(ClientFacadeService);
+  private _combosFacadeService = inject(CombosFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _location = inject(Location);
+  private _fb = inject(UntypedFormBuilder);
+  private _activatedRoute = inject(ActivatedRoute);
+  private _translateService = inject(TranslateService);
+  private finisher$ = new Subject<void>();
+
   public mainForm: UntypedFormGroup;
   public dataForm: LendingModel;
   public currentItem: LendingModel;
@@ -55,22 +64,8 @@ export class LendingFormComponent implements OnInit, OnDestroy {
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
 
-  constructor(
-    private _lendingFacadeService: LendingFacadeService,
-    private _clientFacadeService: ClientFacadeService,
-    private _combosFacadeService: CombosFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _location: Location,
-    private _fb: UntypedFormBuilder,
-    private _activatedRoute: ActivatedRoute,
-    private translateService: TranslateService,
-    private _urlService: UrlService
-  ) {
-    this.mainForm = this.initForm();
-  }
-
   ngOnInit() {
+    this.mainForm = this.initForm();
     this.callsCombos();
     this.chargeIndicatorManager();
     this.controlSubscriptions();
@@ -132,10 +127,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
         if (data.item) {
           this.selectCurrentItem(data.item);
         }
-        if (
-          data.params.idClient ||
-          (data.params.id && data.params.idClient)
-        ) {
+        if (data.params.idClient || (data.params.id && data.params.idClient)) {
           this.disabledInputs(of(data.mainForm), data.params.idClient);
         }
       });
@@ -298,7 +290,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm, this.translateService);
+    return getErrorMessageField(field, this.mainForm, this._translateService);
   }
 
   clean() {

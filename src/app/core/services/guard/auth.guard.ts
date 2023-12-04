@@ -68,15 +68,11 @@ export const AuthTokenGuard = () => {
   const router = inject(Router);
   return authService.isAuthenticate$.pipe(
     take(1),
-    tap((x) => console.log("AuthTokenGuard", x)),
     tap((user: any) => {
-      console.log(user);
       if (user) {
         const tokenExpiration = user.stsTokenManager.expirationTime;
         const expirationDate = new Date(tokenExpiration);
         const currentDate = new Date();
-        console.log("expirationDate", expirationDate);
-        console.log("currentDate", currentDate);
         if (expirationDate > currentDate) {
           return true;
         } else {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -23,24 +23,21 @@ import { TranslateService } from "@ngx-translate/core";
   templateUrl: "./category-form.component.html",
 })
 export class CategoryFormComponent implements OnInit, OnDestroy {
-  public finisher$ = new Subject<void>();
+  private _categoryFacadeService = inject(CategoryFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _translateService = inject(TranslateService);
+  private _activatedRoute = inject(ActivatedRoute);
+  private _fb = inject(UntypedFormBuilder);
+  private _location = inject(Location);
+  private _finisher$ = new Subject<void>();
+
   public mainForm: UntypedFormGroup;
   public dataForm: CategoryModel;
   public currentItem: CategoryModel;
   public isLoading: boolean;
 
-  constructor(
-    private _categoryFacadeService: CategoryFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _location: Location,
-    private _fb: UntypedFormBuilder,
-    private _activatedRoute: ActivatedRoute,
-    private translateService: TranslateService
-  ) {
-    this.mainForm = this.initForm();
-  }
-
   ngOnInit() {
+    this.mainForm = this.initForm();
     this.chargeIndicatorManager();
 
     const params$ = this._activatedRoute.paramMap.pipe(
@@ -49,12 +46,12 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         const id = params.get("id");
         return { id };
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const items$ = this._categoryFacadeService.getAll$().pipe(
       filter((items: CategoryModel[]) => !isNullOrUndefinedEmpty(items)),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const mainForm$ = of(this.mainForm);
@@ -80,7 +77,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
             };
           }
         }),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((data) => {
         console.log("DATA", data);
@@ -93,7 +90,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
       .getCurrentItem$()
       .pipe(
         filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((currentItem) => {
         console.log("currentItem", currentItem);
@@ -112,7 +109,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
-    this.finisher$.next();
+    this._finisher$.next();
   }
 
   selectCurrentItem(item: CategoryModel): void {
@@ -144,7 +141,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm, this.translateService);
+    return getErrorMessageField(field, this.mainForm, this._translateService);
   }
 
   clean() {
@@ -160,10 +157,10 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
     const result$ = combineLatest([isLoadingCategory$]).pipe(
       map(([isLoadingCategory]) => isLoadingCategory),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
-    result$.pipe(takeUntil(this.finisher$)).subscribe((i) => {
+    result$.pipe(takeUntil(this._finisher$)).subscribe((i) => {
       this.isLoading = i;
     });
   }

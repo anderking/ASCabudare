@@ -9,6 +9,7 @@ export const routes: Routes = [
   {
     path: "",
     component: ClientComponent,
+    title: 'Client',
     canActivate: [],
     children: [
       { path: "", component: ClientsComponent },

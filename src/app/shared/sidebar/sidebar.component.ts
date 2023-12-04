@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import {
   faGauge,
@@ -24,6 +24,10 @@ import { Subject, takeUntil } from "rxjs";
   styleUrls: ["./sidebar.component.scss"],
 })
 export class SidebarComponent implements OnInit {
+  private _authService = inject(AuthService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _translateService = inject(TranslateService);
+
   public user: CurrentUserModel;
   public lang: boolean;
   public langStorage = localStorage.getItem("lang");
@@ -42,14 +46,8 @@ export class SidebarComponent implements OnInit {
   public faMoon = faMoon;
   public faLanguage = faLanguage;
 
-  constructor(
-    private auth: AuthService,
-    private authFacadeService: AuthFacadeService,
-    private translateService: TranslateService
-  ) {}
-
   ngOnInit() {
-    this.authFacadeService
+    this._authFacadeService
       .getCurrentUser$()
       .pipe(takeUntil(this.finisher$))
       .subscribe((user: CurrentUserModel) => {
@@ -142,12 +140,12 @@ export class SidebarComponent implements OnInit {
   public changeLanguage(event: boolean): void {
     if (event) {
       localStorage.setItem("lang", "en");
-      this.translateService.setDefaultLang("en");
-      this.translateService.use("en");
+      this._translateService.setDefaultLang("en");
+      this._translateService.use("en");
     } else {
       localStorage.setItem("lang", "es");
-      this.translateService.setDefaultLang("es");
-      this.translateService.use("es");
+      this._translateService.setDefaultLang("es");
+      this._translateService.use("es");
     }
   }
 
@@ -160,7 +158,7 @@ export class SidebarComponent implements OnInit {
   }
 
   public logout(): void {
-    this.auth.logout();
+    this._authService.logout();
     const actualRoute = window.location.origin;
     window.location.replace(actualRoute + "/auth");
   }

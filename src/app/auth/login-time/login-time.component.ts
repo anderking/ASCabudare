@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import { AuthService } from "@services/auth/auth.service";
 import { Subject, filter, takeUntil, tap } from "rxjs";
 import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.util";
@@ -11,9 +11,9 @@ import { Router } from "@angular/router";
   styles: [],
 })
 export class LoginTimeComponent implements OnInit, OnDestroy {
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
   private _finisher = new Subject<void>();
-
-  constructor(private _authService: AuthService, private _router: Router) {}
 
   ngOnInit(): void {
     const params$ = this._authService.paramsToLoginTime.pipe(

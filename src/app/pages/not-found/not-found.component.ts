@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -7,8 +7,8 @@ import { Router } from "@angular/router";
   styleUrls: ["./not-found-component.scss"],
 })
 export class NotFoundComponent {
-  constructor(private router: Router) {}
+  private _router = inject(Router);
   goBack() {
-    this.router.navigate(["authenticated"]);
+    this._router.navigate(["authenticated"]);
   }
 }

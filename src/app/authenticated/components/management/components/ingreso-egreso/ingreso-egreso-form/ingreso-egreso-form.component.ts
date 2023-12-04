@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -33,7 +33,17 @@ import { TranslateService } from "@ngx-translate/core";
   templateUrl: "./ingreso-egreso-form.component.html",
 })
 export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
-  public finisher$ = new Subject<void>();
+  private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
+  private _categoryFacadeService = inject(CategoryFacadeService);
+  private _combosFacadeService = inject(CombosFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _location = inject(Location);
+  private _fb = inject(UntypedFormBuilder);
+  private _activatedRoute = inject(ActivatedRoute);
+  private _translateService = inject(TranslateService);
+  private _finisher$ = new Subject<void>();
+
   public mainForm: UntypedFormGroup;
   public dataForm: IngresoEgresoModel;
   public currentItem: IngresoEgresoModel;
@@ -49,28 +59,15 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
 
-  constructor(
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
-    private _categoryFacadeService: CategoryFacadeService,
-    private _combosFacadeService: CombosFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _location: Location,
-    private _fb: UntypedFormBuilder,
-    private _activatedRoute: ActivatedRoute,
-    private translateService: TranslateService
-  ) {
-    this.mainForm = this.initForm();
-  }
-
   ngOnInit() {
+    this.mainForm = this.initForm();
     this.callsCombos();
     this.chargeIndicatorManager();
     this.controlSubscriptions();
 
     this._authFacadeService
       .getCurrentUser$()
-      .pipe(takeUntil(this.finisher$))
+      .pipe(takeUntil(this._finisher$))
       .subscribe((user: CurrentUserModel) => {
         this.currentUser = user;
         this.numberOfDecimal = user?.numberOfDecimal
@@ -87,12 +84,12 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
         const id = params.get("id");
         return { id };
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const items$ = this._ingresoEgresoFacadeService.getAll$().pipe(
       filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const mainForm$ = of(this.mainForm);
@@ -119,7 +116,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
             };
           }
         }),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((data) => {
         console.log("DATA", data);
@@ -132,7 +129,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
       .getCurrentItem$()
       .pipe(
         filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((currentItem) => {
         console.log("currentItem", currentItem);
@@ -143,7 +140,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
       .getMessage$()
       .pipe(
         filter((currentItem) => !isNullOrUndefinedEmpty(currentItem)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe(() => {
         if (!this.currentItem) {
@@ -154,7 +151,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
-    this.finisher$.next();
+    this._finisher$.next();
   }
 
   selectCurrentItem(item: IngresoEgresoModel): void {
@@ -175,7 +172,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
     typeActive$.subscribe((i: ComboModel[]) => {
       this.typeActiveCombo$.next(i);
@@ -198,7 +195,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
     category$.subscribe((i: CategoryModel[]) => {
       this.categoryCombo$.next(i);
@@ -251,7 +248,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
   }
 
   getErrorMessageField(field: string): string {
-    return getErrorMessageField(field, this.mainForm, this.translateService);
+    return getErrorMessageField(field, this.mainForm, this._translateService);
   }
 
   clean() {
@@ -272,7 +269,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
       .get("idTypeActive")
       .valueChanges.pipe(
         filter((value) => !isNullOrUndefined(value)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((value: string) => {
         if (this.typeActivesArray && this.typeActivesArray.length > 0) {
@@ -295,7 +292,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
       .get("idCategory")
       .valueChanges.pipe(
         filter((value) => !isNullOrUndefined(value)),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((value: string) => {
         if (this.categorysArray && this.categorysArray.length > 0) {
@@ -328,10 +325,10 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
         ([isLoadingIngresoEgreso, isLoadingCategory, isLoadingCombos]) =>
           isLoadingIngresoEgreso || isLoadingCategory || isLoadingCombos
       ),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
-    result$.pipe(takeUntil(this.finisher$)).subscribe((i) => {
+    result$.pipe(takeUntil(this._finisher$)).subscribe((i) => {
       this.isLoading = i;
     });
   }

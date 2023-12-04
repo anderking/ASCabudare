@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import { combineLatest, Subject } from "rxjs";
 import { filter, first, map, takeUntil } from "rxjs/operators";
 import { IngresoEgresoModel } from "@models/management/ingreso-egreso.model";
@@ -25,7 +25,18 @@ import { CustomDecimalPipe } from "@root/core/pipes/custom-decimal.pipe";
   templateUrl: "./dashboard.component.html",
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  public finisher$ = new Subject<void>();
+  private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
+  private _categoryFacadeService = inject(CategoryFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _translateService = inject(TranslateService);
+  private _modalService = inject(ModalService);
+  private _amountPipe = inject(AmountPipe);
+  private _customDecimalPipe = inject(CustomDecimalPipe);
+  private _filterTableSearchPipe = inject(FilterTableSearchPipe);
+  private _urlService = inject(UrlService);
+  private _finisher$ = new Subject<void>();
+
   public wordFilter = "";
   public ingresos_egresos: IngresoEgresoModel[] = [];
   public categories: CategoryModel[] = [];
@@ -41,18 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public systemDecimal: string = "comma";
   private rangeDate: RangeDate;
 
-  constructor(
-    private _ingresoEgresoFacadeService: IngresoEgresoFacadeService,
-    private _categoryFacadeService: CategoryFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private translateService: TranslateService,
-    private _modalService: ModalService,
-    private _amountPipe: AmountPipe,
-    private _customDecimalPipe: CustomDecimalPipe,
-    private _filterTableSearchPipe: FilterTableSearchPipe,
-    private _urlService: UrlService
-  ) {
+  ngOnInit() {
     const previousUrl = this._urlService.getPreviousUrl();
     if (previousUrl && previousUrl.includes("/form")) {
       this._ingresoEgresoFacadeService
@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             (currentFilter: CurrentFilterModel) =>
               !isNullOrUndefinedEmpty(currentFilter)
           ),
-          takeUntil(this.finisher$)
+          takeUntil(this._finisher$)
         )
         .subscribe((currentFilter: CurrentFilterModel) => {
           const payload: CurrentFilterModel = {
@@ -72,9 +72,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this._ingresoEgresoFacadeService.setCurrentFilter(payload);
         });
     }
-  }
-
-  ngOnInit() {
     this._authFacadeService
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
@@ -91,7 +88,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.finisher$.next();
+    this._finisher$.next();
     this._sharedFacadeService.reset();
   }
 
@@ -130,7 +127,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const categories$ = this._categoryFacadeService.getAll$().pipe(
@@ -142,7 +139,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return items;
         }
       }),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
     const results$ = combineLatest([ingresos_egresos$, categories$]);
@@ -163,7 +160,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             };
           }
         }),
-        takeUntil(this.finisher$)
+        takeUntil(this._finisher$)
       )
       .subscribe((data) => {
         console.log("DATA", data);
@@ -224,7 +221,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.numberOfDecimal
     );
     const title =
-      this.translateService.instant("TITLES.TOTAL") + " " + amountAcumFormat;
+      this._translateService.instant("TITLES.TOTAL") + " " + amountAcumFormat;
     const data: ModalModel<GroupModel<IngresoEgresoModel>> = {
       type: "custom",
       item,
@@ -250,10 +247,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ([isLoadingIngresoEgreso, isLoadingCategory]) =>
           isLoadingIngresoEgreso || isLoadingCategory
       ),
-      takeUntil(this.finisher$)
+      takeUntil(this._finisher$)
     );
 
-    result$.pipe(takeUntil(this.finisher$)).subscribe((i) => {
+    result$.pipe(takeUntil(this._finisher$)).subscribe((i) => {
       this.isLoading = i;
     });
   }

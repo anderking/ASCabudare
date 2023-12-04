@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { AttachmentModel } from "@models/shared/attachment.model";
 import { TranslateService } from "@ngx-translate/core";
@@ -6,21 +6,18 @@ import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefine
 import { ToastService } from "@services/ui/toast.service";
 import { filter } from "rxjs/operators";
 
-
 @Component({
   selector: "app-upload-file",
   templateUrl: "./upload-file.component.html",
 })
 export class UploadFileComponent implements OnInit {
+  private _attachmentFacadeService = inject(AttachmentFacadeService);
+  private _translateService = inject(TranslateService);
+  private _toastService = inject(ToastService);
+
   public isLoadingAttachment: boolean;
   public errorFiles = "";
   public currentFile: AttachmentModel = null;
-
-  constructor(
-    private _attachmentFacadeService: AttachmentFacadeService,
-    private translateService: TranslateService,
-    private _toastService: ToastService
-  ) {}
 
   ngOnInit() {
     this._attachmentFacadeService
@@ -50,7 +47,7 @@ export class UploadFileComponent implements OnInit {
         let isValid = true;
 
         if (!extension) {
-          this.errorFiles = this.translateService.instant(
+          this.errorFiles = this._translateService.instant(
             "VALIDATIONS.VALID_FILE_EXTENSION"
           );
           isValid = false;
@@ -58,7 +55,7 @@ export class UploadFileComponent implements OnInit {
 
         if (currentFile.size > max_size) {
           this.errorFiles =
-            this.translateService.instant("VALIDATIONS.VALID_FILE_SIZE") +
+            this._translateService.instant("VALIDATIONS.VALID_FILE_SIZE") +
             " " +
             max_size / 1000000 +
             "Mb";
@@ -79,7 +76,7 @@ export class UploadFileComponent implements OnInit {
       this._attachmentFacadeService.create(this.currentFile);
     } else {
       this._toastService.show(
-        this.translateService.instant("VALIDATIONS.UPLOAD_FILE_REQUERID"),
+        this._translateService.instant("VALIDATIONS.UPLOAD_FILE_REQUERID"),
         {
           classname: "bg-danger text-light",
           delay: 5000,

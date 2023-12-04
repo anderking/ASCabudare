@@ -8,6 +8,7 @@ export const routes: Routes = [
   {
     path: "",
     component: CategoryComponent,
+    title: 'Category',
     canActivate: [],
     children: [
       { path: "", component: CategoriesComponent },

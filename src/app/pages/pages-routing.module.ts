@@ -12,9 +12,18 @@ const routes: Routes = [
     component: PagesComponent,
     children: [
       { path: "", redirectTo: "404", pathMatch: "full" },
-      { path: "404", component: NotFoundComponent },
-      { path: "accessdenied", component: NotAllowedComponent },
-      { path: "verify-email", component: NotVerifyComponent, canActivate: [AuthVerifyEmailtRedirectGuard], },
+      { path: "404", component: NotFoundComponent, title: "Not found" },
+      {
+        path: "accessdenied",
+        component: NotAllowedComponent,
+        title: "Access Denied",
+      },
+      {
+        path: "verify-email",
+        component: NotVerifyComponent,
+        canActivate: [AuthVerifyEmailtRedirectGuard],
+        title: "Verify Email",
+      },
       { path: "**", redirectTo: "", pathMatch: "full" },
     ],
   },

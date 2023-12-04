@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { filter, map, takeUntil } from "rxjs/operators";
 import { LendingModel } from "@models/management/lending.model";
 import { LendingFacadeService } from "@facades/lending-facade.service";
@@ -23,7 +23,17 @@ import { GroupModel } from "@models/shared/group.model";
   templateUrl: "./client-show.component.html",
 })
 export class ClientShowComponent implements OnInit, OnDestroy {
-  public finisher$ = new Subject<void>();
+  private _lendingFacadeService = inject(LendingFacadeService);
+  private _clientFacadeService = inject(ClientFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _authFacadeService = inject(AuthFacadeService);
+  private _translateService = inject(TranslateService);
+  private _activatedRoute = inject(ActivatedRoute);
+  private _modalService = inject(ModalService);
+  private _location = inject(Location);
+  private _router = inject(Router);
+  private finisher$ = new Subject<void>();
+
   public isLoading: boolean;
   public items: LendingModel[] = [];
   public itemsGroup: GroupModel<LendingModel>[] = [];
@@ -34,18 +44,6 @@ export class ClientShowComponent implements OnInit, OnDestroy {
   public rangeDate: RangeDate;
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
-
-  constructor(
-    private _lendingFacadeService: LendingFacadeService,
-    private _clientFacadeService: ClientFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _authFacadeService: AuthFacadeService,
-    private _location: Location,
-    private _router: Router,
-    private _activatedRoute: ActivatedRoute,
-    private translateService: TranslateService,
-    private modalService: ModalService
-  ) {}
 
   ngOnInit() {
     this.chargeIndicatorManager();
@@ -150,12 +148,12 @@ export class ClientShowComponent implements OnInit, OnDestroy {
     const data: ModalModel<LendingModel> = {
       type: "confirmation",
       item,
-      title: this.translateService.instant("TITLES.CONFIRMATION"),
-      message: this.translateService.instant("TEXTS.CONFIRMATION"),
-      buttonYes: this.translateService.instant("BUTTONS.YES"),
-      buttonCancel: this.translateService.instant("BUTTONS.CANCEL"),
+      title: this._translateService.instant("TITLES.CONFIRMATION"),
+      message: this._translateService.instant("TEXTS.CONFIRMATION"),
+      buttonYes: this._translateService.instant("BUTTONS.YES"),
+      buttonCancel: this._translateService.instant("BUTTONS.CANCEL"),
     };
-    this.modalService
+    this._modalService
       .openModal(data)
       .then((data) => {
         this.goDelete(data);

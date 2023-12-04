@@ -24,15 +24,12 @@ import { map } from "rxjs/operators";
   providedIn: "root",
 })
 export class AuthService {
+  private readonly _afAuth = inject(Auth);
+  private readonly _afDB = inject(Firestore);
+  private readonly _authFacadeService = inject(AuthFacadeService);
+
   public userSubcription: Subscription = new Subscription();
   public paramsToLoginTime = new BehaviorSubject<UserAuthModel>(null);
-  private readonly auth = inject(Auth);
-
-  constructor(
-    public afAuth: Auth,
-    private afDB: Firestore,
-    private _authFacadeService: AuthFacadeService
-  ) {}
 
   /**
    * Setea el subject
@@ -49,7 +46,7 @@ export class AuthService {
     this.userSubcription.unsubscribe();
     this._authFacadeService.reset();
     clearLocalStorage();
-    this.afAuth.signOut();
+    this._afAuth.signOut();
   }
 
   /**
@@ -71,7 +68,7 @@ export class AuthService {
     });
 
     const userDoc$ = new Observable<CurrentUserModel>((observer) => {
-      const docRef = doc(this.afDB, `${currentUser?.uid}/User`);
+      const docRef = doc(this._afDB, `${currentUser?.uid}/User`);
       return onSnapshot(
         docRef,
         (snapshot) => {
@@ -147,7 +144,7 @@ export class AuthService {
    * Retorna un boolean si el usuario esta autenticado y si no lo está cierra la sesion automaticamente
    */
   get isAuthenticate$() {
-    return authState(this.auth);
+    return authState(this._afAuth);
   }
 
   /**

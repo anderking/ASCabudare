@@ -8,6 +8,7 @@ export const routes: Routes = [
   {
     path: "",
     component: LendingComponent,
+    title: 'Lending',
     canActivate: [],
     children: [
       { path: "", component: LendingsComponent },

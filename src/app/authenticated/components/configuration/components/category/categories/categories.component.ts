@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { filter, takeUntil } from "rxjs/operators";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
@@ -16,25 +16,23 @@ import { ModalModel } from "@models/shared/modal.model";
   templateUrl: "./categories.component.html",
 })
 export class CategoriesComponent implements OnInit, OnDestroy {
+  private _categoryFacadeService = inject(CategoryFacadeService);
+  private _sharedFacadeService = inject(SharedFacadeService);
+  private _translateService = inject(TranslateService);
+  private _modalService = inject(ModalService);
+  private _location = inject(Location);
+  private _router = inject(Router);
+  private _finisher$ = new Subject<void>();
+
   public isLoading: boolean;
   public items: CategoryModel[] = [];
   public wordFilter = "";
   public wordFilterActive = false;
-  private _finisher = new Subject<void>();
-
-  constructor(
-    private _categoryFacadeService: CategoryFacadeService,
-    private _sharedFacadeService: SharedFacadeService,
-    private _location: Location,
-    private _router: Router,
-    private translateService: TranslateService,
-    private modalService: ModalService
-  ) {}
 
   ngOnInit() {
     this._categoryFacadeService
       .getLoading$()
-      .pipe(takeUntil(this._finisher))
+      .pipe(takeUntil(this._finisher$))
       .subscribe((loading: boolean) => {
         this.isLoading = loading;
       });
@@ -43,7 +41,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       .getAll$()
       .pipe(
         filter((items: CategoryModel[]) => !isNullOrUndefinedEmpty(items)),
-        takeUntil(this._finisher)
+        takeUntil(this._finisher$)
       )
       .subscribe((items: CategoryModel[]) => {
         this.items = items;
@@ -51,7 +49,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._finisher.next();
+    this._finisher$.next();
     this._sharedFacadeService.reset();
   }
 
@@ -88,12 +86,12 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     const data: ModalModel<CategoryModel> = {
       type: "confirmation",
       item,
-      title: this.translateService.instant("TITLES.CONFIRMATION"),
-      message: this.translateService.instant("TEXTS.CONFIRMATION"),
-      buttonYes: this.translateService.instant("BUTTONS.YES"),
-      buttonCancel: this.translateService.instant("BUTTONS.CANCEL"),
+      title: this._translateService.instant("TITLES.CONFIRMATION"),
+      message: this._translateService.instant("TEXTS.CONFIRMATION"),
+      buttonYes: this._translateService.instant("BUTTONS.YES"),
+      buttonCancel: this._translateService.instant("BUTTONS.CANCEL"),
     };
-    this.modalService
+    this._modalService
       .openModal(data)
       .then((data) => {
         this.goDelete(data);
