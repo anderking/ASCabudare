@@ -21,7 +21,7 @@ export function parseCurrentUserAfterAuth(
   userAuth: UserAuthModel
 ): UserAuthModel {
   try {
-    return userAuth = {
+    return (userAuth = {
       accessToken: userAuth.accessToken,
       displayName: userAuth.displayName,
       email: userAuth.email,
@@ -31,7 +31,7 @@ export function parseCurrentUserAfterAuth(
       photoURL: userAuth.photoURL,
       stsTokenManager: userAuth.stsTokenManager,
       uid: userAuth.uid,
-    };
+    });
   } catch {
     return null;
   }
@@ -49,36 +49,40 @@ export function orderBy(items: any[], field: string): any[] {
   return items.sort(generaComparador(field));
 }
 
-export function groupBy(inputArray: any, key: any, removeKey = false): any[] {
-  const outputType = {};
-  inputArray.reduce(
-    (previous, current) => {
-      const { [key]: keyValue } = current;
+export function groupBy(inputArray: any[], key: any, removeKey = false): any[] {
+  let levelOne: any = [];
+  try {
+    const outputType = {};
+    inputArray.reduce(
+      (previous, current) => {
+        const { [key]: keyValue } = current;
 
-      if (removeKey && keyValue) {
-        delete current[key];
+        if (removeKey && keyValue) {
+          delete current[key];
+        }
+
+        const { [keyValue]: reducedValue = [] } = previous;
+
+        return Object.assign(previous, {
+          [keyValue]: reducedValue.concat(current),
+        });
+      },
+
+      outputType
+    );
+
+    for (const id in outputType) {
+      if (outputType.hasOwnProperty(id)) {
+        const element = outputType[id];
+        levelOne.push({
+          id: getUniqueId(5),
+          name: id,
+          values: element,
+        });
       }
-
-      const { [keyValue]: reducedValue = [] } = previous;
-
-      return Object.assign(previous, {
-        [keyValue]: reducedValue.concat(current),
-      });
-    },
-
-    outputType
-  );
-
-  const levelOne: any = [];
-  for (const id in outputType) {
-    if (outputType.hasOwnProperty(id)) {
-      const element = outputType[id];
-      levelOne.push({
-        id: getUniqueId(5),
-        name: id,
-        values: element,
-      });
     }
+  } catch {
+    levelOne = [];
   }
 
   return levelOne;

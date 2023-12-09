@@ -5,6 +5,14 @@
       <h6 *ngIf="items" class="text-center">{{(items | filterTableSearch: { typeActive: wordFilter, category:
         wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } :
         false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
+      <div class="text-center">
+        <li *ngFor="let item of itemsGroup" class="list-group-item"><b>{{item.name}}: </b>{{item.values |
+          filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate:
+          wordFilter, amount: wordFilter, stateText: wordFilter } : false |
+          amount:'amount' |
+          customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
+
+      </div>
     </div>
   </div>
 

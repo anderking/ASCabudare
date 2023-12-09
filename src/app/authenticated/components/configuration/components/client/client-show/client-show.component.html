@@ -13,16 +13,19 @@
           translate
           }}</button>
       </div>
-      <hr>
 
       <div *ngIf="items.length > 0">
-
-        <ul *ngIf="itemsGroup.length > 0" class="list-group my-3">
+        <ul class="list-group my-3">
           <li class="list-group-item active text-center">Total</li>
           <li *ngFor="let item of itemsGroup" class="list-group-item"><b>{{item.name}}: </b>{{item.values |
+            filterTableSearch: { typeActive: wordFilter, description: wordFilter, createDate: wordFilter, amount:
+            wordFilter, stateSolvency: wordFilter, stateText: wordFilter } : false |
             amount:'amount' |
             customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
         </ul>
+
+        <app-current-filter (wordFilterEmit)="wordFilterReceived($event)" [wordFilterActive]="wordFilterActive"
+          [showRangeDates]="false"></app-current-filter>
 
         <div class="row justify-content-center">
           <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -41,7 +44,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of items | orderBy : ['-createDate', '-typeActive', 'description']">
+                  <tr
+                    *ngFor="let item of items | orderBy : ['-createDate', '-typeActive', 'description'] | filterTableSearch: { typeActive: wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateSolvency: wordFilter, stateText: wordFilter } : false">
                     <td>{{item.typeActive}}</td>
                     <td>{{item.description}}</td>
                     <td>{{item.createDate}}</td>

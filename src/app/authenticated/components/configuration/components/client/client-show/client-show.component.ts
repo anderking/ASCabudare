@@ -120,6 +120,10 @@ export class ClientShowComponent implements OnInit, OnDestroy {
     this._sharedFacadeService.reset();
   }
 
+  wordFilterReceived(wordFilter: string): void {
+    this.wordFilter = wordFilter;
+  }
+
   goBack(): void {
     this._location.back();
   }

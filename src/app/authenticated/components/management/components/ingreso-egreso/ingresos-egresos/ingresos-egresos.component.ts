@@ -13,6 +13,8 @@ import { RangeDate } from "@models/shared/filter.model";
 import { ModalModel } from "@models/shared/modal.model";
 import { TranslateService } from "@ngx-translate/core";
 import { ModalService } from "@services/ui/modal.service";
+import { GroupModel } from "@models/shared/group.model";
+import { groupBy } from "@root/core/utilities/core.utilities";
 
 @Component({
   selector: "app-ingresos-egresos",
@@ -30,6 +32,7 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
 
   public isLoading: boolean;
   public items: IngresoEgresoModel[] = [];
+  public itemsGroup: GroupModel<IngresoEgresoModel>[] = [];
   public wordFilter = "";
   public wordFilterActive = false;
   public currentUser: CurrentUserModel;
@@ -101,6 +104,8 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
       )
       .subscribe((items: IngresoEgresoModel[]) => {
         this.items = items;
+        this.itemsGroup = groupBy(items, ["typeActive"]);
+        console.log(this.itemsGroup);
       });
   }
 
