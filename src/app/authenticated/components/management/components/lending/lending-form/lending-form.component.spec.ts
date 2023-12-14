@@ -24,6 +24,7 @@ import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 import { ComboModel } from "@models/masters/combo.model";
 import { ClientModel } from "@models/configurations/client.model";
+import { buildCreateDate } from "@root/core/utilities/core.utilities";
 
 describe("LendingFormComponent", () => {
   let component: LendingFormComponent;
@@ -184,7 +185,7 @@ describe("LendingFormComponent", () => {
     expect(mySpyCo).toHaveBeenCalled();
   });
 
-  it("should to contain 11 fields the form", () => {
+  it("should to contain 10 fields the form", () => {
     let controls: object = component.mainForm.controls;
     let countControls: number = Object.keys(controls).length;
 
@@ -195,11 +196,10 @@ describe("LendingFormComponent", () => {
     expect(component.mainForm.contains("typeActive")).toBeTruthy();
     expect(component.mainForm.contains("idStateSolvency")).toBeTruthy();
     expect(component.mainForm.contains("stateSolvency")).toBeTruthy();
-    expect(component.mainForm.contains("createDate")).toBeTruthy();
     expect(component.mainForm.contains("amount")).toBeTruthy();
     expect(component.mainForm.contains("description")).toBeTruthy();
     expect(component.mainForm.contains("state")).toBeTruthy();
-    expect(countControls).toEqual(11);
+    expect(countControls).toEqual(10);
   });
 
   it("should description be valid", () => {
@@ -223,22 +223,17 @@ describe("LendingFormComponent", () => {
       mockTestComboAll
     );
     component.isLoading = false;
-    const createDateISO: string = new Date().toISOString();
-    const createDate = createDateISO.split("T")[0];
-    const hoursISO = createDateISO.split("T")[1];
-    const hours = hoursISO.split(".")[0];
-    const newDate = createDate + "T" + hours;
-    const date = new Date(newDate);
     const data: LendingModel = {
       ...mockTestLendingOne,
-      createDate: createDate,
-      createDateFB: date,
+      createDate: buildCreateDate().createDate,
+      createDateFB: buildCreateDate().createDateFB,
       stateText: "Activa",
     };
     const mySpy = spyOn(ingresoEgresoFacadeService, "create");
 
     component.mainForm.patchValue(data);
     component.dataForm = data;
+    component.currentItem = null;
 
     fixture.detectChanges();
     const debugElement: DebugElement[] = fixture.debugElement.queryAll(

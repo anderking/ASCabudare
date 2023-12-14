@@ -42,7 +42,7 @@
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let item of items | orderBy : ['firstName'] | filterTableSearch: { firstName: wordFilter, lastName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumber: wordFilter, city: wordFilter, address: wordFilter, stateText: wordFilter } : false">
+                  *ngFor="let item of items | orderBy : ['-createDate'] | filterTableSearch: { firstName: wordFilter, lastName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumber: wordFilter, city: wordFilter, address: wordFilter, stateText: wordFilter } : false">
                   <td><button type="button" aria-label="name" (click)="goShow(item)" class="btn btn-secondary">{{
                       'BUTTONS.DETAIL' | translate }}</button></td>
                   <td>{{item.firstName}}</td>
@@ -53,7 +53,7 @@
                   <td>{{item.phoneNumber}}</td>
                   <td>{{item.city}}</td>
                   <td>{{item.address}}</td>
-                  <td>{{item.createDate}}</td>
+                  <td>{{item.createDate | date : 'medium' }}</td>
                   <td><span class="badge"
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
                   </td>

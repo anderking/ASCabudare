@@ -48,15 +48,6 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label for="createDate" class="form-label">{{ 'PROPERTIES.DATE' | translate }}:</label>
-                  <input type="date" class="form-control" formControlName="createDate" aria-label="createDate"
-                    [ngClass]="{'is-invalid': mainForm.get('createDate')?.touched && !mainForm.get('createDate')?.valid, 'is-valid': mainForm.get('createDate')?.touched && mainForm.get('createDate')?.valid}">
-                  <div class="invalid-feedback" *ngIf="isValidField('createDate')">
-                    {{ getErrorMessageField('createDate') }}
-                  </div>
-                </div>
-
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="amount" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
                   <div class="input-group mb-3">
                     <span class="input-group-text">{{currentUser?.currency}}</span>
@@ -95,7 +86,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
                     <button type="button" aria-label="name" *ngIf="!isLoading" class="btn btn-primary"
-                      (click)="onSubmit(createDateFB)" [disabled]="mainForm.invalid">
+                      (click)="onSubmit(createDate, createDateFB)" [disabled]="mainForm.invalid">
                       {{ 'BUTTONS.SAVE' | translate }}
                     </button>
                     <button type="button" aria-label="name" *ngIf="isLoading" class="btn btn-primary">

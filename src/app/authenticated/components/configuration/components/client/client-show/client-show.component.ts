@@ -108,10 +108,7 @@ export class ClientShowComponent implements OnInit, OnDestroy {
         console.log("DATA", data);
         this.currentItem = data.client;
         this.items = data.items;
-
-        let newItems = data.items.filter((item: LendingModel) => item.state);
-        this.itemsGroup = groupBy(newItems, ["typeActive"]);
-        console.log(this.itemsGroup);
+        this.itemsGroup = groupBy(data.items, ["typeActive"]);
       });
   }
 

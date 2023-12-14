@@ -184,11 +184,12 @@ export const mockTestLendingOne: LendingModel = {
   typeActive: "string",
   idStateSolvency: "string",
   stateSolvency: "string",
-  createDate: "string",
   amount: 100,
   description: "string",
   state: true,
   stateText: "Activa",
+  createDate: buildCreateDate().createDate,
+  createDateFB: buildCreateDate().createDateFB,
 };
 
 export const mockTestLendingAll: LendingModel[] = [
@@ -200,15 +201,11 @@ export const mockTestLendingAll: LendingModel[] = [
     typeActive: "string",
     idStateSolvency: "string",
     stateSolvency: "string",
-    createDate: new Date().toLocaleDateString("en-CA"),
     amount: 100,
     description: "string",
     state: true,
-    createDateFB: new Date(
-      new Date().toLocaleDateString("en-CA") +
-        "T" +
-        new Date().toISOString().split("T")[1]
-    ),
     stateText: "Activa",
+    createDate: buildCreateDate().createDate,
+    createDateFB: buildCreateDate().createDateFB,
   },
 ];

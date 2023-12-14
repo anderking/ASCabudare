@@ -27,7 +27,7 @@ import { ClientFacadeService } from "@facades/client-facade.service";
 import { ClientModel } from "@models/configurations/client.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { orderBy } from "@root/core/utilities/core.utilities";
+import { buildCreateDate, orderBy } from "@root/core/utilities/core.utilities";
 import { TranslateService } from "@ngx-translate/core";
 
 @Component({
@@ -60,6 +60,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
   public clientCurrent: ClientModel;
   public clientCombo$ = new BehaviorSubject<ClientModel[]>([]);
   public currentUser: CurrentUserModel;
+  public createDate: string = null;
   public createDateFB: object = null;
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
@@ -158,6 +159,7 @@ export class LendingFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
+    this._lendingFacadeService.resetSelected();
     this.finisher$.next();
   }
 
@@ -244,14 +246,8 @@ export class LendingFormComponent implements OnInit, OnDestroy {
   }
 
   initForm(): UntypedFormGroup {
-    const createDateISO: string = new Date().toISOString();
-    const createDate = createDateISO.split("T")[0];
-    const hoursISO = createDateISO.split("T")[1];
-    const hours = hoursISO.split(".")[0];
-    const newDate = createDate + "T" + hours;
-    const date = new Date(newDate);
-    this.createDateFB = date;
-
+    this.createDate = buildCreateDate().createDate;
+    this.createDateFB = buildCreateDate().createDateFB;
     return this._fb.group({
       id: null,
       idClient: ["", [Validators.required]],
@@ -260,10 +256,6 @@ export class LendingFormComponent implements OnInit, OnDestroy {
       typeActive: ["", [Validators.required]],
       idStateSolvency: ["", [Validators.required]],
       stateSolvency: ["", [Validators.required]],
-      createDate: [
-        new Date().toLocaleDateString("en-CA"),
-        [Validators.required],
-      ],
       amount: [
         "",
         [Validators.required, Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
@@ -273,12 +265,22 @@ export class LendingFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit(createDateFB: object) {
-    this.dataForm = {
-      ...this.mainForm.getRawValue(),
-      createDateFB,
-      stateText: this.mainForm.getRawValue().state ? "Activa" : "Inactiva",
-    };
+  onSubmit(createDate: string, createDateFB: object) {
+    if (!this.currentItem) {
+      this.dataForm = {
+        ...this.mainForm.getRawValue(),
+        createDate,
+        createDateFB,
+        stateText: this.mainForm.getRawValue().state ? "Activa" : "Inactiva",
+      };
+    } else {
+      this.dataForm = {
+        ...this.mainForm.getRawValue(),
+        createDate: this.currentItem.createDate,
+        createDateFB: this.currentItem.createDateFB,
+        stateText: this.mainForm.getRawValue().state ? "Activa" : "Inactiva",
+      };
+    }
     console.log(this.dataForm);
     if (this.mainForm.valid) {
       this._lendingFacadeService.create(this.dataForm);
