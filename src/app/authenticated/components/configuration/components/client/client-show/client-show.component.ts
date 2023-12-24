@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from "@angular/core";
-import { filter, map, takeUntil } from "rxjs/operators";
+import { filter, map, takeUntil, tap } from "rxjs/operators";
 import { LendingModel } from "@models/management/lending.model";
 import { LendingFacadeService } from "@facades/lending-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
@@ -82,7 +82,8 @@ export class ClientShowComponent implements OnInit, OnDestroy {
 
     results$
       .pipe(
-        filter((x) => !isNullOrUndefinedEmpty(x)),
+        //filter((x) => !isNullOrUndefinedEmpty(x)),
+        tap(x=>console.log(x)),
         map(([clients, lendings, params]) => {
           try {
             const client = clients.find(

@@ -52,6 +52,7 @@ export const mockTestCurrentUserOne: CurrentUserModel = {
   numberOfDecimal: "2",
   systemDecimal: "comma",
   uploadPhoto: "string",
+  officialRate: 35,
 };
 
 export const mockTestAttachmentOne: AttachmentModel = {

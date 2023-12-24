@@ -79,7 +79,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((currentFilter: CurrentFilterModel) => {
-        console.log(currentFilter);
+        console.log("currentFilter",currentFilter);
         this.rangeDate = currentFilter.rangeDate;
         const startDateControl = this.mainForm.controls["startDate"];
         const endDateControl = this.mainForm.controls["endDate"];
@@ -99,6 +99,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         rangeDate: this.rangeDate,
         wordFilter: this.wordFilter,
       };
+      console.log("setCurrentFilter",payload)
       this._ingresoEgresoFacadeService.setCurrentFilter(payload);
     }
   }

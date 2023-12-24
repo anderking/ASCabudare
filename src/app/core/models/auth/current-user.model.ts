@@ -20,6 +20,7 @@ export interface CurrentUserModel extends UserAuthModel {
   numberOfDecimal?: string;
   systemDecimal?: string;
   uploadPhoto?: any;
+  officialRate?: number;
 }
 export interface UserMetadataModel {
   createdAt: string;

@@ -105,6 +105,10 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     return this._fb.group({
       displayName: [""],
       phoneNumber: [""],
+      officialRate: [
+        "",
+        [Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
+      ],
       currency: [""],
       photoURL: [""],
       dayStartDashboard: [

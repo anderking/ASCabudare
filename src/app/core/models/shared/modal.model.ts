@@ -1,7 +1,7 @@
 import { CurrentUserModel } from "@models/auth/current-user.model";
 
 export interface ModalModel<T> {
-  type: "confirmation" | "information" | "custom";
+  type: "confirmation" | "information" | "custom" | "calculate";
   item: T;
   title: string;
   message?: string;

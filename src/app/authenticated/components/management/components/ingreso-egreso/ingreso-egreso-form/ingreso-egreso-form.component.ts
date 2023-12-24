@@ -27,6 +27,8 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { orderBy } from "@root/core/utilities/core.utilities";
 import { TranslateService } from "@ngx-translate/core";
+import { ModalService } from "@services/ui/modal.service";
+import { ModalModel } from "@models/shared/modal.model";
 
 @Component({
   selector: "app-ingreso-egreso-form",
@@ -38,6 +40,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
   private _combosFacadeService = inject(CombosFacadeService);
   private _sharedFacadeService = inject(SharedFacadeService);
   private _authFacadeService = inject(AuthFacadeService);
+  private _modalService = inject(ModalService);
   private _location = inject(Location);
   private _fb = inject(UntypedFormBuilder);
   private _activatedRoute = inject(ActivatedRoute);
@@ -241,6 +244,23 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
     if (this.mainForm.valid) {
       this._ingresoEgresoFacadeService.create(this.dataForm);
     }
+  }
+
+  openModal(): void {
+    const title = this._translateService.instant("TITLES.TOTAL");
+    const data: ModalModel<any> = {
+      type: "calculate",
+      item: null,
+      title,
+      currentUser: this.currentUser,
+    };
+    this._modalService
+      .openModal(data)
+      .then((data) => {
+        console.log(data)
+        this.mainForm.get("amount").setValue(data);
+      })
+      .catch(() => {});
   }
 
   isValidField(field: string): boolean {

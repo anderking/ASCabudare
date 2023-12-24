@@ -114,6 +114,7 @@ export class AuthService {
             ? userDoc?.numberOfDecimal
             : "",
           systemDecimal: userDoc?.systemDecimal ? userDoc?.systemDecimal : "",
+          officialRate: userDoc?.officialRate ? userDoc?.officialRate : null,
           photoURL: userDoc?.photoURL ? userDoc?.photoURL : "",
           uid: userAuth?.uid,
         };

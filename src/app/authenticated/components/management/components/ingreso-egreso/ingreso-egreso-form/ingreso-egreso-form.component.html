@@ -49,6 +49,7 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="amount" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
+                  <span (click)="openModal()" class="small card-link cursor"> {{ 'TEXTS.CALCULATE_AMOUNT' | translate }}</span>
                   <div class="input-group mb-3">
                     <span class="input-group-text">{{currentUser?.currency}}</span>
                     <input appNumericInput type="number" class="form-control" formControlName="amount"

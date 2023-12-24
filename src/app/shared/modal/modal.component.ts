@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from "@angular/core";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { ModalModel } from "@models/shared/modal.model";
@@ -10,6 +17,7 @@ import { ModalModel } from "@models/shared/modal.model";
 export class ModalComponent<T> implements OnInit {
   @Input() data: ModalModel<T>;
   @Output() deleteConfirmed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() resultCalculate: EventEmitter<number> = new EventEmitter<number>();
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
 
   private _authFacadeService = inject(AuthFacadeService);
@@ -18,6 +26,7 @@ export class ModalComponent<T> implements OnInit {
   public systemDecimal: string = "comma";
 
   ngOnInit() {
+    console.log(this.data);
     this._authFacadeService
       .getCurrentUser$()
       .subscribe((user: CurrentUserModel) => {
@@ -36,5 +45,9 @@ export class ModalComponent<T> implements OnInit {
 
   confirmDelete() {
     this.deleteConfirmed.emit(this.data.item);
+  }
+
+  resultEmit(result: number) {
+    this.resultCalculate.emit(result);
   }
 }

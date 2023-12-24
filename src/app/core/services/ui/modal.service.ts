@@ -21,9 +21,16 @@ export class ModalService {
         }
       );
       this.modalRef.componentInstance.modalClosed.subscribe(() => {
-        reject(new Error('Closed'));
+        reject(new Error("Closed"));
         this.modalRef.close();
       });
+
+      this.modalRef.componentInstance.resultCalculate.subscribe(
+        (record: number) => {
+          resolve(record);
+          this.modalRef.close();
+        }
+      );
     });
   }
 }

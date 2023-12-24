@@ -17,12 +17,14 @@ import { DirectivesModule } from "@root/core/directives/directives-module.module
 import { CustomDecimalPipe } from "@root/core/pipes/custom-decimal.pipe";
 import { OrderByPipe } from "@root/core/pipes/orderBy.pipe";
 import { UploadFileComponent } from "./upload-file/upload-file.component";
+import { CalculateAmountComponent } from "./modal/calculate-amount/calculate-amount.component";
 
 @NgModule({
   declarations: [
     ContainerComponent,
     ToastContainerComponent,
     ModalComponent,
+    CalculateAmountComponent,
     CurrentFilterComponent,
     SidebarComponent,
     UploadFileComponent
@@ -50,6 +52,7 @@ import { UploadFileComponent } from "./upload-file/upload-file.component";
     ContainerComponent,
     ToastContainerComponent,
     ModalComponent,
+    CalculateAmountComponent,
     CurrentFilterComponent,
     UploadFileComponent
   ],

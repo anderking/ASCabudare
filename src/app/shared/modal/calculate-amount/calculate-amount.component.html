@@ -1,0 +1,41 @@
+<div class="p-1">
+  <form *ngIf="mainForm" [formGroup]="mainForm" class="row g-3">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <label for="amount" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
+      <input appNumericInput type="number" class="form-control" formControlName="amount" aria-label="amount"
+        [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
+      <div class="invalid-feedback" *ngIf="isValidField('amount')">
+        {{ getErrorMessageField('amount') }}
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <label for="officialRate" class="form-label">{{ 'PROPERTIES.OFFICIAL_RATE' | translate }}:</label>
+      <input appNumericInput type="number" class="form-control" formControlName="officialRate" aria-label="officialRate"
+        [ngClass]="{'is-invalid': mainForm.get('officialRate')?.touched && !mainForm.get('officialRate')?.valid, 'is-valid': mainForm.get('officialRate')?.touched && mainForm.get('officialRate')?.valid}">
+      <div class="invalid-feedback" *ngIf="isValidField('officialRate')">
+        {{ getErrorMessageField('officialRate') }}
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <label for="result" class="form-label">{{ 'PROPERTIES.RESULT' | translate }}:</label>
+      <input appNumericInput type="number" class="form-control" formControlName="result" aria-label="result"
+        [ngClass]="{'is-invalid': mainForm.get('result')?.touched && !mainForm.get('result')?.valid, 'is-valid': mainForm.get('result')?.touched && mainForm.get('result')?.valid}">
+      <div class="invalid-feedback" *ngIf="isValidField('result')">
+        {{ getErrorMessageField('result') }}
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-6 offset-xl-6 col-xl-6">
+      <div class="d-grid gap-2 col-12 mx-auto">
+        <button type="button" aria-label="name" class="btn btn-primary" (click)="onSubmit()"
+          [disabled]="mainForm.invalid">
+          {{ 'BUTTONS.APPLY' | translate }}
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

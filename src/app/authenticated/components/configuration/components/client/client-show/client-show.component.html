@@ -1,18 +1,22 @@
 <div class="container">
 
+  <h2 class="text-center my-3">{{ 'TITLES.LENDING' | translate }}</h2>
+
+  <app-current-filter (wordFilterEmit)="wordFilterReceived($event)" [wordFilterActive]="wordFilterActive"
+    [showRangeDates]="false"></app-current-filter>
+
   <div *ngIf="!isLoading">
-    <div *ngIf="currentItem && currentUser">
 
-      <h2 class="text-center my-3">{{ 'TITLES.LENDING' | translate }}</h2>
+    <div class="d-grid gap-2 d-sm-flex mb-3">
+      <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' |
+        translate
+        }}</button>
+      <button type="button" aria-label="name" class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' |
+        translate
+        }}</button>
+    </div>
 
-      <div class="d-grid gap-2 d-sm-flex mb-3">
-        <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' |
-          translate
-          }}</button>
-        <button type="button" aria-label="name" class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' |
-          translate
-          }}</button>
-      </div>
+    <div *ngIf="currentItem">
 
       <div *ngIf="items.length > 0">
         <ul class="list-group my-3">
@@ -21,11 +25,8 @@
             filterTableSearch: { typeActive: wordFilter, description: wordFilter, createDate: wordFilter, amount:
             wordFilter, stateSolvency: wordFilter, stateText: wordFilter } : false |
             amount:'amount' |
-            customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
+            customDecimal: systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</li>
         </ul>
-
-        <app-current-filter (wordFilterEmit)="wordFilterReceived($event)" [wordFilterActive]="wordFilterActive"
-          [showRangeDates]="false"></app-current-filter>
 
         <div class="row justify-content-center">
           <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -81,7 +82,8 @@
         </li>
         <li class="list-group-item"><b>{{ 'PROPERTIES.ADRESS' | translate }}: </b>{{ currentItem.address }}</li>
         <li class="list-group-item"><b>{{ 'PROPERTIES.CITY' | translate }}: </b>{{ currentItem.city }}</li>
-        <li class="list-group-item"><b>{{ 'PROPERTIES.DATE' | translate }}: </b>{{ currentItem.createDate | date : 'medium' }}</li>
+        <li class="list-group-item"><b>{{ 'PROPERTIES.DATE' | translate }}: </b>{{ currentItem.createDate | date :
+          'medium' }}</li>
         <li class="list-group-item"><b>{{ 'PROPERTIES.STATE' | translate }}: </b><span class="badge"
             [ngClass]="{'text-bg-success': currentItem.state, 'text-bg-danger': !currentItem.state}">{{currentItem.stateText}}</span>
         </li>
