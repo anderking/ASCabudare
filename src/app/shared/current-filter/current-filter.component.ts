@@ -120,14 +120,19 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     let monthCurrent = todaySplit[1];
     const dayCurrent = todaySplit[2];
 
-    if (parseInt(dayCurrent) < parseInt(day)) {
-      if (parseInt(monthCurrent) == 1) {
+    let dayInt = parseInt(day);
+    let dayCurrentInt = parseInt(dayCurrent)
+    let monthCurrentInt = parseInt(monthCurrent);
+    let yearCurrentInt = parseInt(yearCurrent);
+
+    if (dayCurrentInt < dayInt) {
+      if (monthCurrentInt == 1) {
         monthCurrent = "12";
-        yearCurrent = (parseInt(yearCurrent) - 1).toString();
-      } else if (parseInt(monthCurrent) >= 12 && parseInt(monthCurrent) <= 10) {
-        monthCurrent = "0" + (parseInt(monthCurrent) - 1).toString();
+        yearCurrent = (yearCurrentInt - 1).toString();
+      } else if (monthCurrentInt >= 11 && monthCurrentInt <= 12) {
+        monthCurrent = (monthCurrentInt - 1).toString();
       } else {
-        monthCurrent = (parseInt(monthCurrent) - 1).toString();
+        monthCurrent = "0" + (monthCurrentInt - 1).toString();
       }
     }
 
