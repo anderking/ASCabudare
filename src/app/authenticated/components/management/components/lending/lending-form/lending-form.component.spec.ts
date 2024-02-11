@@ -14,8 +14,6 @@ import {
 import { BehaviorSubject, of } from "rxjs";
 import { FormControl } from "@angular/forms";
 import { ClientFacadeService } from "@facades/client-facade.service";
-import { RouterTestingModule } from "@angular/router/testing";
-import { routes } from "../lending-routing.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { LendingFacadeService } from "@facades/lending-facade.service";
@@ -38,7 +36,6 @@ describe("LendingFormComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes),
         SharedModule,
         TranslateModule.forRoot(),
       ],

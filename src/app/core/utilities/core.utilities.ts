@@ -1,12 +1,10 @@
 import { UserAuthModel } from "@models/auth/current-user.model";
-import * as CryptoJS from "crypto-js";
-import { environment } from "@environments/environment";
+import { decrypted } from "@root/core/utilities/crypto-utils";
 
 export function getCurrentUserDecrypt(): UserAuthModel {
   try {
     const getCookieEncrypt = localStorage.getItem("currentUser");
-    const textDecrypt = CryptoJS.AES.decrypt(getCookieEncrypt, environment.key);
-    const currentUserDecript = textDecrypt.toString(CryptoJS.enc.Utf8);
+    const currentUserDecript = decrypted(getCookieEncrypt);
     if (currentUserDecript) {
       return JSON.parse(currentUserDecript);
     } else {

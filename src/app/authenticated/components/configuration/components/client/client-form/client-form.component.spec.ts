@@ -11,8 +11,6 @@ import {
 } from "@root/core/constants/mocks/mocks-units-test";
 import { BehaviorSubject, of } from "rxjs";
 import { ClientFacadeService } from "@facades/client-facade.service";
-import { RouterTestingModule } from "@angular/router/testing";
-import { routes } from "../client-routing.module";
 import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 import { ComboModel } from "@models/masters/combo.model";
@@ -29,7 +27,6 @@ describe("ClientFormComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes),
         SharedModule,
         TranslateModule.forRoot(),
       ],

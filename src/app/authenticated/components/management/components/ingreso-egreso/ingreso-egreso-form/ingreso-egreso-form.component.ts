@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject, Input } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -16,7 +16,6 @@ import {
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
-import { ActivatedRoute, ParamMap } from "@angular/router";
 import {
   isNullOrUndefined,
   isNullOrUndefinedEmpty,
@@ -35,6 +34,8 @@ import { ModalModel } from "@models/shared/modal.model";
   templateUrl: "./ingreso-egreso-form.component.html",
 })
 export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
+  @Input() id?: string;
+
   private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
   private _categoryFacadeService = inject(CategoryFacadeService);
   private _combosFacadeService = inject(CombosFacadeService);
@@ -43,7 +44,6 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
   private _modalService = inject(ModalService);
   private _location = inject(Location);
   private _fb = inject(UntypedFormBuilder);
-  private _activatedRoute = inject(ActivatedRoute);
   private _translateService = inject(TranslateService);
   private _finisher$ = new Subject<void>();
 
@@ -81,15 +81,6 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
           : this.systemDecimal;
       });
 
-    const params$ = this._activatedRoute.paramMap.pipe(
-      filter((params) => !isNullOrUndefinedEmpty(params)),
-      map((params: ParamMap) => {
-        const id = params.get("id");
-        return { id };
-      }),
-      takeUntil(this._finisher$)
-    );
-
     const items$ = this._ingresoEgresoFacadeService.getAll$().pipe(
       filter((items: IngresoEgresoModel[]) => !isNullOrUndefinedEmpty(items)),
       takeUntil(this._finisher$)
@@ -97,24 +88,22 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
 
     const mainForm$ = of(this.mainForm);
 
-    const results$ = combineLatest([items$, params$, mainForm$]);
+    const results$ = combineLatest([items$, mainForm$]);
 
     results$
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
-        map(([items, params, mainForm]) => {
+        map(([items, mainForm]) => {
           try {
             return {
               item: items.find(
-                (item: IngresoEgresoModel) => item.id === params.id
+                (item: IngresoEgresoModel) => item.id === this.id
               ),
-              params,
               mainForm,
             };
           } catch (error) {
             return {
               item: null,
-              params,
               mainForm,
             };
           }

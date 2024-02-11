@@ -13,20 +13,14 @@ import {
   mockTestLendingOne,
 } from "@root/core/constants/mocks/mocks-units-test";
 import { of } from "rxjs";
-import { RouterTestingModule } from "@angular/router/testing";
-import { routes } from "../../../../management/components/lending/lending-routing.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { LendingFacadeService } from "@facades/lending-facade.service";
 import { DebugElement } from "@angular/core";
 import { ClientFacadeService } from "@facades/client-facade.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { ModalService } from "@services/ui/modal.service";
 import { LendingModel } from "@models/management/lending.model";
 import { ModalModel } from "@models/shared/modal.model";
-
-class ActivatedRouteStub {
-  paramMap = of({ get: (key: string) => "testValue" });
-}
 
 describe("ClientShowComponent", () => {
   let component: ClientShowComponent;
@@ -35,14 +29,12 @@ describe("ClientShowComponent", () => {
   let clientFacadeService: ClientFacadeService;
   let authFacadeService: AuthFacadeService;
   let sharedFacadeService: SharedFacadeService;
-  let activatedRoute: ActivatedRoute;
   let modalService: ModalService;
   let router: Router;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes),
         SharedModule,
         TranslateModule.forRoot(),
       ],
@@ -50,8 +42,7 @@ describe("ClientShowComponent", () => {
         {
           provide: Store,
           useValue: storeMock,
-        },
-        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+        }
       ],
       declarations: [ClientShowComponent],
     }).compileComponents();
@@ -63,7 +54,6 @@ describe("ClientShowComponent", () => {
     clientFacadeService = TestBed.inject(ClientFacadeService);
     authFacadeService = TestBed.inject(AuthFacadeService);
     sharedFacadeService = TestBed.inject(SharedFacadeService);
-    activatedRoute = TestBed.inject(ActivatedRoute);
     modalService = TestBed.inject(ModalService);
     router = TestBed.inject(Router);
     component = fixture.componentInstance;
@@ -91,17 +81,6 @@ describe("ClientShowComponent", () => {
     const mySpy = spyOn(authFacadeService, "getCurrentUser$").and.returnValue(
       of(mockTestCurrentUserOne)
     );
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  it("should call activatedRoute$ from activatedRoute", () => {
-    const mySpy = spyOn(activatedRoute.paramMap, "pipe").and.callThrough();
 
     component.ngOnInit();
 

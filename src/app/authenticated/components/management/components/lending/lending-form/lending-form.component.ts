@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject, Input } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -18,7 +18,6 @@ import {
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
-import { ActivatedRoute, ParamMap } from "@angular/router";
 import {
   isNullOrUndefined,
   isNullOrUndefinedEmpty,
@@ -35,6 +34,9 @@ import { TranslateService } from "@ngx-translate/core";
   templateUrl: "./lending-form.component.html",
 })
 export class LendingFormComponent implements OnInit, OnDestroy {
+  @Input() id?: string;
+  @Input() idClient?: string;
+
   private _lendingFacadeService = inject(LendingFacadeService);
   private _clientFacadeService = inject(ClientFacadeService);
   private _combosFacadeService = inject(CombosFacadeService);
@@ -42,7 +44,6 @@ export class LendingFormComponent implements OnInit, OnDestroy {
   private _authFacadeService = inject(AuthFacadeService);
   private _location = inject(Location);
   private _fb = inject(UntypedFormBuilder);
-  private _activatedRoute = inject(ActivatedRoute);
   private _translateService = inject(TranslateService);
   private finisher$ = new Subject<void>();
 
@@ -84,16 +85,6 @@ export class LendingFormComponent implements OnInit, OnDestroy {
           : this.systemDecimal;
       });
 
-    const params$ = this._activatedRoute.paramMap.pipe(
-      filter((params) => !isNullOrUndefinedEmpty(params)),
-      map((params: ParamMap) => {
-        const id = params.get("id");
-        const idClient = params.get("idClient");
-        return { id, idClient };
-      }),
-      takeUntil(this.finisher$)
-    );
-
     const items$ = this._lendingFacadeService.getAll$().pipe(
       filter((items: LendingModel[]) => !isNullOrUndefinedEmpty(items)),
       takeUntil(this.finisher$)
@@ -101,22 +92,20 @@ export class LendingFormComponent implements OnInit, OnDestroy {
 
     const mainForm$ = of(this.mainForm);
 
-    const results$ = combineLatest([items$, params$, mainForm$]);
+    const results$ = combineLatest([items$, mainForm$]);
 
     results$
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
-        map(([items, params, mainForm]) => {
+        map(([items, mainForm]) => {
           try {
             return {
-              item: items.find((item: LendingModel) => item.id === params.id),
-              params,
+              item: items.find((item: LendingModel) => item.id === this.id),
               mainForm,
             };
           } catch (error) {
             return {
               item: null,
-              params,
               mainForm,
             };
           }
@@ -128,8 +117,8 @@ export class LendingFormComponent implements OnInit, OnDestroy {
         if (data.item) {
           this.selectCurrentItem(data.item);
         }
-        if (data.params.idClient || (data.params.id && data.params.idClient)) {
-          this.disabledInputs(of(data.mainForm), data.params.idClient);
+        if (this.idClient || (this.id && this.idClient)) {
+          this.disabledInputs(of(data.mainForm), this.idClient);
         }
       });
 

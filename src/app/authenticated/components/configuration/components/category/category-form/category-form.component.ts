@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject, Input } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -12,7 +12,6 @@ import {
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
-import { ActivatedRoute, ParamMap } from "@angular/router";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
 import { CategoryModel } from "@models/configurations/category.model";
 import { CategoryFacadeService } from "@facades/category-facade.service";
@@ -23,10 +22,11 @@ import { TranslateService } from "@ngx-translate/core";
   templateUrl: "./category-form.component.html",
 })
 export class CategoryFormComponent implements OnInit, OnDestroy {
+  @Input() id?: string;
+
   private _categoryFacadeService = inject(CategoryFacadeService);
   private _sharedFacadeService = inject(SharedFacadeService);
   private _translateService = inject(TranslateService);
-  private _activatedRoute = inject(ActivatedRoute);
   private _fb = inject(UntypedFormBuilder);
   private _location = inject(Location);
   private _finisher$ = new Subject<void>();
@@ -40,15 +40,6 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     this.mainForm = this.initForm();
     this.chargeIndicatorManager();
 
-    const params$ = this._activatedRoute.paramMap.pipe(
-      filter((params) => !isNullOrUndefinedEmpty(params)),
-      map((params: ParamMap) => {
-        const id = params.get("id");
-        return { id };
-      }),
-      takeUntil(this._finisher$)
-    );
-
     const items$ = this._categoryFacadeService.getAll$().pipe(
       filter((items: CategoryModel[]) => !isNullOrUndefinedEmpty(items)),
       takeUntil(this._finisher$)
@@ -56,23 +47,21 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
     const mainForm$ = of(this.mainForm);
 
-    const results$ = combineLatest([items$, params$, mainForm$]);
+    const results$ = combineLatest([items$, mainForm$]);
 
     results$
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
-        map(([items, params, mainForm]) => {
+        map(([items, mainForm]) => {
           try {
             return {
-              item: items.find((item: CategoryModel) => item.id === params.id),
-              params,
+              item: items.find((item: CategoryModel) => item.id === this.id),
               mainForm,
             };
           } catch (error) {
             console.error(error);
             return {
               item: null,
-              params,
               mainForm,
             };
           }

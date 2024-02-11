@@ -12,8 +12,6 @@ import {
 import { of } from "rxjs";
 import { FormControl } from "@angular/forms";
 import { CategoryFacadeService } from "@facades/category-facade.service";
-import { RouterTestingModule } from "@angular/router/testing";
-import { routes } from "../category-routing.module";
 import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
@@ -26,7 +24,6 @@ describe("CategoryFormComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes),
         SharedModule,
         TranslateModule.forRoot(),
       ],

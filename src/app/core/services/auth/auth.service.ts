@@ -12,8 +12,7 @@ import {
   CurrentUserModel,
 } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import * as CryptoJS from "crypto-js";
-import { environment } from "@environments/environment";
+import { encrypted } from "@root/core/utilities/crypto-utils";
 import {
   clearLocalStorage,
   getCurrentUserDecrypt,
@@ -53,7 +52,7 @@ export class AuthService {
    * Escucha los cambios del currentUser desde FireBase
    */
   public initAuthListener(): void {
-    const currentUser: UserAuthModel = this.getCurrentUserDecrypt();
+    const currentUser: UserAuthModel = getCurrentUserDecrypt();
 
     const userAuth$ = new Observable<UserAuthModel>((observer) => {
       const auth = getAuth();
@@ -128,17 +127,10 @@ export class AuthService {
    */
   public setCurrentUserEncrypt(currentUser: UserAuthModel): void {
     const textToEncrypt = JSON.stringify(currentUser).trim();
-    const cookieEncrypt = CryptoJS.AES.encrypt(textToEncrypt, environment.key);
+    const cookieEncrypt = encrypted(textToEncrypt);
     localStorage.setItem("currentUser", cookieEncrypt);
     const actualRoute = window.location.origin;
     window.location.replace(actualRoute + "/authenticated/home");
-  }
-
-  /**
-   * Retorna el currentUser del localStorage y lo desencripta
-   */
-  private getCurrentUserDecrypt(): UserAuthModel {
-    return getCurrentUserDecrypt();
   }
 
   /**
@@ -152,7 +144,7 @@ export class AuthService {
    * Retorna el token de sesion
    */
   public getToken(): string {
-    const currentUser: UserAuthModel = this.getCurrentUserDecrypt();
+    const currentUser: UserAuthModel = getCurrentUserDecrypt();
     return currentUser ? currentUser.accessToken : null;
   }
 }

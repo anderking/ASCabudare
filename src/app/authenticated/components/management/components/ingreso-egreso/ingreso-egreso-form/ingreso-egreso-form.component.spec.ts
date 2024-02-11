@@ -14,8 +14,6 @@ import {
 import { BehaviorSubject, of } from "rxjs";
 import { FormControl } from "@angular/forms";
 import { CategoryFacadeService } from "@facades/category-facade.service";
-import { RouterTestingModule } from "@angular/router/testing";
-import { routes } from "../ingreso-egreso-routing.module";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
@@ -36,7 +34,6 @@ describe("IngresoEgresoFormComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes(routes),
         SharedModule,
         TranslateModule.forRoot(),
       ],

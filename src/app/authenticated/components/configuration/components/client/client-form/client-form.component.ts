@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject, Input } from "@angular/core";
 import {
   UntypedFormGroup,
   Validators,
@@ -18,7 +18,6 @@ import {
   getErrorMessageField,
   isValidField,
 } from "@root/core/utilities/form-validations";
-import { ActivatedRoute, ParamMap } from "@angular/router";
 import {
   isNullOrUndefined,
   isNullOrUndefinedEmpty,
@@ -34,13 +33,14 @@ import { AttachmentFacadeService } from "@facades/attachment-facade.service";
   templateUrl: "./client-form.component.html",
 })
 export class ClientFormComponent implements OnInit, OnDestroy {
+  @Input() id?: string;
+
   private _attachmentFacadeService = inject(AttachmentFacadeService);
   private _clientFacadeService = inject(ClientFacadeService);
   private _combosFacadeService = inject(CombosFacadeService);
   private _sharedFacadeService = inject(SharedFacadeService);
   private _authFacadeService = inject(AuthFacadeService);
   private _translateService = inject(TranslateService);
-  private _activatedRoute = inject(ActivatedRoute);
   private _fb = inject(UntypedFormBuilder);
   private _location = inject(Location);
   private _finisher$ = new Subject<void>();
@@ -68,15 +68,6 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         this.currentUser = user;
       });
 
-    const params$ = this._activatedRoute.paramMap.pipe(
-      filter((params) => !isNullOrUndefinedEmpty(params)),
-      map((params: ParamMap) => {
-        const id = params.get("id");
-        return { id };
-      }),
-      takeUntil(this._finisher$)
-    );
-
     const items$ = this._clientFacadeService.getAll$().pipe(
       filter((items: ClientModel[]) => !isNullOrUndefinedEmpty(items)),
       takeUntil(this._finisher$)
@@ -84,22 +75,20 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
     const mainForm$ = of(this.mainForm);
 
-    const results$ = combineLatest([items$, params$, mainForm$]);
+    const results$ = combineLatest([items$, mainForm$]);
 
     results$
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
-        map(([items, params, mainForm]) => {
+        map(([items, mainForm]) => {
           try {
             return {
-              item: items.find((item: ClientModel) => item.id === params.id),
-              params,
+              item: items.find((item: ClientModel) => item.id === this.id),
               mainForm,
             };
           } catch (error) {
             return {
               item: null,
-              params,
               mainForm,
             };
           }
