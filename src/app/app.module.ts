@@ -33,7 +33,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
-    }),
+    connectInZone: true}),
     CoreModule,
     AppRoutingModule,
     NgbModule,
