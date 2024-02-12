@@ -9,11 +9,11 @@ import {
 import { Observable, throwError } from "rxjs";
 import { environment } from "@environments/environment";
 import { catchError, mergeMap } from "rxjs/operators";
-import { FirebaseService } from "@services/firebase.service";
+import { ApiService } from "@services/api.service";
 
 @Injectable()
 export class ConfiUriInterceptor<T> implements HttpInterceptor {
-  constructor(private _firebaseService: FirebaseService<T>) {}
+  constructor(private _apiService: ApiService<T>) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -37,7 +37,7 @@ export class ConfiUriInterceptor<T> implements HttpInterceptor {
     next: HttpHandler,
     request: HttpRequest<any>
   ): Observable<HttpEvent<any>> {
-    return this._firebaseService
+    return this._apiService
       .getToken$(isExpired)
       .pipe(
         mergeMap((token: string) =>
@@ -52,7 +52,7 @@ export class ConfiUriInterceptor<T> implements HttpInterceptor {
     const headers: { [name: string]: string | string[] } = {
       ["Content-Type"]: "application/json;odata=nometadata",
       ["Accept"]: "application/json;odata=nometadata",
-      ["Authorization"]: 'Bearer ' + token,
+      ["Authorization"]: "Bearer " + token,
       ["X-Content-Type-Options"]: "nosniff",
       ["X-Frame-Options"]: "deny",
     };
