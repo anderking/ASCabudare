@@ -5,6 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   inject,
+  signal,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
@@ -26,8 +27,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy, AfterViewInit
 
   public dataForm: LoginFormModel;
   public isLoading: boolean;
-  public email: string;
-  public password: string;
+  public email = signal("");
 
   ngOnInit() {
     this._authFacadeService

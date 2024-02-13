@@ -1,58 +1,57 @@
-<ng-container *ngIf="data">
-  <ng-container *ngIf="data.type === 'confirmation'">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
-      <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
-    </div>
-    <div class="modal-body">
-      <p>
-        {{data.message}}
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" aria-label="name" class="btn btn-outline-secondary" (click)="closeModal()">
-        {{data.buttonCancel}}
-      </button>
-      <button type="button" aria-label="name" class="btn btn-danger" (click)="confirmDelete()">
-        {{data.buttonYes}}
-      </button>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="data.type === 'information'">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
-      <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
-    </div>
-    <div class="modal-body">
-      <p>
-        {{data.message}}
-      </p>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="data.type === 'custom'">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
-      <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
-    </div>
-    <div class="modal-body">
-      <ul>
-        <li *ngFor="let itemIE of data.item.values">
-          <a [routerLink]="[ '/authenticated/management/ingreso-egreso/form',{id: itemIE.id} ]"
-            (click)="closeModal()">{{itemIE.description}}
-          </a>
-          <strong>{{itemIE.amount | customDecimal: systemDecimal :
-            numberOfDecimal}}{{data.currentUser?.currency}}</strong>
-        </li>
-      </ul>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="data.type === 'calculate'">
-    <div class="modal-body">
-      <app-calculate-amount [officialRate]="data.currentUser.officialRate" (resultEmit)="resultEmit($event)"></app-calculate-amount>
-    </div>
-  </ng-container>
-
-</ng-container>
+@if (data) {
+@if (data.type === 'confirmation') {
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
+  <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+  <p>
+    {{data.message}}
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" aria-label="name" class="btn btn-outline-secondary" (click)="closeModal()">
+    {{data.buttonCancel}}
+  </button>
+  <button type="button" aria-label="name" class="btn btn-danger" (click)="confirmDelete()">
+    {{data.buttonYes}}
+  </button>
+</div>
+}
+@if (data.type === 'information') {
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
+  <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+  <p>
+    {{data.message}}
+  </p>
+</div>
+}
+@if (data.type === 'custom') {
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{data.title}}</h4>
+  <button type="button" aria-label="name" class="btn-close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+  <ul>
+    @for (itemIE of data.item.values; track itemIE) {
+    <li>
+      <a [routerLink]="[ '/authenticated/management/ingreso-egreso/form',{id: itemIE.id} ]"
+        (click)="closeModal()">{{itemIE.description}}
+      </a>
+      <strong>{{itemIE.amount | customDecimal: systemDecimal :
+        numberOfDecimal}}{{data.currentUser?.currency}}</strong>
+    </li>
+    }
+  </ul>
+</div>
+}
+@if (data.type === 'calculate') {
+<div class="modal-body">
+  <app-calculate-amount [officialRate]="data.currentUser.officialRate"
+    (resultEmit)="resultEmit($event)"></app-calculate-amount>
+</div>
+}
+}

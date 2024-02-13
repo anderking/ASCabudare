@@ -9,44 +9,50 @@
         <h1 class="h4 text-gray-900 mb-4">{{ 'TITLES.INGRESS_EGRESS' | translate }}</h1>
       </div>
 
-      <div *ngIf="!isLoading">
+      @if (!isLoading) {
+      <div>
         <div class="card o-hidden border-0 my-5">
           <div class="card-body p-0">
-
             <div class="p-5">
-
-              <form *ngIf="mainForm" [formGroup]="mainForm" class="row g-3">
+              @if (mainForm) {
+              <form [formGroup]="mainForm" class="row g-3">
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="idTypeActive" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate }}:</label>
-                  <div class="form-check" *ngFor="let item of typeActiveCombo$ | async">
+                  @for (item of typeActiveCombo$ | async; track item) {
+                  <div class="form-check">
                     <input type="radio" class="form-check-input" formControlName="idTypeActive"
                       aria-label="idTypeActive" value="{{item.code}}">
                     <label class="form-check-label">{{item?.name}}</label>
                   </div>
+                  }
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label for="idStateSolvency" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate }}:</label>
-                  <div class="form-check" *ngFor="let item of stateSolvencyCombo$ | async">
+                  <label for="idStateSolvency" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate
+                    }}:</label>
+                  @for (item of stateSolvencyCombo$ | async; track item) {
+                  <div class="form-check">
                     <input type="radio" class="form-check-input" formControlName="idStateSolvency"
                       aria-label="idStateSolvency" value="{{item.code}}">
                     <label class="form-check-label">{{item?.name}}</label>
                   </div>
+                  }
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="idClient" class="form-label">{{ 'PROPERTIES.CLIENT' | translate }}:</label>
                   <select class="form-select" formControlName="idClient" aria-label="idClient"
                     [ngClass]="{'is-invalid': mainForm.get('idClient')?.touched && !mainForm.get('idClient')?.valid, 'is-valid':  mainForm.get('idClient')?.touched && mainForm.get('idClient')?.valid}">
                     <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    <option *ngFor="let item of clientCombo$ | async" [ngValue]="item.id">
+                    @for (item of clientCombo$ | async; track item) {
+                    <option [ngValue]="item.id">
                       {{item?.fullName}}</option>
+                    }
                   </select>
-                  <div class="invalid-feedback" *ngIf="isValidField('idClient')">
+                  @if (isValidField('idClient')) {
+                  <div class="invalid-feedback">
                     {{ getErrorMessageField('idClient') }}
                   </div>
+                  }
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="amount" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
                   <div class="input-group mb-3">
@@ -54,21 +60,23 @@
                     <input appNumericInput type="number" class="form-control" formControlName="amount"
                       aria-label="amount"
                       [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
-                    <div class="invalid-feedback" *ngIf="isValidField('amount')">
+                    @if (isValidField('amount')) {
+                    <div class="invalid-feedback">
                       {{ getErrorMessageField('amount') }}
                     </div>
+                    }
                   </div>
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <label for="description" class="form-label">{{ 'PROPERTIES.DESCRIPTION' | translate }}:</label>
                   <textarea class="form-control" formControlName="description" aria-label="description"
                     [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
-                  <div class="invalid-feedback" *ngIf="isValidField('description')">
+                  @if (isValidField('description')) {
+                  <div class="invalid-feedback">
                     {{ getErrorMessageField('description') }}
                   </div>
+                  }
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="state" formControlName="state"
@@ -77,24 +85,28 @@
                     <label class="form-check-label" for="state">
                       {{ 'PROPERTIES.STATE' | translate }}
                     </label>
-                    <div class="invalid-feedback" *ngIf="isValidField('state')">
+                    @if (isValidField('state')) {
+                    <div class="invalid-feedback">
                       {{ getErrorMessageField('state') }}
                     </div>
+                    }
                   </div>
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
-                    <button type="button" aria-label="name" *ngIf="!isLoading" class="btn btn-primary"
+                    @if (!isLoading) {
+                    <button type="button" aria-label="name" class="btn btn-primary"
                       (click)="onSubmit(createDate, createDateFB)" [disabled]="mainForm.invalid">
                       {{ 'BUTTONS.SAVE' | translate }}
                     </button>
-                    <button type="button" aria-label="name" *ngIf="isLoading" class="btn btn-primary">
+                    }
+                    @if (isLoading) {
+                    <button type="button" aria-label="name" class="btn btn-primary">
                       <div class="spinner-border spinner-border-sm" role="status"></div>
                     </button>
+                    }
                   </div>
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
                     <button type="button" aria-label="name" class="btn btn-info" (click)="clean()">
@@ -102,7 +114,6 @@
                     </button>
                   </div>
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
                     <button type="button" aria-label="name" class="btn btn-dark" (click)="goBack()">
@@ -110,17 +121,20 @@
                     </button>
                   </div>
                 </div>
-
               </form>
+              }
             </div>
           </div>
         </div>
       </div>
-      <div *ngIf="isLoading">
+      }
+      @if (isLoading) {
+      <div>
         <div class="d-flex justify-content-center">
           <div class="spinner-border" role="status"></div>
         </div>
       </div>
+      }
     </div>
   </div>
 </div>

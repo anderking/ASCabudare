@@ -5,6 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   inject,
+  signal,
 } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import {
@@ -17,7 +18,6 @@ import { isNullOrUndefined } from "@root/core/utilities/is-null-or-undefined.uti
 import { first, takeUntil } from "rxjs/operators";
 import { AuthService } from "@services/auth/auth.service";
 import { Subject } from "rxjs";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-register",
@@ -33,8 +33,8 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public dataForm: LoginFormModel;
   public isLoading: boolean;
-  public email: string;
-  public password: string;
+  public email = signal("");
+  public password = signal("");
   public registerFB: CurrentUserModel;
 
   ngOnInit() {

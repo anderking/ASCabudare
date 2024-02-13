@@ -15,40 +15,58 @@
                   <div class="mb-3">
                     <input type="email"
                       [ngClass]="{'is-invalid': validationEmail.touched && !validationEmail.valid, 'is-valid': validationEmail.touched && validationEmail.valid}"
-                      class="form-control form-control-user" name="email" aria-label="email" #validationEmail="ngModel" placeholder="Email"
-                      [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
+                      class="form-control form-control-user" name="email" aria-label="email" #validationEmail="ngModel"
+                      placeholder="Email" [ngModel]="email()" (ngModelChange)="email.set($event)" required
+                      pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
 
 
-                    <div class="invalid-feedback" *ngIf="validationEmail.touched && !validationEmail.valid">
-                      <div *ngIf="validationEmail.errors.required">{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
-                      <div *ngIf="validationEmail.errors.pattern">{{ 'VALIDATIONS.EMAIL' | translate }}</div>
+                    @if (validationEmail.touched && !validationEmail.valid) {
+                    <div class="invalid-feedback">
+                      @if (validationEmail.errors.required) {
+                      <div>{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
+                      }
+                      @if (validationEmail.errors.pattern) {
+                      <div>{{ 'VALIDATIONS.EMAIL' | translate }}</div>
+                      }
                     </div>
+                    }
                   </div>
 
                   <div class="mb-3">
 
                     <input type="password"
                       [ngClass]="{'is-invalid': validationPassword.touched && !validationPassword.valid, 'is-valid': validationPassword.touched && validationPassword.valid}"
-                      class="form-control form-control-user" name="password" aria-label="password" #validationPassword="ngModel"
-                      placeholder="Password" [(ngModel)]="password"
+                      class="form-control form-control-user" name="password" aria-label="password"
+                      #validationPassword="ngModel" placeholder="Password" [ngModel]="password()"
+                      (ngModelChange)="password.set($event)"
                       pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
 
-                    <div class="invalid-feedback" *ngIf="validationPassword.touched && !validationPassword.valid">
-                      <div *ngIf="validationPassword.errors.required">{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
-                      <div *ngIf="validationPassword.errors.pattern">{{ 'VALIDATIONS.PASSWORD' | translate }}</div>
+                    @if (validationPassword.touched && !validationPassword.valid) {
+                    <div class="invalid-feedback">
+                      @if (validationPassword.errors.required) {
+                      <div>{{ 'VALIDATIONS.REQUIRED' | translate }}</div>
+                      }
+                      @if (validationPassword.errors.pattern) {
+                      <div>{{ 'VALIDATIONS.PASSWORD' | translate }}</div>
+                      }
                     </div>
+                    }
 
                   </div>
 
                   <div class="mb-3">
                     <div class="d-grid gap-2">
-                      <button type="submit" *ngIf="!isLoading" class="btn btn-primary btn-user btn-block"
-                        [disabled]="mainForm.invalid" (click)="onSubmit()">
+                      @if (!isLoading) {
+                      <button type="submit" class="btn btn-primary btn-user btn-block" [disabled]="mainForm.invalid"
+                        (click)="onSubmit()">
                         {{ 'BUTTONS.REGISTER' | translate }}
                       </button>
-                      <button type="button" aria-label="name" *ngIf="isLoading" class="btn btn-primary btn-user btn-block">
+                      }
+                      @if (isLoading) {
+                      <button type="button" aria-label="name" class="btn btn-primary btn-user btn-block">
                         <div class="spinner-border spinner-border-sm" role="status"></div>
                       </button>
+                      }
                     </div>
                   </div>
                   <div class="mb-3">

@@ -2,23 +2,27 @@
   <div class="row justify-content-center my-3">
     <div class="col-12">
       <h2 class="text-center">{{ 'TITLES.CLIENT' | translate }}</h2>
-      <h6 *ngIf="items" class="text-center">{{(items | filterTableSearch: { firstName: wordFilter, lastName: wordFilter,
+      @if (items) {
+      <h6 class="text-center">{{(items | filterTableSearch: { firstName: wordFilter, lastName: wordFilter,
         documentType: wordFilter, documentNumber: wordFilter, phoneNumber: wordFilter, city: wordFilter, address:
         wordFilter, stateText: wordFilter } : false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
+      }
     </div>
   </div>
 
   <app-current-filter (wordFilterEmit)="wordFilterReceived($event)" [wordFilterActive]="wordFilterActive"
     [showRangeDates]="false"></app-current-filter>
 
-  <div *ngIf="!isLoading">
+  @if (!isLoading) {
+  <div>
     <div class="d-grid gap-2 d-sm-flex mb-3">
       <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' | translate
         }}</button>
       <button type="button" aria-label="name" class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' | translate
         }}</button>
     </div>
-    <div *ngIf="items">
+    @if (items) {
+    <div>
       <div class="row justify-content-center">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
           <div class="table-responsive">
@@ -41,8 +45,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  *ngFor="let item of items | orderBy : ['-createDate'] | filterTableSearch: { firstName: wordFilter, lastName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumber: wordFilter, city: wordFilter, address: wordFilter, stateText: wordFilter } : false">
+                @for (item of items | orderBy : ['-createDate'] | filterTableSearch: { firstName: wordFilter, lastName:
+                wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumber: wordFilter, city:
+                wordFilter, address: wordFilter, stateText: wordFilter } : false; track item) {
+                <tr>
                   <td><button type="button" aria-label="name" (click)="goShow(item)" class="btn btn-secondary">{{
                       'BUTTONS.DETAIL' | translate }}</button></td>
                   <td>{{item.firstName}}</td>
@@ -63,17 +69,22 @@
                       'BUTTONS.DELETE'
                       | translate }}</button></td>
                 </tr>
+                }
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
+    }
   </div>
-  <div *ngIf="isLoading" class="spinner">
+  }
+  @if (isLoading) {
+  <div class="spinner">
     <div class="d-flex justify-content-center">
       <div class="spinner-border" role="status">
       </div>
     </div>
   </div>
+  }
 </div>

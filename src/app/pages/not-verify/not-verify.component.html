@@ -5,14 +5,18 @@
         <div class="text-center">
           <div class="error mx-auto" data-text="401">401</div>
           <p class="lead text-gray-800 mb-5">Access Not Allowed</p>
-          <button type="button" aria-label="name" *ngIf="!isLoading" class="btn btn-primary" (click)="verifyEmail()">
+          @if (!isLoading) {
+          <button type="button" aria-label="name" class="btn btn-primary" (click)="verifyEmail()">
             <span class="text">Verify Email</span>
           </button>
-          <button *ngIf="isLoading" class="btn btn-primary">
+          }
+          @if (isLoading) {
+          <button class="btn btn-primary">
             <div class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
           </button>
+          }
           <button type="button" aria-label="name" class="btn btn-primary ms-3" (click)="logout()">
             <span class="text">Logout</span>
           </button>

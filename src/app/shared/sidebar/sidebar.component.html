@@ -12,9 +12,12 @@
 
   <div class="usuario">
     <a [routerLink]="[ '/authenticated/configuration/profile' ]">
-      <img *ngIf="user" class="img-profile rounded-circle" [src]="user.photoURL" alt="img-profile" />
-      <img *ngIf="!user" class="img-profile rounded-circle" src="../../../assets/img/usernotfound.png"
-        alt="img-profile">
+      @if (user) {
+      <img class="img-profile rounded-circle" [src]="user.photoURL" alt="img-profile" />
+      }
+      @if (!user) {
+      <img class="img-profile rounded-circle" src="../../../assets/img/usernotfound.png" alt="img-profile">
+      }
     </a>
     <div class="info-usuario">
       <div class="nombre-email">
