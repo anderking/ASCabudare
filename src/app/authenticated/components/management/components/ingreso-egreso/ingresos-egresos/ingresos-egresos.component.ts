@@ -87,8 +87,10 @@ export class IngresosEgresosComponent implements OnInit, OnDestroy {
             return items.filter((item: IngresoEgresoModel) => {
               if (this.rangeDate) {
                 const createDate = new Date(item.createDate).getTime();
-                const startDate = new Date(this.rangeDate?.startDate).getTime();
-                const endDate = new Date(this.rangeDate?.endDate).getTime();
+                const startDateZ = this.rangeDate?.startDate;
+                const startDate = new Date(startDateZ).getTime();
+                const endDateZ = this.rangeDate?.endDate;
+                const endDate = new Date(endDateZ).getTime();
                 if (createDate >= startDate && createDate <= endDate) {
                   return true;
                 } else {

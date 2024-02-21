@@ -57,11 +57,11 @@ export const setValidatorDateDashboard = (
   translateService: TranslateService
 ): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
-    const date = control.value + "T04:00:00.000Z";
+    const date = control.value;
     const dateTime = new Date(date).getTime();
 
     if (field === "startDate") {
-      const endDateString = mainForm.get("endDate").value + "T04:00:00.000Z";
+      const endDateString = mainForm.get("endDate").value;
       const endDateTime = new Date(endDateString).getTime();
       if (dateTime > endDateTime) {
         return {
@@ -72,8 +72,7 @@ export const setValidatorDateDashboard = (
       }
     }
     if (field === "endDate") {
-      const startDateString =
-        mainForm.get("startDate").value + "T04:00:00.000Z";
+      const startDateString = mainForm.get("startDate").value;
       const startDateTime = new Date(startDateString).getTime();
       if (dateTime < startDateTime) {
         return {

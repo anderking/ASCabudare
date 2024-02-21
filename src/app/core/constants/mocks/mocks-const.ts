@@ -44,3 +44,7 @@ export const systemDecimal: any = [
   { id: "dot", name: "Punto" },
   { id: "comma", name: "Coma" },
 ];
+
+export const timeZoneT04 = "T04:00:00.000Z";
+export const timeZoneT00 = "T00:00:00";
+export const timeZoneT23 = "T23:59:59";

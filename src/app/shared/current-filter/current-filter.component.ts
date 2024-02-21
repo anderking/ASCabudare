@@ -30,6 +30,11 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { TranslateService } from "@ngx-translate/core";
+import {
+  timeZoneT00,
+  timeZoneT04,
+  timeZoneT23,
+} from "@root/core/constants/mocks/mocks-const";
 
 @Component({
   selector: "app-current-filter",
@@ -79,7 +84,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         takeUntil(this.finisher$)
       )
       .subscribe((currentFilter: CurrentFilterModel) => {
-        console.log("currentFilter",currentFilter);
+        console.log("currentFilter", currentFilter);
         this.rangeDate = currentFilter.rangeDate;
         const startDateControl = this.mainForm.controls["startDate"];
         const endDateControl = this.mainForm.controls["endDate"];
@@ -99,7 +104,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         rangeDate: this.rangeDate,
         wordFilter: this.wordFilter,
       };
-      console.log("setCurrentFilter",payload)
+      console.log("setCurrentFilter", payload);
       this._ingresoEgresoFacadeService.setCurrentFilter(payload);
     }
   }
@@ -121,7 +126,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     const dayCurrent = todaySplit[2];
 
     let dayInt = parseInt(day);
-    let dayCurrentInt = parseInt(dayCurrent)
+    let dayCurrentInt = parseInt(dayCurrent);
     let monthCurrentInt = parseInt(monthCurrent);
     let yearCurrentInt = parseInt(yearCurrent);
 
@@ -137,12 +142,11 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     }
 
     const startDateString = yearCurrent + "-" + monthCurrent + "-" + day;
-    const startDateISO = startDateString + "T04:00:00.000Z";
+    const startDateISO = startDateString + timeZoneT04;
     const startDate = new Date(startDateISO);
     const startDateMonth = startDate.getMonth();
     startDate.setMonth(startDateMonth + 1);
-    const startDateNext =
-      startDate.toLocaleDateString("en-CA") + "T04:00:00.000Z";
+    const startDateNext = startDate.toLocaleDateString("en-CA") + timeZoneT04;
 
     const endDate = new Date(startDateNext);
     const endDateDay = endDate.getDate();
@@ -151,8 +155,8 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     const endDateSplit = endDateISO ? endDateISO.split("T")[0] : "";
 
     this.rangeDate = {
-      startDate: startDateString,
-      endDate: endDateSplit,
+      startDate: startDateString + timeZoneT00,
+      endDate: endDateSplit + timeZoneT23,
     };
     this.rangeDateEmit.emit(this.rangeDate);
   }
@@ -199,12 +203,12 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   public changeToday(): void {
     const today = new Date().toLocaleDateString("en-CA");
     this.rangeDate = {
-      startDate: today,
-      endDate: today,
+      startDate: today + timeZoneT00,
+      endDate: today + timeZoneT23,
     };
     this.mainForm.reset({
-      startDate: today,
-      endDate: today,
+      startDate: today + timeZoneT00,
+      endDate: today + timeZoneT23,
     });
     this.rangeDateEmit.emit(this.rangeDate);
   }
@@ -212,13 +216,14 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
   public changeMonth(type: "before" | "next"): void {
     let startDateNew = "";
     let endDateNew = "";
-    const startDateString = this.rangeDate.startDate;
-    const startDateISO = startDateString + "T04:00:00.000Z";
+
+    const startDateString = this.rangeDate.startDate.slice(0, 10);
+    const startDateISO = startDateString + timeZoneT04;
     const startDate = new Date(startDateISO);
     const startDateMonth = startDate.getMonth();
 
-    const endDateString = this.rangeDate.endDate;
-    const endDateISO = endDateString + "T04:00:00.000Z";
+    const endDateString = this.rangeDate.endDate.slice(0, 10);
+    const endDateISO = endDateString + timeZoneT04;
     const endDate = new Date(endDateISO);
     const endDateMonth = endDate.getMonth();
 
@@ -231,21 +236,21 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
     }
 
     const startDateNext = startDate.toLocaleDateString("en-CA");
-    const startDateNextISO = startDateNext + "T04:00:00.000Z";
+    const startDateNextISO = startDateNext + timeZoneT04;
     startDateNew = startDateNextISO ? startDateNextISO.split("T")[0] : "";
 
     const endDateNext = endDate.toLocaleDateString("en-CA");
-    const endDateNextISO = endDateNext + "T04:00:00.000Z";
+    const endDateNextISO = endDateNext + timeZoneT04;
     endDateNew = endDateNextISO ? endDateNextISO.split("T")[0] : "";
 
     if (startDateNew && endDateNew) {
       this.rangeDate = {
-        startDate: startDateNew,
-        endDate: endDateNew,
+        startDate: startDateNew + timeZoneT00,
+        endDate: endDateNew + timeZoneT23,
       };
       this.mainForm.reset({
-        startDate: startDateNew,
-        endDate: endDateNew,
+        startDate: startDateNew + timeZoneT00,
+        endDate: endDateNew + timeZoneT23,
       });
       this.rangeDateEmit.emit(this.rangeDate);
     }

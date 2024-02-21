@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                   <label for="createDate" class="form-label">{{ 'PROPERTIES.DATE' | translate }}:</label>
-                  <input type="date" class="form-control" formControlName="createDate" aria-label="createDate"
+                  <input type="datetime-local" class="form-control" formControlName="createDate" aria-label="createDate"
                     [ngClass]="{'is-invalid': mainForm.get('createDate')?.touched && !mainForm.get('createDate')?.valid, 'is-valid': mainForm.get('createDate')?.touched && mainForm.get('createDate')?.valid}">
                   @if (isValidField('createDate')) {
                   <div class="invalid-feedback">

@@ -24,7 +24,7 @@ import { CategoryFacadeService } from "@facades/category-facade.service";
 import { CategoryModel } from "@models/configurations/category.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
-import { orderBy } from "@root/core/utilities/core.utilities";
+import { buildCreateDate, orderBy } from "@root/core/utilities/core.utilities";
 import { TranslateService } from "@ngx-translate/core";
 import { ModalService } from "@services/ui/modal.service";
 import { ModalModel } from "@models/shared/modal.model";
@@ -58,6 +58,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
   public categoryCurrent: CategoryModel;
   public categoryCombo$ = new BehaviorSubject<CategoryModel[]>([]);
   public currentUser: CurrentUserModel;
+  public createDate: string = null;
   public createDateFB: object = null;
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
@@ -196,13 +197,8 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
   }
 
   initForm(): UntypedFormGroup {
-    const createDateISO: string = new Date().toISOString();
-    const createDate = createDateISO.split("T")[0];
-    const hoursISO = createDateISO.split("T")[1];
-    const hours = hoursISO.split(".")[0];
-    const newDate = createDate + "T" + hours;
-    const date = new Date(newDate);
-    this.createDateFB = date;
+    this.createDate = buildCreateDate().createDate;
+    this.createDateFB = buildCreateDate().createDateFB;
 
     return this._fb.group({
       id: null,
@@ -211,7 +207,7 @@ export class IngresoEgresoFormComponent implements OnInit, OnDestroy {
       idTypeActive: ["", [Validators.required]],
       typeActive: ["", [Validators.required]],
       createDate: [
-        new Date().toLocaleDateString("en-CA"),
+        this.createDate,
         [Validators.required],
       ],
       amount: [

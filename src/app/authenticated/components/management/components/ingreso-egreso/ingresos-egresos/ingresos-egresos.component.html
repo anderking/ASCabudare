@@ -57,7 +57,7 @@
                   <td>{{item.category}}</td>
                   <td>{{item.typeActive}}</td>
                   <td>{{item.description}}</td>
-                  <td>{{item.createDate}}</td>
+                  <td>{{item.createDate | date : 'medium'}}</td>
                   <td>{{item.amount | customDecimal: systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</td>
                   <td><span class="badge"
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>

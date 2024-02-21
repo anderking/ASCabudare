@@ -3,7 +3,7 @@
 <form [formGroup]="mainForm" class="row g-3 mb-3">
   <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
     <label for="startDate" class="form-label">{{ 'PROPERTIES.START_DATE' | translate }}:</label>
-    <input type="date" class="form-control" formControlName="startDate" aria-label="startDate"
+    <input type="datetime-local" class="form-control" formControlName="startDate" aria-label="startDate"
       [ngClass]="{'is-invalid': mainForm.get('startDate')?.touched && !mainForm.get('startDate')?.valid, 'is-valid': mainForm.get('startDate')?.touched && mainForm.get('startDate')?.valid}"
       (change)="changeFilter($event.target.value,'startDate')">
     @if (isValidField('startDate')) {
@@ -14,7 +14,7 @@
   </div>
   <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
     <label for="endDate" class="form-label">{{ 'PROPERTIES.END_DATE' | translate }}:</label>
-    <input type="date" class="form-control" formControlName="endDate" aria-label="endDate"
+    <input type="datetime-local" class="form-control" formControlName="endDate" aria-label="endDate"
       [ngClass]="{'is-invalid': mainForm.get('endDate')?.touched && !mainForm.get('endDate')?.valid, 'is-valid': mainForm.get('endDate')?.touched && mainForm.get('endDate')?.valid}"
       (change)="changeFilter($event.target.value,'endDate')">
     @if (isValidField('endDate')) {

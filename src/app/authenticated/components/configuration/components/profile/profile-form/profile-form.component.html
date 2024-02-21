@@ -61,7 +61,7 @@
                   <select class="form-select" formControlName="dayStartDashboard" aria-label="dayStartDashboard"
                     [ngClass]="{'is-invalid': mainForm.get('dayStartDashboard')?.touched && !mainForm.get('dayStartDashboard')?.valid, 'is-valid':  mainForm.get('dayStartDashboard')?.touched && mainForm.get('dayStartDashboard')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    @for (item of startDay$ | async; track item) {
+                    @for (item of startDay$; track item) {
                     <option [ngValue]="item.id">
                       {{item?.name}}</option>
                     }
@@ -77,7 +77,7 @@
                   <select class="form-select" formControlName="numberOfDecimal" aria-label="numberOfDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('numberOfDecimal')?.touched && !mainForm.get('numberOfDecimal')?.valid, 'is-valid':  mainForm.get('numberOfDecimal')?.touched && mainForm.get('numberOfDecimal')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    @for (item of numberOfDecimal$ | async; track item) {
+                    @for (item of numberOfDecimal$; track item) {
                     <option [ngValue]="item.id">
                       {{item?.name}}</option>
                     }
@@ -93,7 +93,7 @@
                   <select class="form-select" formControlName="systemDecimal" aria-label="systemDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('systemDecimal')?.touched && !mainForm.get('systemDecimal')?.valid, 'is-valid':  mainForm.get('systemDecimal')?.touched && mainForm.get('systemDecimal')?.valid}">
                     <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    @for (item of systemDecimal$ | async; track item) {
+                    @for (item of systemDecimal$; track item) {
                     <option [ngValue]="item.id">
                       {{item?.name}}</option>
                     }

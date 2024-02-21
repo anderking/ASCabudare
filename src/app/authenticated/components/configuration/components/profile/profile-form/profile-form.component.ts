@@ -46,9 +46,9 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
-  public startDay$: any = of(startDaySelect);
-  public numberOfDecimal$: any = of(numberOfDecimal);
-  public systemDecimal$: any = of(systemDecimal);
+  public startDay$: any = startDaySelect;
+  public numberOfDecimal$: any = numberOfDecimal;
+  public systemDecimal$: any = systemDecimal;
 
   ngOnInit() {
     this.mainForm = this.initForm();

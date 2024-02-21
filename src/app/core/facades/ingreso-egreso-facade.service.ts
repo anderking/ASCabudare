@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 import { FacadeInterface } from "@interfaces/facade-interface";
 import { DataActionModel } from "@models/common/data-action.model";
@@ -45,7 +46,25 @@ export class IngresoEgresoFacadeService
    * Obtiene todos los registros del store disparados por los diferentes search
    */
   public getAll$(): Observable<IngresoEgresoModel[]> {
-    return this._store.select(selectors.selectAll);
+    return this._store.select(selectors.selectAll).pipe(
+      map((items: IngresoEgresoModel[]) => {
+        try {
+          return items.map((item: IngresoEgresoModel) => {
+            let newItem: IngresoEgresoModel = null;
+            const length = item.createDate.length;
+            console.log(length <= 10);
+            if (length <= 10) {
+              newItem = { ...item, createDate: item.createDate + "T00:00:00" };
+            }else{
+              newItem = item;
+            }
+            return newItem;
+          });
+        } catch (error) {
+          return items;
+        }
+      })
+    );
   }
 
   /**

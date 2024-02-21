@@ -22,6 +22,7 @@ import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 import { ComboModel } from "@models/masters/combo.model";
 import { CategoryModel } from "@models/configurations/category.model";
+import { buildCreateDate } from "@root/core/utilities/core.utilities";
 
 describe("IngresoEgresoFormComponent", () => {
   let component: IngresoEgresoFormComponent;
@@ -211,16 +212,11 @@ describe("IngresoEgresoFormComponent", () => {
       mockTestCategoryAll
     );
     component.isLoading = false;
-    const createDateISO: string = new Date().toISOString();
-    const createDate = createDateISO.split("T")[0];
-    const hoursISO = createDateISO.split("T")[1];
-    const hours = hoursISO.split(".")[0];
-    const newDate = createDate + "T" + hours;
-    const date = new Date(newDate);
+
     const data: IngresoEgresoModel = {
       ...mockTestIngresoEgresoOne,
-      createDate: createDate,
-      createDateFB: date,
+      createDate: buildCreateDate().createDate,
+      createDateFB: buildCreateDate().createDateFB,
       stateText: "Activa",
     };
     const mySpy = spyOn(ingresoEgresoFacadeService, "create");
