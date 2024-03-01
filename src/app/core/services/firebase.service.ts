@@ -21,7 +21,7 @@ import {
   onSnapshot,
   setDoc,
 } from "@angular/fire/firestore";
-import { finalize, map, switchMap, tap } from "rxjs/operators";
+import { finalize, map, switchMap } from "rxjs/operators";
 import { ApiFirebaseServiceInterface } from "@interfaces/api-firebase-service.interface";
 import {
   getDownloadURL,
@@ -275,6 +275,57 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
             data = {
               ...payload,
               id,
+            };
+            resolve(await setDoc(docRef, data));
+          }
+        } catch (error) {
+          reject(error);
+        }
+      })
+    );
+    return subscription.pipe(map(() => data));
+  }
+
+  /**
+   * Servicio para crear o actualizar registros con files
+   * @param action Contiene el body DataActionModel
+   */
+  createWithFile$(action: DataActionModel<T>): Observable<T> {
+    const payload: any = action.payload;
+    let data = payload;
+    let id: string = data.id;
+    let photoURL = "";
+    const subscription = from(
+      new Promise(async (resolve, reject) => {
+        try {
+          if (action.currentFile) {
+            const props: DataActionModel<any> = {
+              url: "",
+              payload: action.currentFile,
+            };
+            const observable = this.uploadAttachment$(props);
+            photoURL = await observable.toPromise();
+          }
+
+          console.log(photoURL);
+
+          if (!id) {
+            const ref = collection(this.afDB, `${action.url}`);
+            const add = await addDoc(ref, payload);
+            const id = add.id;
+            const docRef = doc(this.afDB, `${action.url}`, `${id}`);
+            data = {
+              ...payload,
+              id,
+              photoURL,
+            };
+            resolve(await setDoc(docRef, data));
+          } else {
+            const docRef = doc(this.afDB, `${action.url}`, `${id}`);
+            data = {
+              ...payload,
+              id,
+              photoURL,
             };
             resolve(await setDoc(docRef, data));
           }
