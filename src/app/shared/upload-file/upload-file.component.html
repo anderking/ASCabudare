@@ -2,6 +2,7 @@
   <div class="input-group">
     <input type="file" class="form-control" id="file" aria-describedby="file" aria-label="file"
       (change)="changeFile($event)">
+    @if (showLoadButton) {
     <button class="btn btn-outline-secondary" type="button" id="fileButton" (click)="uploadFile()"
       [disabled]="currentFile === null">
       @if (!isLoadingAttachment) {
@@ -15,6 +16,7 @@
       </div>
       }
     </button>
+    }
     @if (errorFiles) {
     <div class="invalid-feedback-custom">
       {{ errorFiles }}
