@@ -40,6 +40,13 @@ export function getErrorMessageField(
     )} ${minLength} ${translateService.instant(
       "VALIDATIONS.FIELD_MORE_CHARACTERS"
     )}`;
+  } else if (mainForm.get(field).hasError("equalLength")) {
+    const length = mainForm.get(field)?.errors?.equalLength.requiredLength;
+    message = `${translateService.instant(
+      "VALIDATIONS.FIELD_INVALID_MUST_BE"
+    )} ${length} ${translateService.instant(
+      "VALIDATIONS.FIELD_EQUAL_CHARACTERS"
+    )}`;
   } else if (mainForm.get(field).hasError("greaterOrEqualDate")) {
     const greaterOrEqualDate = mainForm.get(field)?.errors?.greaterOrEqualDate;
     message = greaterOrEqualDate;
@@ -47,6 +54,22 @@ export function getErrorMessageField(
     const lessThanOrEqualDate =
       mainForm.get(field)?.errors?.lessThanOrEqualDate;
     message = lessThanOrEqualDate;
+  } else if (mainForm.get(field).hasError("onlyCharacteres")) {
+    const onlyCharacteres = mainForm.get(field)?.errors?.onlyCharacteres;
+    message = `${translateService.instant(
+      "VALIDATIONS.FIELD_INVALID_MUST_BE"
+    )} ${onlyCharacteres}`;
+  } else if (mainForm.get(field).hasError("onlyNumbers")) {
+    const onlyNumbers = mainForm.get(field)?.errors?.onlyNumbers;
+    message = `${translateService.instant(
+      "VALIDATIONS.FIELD_INVALID_MUST_BE"
+    )} ${onlyNumbers}`;
+  } else if (mainForm.get(field).hasError("onlyCharacteresAndNumbers")) {
+    const onlyCharacteresAndNumbers =
+      mainForm.get(field)?.errors?.onlyCharacteresAndNumbers;
+    message = `${translateService.instant(
+      "VALIDATIONS.FIELD_INVALID_MUST_BE"
+    )} ${onlyCharacteresAndNumbers}`;
   }
   return message;
 }
@@ -83,6 +106,64 @@ export const setValidatorDateDashboard = (
       }
     }
 
+    return null;
+  };
+};
+
+export const setValidatorEqualLength = (length: number): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value as string;
+
+    if (value.length !== length) {
+      return { equalLength: { value: control.value, requiredLength: length } };
+    }
+
+    return null;
+  };
+};
+
+export const setValidatorOnlyCharacteres = (
+  translateService: TranslateService
+): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const pattern = /^[a-zA-Z ]+$/;
+    if (!pattern.test(control.value)) {
+      return {
+        onlyCharacteres: translateService.instant(
+          "VALIDATIONS.FIELD_ONLY_CHARACTERS"
+        ),
+      };
+    }
+    return null;
+  };
+};
+
+export const setValidatorOnlyNumbers = (
+  translateService: TranslateService
+): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const pattern = /^[0-9]+$/;
+    if (!pattern.test(control.value)) {
+      return {
+        onlyNumbers: translateService.instant("VALIDATIONS.FIELD_ONLY_NUMBERS"),
+      };
+    }
+    return null;
+  };
+};
+
+export const setValidatorOnlyCharacteresAndNumbers = (
+  translateService: TranslateService
+): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const pattern = /^[a-zA-Z0-9]+$/;
+    if (!pattern.test(control.value)) {
+      return {
+        onlyCharacteresAndNumbers: translateService.instant(
+          "VALIDATIONS.FIELD_ONLY_CHARACTERES_AND_NUMBERS"
+        ),
+      };
+    }
     return null;
   };
 };

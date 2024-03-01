@@ -11,6 +11,7 @@
     "UPLOAD": "Upload",
     "LOGIN": "Login",
     "SEND_EMAIL": "Send Email",
+    "SEND": "Send",
     "REGISTER": "Register",
     "DETAIL": "Detail",
     "APPLY": "Apply",
@@ -49,6 +50,10 @@
     "FIELD_INVALID_MUST_BE": "Field invalid, must be",
     "FIELD_LESS_CHARACTERS": "or less characters",
     "FIELD_MORE_CHARACTERS": "o more characters",
+    "FIELD_EQUAL_CHARACTERS": "characters",
+    "FIELD_ONLY_CHARACTERS": "only letters",
+    "FIELD_ONLY_CHARACTERES_AND_NUMBERS": "only letters and numbers",
+    "FIELD_ONLY_NUMBERS": "only numbers",
     "LESS_THAN_START_DATE": "The start date must be less than or equal to the end date.",
     "LESS_GREATER_END_DATE": "The end date must be greater than or equal to the start date."
   },
@@ -62,6 +67,7 @@
     "CATEGORY": "Category",
     "CLIENT": "Client",
     "PROFILE": "Profile",
+    "REPORT_PAY": "Report pay",
     "REGISTER": "Create an Account",
     "LOGIN": "Welcome",
     "FORGOT_PASSWORD": "Forgot Password",
@@ -101,7 +107,8 @@
     "DOCUMENTNUMBER": "Document Number",
     "PHONENUMBER": "Phone Number",
     "CITY": "City",
-    "ADRESS": "Adress"
+    "ADRESS": "Adress",
+    "REFERENCE": "Reference"
   },
   "ROUTERS": {
     "PROFILE": "Profile",

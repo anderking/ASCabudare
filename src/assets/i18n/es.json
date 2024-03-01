@@ -11,6 +11,7 @@
     "UPLOAD": "Subir",
     "LOGIN": "Acceder",
     "SEND_EMAIL": "Enviar Email",
+    "SEND": "Enviar",
     "REGISTER": "Registrar",
     "DETAIL": "Detalle",
     "APPLY": "Aplicar",
@@ -49,6 +50,10 @@
     "FIELD_INVALID_MUST_BE": "Campo inválido, debe tener",
     "FIELD_LESS_CHARACTERS": "o menos caracteres",
     "FIELD_MORE_CHARACTERS": "o más caracteres",
+    "FIELD_EQUAL_CHARACTERS": "caracteres",
+    "FIELD_ONLY_CHARACTERS": "solo letras",
+    "FIELD_ONLY_CHARACTERES_AND_NUMBERS": "solo letras y números",
+    "FIELD_ONLY_NUMBERS": "solo números",
     "LESS_THAN_START_DATE": "La fecha de inicio debe ser menor o igual a la fecha de finalización.",
     "LESS_GREATER_END_DATE": "La fecha de fin debe ser mayor o igual que la fecha de inicio."
   },
@@ -62,6 +67,7 @@
     "CATEGORY": "Categoría",
     "CLIENT": "Cliente",
     "PROFILE": "Perfil",
+    "REPORT_PAY": "Reportar pago",
     "REGISTER": "Crear una cuenta",
     "LOGIN": "Bienvenido",
     "FORGOT_PASSWORD": "Recuperar contraseña",
@@ -101,7 +107,8 @@
     "DOCUMENTNUMBER": "Número de documento",
     "PHONENUMBER": "Número de teléfono",
     "CITY": "Ciudad",
-    "ADRESS": "Dirección"
+    "ADRESS": "Dirección",
+    "REFERENCE": "Referencia"
   },
   "ROUTERS": {
     "PROFILE": "Perfil",
