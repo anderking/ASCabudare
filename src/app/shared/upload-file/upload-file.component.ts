@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from "@angular/core";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { AttachmentModel } from "@models/shared/attachment.model";
 import { TranslateService } from "@ngx-translate/core";
@@ -12,6 +19,7 @@ import { filter } from "rxjs/operators";
 })
 export class UploadFileComponent implements OnInit {
   @Output() currentFileEmit: EventEmitter<AttachmentModel> = new EventEmitter();
+  @Output() validFileEmit: EventEmitter<boolean> = new EventEmitter();
   @Input() showLoadButton: boolean = false;
 
   private _attachmentFacadeService = inject(AttachmentFacadeService);
@@ -68,9 +76,11 @@ export class UploadFileComponent implements OnInit {
           this.errorFiles = "";
           this.currentFile = currentFile;
           this.currentFileEmit.emit(currentFile);
+          this.validFileEmit.emit(true);
         } else {
           this.currentFile = null;
           this.currentFileEmit.emit(null);
+          this.validFileEmit.emit(false);
         }
       }
     }
