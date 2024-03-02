@@ -114,7 +114,7 @@ export const setValidatorEqualLength = (length: number): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value as string;
 
-    if (value.length !== length) {
+    if (value?.length !== length) {
       return { equalLength: { value: control.value, requiredLength: length } };
     }
 

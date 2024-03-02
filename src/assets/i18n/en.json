@@ -68,6 +68,7 @@
     "CLIENT": "Client",
     "PROFILE": "Profile",
     "REPORT_PAY": "Report pay",
+    "PAYS": "Pays",
     "REGISTER": "Create an Account",
     "LOGIN": "Welcome",
     "FORGOT_PASSWORD": "Forgot Password",
@@ -78,7 +79,8 @@
     "NAME": "Name",
     "DISPLAY_NAME": "DisplayName",
     "DESCRIPTION": "Description",
-    "PHONE_NUMBER": "PhoneNumber",
+    "PHONE_NUMBER": "Phone Number",
+    "PHONE_NUMBER_AREA": "Area Code",
     "OFFICIAL_RATE": "Official Rate",
     "RESULT": "Result",
     "LOCAL_CURRENCY": "Local Currency",
@@ -105,7 +107,6 @@
     "FULLNAME": "Full Name",
     "DOCUMENTTYPE": "Document Type",
     "DOCUMENTNUMBER": "Document Number",
-    "PHONENUMBER": "Phone Number",
     "CITY": "City",
     "ADRESS": "Adress",
     "REFERENCE": "Reference"
@@ -118,7 +119,8 @@
     "CATEGORY": "Categories",
     "CLIENT": "Clients",
     "INGRESS_EGRESS": "Ingress Egress",
-    "LENDING": "Lendings"
+    "LENDING": "Lendings",
+    "PAY": "Pays"
   },
   "MESSAGES": {
     "CREATE_SUCCESS": "Registry added successfully",

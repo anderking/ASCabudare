@@ -52,7 +52,6 @@ export class IngresoEgresoFacadeService
           return items.map((item: IngresoEgresoModel) => {
             let newItem: IngresoEgresoModel = null;
             const length = item.createDate.length;
-            console.log(length <= 10);
             if (length <= 10) {
               newItem = { ...item, createDate: item.createDate + "T00:00:00" };
             }else{
