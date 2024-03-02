@@ -7,7 +7,7 @@
   <div class="nombre-pagina">
     <img id="cloud" [src]="'../../../assets/img/logo.png'" alt="Logo" width="40" height="30"
       class="d-inline-block align-text-top cursor">
-    <span>Ingreso Egreso</span>
+    <span>ASCabudare</span>
   </div>
 
   <div class="usuario">
@@ -37,21 +37,9 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="[ '/authenticated/management/ingreso-egreso' ]" [routerLinkActive]="'inbox'">
+        <a [routerLink]="[ '/authenticated/management/pay' ]" [routerLinkActive]="'inbox'">
           <fa-icon [icon]="faMoneyBillTransfer"></fa-icon>
-          <span>{{'ROUTERS.INGRESS_EGRESS' | translate }}</span>
-        </a>
-      </li>
-      <li>
-        <a [routerLink]="[ '/authenticated/configuration/client' ]" [routerLinkActive]="'inbox'">
-          <fa-icon [icon]="faUsers"></fa-icon>
-          <span>{{ 'ROUTERS.CLIENT' | translate }}</span>
-        </a>
-      </li>
-      <li>
-        <a [routerLink]="[ '/authenticated/configuration/category' ]" [routerLinkActive]="'inbox'">
-          <fa-icon [icon]="faTags"></fa-icon>
-          <span>{{'ROUTERS.CATEGORY' | translate }}</span>
+          <span>{{'ROUTERS.PAY' | translate }}</span>
         </a>
       </li>
       <li>

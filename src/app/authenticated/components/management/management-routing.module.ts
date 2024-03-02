@@ -6,21 +6,11 @@ const routes: Routes = [
   {
     path: "",
     children: [
-      { path: "", redirectTo: "ingreso-egreso", pathMatch: "full" },
+      { path: "", redirectTo: "pay", pathMatch: "full" },
       {
-        path: "ingreso-egreso",
+        path: "pay",
         loadChildren: () =>
-          import("./components/ingreso-egreso/ingreso-egreso.module").then(
-            (m) => m.IngresoEgresoModule
-          ),
-        canActivate: [AuthTokenGuard],
-      },
-      {
-        path: "lending",
-        loadChildren: () =>
-          import("./components/lending/lending.module").then(
-            (m) => m.LendingModule
-          ),
+          import("./components/pay/pay.module").then((m) => m.PayModule),
         canActivate: [AuthTokenGuard],
       },
     ],

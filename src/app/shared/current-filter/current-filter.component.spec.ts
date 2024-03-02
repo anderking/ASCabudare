@@ -10,12 +10,10 @@ import {
   mockTestCurrentUserOne,
 } from "@root/core/constants/mocks/mocks-units-test";
 import { of } from "rxjs";
-import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 
 describe("CurrentFilterComponent", () => {
   let component: CurrentFilterComponent;
   let fixture: ComponentFixture<CurrentFilterComponent>;
-  let ingresoEgresoFacadeService: IngresoEgresoFacadeService;
   let authFacadeService: AuthFacadeService;
 
   beforeEach(async () => {
@@ -34,7 +32,6 @@ describe("CurrentFilterComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CurrentFilterComponent);
     authFacadeService = TestBed.inject(AuthFacadeService);
-    ingresoEgresoFacadeService = TestBed.inject(IngresoEgresoFacadeService);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -57,33 +54,6 @@ describe("CurrentFilterComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should call getCurrentFilter$ from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(
-      ingresoEgresoFacadeService,
-      "getCurrentFilter$"
-    ).and.returnValue(of(mockTestCurrentFilterOne));
-
-    component.ngOnInit();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalled();
-  });
-
-  it("should call setCurrentFilter from ingresoEgresoFacadeService", () => {
-    const mySpy = spyOn(ingresoEgresoFacadeService, "setCurrentFilter");
-    component.rangeDate = { startDate: "2023-01-01", endDate: "2023-01-31" };
-    component.wordFilter = "string";
-    component.wordFilterActive = true;
-
-    component.ngOnDestroy();
-
-    expect(mySpy).not.toBeNull();
-    expect(mySpy).toBeTruthy();
-    expect(mySpy).toBeDefined();
-    expect(mySpy).toHaveBeenCalledWith(mockTestCurrentFilterOne);
-  });
 
   it("should return a FormGroup with startDate and endDate controls", () => {
     const form = component.initForm();

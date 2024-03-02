@@ -7,52 +7,42 @@
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 <url>
-  <loc>https://ingreso-egreso.vercel.app/</loc>
+  <loc>https://as-cabudare.vercel.app/</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://ingreso-egreso.vercel.app/authenticated/home</loc>
+  <loc>https://as-cabudare.vercel.app/authenticated/home</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>https://ingreso-egreso.vercel.app/configuration/ingreso-egreso</loc>
+  <loc>https://as-cabudare.vercel.app/authenticated/management/pay</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://ingreso-egreso.vercel.app/configuration/category</loc>
-  <lastmod>2023-08-T14:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://ingreso-egreso.vercel.app/configuration/client</loc>
-  <lastmod>2023-08-T14:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://ingreso-egreso.vercel.app/configuration/profile</loc>
+  <loc>https://as-cabudare.vercel.app/configuration/profile</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://ingreso-egreso.vercel.app/login</loc>
+  <loc>https://as-cabudare.vercel.app/login</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://ingreso-egreso.vercel.app/register</loc>
+  <loc>https://as-cabudare.vercel.app/register</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://ingreso-egreso.vercel.app/forgot-password</loc>
+  <loc>https://as-cabudare.vercel.app/forgot-password</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://ingreso-egreso.vercel.app/pages/404</loc>
+  <loc>https://as-cabudare.vercel.app/pages/404</loc>
   <lastmod>2023-08-T14:00:00+00:00</lastmod>
   <priority>0.50</priority>
 </url>

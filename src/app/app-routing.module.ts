@@ -27,6 +27,12 @@ export const routes: Routes = [
           ),
         canLoad: [AuthGuard],
       },
+
+      {
+        path: "public",
+        loadChildren: () =>
+          import("./public/public.module").then((m) => m.PublicModule),
+      },
     ],
   },
 

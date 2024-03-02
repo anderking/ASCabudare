@@ -38,7 +38,7 @@
   <ul>
     @for (itemIE of data.item.values; track itemIE) {
     <li>
-      <a [routerLink]="[ '/authenticated/management/ingreso-egreso/form',{id: itemIE.id} ]"
+      <a [routerLink]="[ '/authenticated/management/',{id: itemIE.id} ]"
         (click)="closeModal()">{{itemIE.description}}
       </a>
       <strong>{{itemIE.amount | customDecimal: systemDecimal :

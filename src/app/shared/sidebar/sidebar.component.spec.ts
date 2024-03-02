@@ -80,7 +80,7 @@ describe("SidebarComponent", () => {
     expect(mySpyS).toHaveBeenCalled();
   });
 
-  it("should routerLinks to equal 6 and match string", () => {
+  it("should routerLinks to equal 4 and match string", () => {
     const debugElement: DebugElement[] = fixture.debugElement.queryAll(
       By.directive(RouterLink)
     );
@@ -88,17 +88,11 @@ describe("SidebarComponent", () => {
     const routerLinks = debugElement.map((link) =>
       link.injector.get(RouterLink)
     );
-    expect(debugElement.length).toEqual(6);
+    expect(debugElement.length).toEqual(4);
     expect(routerLinks[0].href).toEqual("/authenticated/configuration/profile");
     expect(routerLinks[1].href).toEqual("/authenticated/home");
-    expect(routerLinks[2].href).toEqual(
-      "/authenticated/management/ingreso-egreso"
-    );
-    expect(routerLinks[3].href).toEqual("/authenticated/configuration/client");
-    expect(routerLinks[4].href).toEqual(
-      "/authenticated/configuration/category"
-    );
-    expect(routerLinks[5].href).toEqual("/authenticated/configuration/profile");
+    expect(routerLinks[2].href).toEqual("/authenticated/management/pay");
+    expect(routerLinks[3].href).toEqual("/authenticated/configuration/profile");
   });
 
   it("should call localStorage.setItem, translateService.setDefaultLang and translateService.use from changeLanguage", () => {

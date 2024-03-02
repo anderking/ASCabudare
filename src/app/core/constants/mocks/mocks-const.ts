@@ -45,6 +45,22 @@ export const systemDecimal: any = [
   { id: "comma", name: "Coma" },
 ];
 
+export const phoneNumberArea: any = [
+  { id: "0414", name: "0414" },
+  { id: "0424", name: "0424" },
+  { id: "0416", name: "0416" },
+  { id: "0426", name: "0426" },
+  { id: "0412", name: "0412" },
+];
+
+export const documentType: any = [
+  { id: "V", name: "V" },
+  { id: "J", name: "J" },
+  { id: "E", name: "E" },
+  { id: "P", name: "P" },
+  { id: "G", name: "G" },
+];
+
 export const timeZoneT04 = "T04:00:00.000Z";
 export const timeZoneT00 = "T00:00:00";
 export const timeZoneT23 = "T23:59:59";

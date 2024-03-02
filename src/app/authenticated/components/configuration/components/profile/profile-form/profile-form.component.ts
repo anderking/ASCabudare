@@ -22,7 +22,6 @@ import {
   startDaySelect,
   systemDecimal,
 } from "@root/core/constants/mocks/mocks-const";
-import { IngresoEgresoFacadeService } from "@facades/ingreso-egreso-facade.service";
 import { CombosFacadeService } from "@facades/combos-facade.service";
 
 @Component({
@@ -30,7 +29,6 @@ import { CombosFacadeService } from "@facades/combos-facade.service";
   templateUrl: "./profile-form.component.html",
 })
 export class ProfileUpdateComponent implements OnInit, OnDestroy {
-  private _ingresoEgresoFacadeService = inject(IngresoEgresoFacadeService);
   private _attachmentFacadeService = inject(AttachmentFacadeService);
   private _sharedFacadeService = inject(SharedFacadeService);
   private _combosFacadeService = inject(CombosFacadeService);
@@ -131,7 +129,7 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       if (
         this.currentItem.dayStartDashboard != this.dataForm.dayStartDashboard
       ) {
-        this._ingresoEgresoFacadeService.setCurrentFilter(null);
+
       }
     }
   }

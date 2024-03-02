@@ -8,22 +8,6 @@ const routes: Routes = [
     children: [
       { path: "", redirectTo: "profile", pathMatch: "full" },
       {
-        path: "category",
-        loadChildren: () =>
-          import("./components/category/category.module").then(
-            (m) => m.CategoryModule
-          ),
-        canActivate: [AuthTokenGuard],
-      },
-      {
-        path: "client",
-        loadChildren: () =>
-          import("./components/client/client.module").then(
-            (m) => m.ClientModule
-          ),
-        canActivate: [AuthTokenGuard],
-      },
-      {
         path: "profile",
         loadChildren: () =>
           import("./components/profile/profile.module").then(

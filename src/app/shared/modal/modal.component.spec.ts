@@ -7,11 +7,11 @@ import { AuthFacadeService } from "@facades/auth-facade.service";
 import { mockTestCurrentUserOne } from "@root/core/constants/mocks/mocks-units-test";
 import { of } from "rxjs";
 import { ModalComponent } from "./modal.component";
-import { CategoryModel } from "@models/configurations/category.model";
+import { PayModel } from "@models/management/pay.model";
 
 describe("ModalComponent", () => {
-  let component: ModalComponent<CategoryModel>;
-  let fixture: ComponentFixture<ModalComponent<CategoryModel>>;
+  let component: ModalComponent<PayModel>;
+  let fixture: ComponentFixture<ModalComponent<PayModel>>;
   let authFacadeService: AuthFacadeService;
 
   beforeEach(async () => {
@@ -28,7 +28,7 @@ describe("ModalComponent", () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalComponent<CategoryModel>);
+    fixture = TestBed.createComponent(ModalComponent<PayModel>);
     authFacadeService = TestBed.inject(AuthFacadeService);
     component = fixture.componentInstance;
 

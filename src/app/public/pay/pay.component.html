@@ -1,0 +1,140 @@
+<div class="container">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-12">
+
+      <div class="text-center">
+        <h1 class="h4 text-gray-900 mt-4">{{ 'TITLES.REPORT_PAY' | translate }}</h1>
+      </div>
+
+      @if (!isLoading) {
+      <div>
+        <div class="card o-hidden border-0 my-3">
+          <div class="card-body p-0">
+            <div class="p-1">
+              <form [formGroup]="mainForm" class="row g-3">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                  <input type="text" placeholder="{{ 'PROPERTIES.DISPLAY_NAME' | translate }}" class="form-control"
+                    formControlName="displayName" aria-label="displayName"
+                    [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
+                  @if (isValidField('displayName')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('displayName') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                  <select class="form-select" formControlName="documentType" aria-label="documentType"
+                    [ngClass]="{'is-invalid': mainForm.get('documentType')?.touched && !mainForm.get('documentType')?.valid, 'is-valid':  mainForm.get('documentType')?.touched && mainForm.get('documentType')?.valid}"
+                    [ngModel]="'V'">
+                    @for (item of documentType$; track item) {
+                    <option [ngValue]="item.id">
+                      {{item?.name}}</option>
+                    }
+                  </select>
+                  @if (isValidField('documentType')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('documentType') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                  <input type="text" placeholder="{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}" class="form-control"
+                    formControlName="documentNumber" aria-label="documentNumber"
+                    [ngClass]="{'is-invalid': mainForm.get('documentNumber')?.touched && !mainForm.get('documentNumber')?.valid, 'is-valid': mainForm.get('documentNumber')?.touched && mainForm.get('documentNumber')?.valid}">
+                  @if (isValidField('documentNumber')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('documentNumber') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                  <select class="form-select" formControlName="phoneNumberArea" aria-label="phoneNumberArea"
+                    [ngClass]="{'is-invalid': mainForm.get('phoneNumberArea')?.touched && !mainForm.get('phoneNumberArea')?.valid, 'is-valid':  mainForm.get('phoneNumberArea')?.touched && mainForm.get('phoneNumberArea')?.valid}"
+                    [ngModel]="'0414'">
+                    @for (item of phoneNumberArea$; track item) {
+                    <option [ngValue]="item.id">
+                      {{item?.name}}</option>
+                    }
+                  </select>
+                  @if (isValidField('phoneNumberArea')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('phoneNumberArea') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                  <input type="text" placeholder="{{ 'PROPERTIES.PHONE_NUMBER' | translate }}" class="form-control"
+                    formControlName="phoneNumber" aria-label="phoneNumber"
+                    [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
+                  @if (isValidField('phoneNumber')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('phoneNumber') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                  <div class="input-group">
+                    <input appNumericInput type="number" placeholder="{{ 'PROPERTIES.AMOUNT' | translate }}" class="form-control" formControlName="amount"
+                      aria-label="amount"
+                      [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
+                    @if (isValidField('amount')) {
+                    <div class="invalid-feedback">
+                      {{ getErrorMessageField('amount') }}
+                    </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                  <input type="text" placeholder="{{ 'PROPERTIES.REFERENCE' | translate }}" class="form-control"
+                    formControlName="reference" aria-label="reference"
+                    [ngClass]="{'is-invalid': mainForm.get('reference')?.touched && !mainForm.get('reference')?.valid, 'is-valid': mainForm.get('reference')?.touched && mainForm.get('reference')?.valid}">
+                  @if (isValidField('reference')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('reference') }}
+                  </div>
+                  }
+                </div>
+
+                <app-upload-file (currentFileEmit)="currentFileEmit($event)"
+                  (validFileEmit)="validFileEmit($event)"></app-upload-file>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    @if (!isLoading) {
+                    <button type="button" aria-label="name" class="btn btn-primary"
+                      (click)="onSubmit(createDate, createDateFB)" [disabled]="!(mainForm.valid && validFile)">
+                      {{ 'BUTTONS.SEND' | translate }}
+                    </button>
+                    }
+                    @if (isLoading) {
+                    <button type="button" aria-label="name" class="btn btn-primary">
+                      <div class="spinner-border spinner-border-sm" role="status"></div>
+                    </button>
+                    }
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+      @if (isLoading) {
+      <div>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status"></div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

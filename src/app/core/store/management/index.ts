@@ -3,30 +3,23 @@ import {
   ActionReducerMap,
   createSelector,
 } from "@ngrx/store";
-import { ingresoEgresoReducer, lendingReducer } from "@store/management/reducers";
+import { payReducer } from "@store/management/reducers";
 
 export const managementFeatureKey = "management";
 
 export interface ManagementState {
-  ingresoEgreso: ingresoEgresoReducer.State;
-  lending: lendingReducer.State;
+  pay: payReducer.State;
 }
 
 export const reducers: ActionReducerMap<ManagementState> = {
-  ingresoEgreso: ingresoEgresoReducer.reducer,
-  lending: lendingReducer.reducer,
+  pay: payReducer.reducer,
 };
 
 export const getManagementState = createFeatureSelector<ManagementState>(
   managementFeatureKey
 );
 
-export const getIngresoEgreso = createSelector(
+export const getPay = createSelector(
   getManagementState,
-  (state: ManagementState) => state.ingresoEgreso
-);
-
-export const getLending = createSelector(
-  getManagementState,
-  (state: ManagementState) => state.lending
+  (state: ManagementState) => state.pay
 );

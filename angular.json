@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ingreso-egreso-app": {
+    "as-cabudare-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -122,21 +122,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "ingreso-egreso-app:build"
+            "buildTarget": "as-cabudare-app:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "ingreso-egreso-app:build:production"
+              "buildTarget": "as-cabudare-app:build:production"
             },
             "qa": {
-              "buildTarget": "ingreso-egreso-app:build:qa"
+              "buildTarget": "as-cabudare-app:build:qa"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ingreso-egreso-app:build"
+            "buildTarget": "as-cabudare-app:build"
           }
         },
         "test": {
@@ -161,11 +161,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ingreso-egreso-app:serve"
+            "devServerTarget": "as-cabudare-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ingreso-egreso-app:serve:production"
+              "devServerTarget": "as-cabudare-app:serve:production"
             }
           }
         },

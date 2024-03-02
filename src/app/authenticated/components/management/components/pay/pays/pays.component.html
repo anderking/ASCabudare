@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="row justify-content-center my-3">
+    <div class="col-12">
+      <h2 class="text-center">{{ 'TITLES.PAYS' | translate }}</h2>
+      @if (items) {
+      <h6 class="text-center">{{(items | filterTableSearch: {
+        displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumberArea:
+        wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
+        wordFilter, stateText: wordFilter } :
+        false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
+      }
+      <div class="text-center">
+        @for (item of itemsGroup; track item) {
+        <li class="list-group-item"><b>{{item.name}}: </b>{{item.values |
+          filterTableSearch: { displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter,
+          phoneNumberArea:
+          wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
+          wordFilter, stateText: wordFilter } : false |
+          amount:'amount' |
+          customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
+        }
+      </div>
+    </div>
+  </div>
+
+  <app-current-filter (rangeDateEmit)="rangeDateReceived($event)" (wordFilterEmit)="wordFilterReceived($event)"
+    [wordFilterActive]="wordFilterActive"></app-current-filter>
+
+  @if (!isLoading) {
+  <div>
+    <div class="d-grid gap-2 d-sm-flex mb-3">
+      <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' | translate
+        }}</button>
+      <button type="button" aria-label="name" class="btn btn-primary" (click)="goNew()">{{ 'BUTTONS.CREATE' | translate
+        }}</button>
+    </div>
+    @if (items && currentUser) {
+    <div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover" aria-describedby="ingreso-egreso">
+              <thead>
+                <tr>
+                  <th scope="col">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.AMOUNT' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.DATE' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.STATE' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.EDIT' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.DELETE' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of items | orderBy : ['-createDate','displayName'] | filterTableSearch: {
+                displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumberArea:
+                wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
+                wordFilter, stateText: wordFilter } : false; track item) {
+                <tr>
+                  <td>{{item.displayName}}</td>
+                  <td>{{item.documentType}}{{item.documentNumber}}</td>
+                  <td>{{item.phoneNumberArea}}{{item.phoneNumber}}</td>
+                  <td>{{item.amount | customDecimal: systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</td>
+                  <td>{{item.createDate | date : 'medium'}}</td>
+                  <td><span class="badge"
+                      [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
+                  </td>
+                  <td><button type="button" aria-label="name" (click)="goEdit(item)" class="btn btn-info">{{
+                      'BUTTONS.EDIT' | translate }}</button></td>
+                  <td><button type="button" aria-label="name" (click)="openModal(item)" class="btn btn-danger">{{
+                      'BUTTONS.DELETE'
+                      | translate }}</button></td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+  @if (isLoading) {
+  <div class="spinner">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+      </div>
+    </div>
+  </div>
+  }
+</div>
