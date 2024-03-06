@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                  <input type="text" placeholder="{{ 'PROPERTIES.PHONE_NUMBER' | translate }}" class="form-control"
+                  <input appOnlyNumericInput type="number" placeholder="{{ 'PROPERTIES.PHONE_NUMBER' | translate }}" class="form-control"
                     formControlName="phoneNumber" aria-label="phoneNumber"
                     [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
                   @if (isValidField('phoneNumber')) {

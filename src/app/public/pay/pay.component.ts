@@ -99,7 +99,6 @@ export class PayComponent implements OnInit, OnDestroy {
         "",
         [
           Validators.required,
-          setValidatorOnlyNumbers(this._translateService),
           setValidatorEqualLength(7),
         ],
       ],
