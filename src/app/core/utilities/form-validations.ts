@@ -112,7 +112,8 @@ export const setValidatorDateDashboard = (
 
 export const setValidatorEqualLength = (length: number): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value as string;
+    const value =
+      control && control.value ? (control.value.toString() as string) : null;
 
     if (value?.length !== length) {
       return { equalLength: { value: control.value, requiredLength: length } };
@@ -142,8 +143,9 @@ export const setValidatorOnlyNumbers = (
   translateService: TranslateService
 ): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
+    const value = control && control.value ? control.value : null;
     const pattern = /^[0-9]+$/;
-    if (!pattern.test(control.value)) {
+    if (!value || !pattern.test(value)) {
       return {
         onlyNumbers: translateService.instant("VALIDATIONS.FIELD_ONLY_NUMBERS"),
       };
