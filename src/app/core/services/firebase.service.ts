@@ -258,29 +258,32 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     let data = payload;
     let id: string = data.id;
     const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          if (!id) {
-            const ref = collection(this.afDB, `${action.url}`);
-            const add = await addDoc(ref, payload);
-            const id = add.id;
-            const docRef = doc(this.afDB, `${action.url}`, `${id}`);
-            data = {
-              ...payload,
-              id,
-            };
-            resolve(await setDoc(docRef, data));
-          } else {
-            const docRef = doc(this.afDB, `${action.url}`, `${id}`);
-            data = {
-              ...payload,
-              id,
-            };
-            resolve(await setDoc(docRef, data));
+      new Promise((resolve, reject) => {
+        const asyncFunction = async () => {
+          try {
+            if (!id) {
+              const ref = collection(this.afDB, `${action.url}`);
+              const add = await addDoc(ref, payload);
+              const id = add.id;
+              const docRef = doc(this.afDB, `${action.url}`, `${id}`);
+              data = {
+                ...payload,
+                id,
+              };
+              resolve(await setDoc(docRef, data));
+            } else {
+              const docRef = doc(this.afDB, `${action.url}`, `${id}`);
+              data = {
+                ...payload,
+                id,
+              };
+              resolve(await setDoc(docRef, data));
+            }
+          } catch (error) {
+            reject(error);
           }
-        } catch (error) {
-          reject(error);
-        }
+        };
+        asyncFunction();
       })
     );
     return subscription.pipe(map(() => data));
@@ -296,42 +299,47 @@ export class FirebaseService<T> implements ApiFirebaseServiceInterface<T> {
     let id: string = data.id;
     let photoURL = "";
     const subscription = from(
-      new Promise(async (resolve, reject) => {
-        try {
-          if (action.currentFile) {
-            const props: DataActionModel<any> = {
-              url: "",
-              payload: action.currentFile,
-            };
-            const observable = this.uploadAttachment$(props);
-            photoURL = await observable.toPromise();
-          }
+      new Promise((resolve, reject) => {
+        const asyncFunction = async () => {
+          try {
+            if (action.currentFile) {
+              const props: DataActionModel<any> = {
+                url: "",
+                payload: action.currentFile,
+              };
+              const observable = this.uploadAttachment$(props);
+              photoURL = await observable.toPromise();
+            } else {
+              photoURL = payload.photoURL;
+            }
 
-          console.log(photoURL);
+            console.log(photoURL);
 
-          if (!id) {
-            const ref = collection(this.afDB, `${action.url}`);
-            const add = await addDoc(ref, payload);
-            const id = add.id;
-            const docRef = doc(this.afDB, `${action.url}`, `${id}`);
-            data = {
-              ...payload,
-              id,
-              photoURL,
-            };
-            resolve(await setDoc(docRef, data));
-          } else {
-            const docRef = doc(this.afDB, `${action.url}`, `${id}`);
-            data = {
-              ...payload,
-              id,
-              photoURL,
-            };
-            resolve(await setDoc(docRef, data));
+            if (!id) {
+              const ref = collection(this.afDB, `${action.url}`);
+              const add = await addDoc(ref, payload);
+              const id = add.id;
+              const docRef = doc(this.afDB, `${action.url}`, `${id}`);
+              data = {
+                ...payload,
+                id,
+                photoURL,
+              };
+              resolve(await setDoc(docRef, data));
+            } else {
+              const docRef = doc(this.afDB, `${action.url}`, `${id}`);
+              data = {
+                ...payload,
+                id,
+                photoURL,
+              };
+              resolve(await setDoc(docRef, data));
+            }
+          } catch (error) {
+            reject(error);
           }
-        } catch (error) {
-          reject(error);
-        }
+        };
+        asyncFunction();
       })
     );
     return subscription.pipe(map(() => data));

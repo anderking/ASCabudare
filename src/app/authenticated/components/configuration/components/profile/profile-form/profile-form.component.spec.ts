@@ -135,15 +135,6 @@ describe("ProfileUpdateComponent", () => {
     expect(days.valid).toBeTruthy();
   });
 
-  it("should numberOfDecimal be invalid", () => {
-    let controls: object = component.mainForm.controls;
-    const days = controls["numberOfDecimal"] as FormControl;
-
-    days.setValue("x,ss/*");
-
-    expect(days.invalid).toBeTruthy();
-  });
-
   it("should numberOfDecimal be valid", () => {
     let controls: object = component.mainForm.controls;
     const days = controls["numberOfDecimal"] as FormControl;

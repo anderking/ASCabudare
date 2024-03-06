@@ -19,7 +19,7 @@ export function parseCurrentUserAfterAuth(
   userAuth: UserAuthModel
 ): UserAuthModel {
   try {
-    return (userAuth = {
+    return ({
       accessToken: userAuth.accessToken,
       displayName: userAuth.displayName,
       email: userAuth.email,

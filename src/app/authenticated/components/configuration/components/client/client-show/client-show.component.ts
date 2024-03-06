@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, inject } from "@angular/core";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { filter, map, takeUntil } from "rxjs/operators";
 import { LendingModel } from "@models/management/lending.model";
 import { LendingFacadeService } from "@facades/lending-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { filter, map, takeUntil } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 import { FacadeInterface } from "@interfaces/facade-interface";
 import { DataActionModel } from "@models/common/data-action.model";
