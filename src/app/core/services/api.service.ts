@@ -24,7 +24,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
     return this._http.get<ResponseApiModel<T[]>>(endPoint).pipe(
       map((data) => {
         if (data.isSuccess) {
-          return data as ResponseApiModel<T[]>;
+          return data;
         } else {
           throw new Error(data.message);
         }
@@ -41,7 +41,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
     return this._http.get<ResponseApiModel<T>>(endPoint).pipe(
       map((data) => {
         if (data.isSuccess) {
-          return data as ResponseApiModel<T>;
+          return data;
         } else {
           throw new Error(data.message);
         }
@@ -62,7 +62,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
       .pipe(
         map((data) => {
           if (data.isSuccess) {
-            return data as ResponseApiModel<T[]>;
+            return data;
           } else {
             throw new Error(data.message);
           }
@@ -79,7 +79,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
     return this._http.post<ResponseApiModel<T>>(endPoint, action.payload).pipe(
       map((data) => {
         if (data.isSuccess) {
-          return data as ResponseApiModel<T>;
+          return data;
         } else {
           throw new Error(data.message);
         }
@@ -96,7 +96,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
     return this._http.post<ResponseApiModel<T>>(endPoint, action.payload).pipe(
       map((data) => {
         if (data.isSuccess) {
-          return data as ResponseApiModel<T>;
+          return data;
         } else {
           throw new Error(data.message);
         }
@@ -113,7 +113,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
     return this._http.put<ResponseApiModel<T>>(endPoint, action.payload).pipe(
       map((data) => {
         if (data.isSuccess) {
-          return data as ResponseApiModel<T>;
+          return data;
         } else {
           throw new Error(data.message);
         }
@@ -130,7 +130,7 @@ export class ApiService<T> implements ApiServiceInterface<T> {
     return this._http.delete<ResponseApiModel<T>>(endPoint).pipe(
       map((data) => {
         if (data.isSuccess) {
-          return data as ResponseApiModel<T>;
+          return data;
         } else {
           throw new Error(data.message);
         }

@@ -10,15 +10,17 @@
         false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
       }
       <div class="text-center">
-        @for (item of itemsGroup; track item) {
-        <li class="list-group-item"><b>{{item.name}}: </b>{{item.values |
-          filterTableSearch: { displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter,
-          phoneNumberArea:
-          wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
-          wordFilter, stateText: wordFilter } : false |
-          amount:'amount' |
-          customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
-        }
+        <ul>
+          @for (item of itemsGroup; track item) {
+          <li class="list-group-item"><b>{{item.name}}: </b>{{item.values |
+            filterTableSearch: { displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter,
+            phoneNumberArea:
+            wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
+            wordFilter, stateText: wordFilter } : false |
+            amount:'amount' |
+            customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
+          }
+        </ul>
       </div>
     </div>
   </div>

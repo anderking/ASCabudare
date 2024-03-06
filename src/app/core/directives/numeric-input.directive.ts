@@ -35,7 +35,7 @@ export class NumericInputDirective {
     }
 
     if (
-      [8, 35, 36, 37, 39, 44, 46, 110, 188, 190].indexOf(event.keyCode) !==
+      [8, 9, 35, 36, 37, 39, 44, 46, 110, 188, 190].indexOf(event.keyCode) !==
         -1 ||
       // Permitir Ctrl+A / Command+A
       (event.keyCode === 65 && (event.ctrlKey || event.metaKey)) ||
