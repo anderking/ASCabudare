@@ -1,7 +1,8 @@
 export interface PayModel {
   id: string;
   displayName: string;
-  dni: string;
+  documentType: string;
+  documentNumber: string;
   phoneNumberArea: string;
   phoneNumber: string;
   reference: string;
@@ -10,6 +11,8 @@ export interface PayModel {
   photoURL: string;
   state: boolean;
   stateText: string;
+  idStateSolvency: string;
+  stateSolvency: string;
   createDate: string;
   createDateFB?: object;
 }

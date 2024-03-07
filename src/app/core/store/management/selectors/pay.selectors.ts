@@ -32,3 +32,8 @@ export const selectLoading = createSelector(
   getPay,
   (state) => state.loading
 );
+
+export const selectCurrentFilter = createSelector(
+  getPay,
+  (state) => state.currentFilter
+);

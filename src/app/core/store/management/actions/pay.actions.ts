@@ -2,6 +2,7 @@ import { createAction, props } from "@ngrx/store";
 import { Update } from "@ngrx/entity";
 import { DataActionModel } from "@models/common/data-action.model";
 import { PayModel } from "@models/management/pay.model";
+import { CurrentFilterModel } from "@models/shared/filter.model";
 
 /** Acciones para gestionar el backend */
 
@@ -94,4 +95,9 @@ export const reset = createAction("[Pay/API] reset Pays");
 /** Esta acción permite limpiar el loading del store */
 export const resetLoading = createAction(
   "[Pay/API] resetLoading Pay"
+);
+
+export const setCurrentFilter = createAction(
+  "[Pay/App] setCurrentFilter Pay",
+  props<{ currentFilter: CurrentFilterModel }>()
 );

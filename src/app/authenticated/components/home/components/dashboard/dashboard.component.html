@@ -1,0 +1,49 @@
+@if (!isLoading) {
+<div>
+  @if (currentUser) {
+  <h1>{{ 'TEXTS.WELCOME' | translate }}</h1>
+  <h2>{{currentUser.displayName}}</h2>
+  <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"
+    (wordFilterEmit)="wordFilterReceived($event)"></app-current-filter>
+
+  <div class="row">
+    @for (item of items; track item) {
+    <div class="col-xl-3 col-md-6 mb-4">
+      <a [routerLink]="[ '/authenticated/management/pay/show',{id: item.id} ]">
+        <div class="card shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
+                  [ngClass]="{'text-success': item.idStateSolvency === 'SOL', 'text-danger': item.idStateSolvency === 'PAY'}">
+                  {{item.stateSolvency}}
+                </div>
+                <span class="mb-0">{{item.displayName}}</span><br>
+                <span class="mb-0">{{item.documentType}}{{item.documentNumber}}</span><br>
+                <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{item.amount| customDecimal:
+                  systemDecimal: numberOfDecimal}}
+                  {{currentUser.currency}}</div>
+                <span class="mb-0">{{ item.createDate | date :
+                  'medium' }}</span><br>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    }
+  </div>
+  }
+</div>
+}
+
+@if (isLoading) {
+<div class="spinner">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status"></div>
+  </div>
+</div>
+}

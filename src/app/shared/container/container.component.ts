@@ -21,6 +21,7 @@ export class ContainerComponent implements OnInit {
     this._authService.initAuthListener();
     this._sharedFacadeService.messageSubscriptions();
     this._combosFacadeService.searchDocumentType();
+    this._combosFacadeService.searchStateSolvency();
     this._payFacadeService.search();
   }
 }

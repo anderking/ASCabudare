@@ -4,7 +4,7 @@ import {
   Validators,
   UntypedFormBuilder,
 } from "@angular/forms";
-import { combineLatest, of, Subject } from "rxjs";
+import { BehaviorSubject, combineLatest, of, Subject } from "rxjs";
 import { PayFacadeService } from "@facades/pay-facade.service";
 import { SharedFacadeService } from "@facades/shared-facade.service";
 import { PayModel } from "@models/management/pay.model";
@@ -17,9 +17,11 @@ import {
   setValidatorEqualLength,
   setValidatorOnlyCharacteres,
   setValidatorOnlyCharacteresAndNumbers,
-  setValidatorOnlyNumbers,
 } from "@root/core/utilities/form-validations";
-import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
+import {
+  isNullOrUndefined,
+  isNullOrUndefinedEmpty,
+} from "@root/core/utilities/is-null-or-undefined.util";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
 import { buildCreateDate } from "@root/core/utilities/core.utilities";
@@ -29,6 +31,7 @@ import {
   phoneNumberArea,
 } from "@root/core/constants/mocks/mocks-const";
 import { AttachmentModel } from "@models/shared/attachment.model";
+import { ComboModel } from "@models/masters/combo.model";
 
 @Component({
   selector: "app-pay-form",
@@ -61,11 +64,21 @@ export class PayFormComponent implements OnInit, OnDestroy {
   public systemDecimal: string = "comma";
 
   public phoneNumberArea$: any = phoneNumberArea;
-  public documentType$: any = documentType;
+
+  public stateSolvencysArray: ComboModel[] = [];
+  public stateSolvencyCurrent: ComboModel;
+  public stateSolvencyCombo$ = new BehaviorSubject<ComboModel[]>([]);
+
+  public documentTypesArray: ComboModel[] = [];
+  public documentTypeCurrent: ComboModel;
+  public documentTypeSelected: string = "V";
+  public documentTypeCombo$ = new BehaviorSubject<ComboModel[]>([]);
 
   ngOnInit() {
     this.mainForm = this.initForm();
+    this.controlSubscriptions();
     this.chargeIndicatorManager();
+    this.callsCombos();
 
     this._authFacadeService
       .getCurrentUser$()
@@ -146,6 +159,7 @@ export class PayFormComponent implements OnInit, OnDestroy {
 
   selectCurrentItem(item: PayModel): void {
     this.mainForm.reset(item, { emitEvent: false });
+    this.documentTypeSelected = item.documentType;
     this._payFacadeService.select(item);
   }
 
@@ -171,14 +185,7 @@ export class PayFormComponent implements OnInit, OnDestroy {
         ],
       ],
       phoneNumberArea: ["", [Validators.required]],
-      phoneNumber: [
-        "",
-        [
-          Validators.required,
-          setValidatorOnlyNumbers(this._translateService),
-          setValidatorEqualLength(7),
-        ],
-      ],
+      phoneNumber: ["", [Validators.required, setValidatorEqualLength(7)]],
       reference: [
         "",
         [
@@ -193,7 +200,9 @@ export class PayFormComponent implements OnInit, OnDestroy {
       ],
       photoURL: [""],
       currency: ["VES"],
-      state: [false],
+      idStateSolvency: ["PAY", [Validators.required]],
+      stateSolvency: ["Pagado", [Validators.required]],
+      state: [true],
     });
   }
 
@@ -203,7 +212,7 @@ export class PayFormComponent implements OnInit, OnDestroy {
         ...this.mainForm.getRawValue(),
         createDate,
         createDateFB,
-        stateText: this.mainForm.getRawValue().state ? "Confirmado" : "Pagado",
+        stateText: this.mainForm.getRawValue().state ? "Activo" : "Inactivo",
       };
     } else {
       this.dataForm = {
@@ -211,7 +220,7 @@ export class PayFormComponent implements OnInit, OnDestroy {
         ...this.mainForm.getRawValue(),
         createDate: this.currentItem.createDate,
         createDateFB: this.currentItem.createDateFB,
-        stateText: this.mainForm.getRawValue().state ? "Confirmado" : "Pagado",
+        stateText: this.mainForm.getRawValue().state ? "Activo" : "Inactivo",
       };
     }
     console.log(this.dataForm);
@@ -234,6 +243,92 @@ export class PayFormComponent implements OnInit, OnDestroy {
 
   goBack() {
     this._location.back();
+  }
+
+  /**
+   * Se llaman a todas los subjects que se deseen manipular en el componente
+   */
+  callsCombos(): void {
+    const stateSolvency$ = this._combosFacadeService.getStateSolvency$().pipe(
+      filter((items: ComboModel[]) => !isNullOrUndefined(items)),
+      map((items: ComboModel[]) => {
+        try {
+          return items.filter((item: ComboModel) => item.state);
+        } catch (error) {
+          return items;
+        }
+      }),
+      takeUntil(this._finisher$)
+    );
+    stateSolvency$.subscribe((i: ComboModel[]) => {
+      this.stateSolvencyCombo$.next(i);
+      this.stateSolvencysArray = i;
+    });
+
+    const documentType$ = this._combosFacadeService.getDocumentType$().pipe(
+      filter((items: ComboModel[]) => !isNullOrUndefined(items)),
+      map((items: ComboModel[]) => {
+        try {
+          return items.filter((item: ComboModel) => item.state);
+        } catch (error) {
+          return items;
+        }
+      }),
+      takeUntil(this._finisher$)
+    );
+    documentType$.subscribe((i: ComboModel[]) => {
+      this.documentTypeCombo$.next(i);
+      this.documentTypesArray = i;
+    });
+  }
+
+  controlSubscriptions(): void {
+    this.mainForm
+      .get("idStateSolvency")
+      .valueChanges.pipe(
+        filter((value) => !isNullOrUndefined(value)),
+        takeUntil(this._finisher$)
+      )
+      .subscribe((value: string) => {
+        console.log(value);
+        if (this.stateSolvencysArray && this.stateSolvencysArray.length > 0) {
+          try {
+            this.stateSolvencyCurrent = this.stateSolvencysArray.find(
+              (i: ComboModel) => i.id === value
+            );
+            this.mainForm.patchValue({
+              stateSolvency: this.stateSolvencyCurrent
+                ? this.stateSolvencyCurrent.name
+                : null,
+            });
+          } catch (error) {
+            return;
+          }
+        }
+      });
+
+    this.mainForm
+      .get("documentType")
+      .valueChanges.pipe(
+        filter((value) => !isNullOrUndefined(value)),
+        takeUntil(this._finisher$)
+      )
+      .subscribe((value: string) => {
+        if (this.documentTypesArray && this.documentTypesArray.length > 0) {
+          try {
+            this.documentTypeCurrent = this.documentTypesArray.find(
+              (i: ComboModel) => i.id === value
+            );
+            this.mainForm.patchValue({
+              documentType: this.documentTypeCurrent
+                ? this.documentTypeCurrent.name
+                : null,
+            });
+          } catch (error) {
+            return;
+          }
+        }
+      });
   }
 
   chargeIndicatorManager(): void {

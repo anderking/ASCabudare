@@ -116,7 +116,9 @@ export class PayComponent implements OnInit, OnDestroy {
       ],
       photoURL: [""],
       currency: ["VES"],
-      state: [false],
+      idStateSolvency: ["PAY", [Validators.required]],
+      stateSolvency: ["Pagado", [Validators.required]],
+      state: [true],
     });
   }
 
@@ -125,7 +127,7 @@ export class PayComponent implements OnInit, OnDestroy {
       ...this.mainForm.getRawValue(),
       createDate,
       createDateFB,
-      stateText: "Pagado",
+      stateText: "Activo",
     };
     if (this.mainForm.valid) {
       console.log(this.dataForm);

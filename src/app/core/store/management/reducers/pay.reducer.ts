@@ -2,10 +2,12 @@ import { Action, createReducer, on } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { PayModel } from "@models/management/pay.model";
 import * as actions from "@store/management/actions/pay.actions";
+import { CurrentFilterModel } from "@models/shared/filter.model";
 
 /** Se declara la interface del reducer */
 export interface State extends EntityState<PayModel> {
   selectCurrentId: string | number | null;
+  currentFilter: CurrentFilterModel;
   loading: boolean;
 }
 /** El adapter es como el puente entre el estore y el reducer */
@@ -15,6 +17,7 @@ export const adapter: EntityAdapter<PayModel> =
 /** Inicializamos el state */
 export const initialState: State = adapter.getInitialState({
   selectCurrentId: null,
+  currentFilter: null,
   loading: false,
 });
 
@@ -79,7 +82,13 @@ const entityReducer = createReducer(
   }),
   on(actions.resetLoading, (state) => {
     return { ...state, loading: false };
-  })
+  }),
+  on(actions.setCurrentFilter, (state, { currentFilter }) => {
+    return {
+      ...state,
+      currentFilter,
+    };
+  }),
 );
 
 /** Se exporta la funcion reducer que contiene  el store */

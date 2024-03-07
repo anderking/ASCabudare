@@ -44,11 +44,14 @@
             <table class="table table-striped table-hover" aria-describedby="ingreso-egreso">
               <thead>
                 <tr>
+                  <th scope="col">{{ 'PROPERTIES.DETAIL' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.AMOUNT' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.REFERENCE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DATE' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.STATE_SOLVENCY' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.STATE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.EDIT' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DELETE' | translate }}</th>
@@ -60,11 +63,17 @@
                 wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
                 wordFilter, stateText: wordFilter } : false; track item) {
                 <tr>
+                  <td><button type="button" aria-label="name" (click)="goShow(item)" class="btn btn-secondary">{{
+                      'BUTTONS.DETAIL' | translate }}</button></td>
                   <td>{{item.displayName}}</td>
                   <td>{{item.documentType}}{{item.documentNumber}}</td>
                   <td>{{item.phoneNumberArea}}{{item.phoneNumber}}</td>
                   <td>{{item.amount | customDecimal: systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</td>
+                  <td>{{item.reference}}</td>
                   <td>{{item.createDate | date : 'medium'}}</td>
+                  <td><span class="badge"
+                      [ngClass]="{'text-bg-success': item.idStateSolvency === 'SOL', 'text-bg-danger': item.idStateSolvency === 'PAY'}">{{item.stateSolvency}}</span>
+                  </td>
                   <td><span class="badge"
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
                   </td>

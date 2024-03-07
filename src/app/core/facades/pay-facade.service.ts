@@ -8,6 +8,7 @@ import * as selectors from "@store/management/selectors/pay.selectors";
 import * as actions from "@store/management/actions/pay.actions";
 import { collectionFB } from "@constants/management/pay.constants";
 import { AttachmentModel } from "@models/shared/attachment.model";
+import { CurrentFilterModel } from "@models/shared/filter.model";
 
 @Injectable({
   providedIn: "root",
@@ -146,5 +147,13 @@ export class PayFacadeService implements FacadeInterface<PayModel> {
    */
   public getLoading$(): Observable<boolean> {
     return this._store.select(selectors.selectLoading);
+  }
+
+  getCurrentFilter$(): Observable<CurrentFilterModel> {
+    return this._store.select(selectors.selectCurrentFilter);
+  }
+  setCurrentFilter(currentFilter: CurrentFilterModel): void {
+    const action = actions.setCurrentFilter({ currentFilter });
+    this._store.dispatch(action);
   }
 }

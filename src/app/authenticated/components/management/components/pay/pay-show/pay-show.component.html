@@ -1,0 +1,48 @@
+<div class="container">
+
+  <h2 class="text-center my-3">{{ 'TITLES.PAYS' | translate }}</h2>
+
+  @if (!isLoading) {
+  <div class="d-grid gap-2 d-sm-flex mb-3">
+    <button type="button" aria-label="name" class="btn btn-dark mr-3" (click)="goBack()">{{ 'BUTTONS.BACK' |
+      translate
+      }}</button>
+  </div>
+  @if (currentItem) {
+  <ul class="list-group my-3">
+    <li class="list-group-item active text-center">{{ 'TITLES.DETAIL_PAY' | translate }}</li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.FULLNAME' | translate }}: </b>{{ currentItem.displayName }}</li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}: </b>{{ currentItem.documentType}}{{
+      currentItem.documentNumber}}</li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.PHONE_NUMBER' | translate }}: </b>{{ currentItem.phoneNumberArea }}{{
+      currentItem.phoneNumber }}</li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.AMOUNT' | translate }}: </b>{{currentItem.amount | customDecimal:
+      systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.REFERENCE' | translate }}: </b>{{ currentItem.reference }}</li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.DATE' | translate }}: </b>{{ currentItem.createDate | date :
+      'medium' }}</li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.STATE_SOLVENCY' | translate }}: </b><span class="badge"
+        [ngClass]="{'text-bg-success': currentItem.idStateSolvency === 'SOL', 'text-bg-danger': currentItem.idStateSolvency === 'PAY'}">{{currentItem.stateSolvency}}</span>
+    </li>
+    <li class="list-group-item"><b>{{ 'PROPERTIES.STATE' | translate }}: </b><span class="badge"
+        [ngClass]="{'text-bg-success': currentItem.state, 'text-bg-danger': !currentItem.state}">{{currentItem.stateText}}</span>
+    </li>
+    @if (currentItem.photoURL) {
+    <li class="list-group-item">
+      <b>{{ 'PROPERTIES.SCREENSHOT' | translate }}: </b>
+      <img class="img-fluid img-thumbnail" [src]="currentItem.photoURL" alt="screenshot" />
+    </li>
+    }
+  </ul>
+  }
+  }
+
+  @if (isLoading) {
+  <div class="spinner">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+      </div>
+    </div>
+  </div>
+  }
+</div>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { PayComponent } from "./pay.component";
 import { PaysComponent } from "./pays/pays.component";
 import { PayFormComponent } from "./pay-form/pay-form.component";
+import { PayShowComponent } from "./pay-show/pay-show.component";
 
 export const routes: Routes = [
   {
@@ -13,6 +14,7 @@ export const routes: Routes = [
     children: [
       { path: "", component: PaysComponent },
       { path: "form", component: PayFormComponent },
+      { path: "show", component: PayShowComponent },
       { path: "**", redirectTo: "", pathMatch: "full" },
     ],
   },
