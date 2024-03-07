@@ -127,7 +127,7 @@ export const setValidatorOnlyCharacteres = (
   translateService: TranslateService
 ): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
-    const pattern = /^[a-zA-Z ]+$/;
+    const pattern = /^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ\s]*$/;
     if (!pattern.test(control.value)) {
       return {
         onlyCharacteres: translateService.instant(
