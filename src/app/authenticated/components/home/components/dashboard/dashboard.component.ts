@@ -137,7 +137,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
         console.log("DATA", data);
         const pays = this._filterTableSearchPipe.transform(
           data.items,
-          { displayName: this.wordFilter },
+          {
+            displayName: this.wordFilter,
+            documentNumber: this.wordFilter,
+            phoneNumberArea: this.wordFilter,
+            phoneNumber: this.wordFilter,
+            amount: this.wordFilter,
+            stateSolvency: this.wordFilter,
+          },
           false
         );
         this.pays = pays;
@@ -149,7 +156,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.wordFilter = wordFilter;
     const pays = this._filterTableSearchPipe.transform(
       this.pays,
-      { displayName: this.wordFilter },
+      {
+        displayName: this.wordFilter,
+        documentNumber: this.wordFilter,
+        phoneNumberArea: this.wordFilter,
+        phoneNumber: this.wordFilter,
+        amount: this.wordFilter,
+        stateSolvency: this.wordFilter,
+      },
       false
     );
     this.calculateRender(pays);

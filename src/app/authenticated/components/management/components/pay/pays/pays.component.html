@@ -4,19 +4,19 @@
       <h2 class="text-center">{{ 'TITLES.PAYS' | translate }}</h2>
       @if (items) {
       <h6 class="text-center">{{(items | filterTableSearch: {
-        displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumberArea:
+        displayName: wordFilter, documentNumber: wordFilter, phoneNumberArea:
         wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
-        wordFilter, stateText: wordFilter } :
+        wordFilter, stateText: wordFilter, stateSolvency: wordFilter } :
         false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
       }
       <div class="text-center">
         <ul>
           @for (item of itemsGroup; track item) {
           <li class="list-group-item"><b>{{item.name}}: </b>{{item.values |
-            filterTableSearch: { displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter,
+            filterTableSearch: { displayName: wordFilter, documentNumber: wordFilter,
             phoneNumberArea:
             wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
-            wordFilter, stateText: wordFilter } : false |
+            wordFilter, stateText: wordFilter, stateSolvency: wordFilter } : false |
             amount:'amount' |
             customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
           }
@@ -59,9 +59,9 @@
               </thead>
               <tbody>
                 @for (item of items | orderBy : ['-createDate','displayName'] | filterTableSearch: {
-                displayName: wordFilter, documentType: wordFilter, documentNumber: wordFilter, phoneNumberArea:
+                displayName: wordFilter, documentNumber: wordFilter, phoneNumberArea:
                 wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
-                wordFilter, stateText: wordFilter } : false; track item) {
+                wordFilter, stateText: wordFilter, stateSolvency: wordFilter } : false; track item) {
                 <tr>
                   <td><button type="button" aria-label="name" (click)="goShow(item)" class="btn btn-secondary">{{
                       'BUTTONS.DETAIL' | translate }}</button></td>
