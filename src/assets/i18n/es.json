@@ -88,6 +88,8 @@
     "NUMBER_DECIMAL": "Número decimal",
     "SYSTEM_DECIMAL": "Sistema decimal",
     "PHOTO_URL": "Url foto",
+    "PHOTO_PROFILE": "Foto de perfil",
+    "PHOTO_REFERENCE": "Comprobante de pago",
     "UPLOAD_FILE": "Subir archivo",
     "SCREENSHOT": "Captura",
     "SELECT_AN_OPTION": "Seleccione una opción",

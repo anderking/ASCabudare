@@ -15,7 +15,8 @@
           <div class="card-body p-0">
             <div class="p-5">
               <form [formGroup]="mainForm" class="row g-3">
-                <div class="col-sm-12 col-md-12 col-lg-5 col-xl-4">
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-3">
                   <label for="displayName" class="form-label">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
                   <input type="text" class="form-control" formControlName="displayName" aria-label="displayName"
                     [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
@@ -25,9 +26,29 @@
                   </div>
                   }
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                  <label for="phoneNumberArea" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER_AREA' | translate
+                    }}:</label>
+                  <select class="form-select" formControlName="phoneNumberArea" aria-label="phoneNumberArea"
+                    [ngClass]="{'is-invalid': mainForm.get('phoneNumberArea')?.touched && !mainForm.get('phoneNumberArea')?.valid, 'is-valid':  mainForm.get('phoneNumberArea')?.touched && mainForm.get('phoneNumberArea')?.valid}">
+                    <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
+                    @for (item of phoneNumberAreaCombo$; track item) {
+                    <option [ngValue]="item.id">
+                      {{item?.name}}</option>
+                    }
+                  </select>
+                  @if (isValidField('phoneNumberArea')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('phoneNumberArea') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
                   <label for="phoneNumber" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="phoneNumber" aria-label="phoneNumber"
+                  <input appOnlyNumericInput type="number" class="form-control" formControlName="phoneNumber"
+                    aria-label="phoneNumber"
                     [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
                   @if (isValidField('phoneNumber')) {
                   <div class="invalid-feedback">
@@ -35,7 +56,8 @@
                   </div>
                   }
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-4">
+
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
                   <label for="officialRate" class="form-label">{{ 'PROPERTIES.OFFICIAL_RATE' | translate }}:</label>
                   <input appNumericInput type="number" class="form-control" formControlName="officialRate"
                     aria-label="officialRate"
@@ -46,22 +68,13 @@
                   </div>
                   }
                 </div>
+
                 <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                  <label for="currency" class="form-label">{{ 'PROPERTIES.LOCAL_CURRENCY' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="currency" aria-label="currency"
-                    [ngClass]="{'is-invalid': mainForm.get('currency')?.touched && !mainForm.get('currency')?.valid, 'is-valid': mainForm.get('currency')?.touched && mainForm.get('currency')?.valid}">
-                  @if (isValidField('currency')) {
-                  <div class="invalid-feedback">
-                    {{ getErrorMessageField('currency') }}
-                  </div>
-                  }
-                </div>
-                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
                   <label for="dayStartDashboard" class="form-label">{{ 'PROPERTIES.STARTDAY' | translate }}:</label>
                   <select class="form-select" formControlName="dayStartDashboard" aria-label="dayStartDashboard"
                     [ngClass]="{'is-invalid': mainForm.get('dayStartDashboard')?.touched && !mainForm.get('dayStartDashboard')?.valid, 'is-valid':  mainForm.get('dayStartDashboard')?.touched && mainForm.get('dayStartDashboard')?.valid}">
-                    <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    @for (item of startDay$; track item) {
+                    <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
+                    @for (item of startDayCombo$; track item) {
                     <option [ngValue]="item.id">
                       {{item?.name}}</option>
                     }
@@ -72,12 +85,31 @@
                   </div>
                   }
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+
+                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                  <label for="currency" class="form-label">{{ 'PROPERTIES.LOCAL_CURRENCY' | translate
+                    }}:</label>
+                  <select class="form-select" formControlName="currency" aria-label="currency"
+                    [ngClass]="{'is-invalid': mainForm.get('currency')?.touched && !mainForm.get('currency')?.valid, 'is-valid':  mainForm.get('currency')?.touched && mainForm.get('currency')?.valid}">
+                    <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
+                    @for (item of currencyCombo$; track item) {
+                    <option [ngValue]="item.id">
+                      {{item?.name}}</option>
+                    }
+                  </select>
+                  @if (isValidField('currency')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('currency') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                   <label for="numberOfDecimal" class="form-label">{{ 'PROPERTIES.NUMBER_DECIMAL' | translate }}:</label>
                   <select class="form-select" formControlName="numberOfDecimal" aria-label="numberOfDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('numberOfDecimal')?.touched && !mainForm.get('numberOfDecimal')?.valid, 'is-valid':  mainForm.get('numberOfDecimal')?.touched && mainForm.get('numberOfDecimal')?.valid}">
-                    <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    @for (item of numberOfDecimal$; track item) {
+                    <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
+                    @for (item of numberOfDecimalCombo$; track item) {
                     <option [ngValue]="item.id">
                       {{item?.name}}</option>
                     }
@@ -88,12 +120,13 @@
                   </div>
                   }
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+
+                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
                   <label for="systemDecimal" class="form-label">{{ 'PROPERTIES.SYSTEM_DECIMAL' | translate }}:</label>
                   <select class="form-select" formControlName="systemDecimal" aria-label="systemDecimal"
                     [ngClass]="{'is-invalid': mainForm.get('systemDecimal')?.touched && !mainForm.get('systemDecimal')?.valid, 'is-valid':  mainForm.get('systemDecimal')?.touched && mainForm.get('systemDecimal')?.valid}">
-                    <option value="null" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    @for (item of systemDecimal$; track item) {
+                    <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
+                    @for (item of systemDecimalCombo$; track item) {
                     <option [ngValue]="item.id">
                       {{item?.name}}</option>
                     }
@@ -104,17 +137,9 @@
                   </div>
                   }
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <label for="photoURL" class="form-label">{{ 'PROPERTIES.PHOTO_URL' | translate }}:</label>
-                  <input type="text" class="form-control" formControlName="photoURL" aria-label="photoURL"
-                    [ngClass]="{'is-invalid': mainForm.get('photoURL')?.touched && !mainForm.get('photoURL')?.valid, 'is-valid': mainForm.get('photoURL')?.touched && mainForm.get('photoURL')?.valid}">
-                  @if (isValidField('photoURL')) {
-                  <div class="invalid-feedback">
-                    {{ getErrorMessageField('photoURL') }}
-                  </div>
-                  }
-                </div>
-                <app-upload-file [showLoadButton]="true"></app-upload-file>
+
+                <app-upload-file [showLoadButton]="true" [label]="'PROPERTIES.PHOTO_PROFILE'"></app-upload-file>
+
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                   <div class="d-grid gap-2 col-12 mx-auto">
                     @if (!isLoading) {

@@ -26,6 +26,7 @@ export function parseCurrentUserAfterAuth(
       emailVerified: userAuth.emailVerified,
       metadata: userAuth.metadata,
       phoneNumber: userAuth.phoneNumber,
+      phoneNumberArea: userAuth.phoneNumberArea,
       photoURL: userAuth.photoURL,
       stsTokenManager: userAuth.stsTokenManager,
       uid: userAuth.uid,

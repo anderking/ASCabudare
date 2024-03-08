@@ -34,6 +34,17 @@ export const selectStateSolvencyLoading = createSelector(
   (state) => state.stateSolvencyLoading
 );
 
+/** Exporta el select para el facade */
+export const selectCurrency = createSelector(
+  getMasters,
+  (state) => state.currency
+);
+/** Exporta el loading para el facade */
+export const selectCurrencyLoading = createSelector(
+  getMasters,
+  (state) => state.currencyLoading
+);
+
 /** Exporta el loading para el facade */
 export const selectLoading = createSelector(
   getMasters,

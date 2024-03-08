@@ -102,11 +102,12 @@ describe("ProfileUpdateComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should to contain 8 fields the form", () => {
+  it("should to contain 9 fields the form", () => {
     let controls: object = component.mainForm.controls;
     let countControls: number = Object.keys(controls).length;
 
     expect(component.mainForm.contains("displayName")).toBeTruthy();
+    expect(component.mainForm.contains("phoneNumberArea")).toBeTruthy();
     expect(component.mainForm.contains("phoneNumber")).toBeTruthy();
     expect(component.mainForm.contains("currency")).toBeTruthy();
     expect(component.mainForm.contains("photoURL")).toBeTruthy();
@@ -114,7 +115,7 @@ describe("ProfileUpdateComponent", () => {
     expect(component.mainForm.contains("numberOfDecimal")).toBeTruthy();
     expect(component.mainForm.contains("systemDecimal")).toBeTruthy();
     expect(component.mainForm.contains("officialRate")).toBeTruthy();
-    expect(countControls).toEqual(8);
+    expect(countControls).toEqual(9);
   });
 
   it("should dayStartDashboard be invalid", () => {

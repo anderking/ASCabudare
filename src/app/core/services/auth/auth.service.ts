@@ -104,6 +104,7 @@ export class AuthService {
           displayName: userAuth?.displayName,
           email: userAuth?.email,
           emailVerified: userAuth?.emailVerified,
+          phoneNumberArea: userDoc?.phoneNumberArea ? userDoc?.phoneNumberArea : "",
           phoneNumber: userDoc?.phoneNumber ? userDoc?.phoneNumber : "",
           currency: userDoc?.currency ? userDoc?.currency : "",
           dayStartDashboard: userDoc?.dayStartDashboard
