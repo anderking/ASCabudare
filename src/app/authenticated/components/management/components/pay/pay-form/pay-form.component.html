@@ -85,7 +85,7 @@
               </div>
 
               <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="displayName" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
+                <label for="phoneNumber" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
                 <input appOnlyNumericInput type="number" class="form-control" formControlName="phoneNumber"
                   aria-label="phoneNumber"
                   [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">

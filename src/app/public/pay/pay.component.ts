@@ -12,7 +12,6 @@ import {
   isValidField,
   setValidatorEqualLength,
   setValidatorOnlyCharacteres,
-  setValidatorOnlyNumbers,
   setValidatorOnlyCharacteresAndNumbers,
 } from "@root/core/utilities/form-validations";
 import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
