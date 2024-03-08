@@ -34,6 +34,7 @@ export const mockTestUserAuthOne: UserAuthModel = {
   email: "string",
   emailVerified: false,
   metadata: mockTestUserMetadataOne,
+  phoneNumberArea: "string",
   phoneNumber: "string",
   photoURL: "string",
   stsTokenManager: mockTestStsTokenManagerOne,

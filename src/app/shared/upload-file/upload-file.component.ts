@@ -21,6 +21,7 @@ export class UploadFileComponent implements OnInit {
   @Output() currentFileEmit: EventEmitter<AttachmentModel> = new EventEmitter();
   @Output() validFileEmit: EventEmitter<boolean> = new EventEmitter();
   @Input() showLoadButton: boolean = false;
+  @Input() label: string = "";
 
   private _attachmentFacadeService = inject(AttachmentFacadeService);
   private _translateService = inject(TranslateService);

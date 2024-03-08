@@ -8,6 +8,7 @@ export interface UserAuthModel {
   email: string;
   emailVerified: boolean;
   metadata?: UserMetadataModel;
+  phoneNumberArea: string;
   phoneNumber: string;
   photoURL: string;
   stsTokenManager?: StsTokenManagerModel;

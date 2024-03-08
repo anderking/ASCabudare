@@ -18,11 +18,14 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { TranslateService } from "@ngx-translate/core";
 import {
+  currency,
   numberOfDecimal,
+  phoneNumberArea,
   startDaySelect,
   systemDecimal,
 } from "@root/core/constants/mocks/mocks-const";
 import { CombosFacadeService } from "@facades/combos-facade.service";
+import { ComboModel } from "@models/masters/combo.model";
 
 @Component({
   selector: "app-profile-form",
@@ -44,9 +47,11 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
-  public startDay$: any = startDaySelect;
-  public numberOfDecimal$: any = numberOfDecimal;
-  public systemDecimal$: any = systemDecimal;
+  public startDayCombo$: ComboModel[] = startDaySelect;
+  public numberOfDecimalCombo$: ComboModel[] = numberOfDecimal;
+  public systemDecimalCombo$: ComboModel[] = systemDecimal;
+  public phoneNumberAreaCombo$: ComboModel[] = phoneNumberArea;
+  public currencyCombo$: ComboModel[] = currency;
 
   ngOnInit() {
     this.mainForm = this.initForm();
@@ -102,13 +107,17 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   initForm(): UntypedFormGroup {
     return this._fb.group({
       displayName: [""],
+      phoneNumberArea: [""],
       phoneNumber: [""],
-      officialRate: ["", [Validators.pattern(`^[0-9]+(.[0-9]+)?$`)]],
-      currency: [""],
+      officialRate: [
+        "",
+        [Validators.required, Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
+      ],
+      dayStartDashboard: ["", [Validators.required]],
+      currency: ["", [Validators.required]],
+      numberOfDecimal: [""],
+      systemDecimal: [""],
       photoURL: [""],
-      dayStartDashboard: [null, [Validators.required]],
-      numberOfDecimal: [null],
-      systemDecimal: [null],
     });
   }
 
