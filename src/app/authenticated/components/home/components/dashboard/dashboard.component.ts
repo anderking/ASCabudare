@@ -27,11 +27,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public items: PayModel[] = [];
   public pays: PayModel[] = [];
   public isLoading: boolean;
-  public totalIngresos: number;
-  public totalEgresos: number;
-  public totalEarnings: number;
-  public cantIngresos: any;
-  public cantEgresos: any;
   public currentUser: CurrentUserModel;
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
