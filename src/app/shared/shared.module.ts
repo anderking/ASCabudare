@@ -18,6 +18,7 @@ import { CustomDecimalPipe } from "@root/core/pipes/custom-decimal.pipe";
 import { OrderByPipe } from "@root/core/pipes/orderBy.pipe";
 import { UploadFileComponent } from "./upload-file/upload-file.component";
 import { CalculateAmountComponent } from "./modal/calculate-amount/calculate-amount.component";
+import { NavFooterComponent } from "./nav-footer/nav-footer.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CalculateAmountComponent } from "./modal/calculate-amount/calculate-amo
     CalculateAmountComponent,
     CurrentFilterComponent,
     SidebarComponent,
+    NavFooterComponent,
     UploadFileComponent
   ],
   imports: [

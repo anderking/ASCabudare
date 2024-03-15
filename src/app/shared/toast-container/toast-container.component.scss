@@ -1,8 +1,16 @@
-:host {
-  position: fixed;
-  bottom: 0;
-  left: 48%;
-  margin: 0.5em;
-  z-index: 1200;
-  transform: translate(-50%, 0%);
+@media (min-width: 0px) {
+  :host {
+    position: fixed;
+    bottom: 45px;
+    left: 48%;
+    margin: 0.5em;
+    z-index: 1200;
+    transform: translate(-50%, 0%);
+  }
+}
+
+@media (min-width: 768px) {
+  :host {
+    bottom: 0;
+  }
 }
