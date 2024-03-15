@@ -1,0 +1,34 @@
+<div class="footer">
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[ '/authenticated/configuration/profile' ]" [routerLinkActive]="'inbox'">
+        <fa-icon [icon]="faGear"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[ '/authenticated/home' ]" [routerLinkActive]="'inbox'">
+        <fa-icon [icon]="faGauge"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[ '/authenticated/management/ingreso-egreso' ]" [routerLinkActive]="'inbox'">
+        <fa-icon [icon]="faMoneyBillTransfer"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[ '/authenticated/configuration/client' ]" [routerLinkActive]="'inbox'">
+        <fa-icon [icon]="faUsers"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[ '/authenticated/configuration/category' ]" [routerLinkActive]="'inbox'">
+        <fa-icon [icon]="faTags"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link cursor" href="#" (click)="logout()">
+        <fa-icon [icon]="faRightFromBracket"></fa-icon>
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,11 +1,11 @@
-.main-vh{
-      min-height: 87vh !important;
+@media (min-width: 320px) {
+  #content {
+    padding-bottom: 50px;
+  }
 }
 
-.content {
-  margin-left: 60px;
-  transition: 0.3s;
-  &.sidebarExpanded {
-    margin-left: 200px;
+@media (min-width: 768px) {
+  #content {
+    padding-bottom: 0px;
   }
 }

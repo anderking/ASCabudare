@@ -1,0 +1,50 @@
+@media (min-width: 0px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-barra-lateral);
+    z-index: 1000 !important;
+  }
+
+  .footer ul {
+    a {
+      color: var(--color-texto-menu);
+
+      .ng-fa-icon {
+        font-size: 20px;
+      }
+    }
+
+    a:hover {
+      background-color: var(--color-menu-hover);
+      color: var(--color-menu-hover-texto);
+    }
+
+    a.inbox {
+      background-color: var(--color-menu-hover);
+      color: var(--color-menu-hover-texto);
+    }
+  }
+}
+
+@media (min-width: 360px) {
+  .footer ul a .ng-fa-icon {
+    font-size: 25px;
+  }
+
+  .footer ul li:first-child {
+    margin-right: auto;
+  }
+
+  .footer ul li:last-child {
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 525px) {
+  .footer ul a .ng-fa-icon {
+    font-size: 30px;
+  }
+}
