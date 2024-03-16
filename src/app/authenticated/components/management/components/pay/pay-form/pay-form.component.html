@@ -11,165 +11,163 @@
 
       @if (!isLoading) {
 
-      <div class="card o-hidden border-0 my-5">
+      <div class="card o-hidden border-0">
         <div class="card-body p-0">
-          <div class="p-5">
-            @if (mainForm) {
-            <form [formGroup]="mainForm" class="row g-3">
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="idStateSolvency" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate
-                  }}:</label>
-                @for (item of stateSolvencyCombo$ | async; track item) {
-                <div class="form-check">
-                  <input type="radio" class="form-check-input" formControlName="idStateSolvency"
-                    aria-label="idStateSolvency" value="{{item.code}}">
-                  <span class="form-check-label">{{item?.name}}</span>
-                </div>
-                }
+          @if (mainForm) {
+          <form [formGroup]="mainForm" class="row g-3">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="idStateSolvency" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate
+                }}:</label>
+              @for (item of stateSolvencyCombo$ | async; track item) {
+              <div class="form-check">
+                <input type="radio" class="form-check-input" formControlName="idStateSolvency"
+                  aria-label="idStateSolvency" value="{{item.code}}">
+                <span class="form-check-label">{{item?.name}}</span>
               </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="displayName" class="form-label">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
-                <input type="text" class="form-control" formControlName="displayName" aria-label="displayName"
-                  [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
-                @if (isValidField('displayName')) {
-                <div class="invalid-feedback">
-                  {{ getErrorMessageField('displayName') }}
-                </div>
-                }
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="displayName" class="form-label">{{ 'PROPERTIES.DOCUMENTTYPE' | translate }}:</label>
-                <select class="form-select" formControlName="documentType" aria-label="documentType"
-                  [ngClass]="{'is-invalid': mainForm.get('documentType')?.touched && !mainForm.get('documentType')?.valid, 'is-valid':  mainForm.get('documentType')?.touched && mainForm.get('documentType')?.valid}"
-                  [ngModel]="documentTypeSelected">
-                  @for (item of documentTypeCombo$ | async; track item) {
-                  <option [ngValue]="item.id">
-                    {{item?.name}}</option>
-                  }
-                </select>
-                @if (isValidField('documentType')) {
-                <div class="invalid-feedback">
-                  {{ getErrorMessageField('documentType') }}
-                </div>
-                }
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="displayName" class="form-label">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}:</label>
-                <input type="text" class="form-control" formControlName="documentNumber" aria-label="documentNumber"
-                  [ngClass]="{'is-invalid': mainForm.get('documentNumber')?.touched && !mainForm.get('documentNumber')?.valid, 'is-valid': mainForm.get('documentNumber')?.touched && mainForm.get('documentNumber')?.valid}">
-                @if (isValidField('documentNumber')) {
-                <div class="invalid-feedback">
-                  {{ getErrorMessageField('documentNumber') }}
-                </div>
-                }
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="displayName" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER_AREA' | translate }}:</label>
-                <select class="form-select" formControlName="phoneNumberArea" aria-label="phoneNumberArea"
-                  [ngClass]="{'is-invalid': mainForm.get('phoneNumberArea')?.touched && !mainForm.get('phoneNumberArea')?.valid, 'is-valid':  mainForm.get('phoneNumberArea')?.touched && mainForm.get('phoneNumberArea')?.valid}"
-                  [ngModel]="'0414'">
-                  @for (item of phoneNumberArea$; track item) {
-                  <option [ngValue]="item.id">
-                    {{item?.name}}</option>
-                  }
-                </select>
-                @if (isValidField('phoneNumberArea')) {
-                <div class="invalid-feedback">
-                  {{ getErrorMessageField('phoneNumberArea') }}
-                </div>
-                }
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="phoneNumber" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
-                <input appOnlyNumericInput type="number" class="form-control" formControlName="phoneNumber"
-                  aria-label="phoneNumber"
-                  [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
-                @if (isValidField('phoneNumber')) {
-                <div class="invalid-feedback">
-                  {{ getErrorMessageField('phoneNumber') }}
-                </div>
-                }
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="displayName" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
-                <input appNumericInput type="number" class="form-control" formControlName="amount" aria-label="amount"
-                  [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
-                @if (isValidField('amount')) {
-                <div class="invalid-feedback">
-                  {{ getErrorMessageField('amount') }}
-                </div>
-                }
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                <label for="displayName" class="form-label">{{ 'PROPERTIES.REFERENCE' | translate }}:</label>
-                <input type="text" class="form-control" formControlName="reference" aria-label="reference"
-                  [ngClass]="{'is-invalid': mainForm.get('reference')?.touched && !mainForm.get('reference')?.valid, 'is-valid': mainForm.get('reference')?.touched && mainForm.get('reference')?.valid}">
-                @if (isValidField('reference')) {
-                <div class="invalid-feedback">
-                  {{ getErrorMessageField('reference') }}
-                </div>
-                }
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="state" formControlName="state" aria-label="state"
-                    [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
-                  <label class="form-check-label" for="state">
-                    {{ 'PROPERTIES.STATE' | translate }}
-                  </label>
-                  @if (isValidField('state')) {
-                  <div class="invalid-feedback">
-                    {{ getErrorMessageField('state') }}
-                  </div>
-                  }
-                </div>
-              </div>
-
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                <div class="d-grid gap-2 col-12 mx-auto">
-                  @if (!isLoading) {
-                  <button type="button" aria-label="name" class="btn btn-primary"
-                    (click)="onSubmit(createDate, createDateFB)" [disabled]="!(mainForm.valid && validFile)">
-                    {{ 'BUTTONS.SAVE' | translate }}
-                  </button>
-                  }
-                  @if (isLoading) {
-                  <button type="button" aria-label="name" class="btn btn-primary">
-                    <div class="spinner-border spinner-border-sm" role="status"></div>
-                  </button>
-                  }
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                <div class="d-grid gap-2 col-12 mx-auto">
-                  <button type="button" aria-label="name" class="btn btn-info" (click)="clean()">
-                    {{ 'BUTTONS.CLEAN' | translate }}
-                  </button>
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                <div class="d-grid gap-2 col-12 mx-auto">
-                  <button type="button" aria-label="name" class="btn btn-dark" (click)="goBack()">
-                    {{ 'BUTTONS.BACK' | translate }}
-                  </button>
-                </div>
-              </div>
-            </form>
-            }
-            @if (currentItem?.photoURL) {
-            <div class="d-flex justify-content-center mt-3">
-              <img class="img-fluid img-thumbnail" [src]="currentItem.photoURL" alt="screenshot" />
+              }
             </div>
-            }
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="displayName" class="form-label">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}:</label>
+              <input type="text" class="form-control" formControlName="displayName" aria-label="displayName"
+                [ngClass]="{'is-invalid': mainForm.get('displayName')?.touched && !mainForm.get('displayName')?.valid, 'is-valid': mainForm.get('displayName')?.touched && mainForm.get('displayName')?.valid}">
+              @if (isValidField('displayName')) {
+              <div class="invalid-feedback">
+                {{ getErrorMessageField('displayName') }}
+              </div>
+              }
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="displayName" class="form-label">{{ 'PROPERTIES.DOCUMENTTYPE' | translate }}:</label>
+              <select class="form-select" formControlName="documentType" aria-label="documentType"
+                [ngClass]="{'is-invalid': mainForm.get('documentType')?.touched && !mainForm.get('documentType')?.valid, 'is-valid':  mainForm.get('documentType')?.touched && mainForm.get('documentType')?.valid}"
+                [ngModel]="documentTypeSelected">
+                @for (item of documentTypeCombo$ | async; track item) {
+                <option [ngValue]="item.id">
+                  {{item?.name}}</option>
+                }
+              </select>
+              @if (isValidField('documentType')) {
+              <div class="invalid-feedback">
+                {{ getErrorMessageField('documentType') }}
+              </div>
+              }
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="displayName" class="form-label">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}:</label>
+              <input type="text" class="form-control" formControlName="documentNumber" aria-label="documentNumber"
+                [ngClass]="{'is-invalid': mainForm.get('documentNumber')?.touched && !mainForm.get('documentNumber')?.valid, 'is-valid': mainForm.get('documentNumber')?.touched && mainForm.get('documentNumber')?.valid}">
+              @if (isValidField('documentNumber')) {
+              <div class="invalid-feedback">
+                {{ getErrorMessageField('documentNumber') }}
+              </div>
+              }
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="displayName" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER_AREA' | translate }}:</label>
+              <select class="form-select" formControlName="phoneNumberArea" aria-label="phoneNumberArea"
+                [ngClass]="{'is-invalid': mainForm.get('phoneNumberArea')?.touched && !mainForm.get('phoneNumberArea')?.valid, 'is-valid':  mainForm.get('phoneNumberArea')?.touched && mainForm.get('phoneNumberArea')?.valid}"
+                [ngModel]="'0414'">
+                @for (item of phoneNumberArea$; track item) {
+                <option [ngValue]="item.id">
+                  {{item?.name}}</option>
+                }
+              </select>
+              @if (isValidField('phoneNumberArea')) {
+              <div class="invalid-feedback">
+                {{ getErrorMessageField('phoneNumberArea') }}
+              </div>
+              }
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="phoneNumber" class="form-label">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}:</label>
+              <input appOnlyNumericInput type="number" class="form-control" formControlName="phoneNumber"
+                aria-label="phoneNumber"
+                [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
+              @if (isValidField('phoneNumber')) {
+              <div class="invalid-feedback">
+                {{ getErrorMessageField('phoneNumber') }}
+              </div>
+              }
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="displayName" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
+              <input appNumericInput type="number" class="form-control" formControlName="amount" aria-label="amount"
+                [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
+              @if (isValidField('amount')) {
+              <div class="invalid-feedback">
+                {{ getErrorMessageField('amount') }}
+              </div>
+              }
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+              <label for="displayName" class="form-label">{{ 'PROPERTIES.REFERENCE' | translate }}:</label>
+              <input type="text" class="form-control" formControlName="reference" aria-label="reference"
+                [ngClass]="{'is-invalid': mainForm.get('reference')?.touched && !mainForm.get('reference')?.valid, 'is-valid': mainForm.get('reference')?.touched && mainForm.get('reference')?.valid}">
+              @if (isValidField('reference')) {
+              <div class="invalid-feedback">
+                {{ getErrorMessageField('reference') }}
+              </div>
+              }
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="state" formControlName="state" aria-label="state"
+                  [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
+                <label class="form-check-label" for="state">
+                  {{ 'PROPERTIES.STATE' | translate }}
+                </label>
+                @if (isValidField('state')) {
+                <div class="invalid-feedback">
+                  {{ getErrorMessageField('state') }}
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+              <div class="d-grid gap-2 col-12 mx-auto">
+                @if (!isLoading) {
+                <button type="button" aria-label="name" class="btn btn-primary"
+                  (click)="onSubmit(createDate, createDateFB)" [disabled]="!(mainForm.valid && validFile)">
+                  {{ 'BUTTONS.SAVE' | translate }}
+                </button>
+                }
+                @if (isLoading) {
+                <button type="button" aria-label="name" class="btn btn-primary">
+                  <div class="spinner-border spinner-border-sm" role="status"></div>
+                </button>
+                }
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <button type="button" aria-label="name" class="btn btn-info" (click)="clean()">
+                  {{ 'BUTTONS.CLEAN' | translate }}
+                </button>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <button type="button" aria-label="name" class="btn btn-dark" (click)="goBack()">
+                  {{ 'BUTTONS.BACK' | translate }}
+                </button>
+              </div>
+            </div>
+          </form>
+          }
+          @if (currentItem?.photoURL) {
+          <div class="d-flex justify-content-center mt-3">
+            <img class="img-fluid img-thumbnail" [src]="currentItem.photoURL" alt="screenshot" />
           </div>
+          }
         </div>
       </div>
       }

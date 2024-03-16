@@ -66,7 +66,7 @@ describe("NavFooterComponent", () => {
     expect(mySpy).toHaveBeenCalled();
   });
 
-  it("should routerLinks to equal 5 and match string", () => {
+  it("should routerLinks to equal 3 and match string", () => {
     const debugElement: DebugElement[] = fixture.debugElement.queryAll(
       By.directive(RouterLink)
     );
@@ -74,15 +74,9 @@ describe("NavFooterComponent", () => {
     const routerLinks = debugElement.map((link) =>
       link.injector.get(RouterLink)
     );
-    expect(debugElement.length).toEqual(5);
+    expect(debugElement.length).toEqual(3);
     expect(routerLinks[0].href).toEqual("/authenticated/configuration/profile");
     expect(routerLinks[1].href).toEqual("/authenticated/home");
-    expect(routerLinks[2].href).toEqual(
-      "/authenticated/management/ingreso-egreso"
-    );
-    expect(routerLinks[3].href).toEqual("/authenticated/configuration/client");
-    expect(routerLinks[4].href).toEqual(
-      "/authenticated/configuration/category"
-    );
+    expect(routerLinks[2].href).toEqual("/authenticated/management/pay");
   });
 });

@@ -44,7 +44,6 @@
             <table class="table table-striped table-hover" aria-describedby="pays">
               <thead>
                 <tr>
-                  <th scope="col">{{ 'PROPERTIES.DETAIL' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DISPLAY_NAME' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DOCUMENTNUMBER' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}</th>
@@ -53,8 +52,6 @@
                   <th scope="col">{{ 'PROPERTIES.DATE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.STATE_SOLVENCY' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.STATE' | translate }}</th>
-                  <th scope="col">{{ 'PROPERTIES.EDIT' | translate }}</th>
-                  <th scope="col">{{ 'PROPERTIES.DELETE' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,9 +59,7 @@
                 displayName: wordFilter, documentNumber: wordFilter, phoneNumberArea:
                 wordFilter, phoneNumber: wordFilter, createDate: wordFilter, amount:
                 wordFilter, stateText: wordFilter, stateSolvency: wordFilter } : false; track item) {
-                <tr>
-                  <td><button type="button" aria-label="name" (click)="goShow(item)" class="btn btn-secondary">{{
-                      'BUTTONS.DETAIL' | translate }}</button></td>
+                <tr class="cursor" (click)="goShow(item)">
                   <td>{{item.displayName}}</td>
                   <td>{{item.documentType}}{{item.documentNumber}}</td>
                   <td>{{item.phoneNumberArea}}{{item.phoneNumber}}</td>
@@ -77,11 +72,6 @@
                   <td><span class="badge"
                       [ngClass]="{'text-bg-success': item.state, 'text-bg-danger': !item.state}">{{item.stateText}}</span>
                   </td>
-                  <td><button type="button" aria-label="name" (click)="goEdit(item)" class="btn btn-info">{{
-                      'BUTTONS.EDIT' | translate }}</button></td>
-                  <td><button type="button" aria-label="name" (click)="openModal(item)" class="btn btn-danger">{{
-                      'BUTTONS.DELETE'
-                      | translate }}</button></td>
                 </tr>
                 }
               </tbody>

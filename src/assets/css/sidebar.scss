@@ -1,19 +1,19 @@
 :root {
-  --color-barra-lateral: rgb(255, 255, 255);
+  --color-barra-lateral:rgb(14, 26, 152);
 
-  --color-texto: rgb(0, 0, 0);
+  --color-texto: rgb(255, 255, 255);
   --color-texto-menu: rgb(108, 117, 125);
 
-  --color-menu-hover: rgb(238, 238, 238);
-  --color-menu-hover-texto: rgb(0, 0, 0);
+  --color-menu-hover: rgb(108, 117, 125);
+  --color-menu-hover-texto: rgb(255, 255, 255);
 
   --color-boton: rgb(0, 0, 0);
   --color-boton-texto: rgb(255, 255, 255);
 
-  --color-linea: rgb(180, 180, 180);
+  --color-linea: rgb(255, 255, 255);
 
-  --color-switch-base: rgb(201, 202, 206);
-  --color-switch-circulo: rgb(241, 241, 241);
+  --color-switch-base: rgb(255, 255, 255);
+  --color-switch-circulo: rgb(108, 117, 125);
 
   --color-scroll: rgb(192, 192, 192);
   --color-scroll-hover: rgb(134, 134, 134);
@@ -156,7 +156,7 @@
 }
 
 .barra-lateral .navegacion a:hover {
-  background-color: var(--color-menu-hover);
+  //background-color: var(--color-menu-hover);
   color: var(--color-menu-hover-texto);
 }
 
@@ -197,7 +197,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  color: var(--color-texto-menu);
+  color: var(--color-texto);
 }
 
 .barra-lateral .modo-oscuro .ng-fa-icon,
@@ -290,7 +290,7 @@
 /*-------------main*/
 
 .inbox {
-  background-color: var(--color-menu-hover);
+  //background-color: var(--color-menu-hover);
   color: var(--color-menu-hover-texto);
 }
 

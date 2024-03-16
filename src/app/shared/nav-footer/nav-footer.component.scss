@@ -18,12 +18,12 @@
     }
 
     a:hover {
-      background-color: var(--color-menu-hover);
+      background-color: unset;
       color: var(--color-menu-hover-texto);
     }
 
     a.inbox {
-      background-color: var(--color-menu-hover);
+      background-color: unset;
       color: var(--color-menu-hover-texto);
     }
   }

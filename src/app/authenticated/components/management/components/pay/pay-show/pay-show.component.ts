@@ -8,6 +8,7 @@ import { PayFacadeService } from "@facades/pay-facade.service";
 import { PayModel } from "@models/management/pay.model";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AuthFacadeService } from "@facades/auth-facade.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-pay-show",
@@ -19,6 +20,7 @@ export class PayShowComponent implements OnInit, OnDestroy {
   private _payFacadeService = inject(PayFacadeService);
   private _authFacadeService = inject(AuthFacadeService);
   private _sharedFacadeService = inject(SharedFacadeService);
+  private _router = inject(Router);
   private _location = inject(Location);
   private finisher$ = new Subject<void>();
 
@@ -81,6 +83,15 @@ export class PayShowComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     this._location.back();
+  }
+
+  goEdit(item: PayModel): void {
+    setTimeout(() => {
+      this._router.navigate([
+        "/authenticated/management/pay/form",
+        { id: item?.id },
+      ]);
+    }, 0);
   }
 
   chargeIndicatorManager(): void {
