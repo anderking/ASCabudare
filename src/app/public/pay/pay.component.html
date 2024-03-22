@@ -70,8 +70,8 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                  <input appOnlyNumericInput type="number" placeholder="{{ 'PROPERTIES.PHONE_NUMBER' | translate }}" class="form-control"
-                    formControlName="phoneNumber" aria-label="phoneNumber"
+                  <input appOnlyNumericInput type="number" placeholder="{{ 'PROPERTIES.PHONE_NUMBER' | translate }}"
+                    class="form-control" formControlName="phoneNumber" aria-label="phoneNumber"
                     [ngClass]="{'is-invalid': mainForm.get('phoneNumber')?.touched && !mainForm.get('phoneNumber')?.valid, 'is-valid': mainForm.get('phoneNumber')?.touched && mainForm.get('phoneNumber')?.valid}">
                   @if (isValidField('phoneNumber')) {
                   <div class="invalid-feedback">
@@ -81,9 +81,24 @@
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                  <select class="form-select" formControlName="idPayType" aria-label="idPayType"
+                    [ngClass]="{'is-invalid': mainForm.get('idPayType')?.touched && !mainForm.get('idPayType')?.valid, 'is-valid':  mainForm.get('idPayType')?.touched && mainForm.get('idPayType')?.valid}">
+                    @for (item of payTypeCombo$; track item) {
+                    <option [ngValue]="item.id">
+                      {{item?.name}}</option>
+                    }
+                  </select>
+                  @if (isValidField('idPayType')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('idPayType') }}
+                  </div>
+                  }
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <div class="input-group">
-                    <input appNumericInput type="number" placeholder="{{ 'PROPERTIES.AMOUNT' | translate }}" class="form-control" formControlName="amount"
-                      aria-label="amount"
+                    <input appNumericInput type="number" placeholder="{{ 'PROPERTIES.AMOUNT' | translate }}"
+                      class="form-control" formControlName="amount" aria-label="amount"
                       [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
                     @if (isValidField('amount')) {
                     <div class="invalid-feedback">

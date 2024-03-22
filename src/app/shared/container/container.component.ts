@@ -23,6 +23,7 @@ export class ContainerComponent implements OnInit {
     this._combosFacadeService.searchDocumentType();
     this._combosFacadeService.searchStateSolvency();
     this._combosFacadeService.searchCurrency();
+    this._combosFacadeService.searchPayType();
     this._payFacadeService.search();
   }
 }

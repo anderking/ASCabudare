@@ -13,6 +13,8 @@ export interface PayModel {
   stateText: string;
   idStateSolvency: string;
   stateSolvency: string;
+  idPayType: string;
+  payType: string;
   createDate: string;
   createDateFB?: object;
 }

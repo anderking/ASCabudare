@@ -6,36 +6,65 @@
   <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"
     (wordFilterEmit)="wordFilterReceived($event)"></app-current-filter>
 
+  @if (items.length > 0) {
+  <h2 class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
+  }
+
+  @if (items.length > 0) {
+  <div style="margin:1em 0">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+        <app-advanced-pie-chart [type]="'Transferencia'" [colorScheme]="'ocean'"
+          [items]="items"></app-advanced-pie-chart>
+      </div>
+    </div>
+  </div>
+  }
+
+  @for (item of items; track item) {
   <div class="row">
-    @for (item of items; track item) {
-    <div class="col-xl-3 col-md-6 mb-4">
-      <a [routerLink]="[ '/authenticated/management/pay/show',{id: item.id} ]">
-        <div class="card shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
-                  [ngClass]="{'text-success': item.idStateSolvency === 'SOL', 'text-danger': item.idStateSolvency === 'PAY'}">
-                  {{item.stateSolvency}}
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-12 d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800 fw-bold">{{item.name}}</h1>
+        </div>
+      </div>
+      <div class="row">
+        @for (value of item.values | filterTableSearch: { displayName: wordFilter, documentNumber: wordFilter,
+        phoneNumberArea: wordFilter, phoneNumber: wordFilter, payType: wordFilter, amount: wordFilter, stateSolvency: wordFilter } : false;
+        track value) {
+        <div class="col-xl-3 col-md-6 mb-4">
+          <a [routerLink]="[ '/authenticated/management/pay/show',{id: value.id} ]">
+            <div class="card shadow h-100 py-2"
+              [ngClass]="{'border-left-success': value.idStateSolvency === 'SOL', 'border-left-danger': value.name === 'PAY' }">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1 fw-bold"
+                      [ngClass]="{'text-success': value.idStateSolvency === 'SOL', 'text-danger': value.idStateSolvency === 'PAY' }">
+                      {{value.stateSolvency}}
+                    </div>
+                    <span class="mb-0">{{value.displayName}}</span><br>
+                    <span class="mb-0">{{value.documentType}}{{value.documentNumber}}</span><br>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{value.amount| customDecimal:
+                      systemDecimal: numberOfDecimal}}
+                      {{currentUser.currency}}</div>
+                    <span class="mb-0">{{ value.createDate | date :
+                      'medium' }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                  </div>
                 </div>
-                <span class="mb-0">{{item.displayName}}</span><br>
-                <span class="mb-0">{{item.documentType}}{{item.documentNumber}}</span><br>
-                <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{item.amount| customDecimal:
-                  systemDecimal: numberOfDecimal}}
-                  {{currentUser.currency}}</div>
-                <span class="mb-0">{{ item.createDate | date :
-                  'medium' }}</span><br>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
               </div>
             </div>
-          </div>
+          </a>
         </div>
-      </a>
+        }
+      </div>
     </div>
-    }
   </div>
+  }
   }
 </div>
 }

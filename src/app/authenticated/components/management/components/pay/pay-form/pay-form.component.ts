@@ -74,6 +74,11 @@ export class PayFormComponent implements OnInit, OnDestroy {
   public documentTypeSelected: string = "V";
   public documentTypeCombo$ = new BehaviorSubject<ComboModel[]>([]);
 
+  public payTypesArray: ComboModel[] = [];
+  public payTypeCurrent: ComboModel;
+  public payTypeSelected: string = "MOV";
+  public payTypeCombo$ = new BehaviorSubject<ComboModel[]>([]);
+
   ngOnInit() {
     this.mainForm = this.initForm();
     this.controlSubscriptions();
@@ -153,13 +158,14 @@ export class PayFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
-    this._payFacadeService.resetSelected();
+    //this._payFacadeService.resetSelected();
     this._finisher$.next();
   }
 
   selectCurrentItem(item: PayModel): void {
     this.mainForm.reset(item, { emitEvent: false });
     this.documentTypeSelected = item.documentType;
+    this.payTypeSelected = item.idPayType;
     this._payFacadeService.select(item);
   }
 
@@ -186,14 +192,9 @@ export class PayFormComponent implements OnInit, OnDestroy {
       ],
       phoneNumberArea: ["", [Validators.required]],
       phoneNumber: ["", [Validators.required, setValidatorEqualLength(7)]],
-      reference: [
-        "",
-        [
-          Validators.required,
-          setValidatorOnlyCharacteresAndNumbers(this._translateService),
-          Validators.maxLength(50),
-        ],
-      ],
+      reference: ["", [Validators.maxLength(50)]],
+      idPayType: ["MOV", [Validators.required]],
+      payType: ["Pago Móvil", [Validators.required]],
       amount: [
         "",
         [Validators.required, Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
@@ -280,6 +281,22 @@ export class PayFormComponent implements OnInit, OnDestroy {
       this.documentTypeCombo$.next(i);
       this.documentTypesArray = i;
     });
+
+    const payType$ = this._combosFacadeService.getPayType$().pipe(
+      filter((items: ComboModel[]) => !isNullOrUndefined(items)),
+      map((items: ComboModel[]) => {
+        try {
+          return items.filter((item: ComboModel) => item.state);
+        } catch (error) {
+          return items;
+        }
+      }),
+      takeUntil(this._finisher$)
+    );
+    payType$.subscribe((i: ComboModel[]) => {
+      this.payTypeCombo$.next(i);
+      this.payTypesArray = i;
+    });
   }
 
   controlSubscriptions(): void {
@@ -323,6 +340,27 @@ export class PayFormComponent implements OnInit, OnDestroy {
               documentType: this.documentTypeCurrent
                 ? this.documentTypeCurrent.name
                 : null,
+            });
+          } catch (error) {
+            return;
+          }
+        }
+      });
+
+    this.mainForm
+      .get("idPayType")
+      .valueChanges.pipe(
+        filter((value) => !isNullOrUndefined(value)),
+        takeUntil(this._finisher$)
+      )
+      .subscribe((value: string) => {
+        if (this.payTypesArray && this.payTypesArray.length > 0) {
+          try {
+            this.payTypeCurrent = this.payTypesArray.find(
+              (i: ComboModel) => i.id === value
+            );
+            this.mainForm.patchValue({
+              payType: this.payTypeCurrent ? this.payTypeCurrent.name : null,
             });
           } catch (error) {
             return;

@@ -19,6 +19,7 @@
       currentItem.documentNumber}}</li>
     <li class="list-group-item"><b>{{ 'PROPERTIES.PHONE_NUMBER' | translate }}: </b>{{ currentItem.phoneNumberArea }}{{
       currentItem.phoneNumber }}</li>
+      <li class="list-group-item"><b>{{ 'PROPERTIES.PAY_TYPE' | translate }}: </b>{{ currentItem.payType }}</li>
     <li class="list-group-item"><b>{{ 'PROPERTIES.AMOUNT' | translate }}: </b>{{currentItem.amount | customDecimal:
       systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</li>
     <li class="list-group-item"><b>{{ 'PROPERTIES.REFERENCE' | translate }}: </b>{{ currentItem.reference }}</li>

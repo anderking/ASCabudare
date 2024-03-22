@@ -13,6 +13,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { AuthFacadeService } from "@facades/auth-facade.service";
+import { PayFacadeService } from "@facades/pay-facade.service";
 import { CurrentUserModel } from "@models/auth/current-user.model";
 import { CurrentFilterModel, RangeDate } from "@models/shared/filter.model";
 import {
@@ -47,6 +48,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
 
   private _fb = inject(UntypedFormBuilder);
   private _authFacadeService = inject(AuthFacadeService);
+  private _payFacadeService = inject(PayFacadeService);
   private _translateService = inject(TranslateService);
 
   public mainForm: UntypedFormGroup;
@@ -72,7 +74,26 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         }
       });
 
-
+    this._payFacadeService
+      .getCurrentFilter$()
+      .pipe(
+        filter(
+          (currentFilter: CurrentFilterModel) =>
+            !isNullOrUndefinedEmpty(currentFilter)
+        ),
+        takeUntil(this.finisher$)
+      )
+      .subscribe((currentFilter: CurrentFilterModel) => {
+        console.log("currentFilter", currentFilter);
+        this.rangeDate = currentFilter.rangeDate;
+        const startDateControl = this.mainForm.controls["startDate"];
+        const endDateControl = this.mainForm.controls["endDate"];
+        startDateControl.setValue(currentFilter?.rangeDate?.startDate);
+        endDateControl.setValue(currentFilter?.rangeDate?.endDate);
+        this.wordFilter = currentFilter.wordFilter;
+        this.rangeDateEmit.emit(this.rangeDate);
+        this.wordFilterEmit.emit(this.wordFilter);
+      });
   }
 
   ngOnDestroy(): void {
@@ -84,6 +105,7 @@ export class CurrentFilterComponent implements OnInit, OnDestroy {
         wordFilter: this.wordFilter,
       };
       console.log("setCurrentFilter", payload);
+      this._payFacadeService.setCurrentFilter(payload);
     }
   }
 

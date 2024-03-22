@@ -10,6 +10,8 @@ import { AuthFacadeService } from "@facades/auth-facade.service";
 import { FilterTableSearchPipe } from "@root/core/pipes/filter-table-search.pipe";
 import { UrlService } from "@services/ui/url-service.service";
 import { PayFacadeService } from "@facades/pay-facade.service";
+import { groupBy, groupByMult } from "@root/core/utilities/core.utilities";
+import { GroupModel } from "@models/shared/group.model";
 
 @Component({
   selector: "app-dashboard",
@@ -24,9 +26,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private _finisher$ = new Subject<void>();
 
   public wordFilter = "";
-  public items: PayModel[] = [];
+  public items: GroupModel<PayModel>[] = [];
   public pays: PayModel[] = [];
   public isLoading: boolean;
+  public totalIngresos: number;
+  public totalEgresos: number;
+  public totalEarnings: number;
+  public cantIngresos: any;
+  public cantEgresos: any;
   public currentUser: CurrentUserModel;
   public numberOfDecimal: string = "2";
   public systemDecimal: string = "comma";
@@ -34,7 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const previousUrl = this._urlService.getPreviousUrl();
-    if (previousUrl && previousUrl.includes("/form")) {
+    if (previousUrl && (previousUrl.includes("/form") || previousUrl.includes("/show"))) {
       this._payFacadeService
         .getCurrentFilter$()
         .pipe(
@@ -115,14 +122,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     results$
       .pipe(
         filter((x) => !isNullOrUndefinedEmpty(x)),
-        map(([items]) => {
+        map(([pays]) => {
           try {
             return {
-              items,
+              pays,
             };
           } catch (error) {
             return {
-              items: [],
+              pays: [],
             };
           }
         }),
@@ -131,12 +138,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         console.log("DATA", data);
         const pays = this._filterTableSearchPipe.transform(
-          data.items,
+          data.pays,
           {
             displayName: this.wordFilter,
             documentNumber: this.wordFilter,
             phoneNumberArea: this.wordFilter,
             phoneNumber: this.wordFilter,
+            payType: this.wordFilter,
             amount: this.wordFilter,
             stateSolvency: this.wordFilter,
           },
@@ -156,6 +164,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         documentNumber: this.wordFilter,
         phoneNumberArea: this.wordFilter,
         phoneNumber: this.wordFilter,
+        payType: this.wordFilter,
         amount: this.wordFilter,
         stateSolvency: this.wordFilter,
       },
@@ -165,7 +174,54 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   calculateRender(pays: PayModel[]): void {
-    this.items = pays;
+    this.calculate(pays);
+    this.items = groupBy(pays, ["payType"]);
+
+    console.log(this.items)
+  }
+
+  private calculate(items: PayModel[]): void {
+    this.totalIngresos = 0;
+    this.totalEgresos = 0;
+    this.cantIngresos = 0;
+    this.cantEgresos = 0;
+    try {
+      items.forEach((item) => {
+        if (item.idStateSolvency === "SOL") {
+          this.totalIngresos += item.amount;
+          this.cantIngresos++;
+        }
+
+        if (item.idStateSolvency === "PAY") {
+          this.totalEgresos += item.amount;
+          this.cantEgresos++;
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    this.totalEarnings = this.totalIngresos + this.totalEgresos;
+  }
+
+  openModal(item: GroupModel<PayModel>): void {
+    /* const amountAcum = this._amountPipe.transform(item.values, "amount");
+    const amountAcumFormat = this._customDecimalPipe.transform(
+      amountAcum,
+      this.systemDecimal,
+      this.numberOfDecimal
+    );
+    const title =
+      this._translateService.instant("TITLES.TOTAL") + " " + amountAcumFormat;
+    const data: ModalModel<GroupModel<PayModel>> = {
+      type: "custom",
+      item,
+      title,
+      currentUser: this.currentUser,
+    };
+    this._modalService
+      .openModal(data)
+      .then(() => {})
+      .catch(() => {}); */
   }
 
   public chargeIndicatorManager(): void {

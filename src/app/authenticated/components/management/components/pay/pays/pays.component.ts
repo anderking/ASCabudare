@@ -128,16 +128,6 @@ export class PaysComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  goEdit(item: PayModel): void {
-    this.wordFilterActive = true;
-    setTimeout(() => {
-      this._router.navigate([
-        "/authenticated/management/pay/form",
-        { id: item?.id },
-      ]);
-    }, 0);
-  }
-
   goDelete(item: PayModel): void {
     this._payFacadeService.delete(item);
   }

@@ -14,11 +14,15 @@ import {
   setValidatorOnlyCharacteres,
   setValidatorOnlyCharacteresAndNumbers,
 } from "@root/core/utilities/form-validations";
-import { isNullOrUndefinedEmpty } from "@root/core/utilities/is-null-or-undefined.util";
+import {
+  isNullOrUndefined,
+  isNullOrUndefinedEmpty,
+} from "@root/core/utilities/is-null-or-undefined.util";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { TranslateService } from "@ngx-translate/core";
 import {
   documentType,
+  payType,
   phoneNumberArea,
 } from "@root/core/constants/mocks/mocks-const";
 import { CombosFacadeService } from "@facades/combos-facade.service";
@@ -26,6 +30,7 @@ import { PayFacadeService } from "@facades/pay-facade.service";
 import { PayModel } from "@models/management/pay.model";
 import { AttachmentModel } from "@models/shared/attachment.model";
 import { buildCreateDate } from "@root/core/utilities/core.utilities";
+import { ComboModel } from "@models/masters/combo.model";
 
 @Component({
   selector: "app-pay",
@@ -50,14 +55,19 @@ export class PayComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public isLoadingAttachment: boolean;
 
-  public phoneNumberArea$: any = phoneNumberArea;
-  public documentType$: any = documentType;
+  public phoneNumberArea$: ComboModel[] = phoneNumberArea;
+  public documentType$: ComboModel[] = documentType;
+
+  public payTypeCombo$: ComboModel[] = payType;
+  public payTypesArray: ComboModel[] = payType;
+  public payTypeCurrent: ComboModel = null;
 
   ngOnInit() {
-    this.chargeIndicatorManager();
-
     this.mainForm = this.initForm();
     this.dataForm = { ...this.mainForm.getRawValue() };
+
+    this.chargeIndicatorManager();
+    this.controlSubscriptions();
 
     this._sharedFacadeService
       .getMessage$()
@@ -94,21 +104,10 @@ export class PayComponent implements OnInit, OnDestroy {
         ],
       ],
       phoneNumberArea: ["", [Validators.required]],
-      phoneNumber: [
-        "",
-        [
-          Validators.required,
-          setValidatorEqualLength(7),
-        ],
-      ],
-      reference: [
-        "",
-        [
-          Validators.required,
-          setValidatorOnlyCharacteresAndNumbers(this._translateService),
-          Validators.maxLength(50),
-        ],
-      ],
+      phoneNumber: ["", [Validators.required, setValidatorEqualLength(7)]],
+      reference: ["", [Validators.maxLength(50)]],
+      idPayType: ["MOV", [Validators.required]],
+      payType: ["Pago Móvil", [Validators.required]],
       amount: [
         "",
         [Validators.required, Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
@@ -154,6 +153,30 @@ export class PayComponent implements OnInit, OnDestroy {
   validFileEmit(event: boolean) {
     console.log(event);
     this.validFile = event;
+  }
+
+  controlSubscriptions(): void {
+    this.mainForm
+      .get("idPayType")
+      .valueChanges.pipe(
+        filter((value) => !isNullOrUndefined(value)),
+        takeUntil(this._finisher$)
+      )
+      .subscribe((value: string) => {
+        console.log(value);
+        if (this.payTypesArray && this.payTypesArray.length > 0) {
+          try {
+            this.payTypeCurrent = this.payTypesArray.find(
+              (i: ComboModel) => i.id === value
+            );
+            this.mainForm.patchValue({
+              payType: this.payTypeCurrent ? this.payTypeCurrent.name : null,
+            });
+          } catch (error) {
+            return;
+          }
+        }
+      });
   }
 
   private chargeIndicatorManager(): void {

@@ -65,7 +65,7 @@ export const documentType: ComboModel[] = [
 
 export const currency: ComboModel[] = [
   { id: "VES", code: "VES", name: "VES", state: true },
-  { id: "USD", code: "USD", name: "USD", state: true },
+  //{ id: "USD", code: "USD", name: "USD", state: true },
 ];
 
 export const payType: ComboModel[] = [
