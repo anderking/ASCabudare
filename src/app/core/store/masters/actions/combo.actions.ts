@@ -48,6 +48,17 @@ export const loadCurrency = createAction(
   props<{ items: ComboModel[] }>()
 );
 
+/** Dispara la acción que hace el llamado a la api a traves del efecto para obtener todos los registros del combo */
+export const searchPayType = createAction(
+  "[Combo/API] searchPayType Combo",
+  props<{ props: DataActionModel<ComboModel> }>()
+);
+/** Al disparar la acción del search, esta se dispara a traves del efecto para reemplazar la colección actual con la colección provista */
+export const loadPayType = createAction(
+  "[Combo/API] loadPayType Combo",
+  props<{ items: ComboModel[] }>()
+);
+
 /** Esta acción permite limpiar el store */
 export const resetCombos = createAction("[Combo/API] resetCombos Combo");
 /** Esta acción permite limpiar el store */

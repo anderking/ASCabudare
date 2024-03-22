@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                  <label for="dayStartDashboard" class="form-label">{{ 'PROPERTIES.STARTDAY' | translate }}:</label>
+                  <label for="dayStartDashboard" class="form-label">{{ 'PROPERTIES.START_DAY' | translate }}:</label>
                   <select class="form-select" formControlName="dayStartDashboard" aria-label="dayStartDashboard"
                     [ngClass]="{'is-invalid': mainForm.get('dayStartDashboard')?.touched && !mainForm.get('dayStartDashboard')?.valid, 'is-valid':  mainForm.get('dayStartDashboard')?.touched && mainForm.get('dayStartDashboard')?.valid}">
                     <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>

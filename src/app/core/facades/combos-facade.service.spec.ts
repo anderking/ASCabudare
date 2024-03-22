@@ -7,7 +7,9 @@ import { CombosFacadeService } from "@facades/combos-facade.service";
 import { ComboModel } from "@models/masters/combo.model";
 import { mockTestComboAll } from "@constants/mocks/mocks-units-test";
 import {
+  collectionFBCurrency,
   collectionFBDocumentType,
+  collectionFBPayType,
   collectionFBStateSolvency,
   collectionFBTypeActive,
 } from "@constants/masters/masters.constants";
@@ -108,6 +110,58 @@ describe("CombosFacadeService", () => {
       const mock: ComboModel[] = mockTestComboAll;
       spyOn(facadeService, "getStateSolvency$").and.returnValue(of(mock));
       const result$ = facadeService.getStateSolvency$();
+      expect(result$).toBeDefined();
+      result$.subscribe((result) => {
+        expect(result).toEqual(mock);
+      });
+    });
+  });
+
+  describe("currency", () => {
+    it("should expect the searchCurrency method to exist and to call the correct endpoint", () => {
+      spy = spyOn(facadeService, "searchCurrency");
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
+      expect(collectionFBCurrency).toEqual("Masters/Combos/Currency");
+    });
+
+    it("should expect dispatch searchCurrency action with the correct props", () => {
+      facadeService.searchCurrency();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        actions.searchCurrency({ props: { url: collectionFBCurrency } })
+      );
+    });
+
+    it("should return the getCurrency$ observable type ComboModel[]", () => {
+      const mock: ComboModel[] = mockTestComboAll;
+      spyOn(facadeService, "getCurrency$").and.returnValue(of(mock));
+      const result$ = facadeService.getCurrency$();
+      expect(result$).toBeDefined();
+      result$.subscribe((result) => {
+        expect(result).toEqual(mock);
+      });
+    });
+  });
+
+  describe("payType", () => {
+    it("should expect the searchPayType method to exist and to call the correct endpoint", () => {
+      spy = spyOn(facadeService, "searchPayType");
+      expect(spy).not.toBeNull();
+      expect(spy).toBeDefined();
+      expect(collectionFBPayType).toEqual("Masters/Combos/PayType");
+    });
+
+    it("should expect dispatch searchPayType action with the correct props", () => {
+      facadeService.searchPayType();
+      expect(store.dispatch).toHaveBeenCalledWith(
+        actions.searchPayType({ props: { url: collectionFBPayType } })
+      );
+    });
+
+    it("should return the getPayType$ observable type ComboModel[]", () => {
+      const mock: ComboModel[] = mockTestComboAll;
+      spyOn(facadeService, "getPayType$").and.returnValue(of(mock));
+      const result$ = facadeService.getPayType$();
       expect(result$).toBeDefined();
       result$.subscribe((result) => {
         expect(result).toEqual(mock);

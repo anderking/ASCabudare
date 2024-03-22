@@ -106,7 +106,7 @@
     "DETAIL": "Detalle",
     "EDIT": "Editar",
     "DELETE": "Eliminar",
-    "STARTDAY": "Día de inicio",
+    "START_DAY": "Día de inicio",
     "FIRSTNAME": "Nombre",
     "LASTNAME": "Apellido",
     "FULLNAME": "Nombre completo",
@@ -114,7 +114,8 @@
     "DOCUMENTNUMBER": "Número de documento",
     "CITY": "Ciudad",
     "ADRESS": "Dirección",
-    "REFERENCE": "Referencia"
+    "REFERENCE": "Referencia",
+    "PAY_TYPE": "Tipo de pago"
   },
   "ROUTERS": {
     "PROFILE": "Perfil",
@@ -133,6 +134,7 @@
     "DELETE_SUCCESS": "Registro eliminado exitosamente",
     "USER_UPDATE_SUCCESS": "Usuario actualizado exitosamente",
     "UPLOAD_FILE_SUCCESS": "Archivo subido exitosamente",
-    "SEND_EMAIL": "Email enviado, recuerde revisar su bandeja de entrada, correos no deseado o spam."
+    "SEND_EMAIL": "Email enviado, recuerde revisar su bandeja de entrada, correos no deseado o spam.",
+    "PAY_SUCCESS": "Pago enviado exitosamente"
   }
 }

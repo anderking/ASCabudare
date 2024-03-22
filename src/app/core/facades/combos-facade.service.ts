@@ -10,6 +10,7 @@ import {
   collectionFBTypeActive,
   collectionFBStateSolvency,
   collectionFBCurrency,
+  collectionFBPayType,
 } from "@constants/masters/masters.constants";
 
 @Injectable({
@@ -92,6 +93,24 @@ export class CombosFacadeService {
    */
   public getCurrency$(): Observable<ComboModel[]> {
     return this._store.select(selectors.selectCurrency);
+  }
+
+  /**
+   * Dispara la acción para buscar todos los registros sin filtro en la api
+   */
+  public searchPayType(): void {
+    const props: DataActionModel<ComboModel> = {
+      url: collectionFBPayType,
+    };
+    const action = actions.searchPayType({ props });
+    this._store.dispatch(action);
+  }
+
+  /**
+   * Obtiene todos los registros del store disparados por los diferentes search
+   */
+  public getPayType$(): Observable<ComboModel[]> {
+    return this._store.select(selectors.selectPayType);
   }
 
   /**

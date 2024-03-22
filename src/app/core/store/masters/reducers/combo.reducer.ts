@@ -12,6 +12,8 @@ export interface State {
   stateSolvencyLoading: boolean;
   currency: ComboModel[];
   currencyLoading: boolean;
+  payType: ComboModel[];
+  payTypeLoading: boolean;
   loading: boolean;
 }
 
@@ -25,6 +27,8 @@ export const initialState: State = {
   stateSolvencyLoading: false,
   currency: [],
   currencyLoading: false,
+  payType: [],
+  payTypeLoading: false,
   loading: false,
 };
 
@@ -88,6 +92,21 @@ const comboReducer = createReducer(
       ...state,
       currency: items,
       currencyLoading: false,
+      loading: false,
+    };
+  }),
+
+  on(actions.searchPayType, (state) => ({
+    ...state,
+    payTypeLoading: true,
+    loading: true,
+  })),
+
+  on(actions.loadPayType, (state, { items }) => {
+    return {
+      ...state,
+      payType: items,
+      payTypeLoading: false,
       loading: false,
     };
   }),
