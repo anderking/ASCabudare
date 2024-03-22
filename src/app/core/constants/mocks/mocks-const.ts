@@ -68,6 +68,12 @@ export const currency: ComboModel[] = [
   { id: "USD", code: "USD", name: "USD", state: true },
 ];
 
+export const payType: ComboModel[] = [
+  { id: "MOV", code: "MOV", name: "Pago Móvil", state: true },
+  { id: "TRA", code: "TRA", name: "Transferencia", state: true },
+  { id: "EFE", code: "EFE", name: "Efectivo", state: true },
+];
+
 export const timeZoneT04 = "T04:00:00.000Z";
 export const timeZoneT00 = "T00:00:00";
 export const timeZoneT23 = "T23:59:59";

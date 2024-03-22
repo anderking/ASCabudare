@@ -45,6 +45,17 @@ export const selectCurrencyLoading = createSelector(
   (state) => state.currencyLoading
 );
 
+/** Exporta el select para el facade */
+export const selectPayType = createSelector(
+  getMasters,
+  (state) => state.payType
+);
+/** Exporta el loading para el facade */
+export const selectPayTypeLoading = createSelector(
+  getMasters,
+  (state) => state.payTypeLoading
+);
+
 /** Exporta el loading para el facade */
 export const selectLoading = createSelector(
   getMasters,

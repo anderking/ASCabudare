@@ -69,6 +69,25 @@ export class ComboEffects {
   );
 
   /**
+   * Efecto que escucha la acción de buscar todos los registros de la entidad
+   */
+  searchPayType$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(actions.searchPayType),
+      switchMap((params) =>
+        this.firebaseService.searchCombo$(params.props).pipe(
+          switchMap((items: ComboModel[]) => {
+            return [actions.loadPayType({ items })];
+          }),
+          catchError((error) =>
+            of(notificationActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    )
+  );
+
+  /**
    * Se manejan los inyecciones de acciones y modelos que se necesitan en el efecto.
    * @param _actions$ Contiene la librería de acciones
    * @param firebaseService Contiene los servicios para conectar con Firebase
