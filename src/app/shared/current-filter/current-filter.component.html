@@ -33,29 +33,35 @@
 </div>
 @if (showRangeDates) {
 <div class="row mb-3">
-  <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-3">
     <div class="d-grid gap-2 col-12 mx-auto">
       <button type="button" aria-label="name" class="btn btn-dark btn-sm mb-1" (click)="changeMonth('before')"><fa-icon
-          [icon]="faArrowLeft"></fa-icon> {{ 'TEXTS.MONTH_BEFORE' | translate }}</button>
+          [icon]="faArrowLeft"></fa-icon> <span class="d-none d-md-block-custom"> &nbsp; {{ 'TEXTS.MONTH_BEFORE' |
+          translate
+          }}</span></button>
     </div>
   </div>
-  <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-3">
     <div class="d-grid gap-2 col-12 mx-auto">
       <button type="button" aria-label="name" class="btn btn-secondary btn-sm mb-1" (click)="resetDates()"><fa-icon
-          [icon]="faTrash"></fa-icon> {{ 'TEXTS.RESET' | translate }}</button>
+          [icon]="faTrash"></fa-icon> <span class="d-none d-md-block-custom"> &nbsp; {{ 'TEXTS.RESET' | translate
+          }}</span></button>
     </div>
   </div>
-  <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-3">
     <div class="d-grid gap-2 col-12 mx-auto">
       <button type="button" aria-label="name" class="btn btn-secondary btn-sm mb-1" (click)="changeToday()"><fa-icon
-          [icon]="faCalendarCheck"></fa-icon> {{ 'TEXTS.TODAY' | translate }}</button>
+          [icon]="faCalendarCheck"></fa-icon> <span class="d-none d-md-block-custom"> &nbsp; {{ 'TEXTS.TODAY' |
+          translate
+          }}</span></button>
     </div>
   </div>
-  <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-3">
     <div class="d-grid gap-2 col-12 mx-auto">
-      <button type="button" aria-label="name" class="btn btn-dark btn-sm mb-1" (click)="changeMonth('next')">{{
-        'TEXTS.MONTH_NEXT' |
-        translate }}
+      <button type="button" aria-label="name" class="btn btn-dark btn-sm mb-1" (click)="changeMonth('next')"><span
+          class="d-none d-md-block-custom">{{
+          'TEXTS.MONTH_NEXT' |
+          translate }} &nbsp; </span>
         <fa-icon [icon]="faArrowRight"></fa-icon></button>
     </div>
   </div>
