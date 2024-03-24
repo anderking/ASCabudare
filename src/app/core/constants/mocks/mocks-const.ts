@@ -1,5 +1,24 @@
 import { ComboModel } from "@models/masters/combo.model";
 
+export const timeZoneT04 = "T04:00:00.000Z";
+export const timeZoneT00 = "T00:00:00";
+export const timeZoneT23 = "T23:59:59";
+
+export const BS = "Bs";
+export const BOLIVARES = "Bolívares";
+export const USD = "USD";
+export const DOLARES = "Dólares";
+export const MOV = "MOV";
+export const PAGO_MOVIL = "Pago Móvil";
+export const TRA = "TRA";
+export const TRANSFERENCIA = "Transferencia";
+export const EFE = "EFE";
+export const EFECTIVO = "Efectivo";
+export const PAY = "PAY";
+export const PAGADO = "Pagado";
+export const SOL = "SOL";
+export const SOLVENTE = "Solvente";
+
 export const startDaySelect: ComboModel[] = [
   { id: "01", code: "01", name: "01", state: true },
   { id: "02", code: "02", name: "02", state: true },
@@ -64,16 +83,12 @@ export const documentType: ComboModel[] = [
 ];
 
 export const currency: ComboModel[] = [
-  { id: "VES", code: "VES", name: "VES", state: true },
-  { id: "USD", code: "USD", name: "USD", state: true },
+  { id: "Bs", code: "Bs", name: BOLIVARES, state: true },
+  { id: "USD", code: "USD", name: DOLARES, state: true },
 ];
 
 export const payType: ComboModel[] = [
-  { id: "MOV", code: "MOV", name: "Pago Móvil", state: true },
-  { id: "TRA", code: "TRA", name: "Transferencia", state: true },
-  { id: "EFE", code: "EFE", name: "Efectivo", state: true },
+  { id: "MOV", code: "MOV", name: PAGO_MOVIL, state: true },
+  { id: "TRA", code: "TRA", name: TRANSFERENCIA, state: true },
+  { id: "EFE", code: "EFE", name: EFECTIVO, state: true },
 ];
-
-export const timeZoneT04 = "T04:00:00.000Z";
-export const timeZoneT00 = "T00:00:00";
-export const timeZoneT23 = "T23:59:59";

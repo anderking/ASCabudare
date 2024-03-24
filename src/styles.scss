@@ -57,6 +57,11 @@ a:hover {
   width: max-content;
 }
 
+@media (min-width: 768px){
+  .d-md-block-custom {
+      display: inline-block !important;
+  }
+}
 /** Styles for charts*/
 
 @media (min-width: 320px) {
