@@ -10,12 +10,23 @@
   <h2 class="h3 mb-0 text-gray-800 text-center">{{ 'TITLES.INGRESS' | translate }}</h2>
   }
 
-  @if (items.length > 0) {
+  <!--   @if (items.length > 0) {
   <div style="margin:1em 0">
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
         <app-advanced-pie-chart [type]="'Transferencia'" [colorScheme]="'ocean'"
           [items]="items"></app-advanced-pie-chart>
+      </div>
+    </div>
+  </div>
+  } -->
+
+  @if (itemsTwo.length > 0) {
+  <div style="margin:1em 0">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+        <app-advanced-pie-chart-two [type]="'BS'" [colorScheme]="'ocean'"
+          [items]="itemsTwo"></app-advanced-pie-chart-two>
       </div>
     </div>
   </div>
@@ -31,7 +42,8 @@
       </div>
       <div class="row">
         @for (value of item.values | filterTableSearch: { displayName: wordFilter, documentNumber: wordFilter,
-        phoneNumberArea: wordFilter, phoneNumber: wordFilter, payType: wordFilter, amount: wordFilter, stateSolvency: wordFilter } : false;
+        phoneNumberArea: wordFilter, phoneNumber: wordFilter, payType: wordFilter, currency: wordFilter, amount:
+        wordFilter, stateSolvency: wordFilter } : false;
         track value) {
         <div class="col-xl-3 col-md-6 mb-4">
           <a [routerLink]="[ '/authenticated/management/pay/show',{id: value.id} ]">
@@ -48,7 +60,7 @@
                     <span class="mb-0">{{value.documentType}}{{value.documentNumber}}</span><br>
                     <div class="h5 mb-0 font-weight-bold text-gray-800 fw-bold">{{value.amount| customDecimal:
                       systemDecimal: numberOfDecimal}}
-                      {{currentUser.currency}}</div>
+                      {{value.currency}}</div>
                     <span class="mb-0">{{ value.createDate | date :
                       'medium' }}</span>
                   </div>

@@ -27,7 +27,11 @@ import { AuthFacadeService } from "@facades/auth-facade.service";
 import { buildCreateDate } from "@root/core/utilities/core.utilities";
 import { TranslateService } from "@ngx-translate/core";
 import {
-  documentType,
+  BS,
+  MOV,
+  PAGADO,
+  PAGO_MOVIL,
+  PAY,
   phoneNumberArea,
 } from "@root/core/constants/mocks/mocks-const";
 import { AttachmentModel } from "@models/shared/attachment.model";
@@ -76,8 +80,13 @@ export class PayFormComponent implements OnInit, OnDestroy {
 
   public payTypesArray: ComboModel[] = [];
   public payTypeCurrent: ComboModel;
-  public payTypeSelected: string = "MOV";
+  public payTypeSelected: string = MOV;
   public payTypeCombo$ = new BehaviorSubject<ComboModel[]>([]);
+
+  public currencysArray: ComboModel[] = [];
+  public currencyCurrent: ComboModel;
+  public currencySelected: string = BS;
+  public currencyCombo$ = new BehaviorSubject<ComboModel[]>([]);
 
   ngOnInit() {
     this.mainForm = this.initForm();
@@ -158,7 +167,7 @@ export class PayFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._sharedFacadeService.reset();
-    //this._payFacadeService.resetSelected();
+    this._payFacadeService.resetSelected();
     this._finisher$.next();
   }
 
@@ -166,6 +175,7 @@ export class PayFormComponent implements OnInit, OnDestroy {
     this.mainForm.reset(item, { emitEvent: false });
     this.documentTypeSelected = item.documentType;
     this.payTypeSelected = item.idPayType;
+    this.currencySelected = item.currency;
     this._payFacadeService.select(item);
   }
 
@@ -192,17 +202,17 @@ export class PayFormComponent implements OnInit, OnDestroy {
       ],
       phoneNumberArea: ["", [Validators.required]],
       phoneNumber: ["", [Validators.required, setValidatorEqualLength(7)]],
-      reference: ["", [Validators.maxLength(50)]],
-      idPayType: ["MOV", [Validators.required]],
-      payType: ["Pago Móvil", [Validators.required]],
+      idPayType: [MOV, [Validators.required]],
+      payType: [PAGO_MOVIL, [Validators.required]],
+      currency: [BS, [Validators.required]],
       amount: [
         "",
         [Validators.required, Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
       ],
+      reference: ["", [Validators.maxLength(50)]],
+      idStateSolvency: [PAY, [Validators.required]],
+      stateSolvency: [PAGADO, [Validators.required]],
       photoURL: [""],
-      currency: ["VES"],
-      idStateSolvency: ["PAY", [Validators.required]],
-      stateSolvency: ["Pagado", [Validators.required]],
       state: [true],
     });
   }
@@ -297,6 +307,22 @@ export class PayFormComponent implements OnInit, OnDestroy {
       this.payTypeCombo$.next(i);
       this.payTypesArray = i;
     });
+
+    const currency$ = this._combosFacadeService.getCurrency$().pipe(
+      filter((items: ComboModel[]) => !isNullOrUndefined(items)),
+      map((items: ComboModel[]) => {
+        try {
+          return items.filter((item: ComboModel) => item.state);
+        } catch (error) {
+          return items;
+        }
+      }),
+      takeUntil(this._finisher$)
+    );
+    currency$.subscribe((i: ComboModel[]) => {
+      this.currencyCombo$.next(i);
+      this.currencysArray = i;
+    });
   }
 
   controlSubscriptions(): void {
@@ -361,6 +387,27 @@ export class PayFormComponent implements OnInit, OnDestroy {
             );
             this.mainForm.patchValue({
               payType: this.payTypeCurrent ? this.payTypeCurrent.name : null,
+            });
+          } catch (error) {
+            return;
+          }
+        }
+      });
+
+    this.mainForm
+      .get("currency")
+      .valueChanges.pipe(
+        filter((value) => !isNullOrUndefined(value)),
+        takeUntil(this._finisher$)
+      )
+      .subscribe((value: string) => {
+        if (this.currencysArray && this.currencysArray.length > 0) {
+          try {
+            this.currencyCurrent = this.currencysArray.find(
+              (i: ComboModel) => i.id === value
+            );
+            this.mainForm.patchValue({
+              currency: this.currencyCurrent ? this.currencyCurrent.id : null,
             });
           } catch (error) {
             return;

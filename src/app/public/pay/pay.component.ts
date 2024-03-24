@@ -21,6 +21,12 @@ import {
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { TranslateService } from "@ngx-translate/core";
 import {
+  BS,
+  MOV,
+  PAGADO,
+  PAGO_MOVIL,
+  PAY,
+  currency,
   documentType,
   payType,
   phoneNumberArea,
@@ -57,6 +63,7 @@ export class PayComponent implements OnInit, OnDestroy {
 
   public phoneNumberArea$: ComboModel[] = phoneNumberArea;
   public documentType$: ComboModel[] = documentType;
+  public currencyCombo$: ComboModel[] = currency;
 
   public payTypeCombo$: ComboModel[] = payType;
   public payTypesArray: ComboModel[] = payType;
@@ -105,17 +112,17 @@ export class PayComponent implements OnInit, OnDestroy {
       ],
       phoneNumberArea: ["", [Validators.required]],
       phoneNumber: ["", [Validators.required, setValidatorEqualLength(7)]],
-      reference: ["", [Validators.maxLength(50)]],
-      idPayType: ["MOV", [Validators.required]],
-      payType: ["Pago Móvil", [Validators.required]],
+      idPayType: [MOV, [Validators.required]],
+      payType: [PAGO_MOVIL, [Validators.required]],
+      currency: [BS, [Validators.required]],
       amount: [
         "",
         [Validators.required, Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
       ],
+      reference: ["", [Validators.maxLength(50)]],
+      idStateSolvency: [PAY, [Validators.required]],
+      stateSolvency: [PAGADO, [Validators.required]],
       photoURL: [""],
-      currency: ["VES"],
-      idStateSolvency: ["PAY", [Validators.required]],
-      stateSolvency: ["Pagado", [Validators.required]],
       state: [true],
     });
   }

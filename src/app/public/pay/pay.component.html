@@ -95,6 +95,21 @@
                   }
                 </div>
 
+                <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                  <select class="form-select" formControlName="currency" aria-label="currency"
+                    [ngClass]="{'is-invalid': mainForm.get('currency')?.touched && !mainForm.get('currency')?.valid, 'is-valid':  mainForm.get('currency')?.touched && mainForm.get('currency')?.valid}">
+                    @for (item of currencyCombo$; track item) {
+                    <option [ngValue]="item.id">
+                      {{item?.name}}</option>
+                    }
+                  </select>
+                  @if (isValidField('currency')) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessageField('currency') }}
+                  </div>
+                  }
+                </div>
+
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
                   <div class="input-group">
                     <input appNumericInput type="number" placeholder="{{ 'PROPERTIES.AMOUNT' | translate }}"

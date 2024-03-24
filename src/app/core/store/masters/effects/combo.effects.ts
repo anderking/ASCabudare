@@ -71,6 +71,25 @@ export class ComboEffects {
   /**
    * Efecto que escucha la acción de buscar todos los registros de la entidad
    */
+  searchCurrency$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(actions.searchCurrency),
+      switchMap((params) =>
+        this.firebaseService.searchCombo$(params.props).pipe(
+          switchMap((items: ComboModel[]) => {
+            return [actions.loadCurrency({ items })];
+          }),
+          catchError((error) =>
+            of(notificationActions.setError({ error }), actions.resetLoading())
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Efecto que escucha la acción de buscar todos los registros de la entidad
+   */
   searchPayType$ = createEffect(() =>
     this._actions$.pipe(
       ofType(actions.searchPayType),

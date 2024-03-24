@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public wordFilter = "";
   public items: GroupModel<PayModel>[] = [];
+  public itemsTwo: GroupModel<GroupModel<PayModel>>[] = [];
   public pays: PayModel[] = [];
   public isLoading: boolean;
   public totalIngresos: number;
@@ -145,6 +146,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             phoneNumberArea: this.wordFilter,
             phoneNumber: this.wordFilter,
             payType: this.wordFilter,
+            currency: this.wordFilter,
             amount: this.wordFilter,
             stateSolvency: this.wordFilter,
           },
@@ -165,6 +167,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         phoneNumberArea: this.wordFilter,
         phoneNumber: this.wordFilter,
         payType: this.wordFilter,
+        currency: this.wordFilter,
         amount: this.wordFilter,
         stateSolvency: this.wordFilter,
       },
@@ -176,6 +179,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   calculateRender(pays: PayModel[]): void {
     this.calculate(pays);
     this.items = groupBy(pays, ["payType"]);
+    this.itemsTwo = groupBy(pays, ["currency"]);
 
     console.log(this.items)
   }

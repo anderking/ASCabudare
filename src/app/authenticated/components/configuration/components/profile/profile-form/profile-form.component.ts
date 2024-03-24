@@ -18,7 +18,6 @@ import { CurrentUserModel } from "@models/auth/current-user.model";
 import { AttachmentFacadeService } from "@facades/attachment-facade.service";
 import { TranslateService } from "@ngx-translate/core";
 import {
-  currency,
   numberOfDecimal,
   phoneNumberArea,
   startDaySelect,
@@ -51,7 +50,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
   public numberOfDecimalCombo$: ComboModel[] = numberOfDecimal;
   public systemDecimalCombo$: ComboModel[] = systemDecimal;
   public phoneNumberAreaCombo$: ComboModel[] = phoneNumberArea;
-  public currencyCombo$: ComboModel[] = currency;
 
   ngOnInit() {
     this.mainForm = this.initForm();
@@ -114,7 +112,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.pattern(`^[0-9]+(.[0-9]+)?$`)],
       ],
       dayStartDashboard: ["", [Validators.required]],
-      currency: ["", [Validators.required]],
       numberOfDecimal: [""],
       systemDecimal: [""],
       photoURL: [""],
@@ -132,7 +129,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
       if (
         this.currentItem.dayStartDashboard != this.dataForm.dayStartDashboard
       ) {
-
       }
     }
   }

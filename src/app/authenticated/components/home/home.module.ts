@@ -6,6 +6,7 @@ import {
   HomeComponent,
   DashboardComponent,
   AdvancePieChartComponent,
+  AdvancePieChartTwoComponent,
 } from "./components/index";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 
@@ -13,7 +14,8 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
   declarations: [
     HomeComponent,
     DashboardComponent,
-    AdvancePieChartComponent
+    AdvancePieChartComponent,
+    AdvancePieChartTwoComponent
   ],
   imports: [CommonModule, HomeRoutingModule, SharedModule, NgxChartsModule],
 })

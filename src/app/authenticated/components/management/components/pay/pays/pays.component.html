@@ -5,7 +5,7 @@
       @if (items) {
       <h6 class="text-center">{{(items | filterTableSearch: {
         displayName: wordFilter, documentNumber: wordFilter, phoneNumberArea:
-        wordFilter, phoneNumber: wordFilter, payType: wordFilter, createDate: wordFilter, amount:
+        wordFilter, phoneNumber: wordFilter, payType: wordFilter, currency: wordFilter, createDate: wordFilter, amount:
         wordFilter, stateText: wordFilter, stateSolvency: wordFilter } :
         false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
       }
@@ -15,10 +15,11 @@
           <li class="list-group-item"><b>{{item.name}}: </b>{{item.values |
             filterTableSearch: { displayName: wordFilter, documentNumber: wordFilter,
             phoneNumberArea:
-            wordFilter, phoneNumber: wordFilter, payType: wordFilter, createDate: wordFilter, amount:
+            wordFilter, phoneNumber: wordFilter, payType: wordFilter, currency: wordFilter, createDate: wordFilter,
+            amount:
             wordFilter, stateText: wordFilter, stateSolvency: wordFilter } : false |
             amount:'amount' |
-            customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
+            customDecimal: systemDecimal: numberOfDecimal}}</li>
           }
         </ul>
       </div>
@@ -49,6 +50,7 @@
                   <th scope="col">{{ 'PROPERTIES.PHONE_NUMBER' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.PAY_TYPE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.AMOUNT' | translate }}</th>
+                  <th scope="col">{{ 'PROPERTIES.LOCAL_CURRENCY' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.REFERENCE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.DATE' | translate }}</th>
                   <th scope="col">{{ 'PROPERTIES.STATE_SOLVENCY' | translate }}</th>
@@ -58,14 +60,16 @@
               <tbody>
                 @for (item of items | orderBy : ['-createDate','displayName'] | filterTableSearch: {
                 displayName: wordFilter, documentNumber: wordFilter, phoneNumberArea:
-                wordFilter, phoneNumber: wordFilter, payType: wordFilter, createDate: wordFilter, amount:
+                wordFilter, phoneNumber: wordFilter, payType: wordFilter, currency: wordFilter, createDate: wordFilter,
+                amount:
                 wordFilter, stateText: wordFilter, stateSolvency: wordFilter } : false; track item) {
-                <tr class="cursor" (click)="goShow(item)">
+                <tr class="cursor" (click)="goEdit(item)">
                   <td>{{item.displayName}}</td>
                   <td>{{item.documentType}}{{item.documentNumber}}</td>
                   <td>{{item.phoneNumberArea}}{{item.phoneNumber}}</td>
                   <td>{{item.payType}}</td>
-                  <td>{{item.amount | customDecimal: systemDecimal: numberOfDecimal}} {{currentUser?.currency}}</td>
+                  <td>{{item.amount | customDecimal: systemDecimal: numberOfDecimal}}</td>
+                  <td>{{item?.currency}}</td>
                   <td>{{item.reference}}</td>
                   <td>{{item.createDate | date : 'medium'}}</td>
                   <td><span class="badge"
