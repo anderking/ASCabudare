@@ -11,119 +11,115 @@
 
       @if (!isLoading) {
       <div>
-        <div class="card o-hidden border-0 my-5">
+        <div class="card o-hidden border-0">
           <div class="card-body p-0">
-            <div class="p-5">
-              @if (mainForm) {
-              <form [formGroup]="mainForm" class="row g-3">
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label for="idTypeActive" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate }}:</label>
-                  @for (item of typeActiveCombo$ | async; track item) {
-                  <div class="form-check">
-                    <input type="radio" class="form-check-input" formControlName="idTypeActive"
-                      aria-label="idTypeActive" value="{{item.code}}">
-                    <span class="form-check-label">{{item?.name}}</span>
-                  </div>
-                  }
+            @if (mainForm) {
+            <form [formGroup]="mainForm" class="row g-3">
+              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="idTypeActive" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate }}:</label>
+                @for (item of typeActiveCombo$ | async; track item) {
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" formControlName="idTypeActive" aria-label="idTypeActive"
+                    value="{{item.code}}">
+                  <span class="form-check-label">{{item?.name}}</span>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label for="idStateSolvency" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate
-                    }}:</label>
-                  @for (item of stateSolvencyCombo$ | async; track item) {
-                  <div class="form-check">
-                    <input type="radio" class="form-check-input" formControlName="idStateSolvency"
-                      aria-label="idStateSolvency" value="{{item.code}}">
-                    <span class="form-check-label">{{item?.name}}</span>
-                  </div>
-                  }
+                }
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="idStateSolvency" class="form-label">{{ 'PROPERTIES.SELECT_AN_OPTION' | translate
+                  }}:</label>
+                @for (item of stateSolvencyCombo$ | async; track item) {
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" formControlName="idStateSolvency"
+                    aria-label="idStateSolvency" value="{{item.code}}">
+                  <span class="form-check-label">{{item?.name}}</span>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label for="idClient" class="form-label">{{ 'PROPERTIES.CLIENT' | translate }}:</label>
-                  <select class="form-select" formControlName="idClient" aria-label="idClient"
-                    [ngClass]="{'is-invalid': mainForm.get('idClient')?.touched && !mainForm.get('idClient')?.valid, 'is-valid':  mainForm.get('idClient')?.touched && mainForm.get('idClient')?.valid}">
-                    <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
-                    @for (item of clientCombo$ | async; track item) {
-                    <option [ngValue]="item.id">
-                      {{item?.fullName}}</option>
-                    }
-                  </select>
-                  @if (isValidField('idClient')) {
+                }
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="idClient" class="form-label">{{ 'PROPERTIES.CLIENT' | translate }}:</label>
+                <select class="form-select" formControlName="idClient" aria-label="idClient"
+                  [ngClass]="{'is-invalid': mainForm.get('idClient')?.touched && !mainForm.get('idClient')?.valid, 'is-valid':  mainForm.get('idClient')?.touched && mainForm.get('idClient')?.valid}">
+                  <option value="" selected>{{ 'TEXTS.SELECT_AN_OPTION' | translate }}</option>
+                  @for (item of clientCombo$ | async; track item) {
+                  <option [ngValue]="item.id">
+                    {{item?.fullName}}</option>
+                  }
+                </select>
+                @if (isValidField('idClient')) {
+                <div class="invalid-feedback">
+                  {{ getErrorMessageField('idClient') }}
+                </div>
+                }
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <label for="amount" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text">{{currentUser?.currency}}</span>
+                  <input appNumericInput type="number" class="form-control" formControlName="amount" aria-label="amount"
+                    [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
+                  @if (isValidField('amount')) {
                   <div class="invalid-feedback">
-                    {{ getErrorMessageField('idClient') }}
+                    {{ getErrorMessageField('amount') }}
                   </div>
                   }
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                  <label for="amount" class="form-label">{{ 'PROPERTIES.AMOUNT' | translate }}:</label>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">{{currentUser?.currency}}</span>
-                    <input appNumericInput type="number" class="form-control" formControlName="amount"
-                      aria-label="amount"
-                      [ngClass]="{'is-invalid': mainForm.get('amount')?.touched && !mainForm.get('amount')?.valid, 'is-valid': mainForm.get('amount')?.touched && mainForm.get('amount')?.valid}">
-                    @if (isValidField('amount')) {
-                    <div class="invalid-feedback">
-                      {{ getErrorMessageField('amount') }}
-                    </div>
-                    }
-                  </div>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <label for="description" class="form-label">{{ 'PROPERTIES.DESCRIPTION' | translate }}:</label>
+                <textarea class="form-control" formControlName="description" aria-label="description"
+                  [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
+                @if (isValidField('description')) {
+                <div class="invalid-feedback">
+                  {{ getErrorMessageField('description') }}
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <label for="description" class="form-label">{{ 'PROPERTIES.DESCRIPTION' | translate }}:</label>
-                  <textarea class="form-control" formControlName="description" aria-label="description"
-                    [ngClass]="{'is-invalid': mainForm.get('description')?.touched && !mainForm.get('description')?.valid, 'is-valid': mainForm.get('description')?.touched && mainForm.get('description')?.valid}"></textarea>
-                  @if (isValidField('description')) {
+                }
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="state" formControlName="state" aria-label="state"
+                    [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
+                  <label class="form-check-label" for="state">
+                    {{ 'PROPERTIES.STATE' | translate }}
+                  </label>
+                  @if (isValidField('state')) {
                   <div class="invalid-feedback">
-                    {{ getErrorMessageField('description') }}
+                    {{ getErrorMessageField('state') }}
                   </div>
                   }
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="state" formControlName="state"
-                      aria-label="state"
-                      [ngClass]="{'is-invalid': mainForm.get('state')?.touched && !mainForm.get('state')?.valid, 'is-valid': mainForm.get('state')?.touched && mainForm.get('state')?.valid}">
-                    <label class="form-check-label" for="state">
-                      {{ 'PROPERTIES.STATE' | translate }}
-                    </label>
-                    @if (isValidField('state')) {
-                    <div class="invalid-feedback">
-                      {{ getErrorMessageField('state') }}
-                    </div>
-                    }
-                  </div>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                <div class="d-grid gap-2 col-12 mx-auto">
+                  @if (!isLoading) {
+                  <button type="button" aria-label="name" class="btn btn-primary"
+                    (click)="onSubmit(createDate, createDateFB)" [disabled]="mainForm.invalid">
+                    {{ 'BUTTONS.SAVE' | translate }}
+                  </button>
+                  }
+                  @if (isLoading) {
+                  <button type="button" aria-label="name" class="btn btn-primary">
+                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                  </button>
+                  }
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                  <div class="d-grid gap-2 col-12 mx-auto">
-                    @if (!isLoading) {
-                    <button type="button" aria-label="name" class="btn btn-primary"
-                      (click)="onSubmit(createDate, createDateFB)" [disabled]="mainForm.invalid">
-                      {{ 'BUTTONS.SAVE' | translate }}
-                    </button>
-                    }
-                    @if (isLoading) {
-                    <button type="button" aria-label="name" class="btn btn-primary">
-                      <div class="spinner-border spinner-border-sm" role="status"></div>
-                    </button>
-                    }
-                  </div>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                <div class="d-grid gap-2 col-12 mx-auto">
+                  <button type="button" aria-label="name" class="btn btn-info" (click)="clean()">
+                    {{ 'BUTTONS.CLEAN' | translate }}
+                  </button>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                  <div class="d-grid gap-2 col-12 mx-auto">
-                    <button type="button" aria-label="name" class="btn btn-info" (click)="clean()">
-                      {{ 'BUTTONS.CLEAN' | translate }}
-                    </button>
-                  </div>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                <div class="d-grid gap-2 col-12 mx-auto">
+                  <button type="button" aria-label="name" class="btn btn-dark" (click)="goBack()">
+                    {{ 'BUTTONS.BACK' | translate }}
+                  </button>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                  <div class="d-grid gap-2 col-12 mx-auto">
-                    <button type="button" aria-label="name" class="btn btn-dark" (click)="goBack()">
-                      {{ 'BUTTONS.BACK' | translate }}
-                    </button>
-                  </div>
-                </div>
-              </form>
-              }
-            </div>
+              </div>
+            </form>
+            }
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row justify-content-center my-3">
+  <div class="row justify-content-center">
     <div class="col-12">
       <h2 class="text-center">{{ 'TITLES.INGRESS_EGRESS' | translate }}</h2>
       @if (items) {
@@ -7,16 +7,14 @@
         wordFilter, description: wordFilter, createDate: wordFilter, amount: wordFilter, stateText: wordFilter } :
         false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
       }
-      <div class="text-center">
-        <ul>
-          @for (item of itemsGroup; track item) {
-          <li class="list-group-item"><b>{{item.name}}: </b>{{item.values |
-            filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate:
-            wordFilter, amount: wordFilter, stateText: wordFilter } : false |
-            amount:'amount' |
-            customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</li>
-          }
-        </ul>
+      <div class="d-flex justify-content-center mb-2 fs-7">
+        @for (item of itemsGroup; track item) {
+        <div class="me-3"><b>{{item.name}}: </b>{{item.values |
+          filterTableSearch: { typeActive: wordFilter, category: wordFilter, description: wordFilter, createDate:
+          wordFilter, amount: wordFilter, stateText: wordFilter } : false |
+          amount:'amount' |
+          customDecimal: systemDecimal: numberOfDecimal}} {{currentUser.currency}}</div>
+        }
       </div>
     </div>
   </div>

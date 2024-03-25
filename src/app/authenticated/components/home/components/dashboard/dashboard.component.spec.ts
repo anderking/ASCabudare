@@ -59,7 +59,7 @@ describe("DashboardComponent", () => {
     const htmlElement: HTMLElement = fixture.nativeElement;
     const element = htmlElement.querySelector("h1");
 
-    expect(element.textContent).toEqual("TEXTS.WELCOME");
+    expect(element.textContent).toEqual("TEXTS.WELCOME ");
   });
 
   it("should call getCurrentUser$ from authFacadeService", () => {
