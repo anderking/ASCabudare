@@ -1,22 +1,22 @@
 @if (mainForm) {
 @if (showRangeDates) {
 <form [formGroup]="mainForm" class="row g-3 mb-3">
-  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-    <label for="startDate" class="form-label">{{ 'PROPERTIES.START_DATE' | translate }}:</label>
+  <div class="col-6">
+    <label for="startDate" class="form-label d-none">{{ 'PROPERTIES.START_DATE' | translate }}:</label>
     <input type="datetime-local" class="form-control" formControlName="startDate" aria-label="startDate"
       [ngClass]="{'is-invalid': mainForm.get('startDate')?.touched && !mainForm.get('startDate')?.valid, 'is-valid': mainForm.get('startDate')?.touched && mainForm.get('startDate')?.valid}"
-      (change)="changeFilter($event.target.value,'startDate')">
+      (change)="changeFilter($event.target.value,'startDate')" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'PROPERTIES.START_DATE' | translate }}">
     @if (isValidField('startDate')) {
     <div class="invalid-feedback">
       {{ getErrorMessageField('startDate') }}
     </div>
     }
   </div>
-  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-    <label for="endDate" class="form-label">{{ 'PROPERTIES.END_DATE' | translate }}:</label>
+  <div class="col-6">
+    <label for="endDate" class="form-label d-none">{{ 'PROPERTIES.END_DATE' | translate }}:</label>
     <input type="datetime-local" class="form-control" formControlName="endDate" aria-label="endDate"
       [ngClass]="{'is-invalid': mainForm.get('endDate')?.touched && !mainForm.get('endDate')?.valid, 'is-valid': mainForm.get('endDate')?.touched && mainForm.get('endDate')?.valid}"
-      (change)="changeFilter($event.target.value,'endDate')">
+      (change)="changeFilter($event.target.value,'endDate')" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'PROPERTIES.END_DATE' | translate }}">
     @if (isValidField('endDate')) {
     <div class="invalid-feedback">
       {{ getErrorMessageField('endDate') }}

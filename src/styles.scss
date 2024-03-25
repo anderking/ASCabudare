@@ -56,8 +56,11 @@ a:hover {
 .toast{
   width: max-content;
 }
-.btn-primary, .list-group-item.active{
+.btn-primary, .list-group-item.active {
   background-color: #0E1A98;
+}
+.fs-7{
+  font-size: 14px !important;
 }
 
 @media (min-width: 768px){

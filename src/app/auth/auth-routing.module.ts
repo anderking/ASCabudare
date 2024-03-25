@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { LoginComponent } from "./login/login.component";
-import { RegisterComponent } from "./register/register.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { AuthRedirectGuard } from "@services/guard/auth.guard";
 import { AuthComponent } from "./auth.component";
@@ -16,7 +15,6 @@ export const routes: Routes = [
       { path: "", redirectTo: "login", pathMatch: "full" },
       { path: "login", component: LoginComponent, title: "Login" },
       { path: "login-time", component: LoginTimeComponent },
-      { path: "register", component: RegisterComponent, title: "Register" },
       {
         path: "forgot-password",
         component: ForgotPasswordComponent,

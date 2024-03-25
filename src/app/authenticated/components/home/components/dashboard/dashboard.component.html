@@ -1,8 +1,7 @@
 @if (!isLoading) {
 <div>
   @if (currentUser) {
-  <h1>{{ 'TEXTS.WELCOME' | translate }}</h1>
-  <h2>{{currentUser.displayName}}</h2>
+  <h1>{{ 'TEXTS.WELCOME' | translate }} {{currentUser.displayName}}</h1>
   <app-current-filter (rangeDateEmit)="rangeDateReceived($event)"
     (wordFilterEmit)="wordFilterReceived($event)"></app-current-filter>
 

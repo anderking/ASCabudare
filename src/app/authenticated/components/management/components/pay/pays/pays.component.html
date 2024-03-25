@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row justify-content-center my-3">
+  <div class="row justify-content-center">
     <div class="col-12">
       <h2 class="text-center">{{ 'TITLES.PAYS' | translate }}</h2>
       @if (items) {
@@ -9,19 +9,17 @@
         wordFilter, stateText: wordFilter, stateSolvency: wordFilter } :
         false).length}} {{ 'TEXTS.REGISTERS' | translate }}</h6>
       }
-      <div class="text-center">
-        <ul>
-          @for (item of itemsGroup; track item) {
-          <li class="list-group-item"><b>{{item.name}}: </b>{{item.values |
-            filterTableSearch: { displayName: wordFilter, documentNumber: wordFilter,
-            phoneNumberArea:
-            wordFilter, phoneNumber: wordFilter, payType: wordFilter, currency: wordFilter, createDate: wordFilter,
-            amount:
-            wordFilter, stateText: wordFilter, stateSolvency: wordFilter } : false |
-            amount:'amount' |
-            customDecimal: systemDecimal: numberOfDecimal}}</li>
-          }
-        </ul>
+      <div class="d-flex justify-content-center mb-2 fs-7">
+        @for (item of itemsGroup; track item) {
+        <div class="me-3"><b>{{item.name}}: </b>{{item.values |
+          filterTableSearch: { displayName: wordFilter, documentNumber: wordFilter,
+          phoneNumberArea:
+          wordFilter, phoneNumber: wordFilter, payType: wordFilter, currency: wordFilter, createDate: wordFilter,
+          amount:
+          wordFilter, stateText: wordFilter, stateSolvency: wordFilter } : false |
+          amount:'amount' |
+          customDecimal: systemDecimal: numberOfDecimal}}</div>
+        }
       </div>
     </div>
   </div>
